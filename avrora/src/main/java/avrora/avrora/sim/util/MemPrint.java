@@ -63,7 +63,9 @@ public class MemPrint extends Simulator.Watch.Empty
         {
             try
             {
-                new FileWriter(log);
+               FileWriter foo = new FileWriter(log);
+               // TODO: foo.close(() is a hoftix
+               foo.close();
             }
             catch (Exception e)
             {// Catch exception if any
