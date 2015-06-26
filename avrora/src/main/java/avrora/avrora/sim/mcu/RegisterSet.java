@@ -37,7 +37,6 @@ import avrora.avrora.sim.RWRegister;
 import avrora.cck.text.StringUtil;
 import avrora.cck.util.Util;
 import java.util.HashMap;
-import java.util.Iterator;
 
 /**
  * The <code>RegisterSet</code> class is a utility that simplifies the
