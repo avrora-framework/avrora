@@ -32,11 +32,17 @@
 
 package avrora.avrora.core;
 
-import avrora.avrora.arch.*;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.LinkedList;
+import java.util.List;
+
+import avrora.avrora.arch.AbstractArchitecture;
+import avrora.avrora.arch.AbstractDisassembler;
+import avrora.avrora.arch.AbstractInstr;
 import avrora.avrora.arch.legacy.LegacyInstr;
 import avrora.cck.text.StringUtil;
 import avrora.cck.util.Util;
-import java.util.*;
 
 /**
  * The <code>Program</code> class represents a complete program of AVR

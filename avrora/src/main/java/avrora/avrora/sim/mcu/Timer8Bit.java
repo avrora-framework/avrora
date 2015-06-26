@@ -34,9 +34,9 @@ package avrora.avrora.sim.mcu;
 
 import avrora.avrora.sim.RWRegister;
 import avrora.avrora.sim.Simulator;
-import avrora.avrora.sim.state.RegisterView;
-import avrora.avrora.sim.state.RegisterUtil;
 import avrora.avrora.sim.clock.Clock;
+import avrora.avrora.sim.state.RegisterUtil;
+import avrora.avrora.sim.state.RegisterView;
 
 /**
  * Base class of 8-bit timers. Timer0 and Timer2 are subclasses of this.

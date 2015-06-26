@@ -32,9 +32,12 @@
 
 package avrora.avrora.sim.mcu;
 
-import avrora.avrora.sim.*;
-import avrora.avrora.sim.output.SimPrinter;
+import avrora.avrora.sim.ActiveRegister;
+import avrora.avrora.sim.AtmelInterpreter;
+import avrora.avrora.sim.RWRegister;
+import avrora.avrora.sim.Simulator;
 import avrora.avrora.sim.clock.Clock;
+import avrora.avrora.sim.output.SimPrinter;
 
 /**
  * The <code>InteralDevice</code> class represents an internal device on a

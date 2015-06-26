@@ -36,7 +36,9 @@ package avrora.avrora.arch.avr;
 
 import avrora.avrora.arch.AbstractInstr;
 import avrora.avrora.core.Program;
-import avrora.avrora.sim.*;
+import avrora.avrora.sim.ActiveRegister;
+import avrora.avrora.sim.RWRegister;
+import avrora.avrora.sim.Simulator;
 import avrora.avrora.sim.clock.MainClock;
 import avrora.avrora.sim.mcu.RegisterSet;
 import avrora.cck.util.Arithmetic;

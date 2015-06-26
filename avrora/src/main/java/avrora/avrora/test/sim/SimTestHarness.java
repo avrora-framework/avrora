@@ -32,6 +32,9 @@
 
 package avrora.avrora.test.sim;
 
+import java.util.List;
+import java.util.Properties;
+
 import avrora.avrora.Defaults;
 import avrora.avrora.core.Program;
 import avrora.avrora.core.ProgramReader;
@@ -40,10 +43,11 @@ import avrora.avrora.sim.State;
 import avrora.avrora.syntax.Module;
 import avrora.avrora.test.sim.legacy.LegacyTester;
 import avrora.avrora.test.sim.msp430.MSP430Tester;
-import avrora.cck.test.*;
+import avrora.cck.test.TestCase;
+import avrora.cck.test.TestEngine;
+import avrora.cck.test.TestResult;
 import avrora.cck.text.Terminal;
 import avrora.cck.util.ClassMap;
-import java.util.*;
 
 /**
  * The <code>SimulatorTestHarness</code> implements a test harness that

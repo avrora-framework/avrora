@@ -32,14 +32,14 @@
 
 package avrora.avrora.test;
 
+import java.util.Properties;
+
 import avrora.avrora.Defaults;
 import avrora.avrora.core.Program;
 import avrora.avrora.core.ProgramReader;
 import avrora.avrora.syntax.Module;
 import avrora.cck.test.TestCase;
 import avrora.cck.test.TestEngine;
-
-import java.util.Properties;
 
 /**
  * The <code>SimulatorTestHarness</code> implements a test harness that

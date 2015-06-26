@@ -33,7 +33,9 @@
 package avrora.avrora.sim.mcu;
 
 import avrora.avrora.arch.avr.AVRProperties;
-import avrora.avrora.sim.*;
+import avrora.avrora.sim.FiniteStateMachine;
+import avrora.avrora.sim.RW16Register;
+import avrora.avrora.sim.RWRegister;
 import avrora.avrora.sim.clock.ClockDomain;
 import avrora.cck.util.Arithmetic;
 

@@ -32,14 +32,18 @@
 
 package avrora.cck.test;
 
-import avrora.cck.text.Status;
-import avrora.cck.text.Terminal;
-import avrora.cck.util.*;
-
-import java.io.*;
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.IOException;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Properties;
+
+import avrora.cck.text.Status;
+import avrora.cck.text.Terminal;
+import avrora.cck.util.ClassMap;
+import avrora.cck.util.TimeUtil;
+import avrora.cck.util.Util;
 
 /**
  * The <code>AutomatedTester</code> is a class that is designed to be an

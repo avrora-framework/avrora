@@ -35,8 +35,8 @@ package avrora.avrora.sim.platform;
 import avrora.avrora.sim.Simulator;
 import avrora.avrora.sim.mcu.USART;
 import avrora.avrora.sim.util.SimUtil;
-import avrora.cck.text.Terminal;
 import avrora.cck.text.StringUtil;
+import avrora.cck.text.Terminal;
 import avrora.cck.util.Util;
 
 /**

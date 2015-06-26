@@ -32,7 +32,9 @@
 
 package avrora.avrora.stack;
 
-import avrora.avrora.arch.legacy.*;
+import avrora.avrora.arch.legacy.LegacyInstr;
+import avrora.avrora.arch.legacy.LegacyInstrVisitor;
+import avrora.avrora.arch.legacy.LegacyRegister;
 import avrora.avrora.core.Program;
 import avrora.cck.text.StringUtil;
 import avrora.cck.util.Util;

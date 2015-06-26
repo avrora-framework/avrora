@@ -34,7 +34,9 @@
 
 package avrora.avrora.test.sim.legacy;
 
-import avrora.avrora.arch.legacy.*;
+import avrora.avrora.arch.legacy.LegacyInterpreter;
+import avrora.avrora.arch.legacy.LegacyRegister;
+import avrora.avrora.arch.legacy.LegacyState;
 import avrora.avrora.core.Program;
 import avrora.avrora.sim.Simulator;
 import avrora.avrora.test.sim.StateAccessor;

@@ -32,15 +32,15 @@
 
 package avrora.cck.text;
 
-import avrora.cck.util.Arithmetic;
-import avrora.cck.util.Util;
-
 import java.text.CharacterIterator;
 import java.text.StringCharacterIterator;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Properties;
+
+import avrora.cck.util.Arithmetic;
+import avrora.cck.util.Util;
 
 /**
  * The <code>StringUtil</code> class implements several useful functions for

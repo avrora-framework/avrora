@@ -34,13 +34,14 @@
 
 package avrora.jintgen.isdl.verifier;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.util.Properties;
+
 import avrora.cck.test.TestCase;
 import avrora.cck.test.TestEngine;
 import avrora.jintgen.isdl.ArchDecl;
 import avrora.jintgen.isdl.parser.ISDLParser;
-import java.io.File;
-import java.io.FileInputStream;
-import java.util.Properties;
 
 /**
  * @author Ben L. Titzer

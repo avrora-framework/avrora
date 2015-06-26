@@ -32,15 +32,27 @@
 
 package avrora.jintgen.gen.disassembler;
 
-import avrora.cck.text.*;
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
+
+import avrora.cck.text.Printer;
+import avrora.cck.text.StringUtil;
+import avrora.cck.text.Terminal;
 import avrora.cck.util.Arithmetic;
 import avrora.cck.util.Util;
 import avrora.jintgen.gen.ConstantPropagator;
-import avrora.jintgen.isdl.*;
+import avrora.jintgen.isdl.AddrModeDecl;
+import avrora.jintgen.isdl.FormatDecl;
+import avrora.jintgen.isdl.InstrDecl;
+import avrora.jintgen.isdl.Property;
 import avrora.jintgen.isdl.parser.Token;
 import avrora.jintgen.jigir.Expr;
 import avrora.jintgen.jigir.Literal;
-import java.util.*;
 
 /**
  * The <code>DGUtil</code> class contains a set of utility methods that are

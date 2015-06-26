@@ -32,10 +32,16 @@
 
 package avrora.avrora.sim.mcu;
 
-import avrora.avrora.sim.*;
+import java.util.HashMap;
+import java.util.Map;
+
+import avrora.avrora.sim.ActiveRegister;
+import avrora.avrora.sim.InterruptTable;
+import avrora.avrora.sim.RW16Register;
+import avrora.avrora.sim.RWRegister;
+import avrora.avrora.sim.Simulator;
 import avrora.avrora.sim.clock.Clock;
 import avrora.cck.util.Util;
-import java.util.*;
 
 /**
  * The <code>ATMegaTimer</code> class implements a timer on the ATMega series of

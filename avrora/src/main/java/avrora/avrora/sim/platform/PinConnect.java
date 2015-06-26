@@ -32,14 +32,15 @@
 
 package avrora.avrora.sim.platform;
 
+import java.util.Iterator;
+import java.util.LinkedList;
+import java.util.List;
+
 import avrora.avrora.sim.Simulator;
 import avrora.avrora.sim.SimulatorThread;
 import avrora.avrora.sim.clock.StepSynchronizer;
 import avrora.avrora.sim.clock.Synchronizer;
 import avrora.avrora.sim.mcu.Microcontroller;
-import java.util.Iterator;
-import java.util.LinkedList;
-import java.util.List;
 
 /**
  * Very simple implementation of pin interconnect between microcontrollers

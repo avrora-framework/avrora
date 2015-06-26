@@ -34,11 +34,11 @@
 
 package avrora.avrora.sim.state;
 
+import avrora.avrora.sim.Simulator;
 import avrora.avrora.sim.clock.Clock;
-import avrora.avrora.sim.*;
 import avrora.avrora.sim.output.SimPrinter;
-import avrora.cck.util.Arithmetic;
 import avrora.cck.text.StringUtil;
+import avrora.cck.util.Arithmetic;
 
 /**
  * The <code>RegisterUtil</code> class implements a number of utilities for

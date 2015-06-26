@@ -32,7 +32,8 @@
 
 package avrora.avrora.sim.util;
 
-import avrora.avrora.sim.*;
+import avrora.avrora.sim.Simulator;
+import avrora.avrora.sim.State;
 import avrora.cck.text.Terminal;
 
 /**

@@ -33,8 +33,8 @@
 package avrora.avrora.sim.platform;
 
 import avrora.avrora.core.Program;
-import avrora.avrora.sim.Simulator;
 import avrora.avrora.sim.Simulation;
+import avrora.avrora.sim.Simulator;
 import avrora.avrora.sim.clock.ClockDomain;
 import avrora.avrora.sim.mcu.ATMega128;
 import avrora.avrora.sim.mcu.Microcontroller;

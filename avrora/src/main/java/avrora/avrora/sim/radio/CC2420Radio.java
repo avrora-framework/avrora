@@ -33,19 +33,29 @@
  */
 package avrora.avrora.sim.radio;
 
+import java.util.Arrays;
+import java.util.LinkedList;
+import java.util.Random;
+
+import avrora.avrora.sim.FiniteStateMachine;
 import avrora.avrora.sim.Simulator;
 import avrora.avrora.sim.clock.Synchronizer;
-import avrora.avrora.sim.mcu.*;
+import avrora.avrora.sim.energy.Energy;
+import avrora.avrora.sim.mcu.ADC;
+import avrora.avrora.sim.mcu.Microcontroller;
 import avrora.avrora.sim.mcu.Microcontroller.Pin.InputListener;
+import avrora.avrora.sim.mcu.SPI;
+import avrora.avrora.sim.mcu.SPIDevice;
 import avrora.avrora.sim.output.SimPrinter;
-import avrora.avrora.sim.state.*;
+import avrora.avrora.sim.state.BooleanRegister;
+import avrora.avrora.sim.state.BooleanView;
+import avrora.avrora.sim.state.ByteFIFO;
+import avrora.avrora.sim.state.Register;
+import avrora.avrora.sim.state.RegisterUtil;
+import avrora.avrora.sim.state.RegisterView;
 import avrora.cck.text.StringUtil;
 import avrora.cck.util.Arithmetic;
 import avrora.cck.util.Util;
-import avrora.avrora.sim.FiniteStateMachine;
-import avrora.avrora.sim.energy.Energy;
-
-import java.util.*;
 
 /**
  * The <code>CC2420Radio</code> implements a simulation of the CC2420 radio

@@ -32,9 +32,12 @@
 
 package avrora.cck.util;
 
-import avrora.cck.text.StringUtil;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.List;
 
-import java.util.*;
+import avrora.cck.text.StringUtil;
 
 /**
  * The <code>ClassMap</code> is a class that maps short names (i.e. short, lower

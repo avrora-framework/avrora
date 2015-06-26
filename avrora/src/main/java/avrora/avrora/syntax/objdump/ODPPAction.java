@@ -32,10 +32,11 @@
 
 package avrora.avrora.syntax.objdump;
 
-import avrora.avrora.actions.Action;
-import avrora.cck.util.Option;
 import java.io.FileOutputStream;
 import java.io.PrintWriter;
+
+import avrora.avrora.actions.Action;
+import avrora.cck.util.Option;
 
 /**
  * The <code>ObjDumpPreprocessor</code> class is a utility class that takes the

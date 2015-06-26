@@ -32,11 +32,18 @@
 
 package avrora.cck.help;
 
+import java.util.Collection;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.LinkedList;
+import java.util.List;
+
 import avrora.cck.text.StringUtil;
 import avrora.cck.text.Terminal;
-import avrora.cck.util.*;
-
-import java.util.*;
+import avrora.cck.util.ClassMap;
+import avrora.cck.util.Option;
+import avrora.cck.util.Options;
+import avrora.cck.util.Util;
 
 /**
  * The <code>HelpCategory</code> class implements a category that provides help

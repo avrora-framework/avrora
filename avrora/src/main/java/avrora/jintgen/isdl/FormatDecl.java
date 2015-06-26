@@ -32,12 +32,13 @@
 
 package avrora.jintgen.isdl;
 
+import java.util.LinkedList;
+import java.util.List;
+
 import avrora.cck.text.StringUtil;
 import avrora.cck.util.Util;
 import avrora.jintgen.isdl.parser.Token;
 import avrora.jintgen.jigir.Expr;
-import java.util.LinkedList;
-import java.util.List;
 
 /**
  * The <code>FormatDecl</code> class represents the encoding of an instruction

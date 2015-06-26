@@ -32,15 +32,24 @@
 
 package avrora.jintgen.gen;
 
+import java.io.IOException;
+import java.util.HashSet;
+import java.util.LinkedList;
+import java.util.List;
+
 import avrora.cck.text.Printer;
 import avrora.cck.text.StringUtil;
 import avrora.cck.util.Option;
 import avrora.jintgen.gen.disassembler.DGUtil;
-import avrora.jintgen.isdl.*;
-import avrora.jintgen.types.TypeRef;
+import avrora.jintgen.isdl.AddrModeDecl;
+import avrora.jintgen.isdl.AddrModeSetDecl;
+import avrora.jintgen.isdl.EnumDecl;
+import avrora.jintgen.isdl.InstrDecl;
+import avrora.jintgen.isdl.OperandTypeDecl;
+import avrora.jintgen.isdl.Property;
+import avrora.jintgen.isdl.SymbolMapping;
 import avrora.jintgen.jigir.JIGIRTypeEnv;
-import java.io.IOException;
-import java.util.*;
+import avrora.jintgen.types.TypeRef;
 
 /**
  * The <code>ClassGenerator</code> class generates a set of classes that

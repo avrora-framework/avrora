@@ -32,7 +32,8 @@
 
 package avrora.avrora.sim.platform.sensors;
 
-import avrora.avrora.sim.mcu.*;
+import avrora.avrora.sim.mcu.ADC;
+import avrora.avrora.sim.mcu.AtmelMicrocontroller;
 
 /**
  * The <code>AccelSensor</code> class implements a accelerometer like that

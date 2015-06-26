@@ -32,7 +32,9 @@
 
 package avrora.avrora.core;
 
-import java.util.*;
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.HashSet;
 
 import avrora.avrora.core.ControlFlowGraph.Block;
 

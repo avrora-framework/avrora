@@ -34,7 +34,12 @@
 
 package avrora.avrora.arch.avr;
 
-import avrora.avrora.sim.*;
+import avrora.avrora.sim.ActiveRegister;
+import avrora.avrora.sim.CodeSegment;
+import avrora.avrora.sim.InterruptTable;
+import avrora.avrora.sim.Segment;
+import avrora.avrora.sim.Simulator;
+import avrora.avrora.sim.State;
 import avrora.avrora.sim.clock.DeltaQueue;
 
 /**

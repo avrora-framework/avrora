@@ -32,13 +32,18 @@
 
 package avrora.avrora.monitors;
 
-import avrora.avrora.sim.*;
-import avrora.avrora.sim.output.SimPrinter;
-import avrora.avrora.sim.mcu.MCUProperties;
-import avrora.cck.stat.MinMaxMean;
-import avrora.cck.text.*;
-import avrora.cck.util.Option;
 import java.util.Arrays;
+
+import avrora.avrora.sim.InterruptTable;
+import avrora.avrora.sim.Simulator;
+import avrora.avrora.sim.State;
+import avrora.avrora.sim.mcu.MCUProperties;
+import avrora.avrora.sim.output.SimPrinter;
+import avrora.cck.stat.MinMaxMean;
+import avrora.cck.text.StringUtil;
+import avrora.cck.text.TermUtil;
+import avrora.cck.text.Terminal;
+import avrora.cck.util.Option;
 
 /**
  * The <code>InterruptMonitor</code> class implements a monitor that tracks the

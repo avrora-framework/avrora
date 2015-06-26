@@ -32,12 +32,20 @@
 
 package avrora.jintgen.gen;
 
-import avrora.cck.text.*;
-import avrora.cck.util.*;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.PrintStream;
+import java.util.List;
+
+import avrora.cck.text.Printer;
+import avrora.cck.text.SectionFile;
+import avrora.cck.text.StringUtil;
+import avrora.cck.util.Option;
+import avrora.cck.util.Options;
+import avrora.cck.util.Util;
 import avrora.jintgen.Main;
 import avrora.jintgen.isdl.ArchDecl;
-import java.io.*;
-import java.util.List;
 
 /**
  * The <code>Generator</code> class represents a class that generates some tool

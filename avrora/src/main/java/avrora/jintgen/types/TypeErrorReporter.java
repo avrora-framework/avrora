@@ -34,7 +34,9 @@
 
 package avrora.jintgen.types;
 
-import avrora.cck.parser.*;
+import avrora.cck.parser.AbstractToken;
+import avrora.cck.parser.ErrorReporter;
+import avrora.cck.parser.SourcePoint;
 
 /**
  * The <code>TypeErrorReporter</code> class implements an

@@ -35,7 +35,11 @@
 package avrora.avrora.arch.msp430;
 
 import avrora.avrora.arch.AbstractInstr;
-import avrora.avrora.sim.*;
+import avrora.avrora.sim.ActiveRegister;
+import avrora.avrora.sim.Interpreter;
+import avrora.avrora.sim.Segment;
+import avrora.avrora.sim.Simulator;
+import avrora.avrora.sim.State;
 import avrora.cck.util.Util;
 
 /**

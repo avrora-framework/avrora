@@ -34,9 +34,10 @@
 
 package avrora.avrora.arch.msp430;
 
+import java.util.HashMap;
+
 import avrora.avrora.sim.mcu.MCUProperties;
 import avrora.avrora.sim.mcu.RegisterLayout;
-import java.util.HashMap;
 
 /**
  * @author Ben L. Titzer

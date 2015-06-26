@@ -32,7 +32,9 @@
 
 package avrora.avrora.monitors;
 
-import avrora.avrora.arch.legacy.*;
+import avrora.avrora.arch.legacy.LegacyInstr;
+import avrora.avrora.arch.legacy.LegacyRegister;
+import avrora.avrora.arch.legacy.LegacyState;
 import avrora.avrora.core.Program;
 import avrora.avrora.core.SourceMapping;
 import avrora.avrora.sim.Simulator;

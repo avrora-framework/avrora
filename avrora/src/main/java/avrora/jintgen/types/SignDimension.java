@@ -34,9 +34,10 @@
 
 package avrora.jintgen.types;
 
+import java.util.List;
+
 import avrora.cck.parser.AbstractToken;
 import avrora.cck.util.Util;
-import java.util.List;
 
 /**
  * The <code>SignDimension</code> class represents a sign dimension that applies

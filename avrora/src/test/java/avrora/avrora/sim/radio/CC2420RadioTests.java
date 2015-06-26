@@ -1,12 +1,11 @@
 package avrora.avrora.sim.radio;
 
-import junit.framework.TestCase;
 import avrora.avrora.sim.mcu.MockMCU;
 import avrora.avrora.sim.mcu.MockPinInputListener;
-import avrora.avrora.sim.radio.CC2420Radio;
 import avrora.avrora.sim.state.Register;
 import avrora.avrora.sim.state.RegisterUtil;
 import avrora.cck.util.Arithmetic;
+import junit.framework.TestCase;
 
 /**
  * Tests for the {@link CC2420Radio}

@@ -32,16 +32,18 @@
 
 package avrora.avrora.gui;
 
+import java.awt.BorderLayout;
+
+import javax.swing.JPanel;
+
 import avrora.avrora.arch.legacy.LegacyRegister;
 import avrora.avrora.arch.legacy.LegacyState;
 import avrora.avrora.core.Program;
-import avrora.avrora.monitors.MonitorFactory;
 import avrora.avrora.monitors.Monitor;
+import avrora.avrora.monitors.MonitorFactory;
 import avrora.avrora.sim.Simulator;
 import avrora.avrora.sim.State;
 import avrora.avrora.sim.util.ProgramProfiler;
-import javax.swing.*;
-import java.awt.*;
 
 /**
  * The <code>VisualRegMonitor</code> class is a monitor that tracks the current

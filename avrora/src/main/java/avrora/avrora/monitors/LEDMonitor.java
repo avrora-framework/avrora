@@ -6,8 +6,8 @@
  */
 package avrora.avrora.monitors;
 
-import avrora.avrora.sim.Simulator;
 import avrora.avrora.sim.FiniteStateMachine;
+import avrora.avrora.sim.Simulator;
 import avrora.avrora.sim.output.SimPrinter;
 import avrora.avrora.sim.platform.LED;
 import avrora.avrora.sim.platform.Platform;

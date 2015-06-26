@@ -32,12 +32,22 @@
 
 package avrora.jintgen.gen.disassembler;
 
-import avrora.cck.text.*;
-import avrora.cck.util.*;
-import avrora.jintgen.gen.Generator;
-import avrora.jintgen.isdl.*;
 import java.util.LinkedList;
 import java.util.List;
+
+import avrora.cck.text.StringUtil;
+import avrora.cck.text.TermUtil;
+import avrora.cck.text.Terminal;
+import avrora.cck.text.Verbose;
+import avrora.cck.util.Arithmetic;
+import avrora.cck.util.Option;
+import avrora.cck.util.Util;
+import avrora.jintgen.gen.Generator;
+import avrora.jintgen.isdl.AddrModeDecl;
+import avrora.jintgen.isdl.EnumDecl;
+import avrora.jintgen.isdl.FormatDecl;
+import avrora.jintgen.isdl.InstrDecl;
+import avrora.jintgen.isdl.SymbolMapping;
 
 /**
  * The <code>DisassemblerGenerator</code> class is a generator that can create a

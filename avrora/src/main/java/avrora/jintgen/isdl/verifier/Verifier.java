@@ -35,7 +35,9 @@ package avrora.jintgen.isdl.verifier;
 import avrora.cck.text.Status;
 import avrora.cck.text.Verbose;
 import avrora.jintgen.gen.Canonicalizer;
-import avrora.jintgen.isdl.*;
+import avrora.jintgen.isdl.ArchDecl;
+import avrora.jintgen.isdl.InstrDecl;
+import avrora.jintgen.isdl.SubroutineDecl;
 
 /**
  * The <code>Verifier</code> class performs some consistency checks on an

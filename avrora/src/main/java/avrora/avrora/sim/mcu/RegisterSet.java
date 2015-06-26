@@ -32,11 +32,12 @@
 
 package avrora.avrora.sim.mcu;
 
+import java.util.HashMap;
+
 import avrora.avrora.sim.ActiveRegister;
 import avrora.avrora.sim.RWRegister;
 import avrora.cck.text.StringUtil;
 import avrora.cck.util.Util;
-import java.util.HashMap;
 
 /**
  * The <code>RegisterSet</code> class is a utility that simplifies the

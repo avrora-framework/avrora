@@ -33,7 +33,9 @@
 package avrora.avrora.syntax;
 
 import avrora.avrora.arch.legacy.LegacyRegister;
-import avrora.cck.parser.*;
+import avrora.cck.parser.AbstractToken;
+import avrora.cck.parser.ErrorReporter;
+import avrora.cck.parser.SourcePoint;
 import avrora.cck.text.StringUtil;
 
 /**

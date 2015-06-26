@@ -32,10 +32,11 @@
 
 package avrora.jintgen.isdl;
 
-import avrora.cck.util.Util;
-import avrora.jintgen.isdl.parser.Token;
 import java.util.LinkedList;
 import java.util.List;
+
+import avrora.cck.util.Util;
+import avrora.jintgen.isdl.parser.Token;
 
 /**
  * @author Ben L. Titzer

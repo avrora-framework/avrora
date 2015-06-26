@@ -33,7 +33,9 @@
 package avrora.avrora.sim.platform.sensors;
 
 import avrora.avrora.sim.FiniteStateMachine;
-import avrora.avrora.sim.mcu.*;
+import avrora.avrora.sim.mcu.ADC;
+import avrora.avrora.sim.mcu.AtmelMicrocontroller;
+import avrora.avrora.sim.mcu.Microcontroller;
 
 /**
  * The <code>LightSensor</code> class implements a light sensor like that

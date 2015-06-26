@@ -35,15 +35,18 @@
 
 package avrora.avrora.monitors;
 
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Set;
+
 import avrora.avrora.sim.Simulator;
 import avrora.avrora.sim.mcu.AtmelMicrocontroller;
 import avrora.avrora.sim.mcu.USART;
 import avrora.avrora.sim.platform.SerialForwarder;
 import avrora.avrora.sim.platform.SerialLogger;
-import avrora.cck.util.*;
-import java.util.HashMap;
-import java.util.Set;
-import java.util.HashSet;
+import avrora.cck.util.Option;
+import avrora.cck.util.Options;
+import avrora.cck.util.Util;
 
 /**
  * The <code>SerialMonitor</code> class is a monitor that that is capable of

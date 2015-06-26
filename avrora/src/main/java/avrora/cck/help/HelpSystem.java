@@ -32,9 +32,9 @@
 
 package avrora.cck.help;
 
-import avrora.cck.util.ClassMap;
-
 import java.util.List;
+
+import avrora.cck.util.ClassMap;
 
 /**
  * The <code>HelpSystem</code> is the global repository for help information,

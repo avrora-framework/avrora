@@ -32,12 +32,17 @@
 
 package avrora.jintgen.gen;
 
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Properties;
+
 import avrora.cck.text.Printer;
 import avrora.cck.text.StringUtil;
 import avrora.jintgen.isdl.AddrModeDecl;
 import avrora.jintgen.jigir.JIGIRTypeEnv;
-import avrora.jintgen.types.*;
-import java.util.*;
+import avrora.jintgen.types.Type;
+import avrora.jintgen.types.TypeCon;
+import avrora.jintgen.types.TypeRef;
 
 /**
  * The <code>GenBase</code> class contains a number of utility methods that help

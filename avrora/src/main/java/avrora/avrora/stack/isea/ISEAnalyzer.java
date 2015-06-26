@@ -32,11 +32,22 @@
 
 package avrora.avrora.stack.isea;
 
-import avrora.avrora.core.*;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Stack;
+
+import avrora.avrora.core.ControlFlowGraph;
 import avrora.avrora.core.ControlFlowGraph.Block;
-import avrora.cck.text.*;
+import avrora.avrora.core.ProcedureMap;
+import avrora.avrora.core.Program;
+import avrora.avrora.core.SourceMapping;
+import avrora.cck.text.StringUtil;
+import avrora.cck.text.TermUtil;
+import avrora.cck.text.Terminal;
+import avrora.cck.text.Verbose;
 import avrora.cck.util.Util;
-import java.util.*;
 
 /**
  * The <code>ISEAnalyzer</code> class is a static analyzer for machine code.

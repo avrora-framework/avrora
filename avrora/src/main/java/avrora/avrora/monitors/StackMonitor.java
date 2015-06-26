@@ -37,7 +37,9 @@ import avrora.avrora.core.Program;
 import avrora.avrora.sim.Simulator;
 import avrora.avrora.sim.State;
 import avrora.avrora.sim.mcu.MCUProperties;
-import avrora.cck.text.*;
+import avrora.cck.text.StringUtil;
+import avrora.cck.text.TermUtil;
+import avrora.cck.text.Terminal;
 
 /**
  * The <code>StackMonitor</code> class is a monitor that tracks the height of

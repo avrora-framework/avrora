@@ -32,10 +32,14 @@
 
 package avrora.avrora.gui;
 
-import avrora.avrora.sim.*;
+import java.awt.BorderLayout;
+
+import javax.swing.JPanel;
+
+import avrora.avrora.sim.Simulation;
+import avrora.avrora.sim.Simulator;
+import avrora.avrora.sim.State;
 import avrora.avrora.sim.mcu.MCUProperties;
-import javax.swing.*;
-import java.awt.*;
 
 /**
  * The <code>VisualStackMonitor</code> class is a monitor that tracks the

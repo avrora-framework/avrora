@@ -32,6 +32,9 @@
 
 package avrora.avrora.monitors;
 
+import java.util.HashSet;
+import java.util.List;
+
 import avrora.avrora.arch.avr.AVRProperties;
 import avrora.avrora.arch.legacy.LegacyState;
 import avrora.avrora.core.Program;
@@ -39,12 +42,11 @@ import avrora.avrora.core.SourceMapping;
 import avrora.avrora.sim.Simulator;
 import avrora.avrora.sim.mcu.Microcontroller;
 import avrora.avrora.sim.util.MemoryProfiler;
-import avrora.cck.text.*;
+import avrora.cck.text.StringUtil;
+import avrora.cck.text.TermUtil;
+import avrora.cck.text.Terminal;
 import avrora.cck.util.Option;
 import avrora.cck.util.Util;
-
-import java.util.HashSet;
-import java.util.List;
 
 /**
  * The <code>MemoryMonitor</code> class implements a monitor that collects

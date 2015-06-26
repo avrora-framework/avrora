@@ -32,14 +32,18 @@
 
 package avrora.avrora.gui;
 
+import java.awt.BorderLayout;
+import java.awt.GridLayout;
+import java.util.Vector;
+
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+
 import avrora.avrora.core.Program;
-import avrora.avrora.monitors.MonitorFactory;
 import avrora.avrora.monitors.Monitor;
+import avrora.avrora.monitors.MonitorFactory;
 import avrora.avrora.sim.Simulator;
 import avrora.avrora.sim.util.ProgramProfiler;
-import javax.swing.*;
-import java.awt.*;
-import java.util.Vector;
 
 /**
  * This is a prototype for a "global monitor." Several different nodes are all

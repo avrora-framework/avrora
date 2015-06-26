@@ -32,17 +32,20 @@
 
 package avrora.avrora.sim.mcu;
 
+import java.util.HashMap;
+
 import avrora.avrora.arch.avr.AVRProperties;
 import avrora.avrora.arch.legacy.LegacyInterpreter;
 import avrora.avrora.core.Program;
-import avrora.avrora.sim.*;
 import avrora.avrora.sim.ActiveRegister;
+import avrora.avrora.sim.AtmelInterpreter;
+import avrora.avrora.sim.FiniteStateMachine;
+import avrora.avrora.sim.Simulation;
 import avrora.avrora.sim.clock.ClockDomain;
 import avrora.avrora.sim.energy.Energy;
 import avrora.avrora.sim.state.RegisterUtil;
 import avrora.avrora.sim.state.RegisterView;
 import avrora.cck.util.Arithmetic;
-import java.util.HashMap;
 
 /**
  * The <code>ATMega128</code> class represents the ATMega128 microcontroller

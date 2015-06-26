@@ -34,12 +34,16 @@ package avrora.avrora.sim.radio;
 
 import avrora.avrora.sim.FiniteStateMachine;
 import avrora.avrora.sim.Simulator;
-import avrora.avrora.sim.output.SimPrinter;
 import avrora.avrora.sim.clock.Clock;
 import avrora.avrora.sim.clock.Synchronizer;
 import avrora.avrora.sim.energy.Energy;
-import avrora.avrora.sim.mcu.*;
+import avrora.avrora.sim.mcu.ADC;
+import avrora.avrora.sim.mcu.ATMegaFamily;
+import avrora.avrora.sim.mcu.Microcontroller;
 import avrora.avrora.sim.mcu.Microcontroller.Pin.ListenableBooleanViewInput;
+import avrora.avrora.sim.mcu.SPI;
+import avrora.avrora.sim.mcu.SPIDevice;
+import avrora.avrora.sim.output.SimPrinter;
 import avrora.cck.text.StringUtil;
 import avrora.cck.util.Arithmetic;
 

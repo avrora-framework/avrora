@@ -32,9 +32,11 @@
 
 package avrora.avrora.core;
 
-import avrora.cck.text.StringUtil;
+import java.util.Comparator;
+import java.util.HashMap;
+import java.util.Iterator;
 
-import java.util.*;
+import avrora.cck.text.StringUtil;
 
 /**
  * The <code>SourceMapping</code> class embodies the concept of mapping machine

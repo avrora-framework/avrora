@@ -32,13 +32,19 @@
 
 package avrora.jintgen.isdl;
 
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.LinkedList;
+import java.util.List;
+
 import avrora.cck.text.StringUtil;
 import avrora.cck.util.Util;
 import avrora.jintgen.isdl.parser.Token;
 import avrora.jintgen.jigir.CodeRegion;
 import avrora.jintgen.jigir.JIGIRTypeEnv;
-import avrora.jintgen.types.*;
-import java.util.*;
+import avrora.jintgen.types.Type;
+import avrora.jintgen.types.TypeCon;
+import avrora.jintgen.types.TypeRef;
 
 /**
  * The <code>OperandDecl</code> class represents the declaration of a set of

@@ -32,23 +32,35 @@
 
 package avrora.avrora.sim;
 
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.util.Iterator;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.NoSuchElementException;
+import java.util.Random;
+
 import avrora.avrora.Defaults;
 import avrora.avrora.core.LoadableProgram;
 import avrora.avrora.core.Program;
 import avrora.avrora.monitors.Monitor;
 import avrora.avrora.monitors.MonitorFactory;
 import avrora.avrora.sim.clock.Synchronizer;
-import avrora.avrora.sim.mcu.*;
-import avrora.avrora.sim.platform.*;
+import avrora.avrora.sim.mcu.AtmelMicrocontroller;
+import avrora.avrora.sim.mcu.EEPROM;
+import avrora.avrora.sim.mcu.Microcontroller;
+import avrora.avrora.sim.mcu.MicrocontrollerFactory;
+import avrora.avrora.sim.output.SimPrinter;
+import avrora.avrora.sim.platform.DefaultPlatform;
+import avrora.avrora.sim.platform.Platform;
+import avrora.avrora.sim.platform.PlatformFactory;
 import avrora.avrora.sim.util.ClockCycleTimeout;
 import avrora.avrora.sim.util.InterruptScheduler;
-import avrora.avrora.sim.output.SimPrinter;
 import avrora.cck.help.HelpCategory;
-import avrora.cck.util.*;
 import avrora.cck.text.Verbose;
-
-import java.util.*;
-import java.io.*;
+import avrora.cck.util.Option;
+import avrora.cck.util.Options;
+import avrora.cck.util.Util;
 
 /**
  * The <code>Simulation</code> class represents a complete simulation, including

@@ -32,11 +32,18 @@
 
 package avrora.avrora.stack.isea;
 
-import avrora.avrora.arch.legacy.*;
+import java.util.HashMap;
+import java.util.List;
+
+import avrora.avrora.arch.legacy.LegacyInstr;
+import avrora.avrora.arch.legacy.LegacyInstrVisitor;
+import avrora.avrora.arch.legacy.LegacyRegister;
 import avrora.avrora.core.Program;
-import avrora.cck.text.*;
+import avrora.cck.text.StringUtil;
+import avrora.cck.text.TermUtil;
+import avrora.cck.text.Terminal;
+import avrora.cck.text.Verbose;
 import avrora.cck.util.Util;
-import java.util.*;
 
 /**
  * The <code>ISEInterpreter</code> class implements an abstract interpreter for

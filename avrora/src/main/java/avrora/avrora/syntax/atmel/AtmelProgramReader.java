@@ -32,12 +32,15 @@
 
 package avrora.avrora.syntax.atmel;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
+
 import avrora.avrora.arch.legacy.LegacyArchitecture;
 import avrora.avrora.core.Program;
 import avrora.avrora.core.ProgramReader;
 import avrora.avrora.syntax.Module;
 import avrora.cck.util.Util;
-import java.io.*;
 
 /**
  * The <code>AtmelProgramReader</code> is an implementation of the

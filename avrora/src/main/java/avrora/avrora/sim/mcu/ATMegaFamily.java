@@ -33,9 +33,11 @@
 package avrora.avrora.sim.mcu;
 
 import avrora.avrora.arch.avr.AVRProperties;
-import avrora.avrora.sim.*;
 import avrora.avrora.sim.ActiveRegister;
 import avrora.avrora.sim.AtmelInterpreter;
+import avrora.avrora.sim.FiniteStateMachine;
+import avrora.avrora.sim.InterruptTable;
+import avrora.avrora.sim.RWRegister;
 import avrora.avrora.sim.clock.ClockDomain;
 import avrora.avrora.sim.state.BooleanView;
 import avrora.cck.util.Arithmetic;

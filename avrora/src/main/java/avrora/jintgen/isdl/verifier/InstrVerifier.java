@@ -34,8 +34,13 @@
 
 package avrora.jintgen.isdl.verifier;
 
-import avrora.jintgen.isdl.*;
 import java.util.LinkedList;
+
+import avrora.jintgen.isdl.AddrModeDecl;
+import avrora.jintgen.isdl.AddrModeSetDecl;
+import avrora.jintgen.isdl.AddrModeUse;
+import avrora.jintgen.isdl.ArchDecl;
+import avrora.jintgen.isdl.InstrDecl;
 
 /**
  * The <code>InstrVerifier</code> class verifies that each of the instructions

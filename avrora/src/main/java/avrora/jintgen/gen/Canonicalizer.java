@@ -32,11 +32,18 @@
 
 package avrora.jintgen.gen;
 
+import java.util.List;
+
 import avrora.cck.util.Util;
-import avrora.jintgen.jigir.*;
+import avrora.jintgen.jigir.AssignStmt;
+import avrora.jintgen.jigir.DeclStmt;
+import avrora.jintgen.jigir.Expr;
+import avrora.jintgen.jigir.FixedRangeExpr;
+import avrora.jintgen.jigir.IndexExpr;
+import avrora.jintgen.jigir.Stmt;
+import avrora.jintgen.jigir.VarExpr;
 import avrora.jintgen.types.Type;
 import avrora.jintgen.types.TypeRef;
-import java.util.List;
 
 /**
  * @author Ben L. Titzer

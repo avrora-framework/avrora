@@ -35,10 +35,10 @@ package avrora.avrora.sim;
 import avrora.avrora.arch.legacy.LegacyInstr;
 import avrora.avrora.core.Program;
 import avrora.avrora.sim.clock.MainClock;
+import avrora.avrora.sim.energy.EnergyControl;
 import avrora.avrora.sim.mcu.Microcontroller;
 import avrora.avrora.sim.output.EventBuffer;
 import avrora.avrora.sim.output.SimPrinter;
-import avrora.avrora.sim.energy.EnergyControl;
 
 /**
  * The <code>Simulator</code> class implements a full processor simulator for

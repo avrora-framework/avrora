@@ -32,13 +32,26 @@
 
 package avrora.jintgen.gen.disassembler;
 
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.LinkedList;
+import java.util.List;
+
 import avrora.cck.text.StringUtil;
-import avrora.cck.util.Util;
 import avrora.cck.util.Arithmetic;
+import avrora.cck.util.Util;
 import avrora.jintgen.gen.GenBase;
-import avrora.jintgen.isdl.*;
-import avrora.jintgen.jigir.*;
-import java.util.*;
+import avrora.jintgen.isdl.AddrModeDecl;
+import avrora.jintgen.isdl.EnumDecl;
+import avrora.jintgen.isdl.FormatDecl;
+import avrora.jintgen.isdl.InstrDecl;
+import avrora.jintgen.isdl.OperandTypeDecl;
+import avrora.jintgen.jigir.DotExpr;
+import avrora.jintgen.jigir.Expr;
+import avrora.jintgen.jigir.FixedRangeExpr;
+import avrora.jintgen.jigir.IndexExpr;
+import avrora.jintgen.jigir.Literal;
+import avrora.jintgen.jigir.VarExpr;
 
 /**
  * The <code>ReaderImplementation</code> class implements the functionality

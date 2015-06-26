@@ -20,9 +20,12 @@
  */
 package avrora.avrora.sim.radio;
 
-import java.util.*;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Random;
+
 import avrora.avrora.sim.state.Complex;
-import avrora.avrora.sim.radio.Topology;
 
 /**
  * The <code>LossyModel</code> definition.

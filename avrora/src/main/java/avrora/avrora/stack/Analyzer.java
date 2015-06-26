@@ -32,16 +32,25 @@
 
 package avrora.avrora.stack;
 
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.List;
+
 import avrora.avrora.arch.legacy.LegacyInstr;
 import avrora.avrora.arch.legacy.LegacyRegister;
 import avrora.avrora.core.Program;
 import avrora.avrora.stack.StateCache.State;
-import avrora.avrora.stack.isea.*;
+import avrora.avrora.stack.isea.ISEAnalyzer;
+import avrora.avrora.stack.isea.ISEState;
+import avrora.avrora.stack.isea.ISEValue;
 import avrora.cck.stat.Distribution;
-import avrora.cck.text.*;
-import avrora.cck.util.Util;
+import avrora.cck.text.Printer;
+import avrora.cck.text.StringUtil;
+import avrora.cck.text.TermUtil;
+import avrora.cck.text.Terminal;
+import avrora.cck.text.Verbose;
 import avrora.cck.util.TimeUtil;
-import java.util.*;
+import avrora.cck.util.Util;
 
 /**
  * The <code>Analyzer</code> class implements the analysis phase that determines

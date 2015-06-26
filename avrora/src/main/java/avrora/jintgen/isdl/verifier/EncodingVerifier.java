@@ -34,12 +34,23 @@
 
 package avrora.jintgen.isdl.verifier;
 
-import avrora.cck.util.Util;
-import avrora.cck.text.StringUtil;
-import avrora.jintgen.isdl.*;
-import avrora.jintgen.jigir.*;
 import java.util.HashMap;
 import java.util.List;
+
+import avrora.cck.text.StringUtil;
+import avrora.cck.util.Util;
+import avrora.jintgen.isdl.AddrModeDecl;
+import avrora.jintgen.isdl.ArchDecl;
+import avrora.jintgen.isdl.FormatDecl;
+import avrora.jintgen.isdl.InstrDecl;
+import avrora.jintgen.isdl.OperandTypeDecl;
+import avrora.jintgen.jigir.CodeVisitor;
+import avrora.jintgen.jigir.DotExpr;
+import avrora.jintgen.jigir.Expr;
+import avrora.jintgen.jigir.FixedRangeExpr;
+import avrora.jintgen.jigir.IndexExpr;
+import avrora.jintgen.jigir.Literal;
+import avrora.jintgen.jigir.VarExpr;
 
 /**
  * @author Ben L. Titzer

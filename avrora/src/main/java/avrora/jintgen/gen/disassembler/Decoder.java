@@ -32,15 +32,18 @@
 
 package avrora.jintgen.gen.disassembler;
 
+import java.io.FileOutputStream;
+import java.io.PrintStream;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Map;
+
 import avrora.cck.text.Printer;
 import avrora.cck.text.StringUtil;
 import avrora.cck.util.Util;
 import avrora.jintgen.gen.GenBase;
 import avrora.jintgen.isdl.FormatDecl;
 import avrora.jintgen.isdl.InstrDecl;
-import java.io.FileOutputStream;
-import java.io.PrintStream;
-import java.util.*;
 
 /**
  * @author Ben L. Titzer

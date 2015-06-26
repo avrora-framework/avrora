@@ -32,10 +32,15 @@
 
 package avrora.avrora.syntax.objdump;
 
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.IOException;
+import java.util.HashSet;
+import java.util.List;
+import java.util.StringTokenizer;
+
 import avrora.cck.text.StringUtil;
 import avrora.cck.util.Util;
-import java.io.*;
-import java.util.*;
 
 /**
  * @author Ben L. Titzer

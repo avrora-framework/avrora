@@ -32,9 +32,12 @@
 
 package avrora.avrora.sim.clock;
 
-import avrora.avrora.sim.*;
-import avrora.cck.util.Util;
 import java.util.HashMap;
+
+import avrora.avrora.sim.Simulation;
+import avrora.avrora.sim.Simulator;
+import avrora.avrora.sim.SimulatorThread;
+import avrora.cck.util.Util;
 
 /**
  * The <code>BarrierSynchronizer</code> class implements a global timer among

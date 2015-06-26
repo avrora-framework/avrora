@@ -33,14 +33,16 @@
 package avrora.avrora.sim.platform;
 
 import avrora.avrora.core.Program;
-import avrora.avrora.sim.Simulator;
 import avrora.avrora.sim.Simulation;
+import avrora.avrora.sim.Simulator;
 import avrora.avrora.sim.clock.ClockDomain;
-import avrora.avrora.sim.mcu.*;
-import avrora.avrora.sim.platform.sensors.LightSensor;
-import avrora.avrora.sim.platform.sensors.SensorBoard;
+import avrora.avrora.sim.mcu.ATMega128;
+import avrora.avrora.sim.mcu.AtmelMicrocontroller;
+import avrora.avrora.sim.mcu.Microcontroller;
 import avrora.avrora.sim.platform.sensors.AccelSensor;
 import avrora.avrora.sim.platform.sensors.AccelSensorPower;
+import avrora.avrora.sim.platform.sensors.LightSensor;
+import avrora.avrora.sim.platform.sensors.SensorBoard;
 import avrora.avrora.sim.radio.CC1000Radio;
 import avrora.cck.text.Terminal;
 

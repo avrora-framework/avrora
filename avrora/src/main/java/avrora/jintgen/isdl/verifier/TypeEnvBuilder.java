@@ -34,7 +34,12 @@
 
 package avrora.jintgen.isdl.verifier;
 
-import avrora.jintgen.isdl.*;
+import avrora.jintgen.isdl.ArchDecl;
+import avrora.jintgen.isdl.EnumDecl;
+import avrora.jintgen.isdl.GlobalDecl;
+import avrora.jintgen.isdl.OperandTypeDecl;
+import avrora.jintgen.isdl.SubroutineDecl;
+import avrora.jintgen.isdl.SymbolMapping;
 import avrora.jintgen.jigir.JIGIRTypeEnv;
 import avrora.jintgen.types.Type;
 import avrora.jintgen.types.TypeCon;

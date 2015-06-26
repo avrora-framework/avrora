@@ -32,12 +32,13 @@
 
 package avrora.jintgen.isdl;
 
+import java.util.List;
+
 import avrora.cck.text.StringUtil;
 import avrora.cck.util.Util;
 import avrora.jintgen.isdl.parser.Token;
 import avrora.jintgen.jigir.CodeRegion;
 import avrora.jintgen.jigir.Stmt;
-import java.util.List;
 
 /**
  * The <code>InstrDecl</code> class represents the declaration of an instruction

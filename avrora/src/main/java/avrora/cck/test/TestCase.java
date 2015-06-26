@@ -32,11 +32,11 @@
 
 package avrora.cck.test;
 
+import java.util.Properties;
+
 import avrora.cck.parser.SourceError;
 import avrora.cck.text.StringUtil;
 import avrora.cck.util.Util;
-
-import java.util.Properties;
 
 /**
  * The <code>TestCase</code> class encapsulates the notion of a test case in the

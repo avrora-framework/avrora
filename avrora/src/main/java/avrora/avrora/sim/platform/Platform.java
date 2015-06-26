@@ -32,8 +32,9 @@
 
 package avrora.avrora.sim.platform;
 
-import avrora.avrora.sim.mcu.Microcontroller;
 import java.util.HashMap;
+
+import avrora.avrora.sim.mcu.Microcontroller;
 
 /**
  * The <code>Platform</code> interface represents both a microcontroller

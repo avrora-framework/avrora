@@ -8,8 +8,8 @@ package avrora.avrora.monitors;
 
 import avrora.avrora.core.SourceMapping;
 import avrora.avrora.sim.Simulator;
-import avrora.avrora.sim.mcu.MCUProperties;
 import avrora.avrora.sim.clock.MainClock;
+import avrora.avrora.sim.mcu.MCUProperties;
 import avrora.cck.text.StringUtil;
 import avrora.cck.text.Terminal;
 import avrora.cck.util.Option;

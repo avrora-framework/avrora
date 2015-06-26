@@ -32,9 +32,9 @@
 
 package avrora.avrora.sim;
 
-import avrora.cck.util.Arithmetic;
 import avrora.avrora.sim.state.AbstractRegisterView;
 import avrora.avrora.sim.state.RegisterView;
+import avrora.cck.util.Arithmetic;
 
 /**
  * The <code>RWRegister</code> class is an implementation of an IO register that

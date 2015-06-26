@@ -32,11 +32,14 @@
 
 package avrora.jintgen.isdl;
 
+import java.util.List;
+
 import avrora.jintgen.isdl.parser.Token;
-import avrora.jintgen.jigir.*;
+import avrora.jintgen.jigir.CodeRegion;
+import avrora.jintgen.jigir.Decl;
+import avrora.jintgen.jigir.Stmt;
 import avrora.jintgen.types.Type;
 import avrora.jintgen.types.TypeRef;
-import java.util.List;
 
 /**
  * The <code>SubroutineDecl</code> class represents the declaration of a

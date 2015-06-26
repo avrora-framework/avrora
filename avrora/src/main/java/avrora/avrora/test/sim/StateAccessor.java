@@ -34,11 +34,13 @@
 
 package avrora.avrora.test.sim;
 
+import java.util.HashMap;
+import java.util.List;
+
 import avrora.avrora.core.Program;
 import avrora.avrora.sim.Simulator;
 import avrora.cck.util.Arithmetic;
 import avrora.cck.util.Util;
-import java.util.*;
 
 /**
  * The <code>StateAccessor</code> class separates the simulation test engine

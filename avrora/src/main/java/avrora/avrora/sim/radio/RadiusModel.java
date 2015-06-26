@@ -6,11 +6,12 @@
  */
 package avrora.avrora.sim.radio;
 
-import avrora.avrora.sim.radio.Medium.TXRX;
-import avrora.avrora.sim.radio.Topology;
-import avrora.avrora.sim.radio.Topology.Position;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
-import java.util.*;
+import avrora.avrora.sim.radio.Medium.TXRX;
+import avrora.avrora.sim.radio.Topology.Position;
 
 /**
  * The <code>RadiusModel</code> definition.

@@ -33,11 +33,16 @@
  */
 package avrora.jintgen.gen;
 
+import java.util.HashMap;
+
 import avrora.jintgen.isdl.GlobalDecl;
 import avrora.jintgen.isdl.parser.Token;
-import avrora.jintgen.jigir.*;
+import avrora.jintgen.jigir.Decl;
+import avrora.jintgen.jigir.DeclStmt;
+import avrora.jintgen.jigir.ReadExpr;
+import avrora.jintgen.jigir.VarExpr;
+import avrora.jintgen.jigir.WriteStmt;
 import avrora.jintgen.types.Type;
-import java.util.HashMap;
 
 /**
  * @author Ben L. Titzer

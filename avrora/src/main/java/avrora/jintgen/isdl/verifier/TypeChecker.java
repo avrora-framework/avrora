@@ -34,13 +34,46 @@
 
 package avrora.jintgen.isdl.verifier;
 
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.LinkedList;
+import java.util.List;
+
 import avrora.cck.util.Arithmetic;
 import avrora.cck.util.Util;
-import avrora.jintgen.isdl.*;
+import avrora.jintgen.isdl.AddrModeDecl;
+import avrora.jintgen.isdl.ArchDecl;
+import avrora.jintgen.isdl.Environment;
+import avrora.jintgen.isdl.InstrDecl;
+import avrora.jintgen.isdl.OperandTypeDecl;
+import avrora.jintgen.isdl.SubroutineDecl;
 import avrora.jintgen.isdl.parser.Token;
-import avrora.jintgen.jigir.*;
-import avrora.jintgen.types.*;
-import java.util.*;
+import avrora.jintgen.jigir.AssignStmt;
+import avrora.jintgen.jigir.BinOpExpr;
+import avrora.jintgen.jigir.CallExpr;
+import avrora.jintgen.jigir.CallStmt;
+import avrora.jintgen.jigir.CodeAccumulator;
+import avrora.jintgen.jigir.CommentStmt;
+import avrora.jintgen.jigir.ConversionExpr;
+import avrora.jintgen.jigir.Decl;
+import avrora.jintgen.jigir.DeclStmt;
+import avrora.jintgen.jigir.DotExpr;
+import avrora.jintgen.jigir.Expr;
+import avrora.jintgen.jigir.FixedRangeExpr;
+import avrora.jintgen.jigir.IfStmt;
+import avrora.jintgen.jigir.IndexExpr;
+import avrora.jintgen.jigir.JIGIRTypeEnv;
+import avrora.jintgen.jigir.Literal;
+import avrora.jintgen.jigir.ReadExpr;
+import avrora.jintgen.jigir.ReturnStmt;
+import avrora.jintgen.jigir.Stmt;
+import avrora.jintgen.jigir.StmtAccumulator;
+import avrora.jintgen.jigir.UnOpExpr;
+import avrora.jintgen.jigir.VarExpr;
+import avrora.jintgen.jigir.WriteStmt;
+import avrora.jintgen.types.Type;
+import avrora.jintgen.types.TypeCon;
+import avrora.jintgen.types.TypeRef;
 
 /**
  * The <code>TypeChecker</code> implements typecheck of JIGIR code. It visits

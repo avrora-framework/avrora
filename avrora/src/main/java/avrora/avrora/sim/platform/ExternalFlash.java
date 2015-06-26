@@ -38,14 +38,14 @@ package avrora.avrora.sim.platform;
 
 import avrora.avrora.sim.FiniteStateMachine;
 import avrora.avrora.sim.Simulator;
+import avrora.avrora.sim.clock.Clock;
+import avrora.avrora.sim.energy.Energy;
+import avrora.avrora.sim.mcu.Microcontroller;
 import avrora.avrora.sim.output.SimPrinter;
 import avrora.avrora.sim.state.BooleanView;
 import avrora.avrora.sim.state.BooleanView.ValueSetListener;
 import avrora.avrora.sim.state.Register;
 import avrora.avrora.sim.state.RegisterUtil;
-import avrora.avrora.sim.clock.Clock;
-import avrora.avrora.sim.energy.Energy;
-import avrora.avrora.sim.mcu.Microcontroller;
 import avrora.cck.text.Terminal;
 
 /**

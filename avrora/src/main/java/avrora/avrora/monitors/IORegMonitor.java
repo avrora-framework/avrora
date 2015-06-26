@@ -36,8 +36,8 @@ import avrora.avrora.arch.avr.AVRProperties;
 import avrora.avrora.arch.legacy.LegacyState;
 import avrora.avrora.sim.Simulator;
 import avrora.avrora.sim.State;
-import avrora.avrora.sim.output.SimPrinter;
 import avrora.avrora.sim.mcu.Microcontroller;
+import avrora.avrora.sim.output.SimPrinter;
 import avrora.cck.text.StringUtil;
 import avrora.cck.util.Option;
 

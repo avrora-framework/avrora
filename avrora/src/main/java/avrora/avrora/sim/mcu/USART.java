@@ -32,13 +32,16 @@
 
 package avrora.avrora.sim.mcu;
 
-import avrora.avrora.sim.*;
-import avrora.avrora.sim.state.*;
+import java.util.LinkedList;
+
+import avrora.avrora.sim.RWRegister;
+import avrora.avrora.sim.Simulator;
 import avrora.avrora.sim.output.SimPrinter;
+import avrora.avrora.sim.state.BooleanView;
+import avrora.avrora.sim.state.RegisterUtil;
+import avrora.avrora.sim.state.RegisterView;
 import avrora.cck.text.StringUtil;
 import avrora.cck.util.Arithmetic;
-
-import java.util.LinkedList;
 
 /**
  * The USART class implements a Universal Synchronous Asynchronous

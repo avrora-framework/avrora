@@ -32,15 +32,19 @@
 
 package avrora.avrora.sim.mcu;
 
+import java.util.HashMap;
+
 import avrora.avrora.arch.avr.AVRProperties;
-import avrora.avrora.sim.*;
+import avrora.avrora.sim.ActiveRegister;
+import avrora.avrora.sim.AtmelInterpreter;
+import avrora.avrora.sim.FiniteStateMachine;
+import avrora.avrora.sim.InterruptTable;
 import avrora.avrora.sim.InterruptTable.Notification;
 import avrora.avrora.sim.clock.ClockDomain;
 import avrora.avrora.sim.clock.MainClock;
 import avrora.avrora.sim.mcu.ATMegaFamily.FlagRegister;
 import avrora.avrora.sim.state.RegisterUtil.BitRangeView;
 import avrora.cck.text.Printer;
-import java.util.HashMap;
 
 /**
  * The <code>AtmelMicrocontroller</code> class represents the common

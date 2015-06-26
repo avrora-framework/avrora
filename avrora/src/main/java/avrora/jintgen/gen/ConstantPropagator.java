@@ -32,10 +32,23 @@
 
 package avrora.jintgen.gen;
 
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.List;
+
 import avrora.cck.util.Arithmetic;
 import avrora.cck.util.Util;
-import avrora.jintgen.jigir.*;
-import java.util.*;
+import avrora.jintgen.jigir.AssignStmt;
+import avrora.jintgen.jigir.BinOpExpr;
+import avrora.jintgen.jigir.DeclStmt;
+import avrora.jintgen.jigir.Expr;
+import avrora.jintgen.jigir.FixedRangeExpr;
+import avrora.jintgen.jigir.IndexExpr;
+import avrora.jintgen.jigir.Literal;
+import avrora.jintgen.jigir.Stmt;
+import avrora.jintgen.jigir.StmtRebuilder;
+import avrora.jintgen.jigir.UnOpExpr;
+import avrora.jintgen.jigir.VarExpr;
 
 /**
  * @author Ben L. Titzer

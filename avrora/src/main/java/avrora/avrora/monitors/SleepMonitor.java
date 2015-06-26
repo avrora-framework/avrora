@@ -37,7 +37,9 @@ import avrora.avrora.sim.FiniteStateMachine;
 import avrora.avrora.sim.Simulator;
 import avrora.avrora.sim.clock.Clock;
 import avrora.avrora.sim.mcu.DefaultMCU;
-import avrora.cck.text.*;
+import avrora.cck.text.StringUtil;
+import avrora.cck.text.TermUtil;
+import avrora.cck.text.Terminal;
 
 /**
  * The <code>SleepMonitor</code> class is a monitor that tracks statistics about

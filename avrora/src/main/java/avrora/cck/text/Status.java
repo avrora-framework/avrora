@@ -31,10 +31,10 @@
  */
 package avrora.cck.text;
 
-import avrora.cck.util.Util;
-import avrora.cck.util.TimeUtil;
-
 import java.util.Stack;
+
+import avrora.cck.util.TimeUtil;
+import avrora.cck.util.Util;
 
 /**
  * The <code>Status</code> class is a utility that allows printing of the status

@@ -32,8 +32,12 @@
 
 package avrora.avrora.sim.mcu;
 
-import avrora.avrora.sim.*;
-import avrora.avrora.sim.state.*;
+import avrora.avrora.sim.InterruptTable;
+import avrora.avrora.sim.RWRegister;
+import avrora.avrora.sim.Simulator;
+import avrora.avrora.sim.state.BooleanView;
+import avrora.avrora.sim.state.RegisterUtil;
+import avrora.avrora.sim.state.RegisterView;
 
 /**
  * The <code>ADC</code> class represents an on-chip device on the ATMega series

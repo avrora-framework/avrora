@@ -34,11 +34,14 @@
 
 package avrora.jintgen.isdl.verifier;
 
-import avrora.jintgen.isdl.*;
-import avrora.jintgen.isdl.parser.Token;
-import avrora.jintgen.jigir.JIGIRTypeEnv;
 import java.util.HashMap;
 import java.util.List;
+
+import avrora.jintgen.isdl.AddrModeDecl;
+import avrora.jintgen.isdl.ArchDecl;
+import avrora.jintgen.isdl.Item;
+import avrora.jintgen.isdl.parser.Token;
+import avrora.jintgen.jigir.JIGIRTypeEnv;
 
 /**
  * @author Ben L. Titzer

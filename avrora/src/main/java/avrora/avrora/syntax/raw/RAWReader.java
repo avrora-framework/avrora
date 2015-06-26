@@ -34,6 +34,14 @@
 
 package avrora.avrora.syntax.raw;
 
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.text.CharacterIterator;
+import java.text.StringCharacterIterator;
+import java.util.ArrayList;
+import java.util.LinkedList;
+import java.util.List;
+
 import avrora.avrora.Main;
 import avrora.avrora.arch.AbstractArchitecture;
 import avrora.avrora.core.Program;
@@ -41,11 +49,6 @@ import avrora.avrora.core.ProgramReader;
 import avrora.cck.text.StringUtil;
 import avrora.cck.util.Arithmetic;
 import avrora.cck.util.Util;
-import java.io.BufferedReader;
-import java.io.FileReader;
-import java.text.CharacterIterator;
-import java.text.StringCharacterIterator;
-import java.util.*;
 
 /**
  * @author Ben L. Titzer

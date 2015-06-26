@@ -32,9 +32,10 @@
 
 package avrora.avrora.core;
 
+import java.io.File;
+
 import avrora.avrora.Main;
 import avrora.cck.util.Util;
-import java.io.File;
 
 /**
  * The <code>LoadableProgram</code> class represents a reference to a program on

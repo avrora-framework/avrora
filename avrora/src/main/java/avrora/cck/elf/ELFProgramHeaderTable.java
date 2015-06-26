@@ -33,11 +33,11 @@
  */
 package avrora.cck.elf;
 
-import avrora.cck.text.StringUtil;
-import avrora.cck.util.Util;
-
 import java.io.IOException;
 import java.io.RandomAccessFile;
+
+import avrora.cck.text.StringUtil;
+import avrora.cck.util.Util;
 
 /**
  * The <code>ELFProgramHeaderTable</code> class represents a program header

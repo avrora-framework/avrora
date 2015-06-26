@@ -32,11 +32,12 @@
 
 package avrora.avrora.stack;
 
+import java.util.Iterator;
+
 import avrora.avrora.core.Program;
 import avrora.cck.text.Printer;
 import avrora.cck.text.StringUtil;
 import avrora.cck.util.Util;
-import java.util.Iterator;
 
 /**
  * @author Ben L. Titzer

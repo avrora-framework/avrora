@@ -32,6 +32,15 @@
 
 package avrora.avrora.monitors;
 
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.net.ServerSocket;
+import java.net.Socket;
+import java.text.CharacterIterator;
+import java.text.StringCharacterIterator;
+import java.util.HashMap;
+
 import avrora.avrora.arch.legacy.LegacyRegister;
 import avrora.avrora.arch.legacy.LegacyState;
 import avrora.avrora.sim.Simulator;
@@ -42,12 +51,6 @@ import avrora.cck.text.Terminal;
 import avrora.cck.util.Option;
 import avrora.cck.util.Options;
 import avrora.cck.util.Util;
-import java.io.*;
-import java.net.ServerSocket;
-import java.net.Socket;
-import java.text.CharacterIterator;
-import java.text.StringCharacterIterator;
-import java.util.HashMap;
 
 /**
  * The <code>GDBServer</code> class implements a monitor that can communicate to

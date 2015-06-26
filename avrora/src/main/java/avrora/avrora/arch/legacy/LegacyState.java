@@ -32,7 +32,9 @@
 
 package avrora.avrora.arch.legacy;
 
-import avrora.avrora.sim.*;
+import avrora.avrora.sim.ActiveRegister;
+import avrora.avrora.sim.InterruptTable;
+import avrora.avrora.sim.State;
 
 /**
  * The <code>LegacyState</code> class represents the state of the simulator,

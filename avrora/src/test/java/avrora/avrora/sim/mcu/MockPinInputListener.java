@@ -1,6 +1,5 @@
 package avrora.avrora.sim.mcu;
 
-import avrora.avrora.sim.mcu.Microcontroller;
 import avrora.avrora.sim.mcu.Microcontroller.Pin.Input;
 
 /**

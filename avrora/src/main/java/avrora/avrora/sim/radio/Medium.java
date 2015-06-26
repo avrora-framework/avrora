@@ -33,13 +33,14 @@
  */
 package avrora.avrora.sim.radio;
 
+import java.util.Iterator;
+import java.util.LinkedList;
+import java.util.List;
+
+import avrora.avrora.sim.Simulator;
 import avrora.avrora.sim.clock.Clock;
 import avrora.avrora.sim.clock.Synchronizer;
-import avrora.avrora.sim.Simulator;
 import avrora.avrora.sim.util.TransactionalList;
-
-import java.util.*;
-
 import avrora.cck.util.Arithmetic;
 
 /**

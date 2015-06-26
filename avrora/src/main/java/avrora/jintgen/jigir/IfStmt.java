@@ -32,8 +32,9 @@
 
 package avrora.jintgen.jigir;
 
-import avrora.cck.text.StringUtil;
 import java.util.List;
+
+import avrora.cck.text.StringUtil;
 
 /**
  * The <code>IfStmt</code> class represents a simple branch within the IR. Since

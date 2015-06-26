@@ -36,8 +36,8 @@ package avrora.avrora.sim.platform;
 
 import avrora.avrora.arch.msp430.mcu.F1611;
 import avrora.avrora.core.Program;
-import avrora.avrora.sim.Simulator;
 import avrora.avrora.sim.Simulation;
+import avrora.avrora.sim.Simulator;
 import avrora.avrora.sim.clock.ClockDomain;
 import avrora.avrora.sim.mcu.Microcontroller;
 import avrora.cck.text.Terminal;

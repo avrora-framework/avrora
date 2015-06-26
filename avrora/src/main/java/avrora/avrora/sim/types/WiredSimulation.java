@@ -32,6 +32,8 @@
 
 package avrora.avrora.sim.types;
 
+import java.util.Random;
+
 import avrora.avrora.Main;
 import avrora.avrora.core.LoadableProgram;
 import avrora.avrora.sim.Simulation;
@@ -39,8 +41,9 @@ import avrora.avrora.sim.SimulatorThread;
 import avrora.avrora.sim.platform.PinConnect;
 import avrora.avrora.sim.platform.PlatformFactory;
 import avrora.cck.text.StringUtil;
-import avrora.cck.util.*;
-import java.util.Random;
+import avrora.cck.util.Option;
+import avrora.cck.util.Options;
+import avrora.cck.util.Util;
 
 /**
  * The <code>WiredSimulation</code> class represents a simulation type where

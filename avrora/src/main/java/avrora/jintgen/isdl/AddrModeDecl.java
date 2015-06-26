@@ -32,11 +32,12 @@
 
 package avrora.jintgen.isdl;
 
+import java.util.LinkedList;
+import java.util.List;
+
 import avrora.jintgen.isdl.parser.Token;
 import avrora.jintgen.jigir.Decl;
 import avrora.jintgen.types.Type;
-import java.util.LinkedList;
-import java.util.List;
 
 /**
  * @author Ben L. Titzer

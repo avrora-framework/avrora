@@ -32,6 +32,9 @@
 
 package avrora.avrora.test;
 
+import java.io.FileInputStream;
+import java.util.Properties;
+
 import avrora.avrora.Defaults;
 import avrora.avrora.Main;
 import avrora.avrora.core.Program;
@@ -40,9 +43,9 @@ import avrora.avrora.sim.util.InterruptScheduler;
 import avrora.avrora.syntax.Module;
 import avrora.avrora.test.probes.ProbeParser;
 import avrora.avrora.test.probes.ProbeTest;
-import avrora.cck.test.*;
-import java.io.FileInputStream;
-import java.util.Properties;
+import avrora.cck.test.TestCase;
+import avrora.cck.test.TestEngine;
+import avrora.cck.test.TestResult;
 
 /**
  * The <code>SimulatorTestHarness</code> implements a test harness that

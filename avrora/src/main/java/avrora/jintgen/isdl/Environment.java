@@ -33,9 +33,10 @@
  */
 package avrora.jintgen.isdl;
 
+import java.util.HashMap;
+
 import avrora.jintgen.jigir.Decl;
 import avrora.jintgen.types.Type;
-import java.util.HashMap;
 
 /**
  * @author Ben L. Titzer

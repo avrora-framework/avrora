@@ -32,11 +32,15 @@
 
 package avrora.avrora.sim;
 
-import avrora.avrora.arch.legacy.*;
+import java.util.Arrays;
+
+import avrora.avrora.arch.legacy.LegacyInstr;
+import avrora.avrora.arch.legacy.LegacyInstrProperties;
+import avrora.avrora.arch.legacy.LegacyInstrVisitor;
+import avrora.avrora.arch.legacy.LegacyOperand;
 import avrora.avrora.core.Program;
 import avrora.avrora.sim.util.MulticastProbe;
 import avrora.cck.util.Util;
-import java.util.Arrays;
 
 /**
  * The <code>CodeSegment</code> class represents a segment of memory that stores

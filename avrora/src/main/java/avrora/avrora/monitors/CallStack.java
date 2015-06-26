@@ -33,10 +33,10 @@
  */
 package avrora.avrora.monitors;
 
-import avrora.cck.util.Util;
-import avrora.cck.text.Terminal;
-import avrora.avrora.sim.output.SimPrinter;
 import avrora.avrora.core.SourceMapping;
+import avrora.avrora.sim.output.SimPrinter;
+import avrora.cck.text.Terminal;
+import avrora.cck.util.Util;
 
 /**
  * The <code>CallStack</code> class implements a monitor that maintains a

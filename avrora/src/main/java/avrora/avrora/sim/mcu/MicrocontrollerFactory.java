@@ -33,8 +33,8 @@
 package avrora.avrora.sim.mcu;
 
 import avrora.avrora.core.Program;
-import avrora.avrora.sim.clock.ClockDomain;
 import avrora.avrora.sim.Simulation;
+import avrora.avrora.sim.clock.ClockDomain;
 
 /**
  * The <code>MicrocontrollerFactory</code> interface is implemented by a class

@@ -34,7 +34,11 @@
 
 package avrora.avrora.arch.msp430;
 
-import avrora.avrora.arch.*;
+import avrora.avrora.arch.AbstractArchitecture;
+import avrora.avrora.arch.AbstractAssembler;
+import avrora.avrora.arch.AbstractDisassembler;
+import avrora.avrora.arch.AbstractInstr;
+import avrora.avrora.arch.AbstractParser;
 import avrora.cck.util.Util;
 
 /**

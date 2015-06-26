@@ -32,11 +32,15 @@
 
 package avrora.avrora.sim.util;
 
+import java.io.File;
+import java.io.FileReader;
+import java.io.IOException;
+import java.io.StreamTokenizer;
+
 import avrora.avrora.Main;
 import avrora.avrora.sim.Simulator;
 import avrora.cck.text.Terminal;
 import avrora.cck.util.Util;
-import java.io.*;
 
 /**
  * The <code>InterruptScheduler</code> class is a testing utility that reads an

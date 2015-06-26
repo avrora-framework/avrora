@@ -34,17 +34,17 @@
 
 package avrora.avrora.test;
 
-import avrora.avrora.core.Program;
-import avrora.avrora.syntax.elf.*;
-import avrora.avrora.sim.platform.Platform;
-import avrora.avrora.sim.platform.DefaultPlatform;
-import avrora.avrora.sim.mcu.MicrocontrollerFactory;
-import avrora.avrora.sim.Simulator;
-import avrora.avrora.sim.AtmelInterpreter;
-import avrora.avrora.sim.types.SingleSimulation;
 import avrora.avrora.Defaults;
-import avrora.cck.util.Arithmetic;
+import avrora.avrora.core.Program;
+import avrora.avrora.sim.AtmelInterpreter;
+import avrora.avrora.sim.Simulator;
+import avrora.avrora.sim.mcu.MicrocontrollerFactory;
+import avrora.avrora.sim.platform.DefaultPlatform;
+import avrora.avrora.sim.platform.Platform;
+import avrora.avrora.sim.types.SingleSimulation;
+import avrora.avrora.syntax.elf.ELFParser;
 import avrora.cck.text.Terminal;
+import avrora.cck.util.Arithmetic;
 
 /**
  * The <code>VirgilRunner</code> class implements a simple facade that can be

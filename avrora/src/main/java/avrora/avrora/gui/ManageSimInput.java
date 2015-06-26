@@ -32,18 +32,34 @@
 
 package avrora.avrora.gui;
 
+import java.awt.BorderLayout;
+import java.awt.Component;
+import java.awt.Dimension;
+import java.awt.FlowLayout;
+import java.awt.GridLayout;
+import java.awt.event.ActionEvent;
+import java.io.File;
+import java.io.Serializable;
+import java.util.LinkedList;
+import java.util.ListIterator;
+
+import javax.swing.BorderFactory;
+import javax.swing.JButton;
+import javax.swing.JCheckBox;
+import javax.swing.JDialog;
+import javax.swing.JFileChooser;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JSpinner;
+import javax.swing.JTextField;
+import javax.swing.SpinnerNumberModel;
+
 import avrora.avrora.Defaults;
 import avrora.avrora.core.LoadableProgram;
 import avrora.avrora.sim.Simulation;
 import avrora.avrora.sim.platform.PlatformFactory;
 import avrora.cck.util.Option;
 import avrora.cck.util.Util;
-import javax.swing.*;
-import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.io.File;
-import java.io.Serializable;
-import java.util.*;
 
 /**
  * From a high level view, this class handles "input to the simulator," which

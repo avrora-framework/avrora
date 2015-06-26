@@ -36,7 +36,8 @@ import avrora.avrora.arch.AbstractArchitecture;
 import avrora.avrora.arch.ArchitectureRegistry;
 import avrora.cck.help.HelpCategory;
 import avrora.cck.text.StringUtil;
-import avrora.cck.util.*;
+import avrora.cck.util.Option;
+import avrora.cck.util.Util;
 
 /**
  * The <code>ProgramReader</code> class represents an object capable of reading

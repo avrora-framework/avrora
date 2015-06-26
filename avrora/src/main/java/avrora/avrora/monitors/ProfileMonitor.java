@@ -32,14 +32,20 @@
 
 package avrora.avrora.monitors;
 
+import java.util.Collections;
+import java.util.Enumeration;
+import java.util.HashMap;
+import java.util.List;
+
 import avrora.avrora.arch.AbstractInstr;
 import avrora.avrora.core.Program;
 import avrora.avrora.sim.Simulator;
 import avrora.avrora.sim.State;
 import avrora.cck.stat.StatUtil;
-import avrora.cck.text.*;
+import avrora.cck.text.StringUtil;
+import avrora.cck.text.TermUtil;
+import avrora.cck.text.Terminal;
 import avrora.cck.util.Option;
-import java.util.*;
 
 /**
  * The <code>ProfileMonitor</code> class represents a monitor that can collect

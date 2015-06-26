@@ -32,18 +32,30 @@
 
 package avrora.jintgen;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+
 import avrora.cck.help.HelpCategory;
 import avrora.cck.test.TestEngine;
-import avrora.cck.text.*;
-import avrora.cck.util.*;
-import avrora.jintgen.gen.*;
+import avrora.cck.text.Status;
+import avrora.cck.text.StringUtil;
+import avrora.cck.text.Terminal;
+import avrora.cck.text.Verbose;
+import avrora.cck.util.ClassMap;
+import avrora.cck.util.Option;
+import avrora.cck.util.Options;
+import avrora.cck.util.Util;
+import avrora.jintgen.gen.CodemapGenerator;
+import avrora.jintgen.gen.Generator;
+import avrora.jintgen.gen.InstrIRGenerator;
+import avrora.jintgen.gen.InterpreterGenerator;
 import avrora.jintgen.gen.disassembler.DisassemblerGenerator;
 import avrora.jintgen.isdl.ArchDecl;
 import avrora.jintgen.isdl.parser.ISDLParser;
 import avrora.jintgen.isdl.parser.ParseException;
 import avrora.jintgen.isdl.verifier.Verifier;
 import avrora.jintgen.isdl.verifier.VerifierTestHarness;
-import java.io.*;
 
 /**
  * This is the main entrypoint to Jintgen. It is responsible for parsing the

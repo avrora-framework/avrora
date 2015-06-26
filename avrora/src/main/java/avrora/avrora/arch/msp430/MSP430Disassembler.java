@@ -1,8 +1,9 @@
 package avrora.avrora.arch.msp430;
 
+import java.util.Arrays;
+
 import avrora.avrora.arch.AbstractDisassembler;
 import avrora.avrora.arch.AbstractInstr;
-import java.util.Arrays;
 
 /**
  * The <code>MSP430Disassembler</code> class decodes bit patterns into

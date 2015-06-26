@@ -36,8 +36,8 @@ import avrora.avrora.sim.RWRegister;
 import avrora.avrora.sim.Simulator;
 import avrora.avrora.sim.state.BooleanView;
 import avrora.avrora.sim.state.RegisterUtil;
-import avrora.cck.util.Arithmetic;
 import avrora.cck.text.StringUtil;
+import avrora.cck.util.Arithmetic;
 
 /**
  * This is an implementation of the non-volatile EEPROM on the ATMega128

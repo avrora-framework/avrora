@@ -35,7 +35,11 @@
 package avrora.avrora.arch.msp430;
 
 import avrora.avrora.core.Program;
-import avrora.avrora.sim.*;
+import avrora.avrora.sim.Interpreter;
+import avrora.avrora.sim.InterpreterFactory;
+import avrora.avrora.sim.InterruptTable;
+import avrora.avrora.sim.Simulator;
+import avrora.avrora.sim.State;
 import avrora.avrora.sim.mcu.MCUProperties;
 import avrora.avrora.sim.mcu.RegisterSet;
 import avrora.avrora.sim.util.MulticastProbe;

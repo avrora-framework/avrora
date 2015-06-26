@@ -34,7 +34,9 @@
 
 package avrora.avrora.arch.avr;
 
-import avrora.avrora.sim.*;
+import avrora.avrora.sim.ActiveRegister;
+import avrora.avrora.sim.Segment;
+import avrora.avrora.sim.State;
 
 /**
  * The <code>AVRDataSegment</code> class implements a data segment corresponding

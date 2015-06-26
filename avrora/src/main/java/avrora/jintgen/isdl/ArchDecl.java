@@ -32,13 +32,14 @@
 
 package avrora.jintgen.isdl;
 
+import java.util.LinkedList;
+import java.util.List;
+
 import avrora.cck.text.Verbose;
 import avrora.jintgen.isdl.parser.Token;
 import avrora.jintgen.isdl.verifier.JIGIRErrorReporter;
 import avrora.jintgen.jigir.JIGIRTypeEnv;
 import avrora.jintgen.types.TypeRef;
-import java.util.LinkedList;
-import java.util.List;
 
 /**
  * The <code>Architecture</code> class represents a collection of instructions,

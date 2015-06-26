@@ -34,8 +34,11 @@
 
 package avrora.avrora.gui;
 
-import javax.swing.*;
 import java.awt.event.ActionEvent;
+
+import javax.swing.JMenu;
+import javax.swing.JMenuBar;
+import javax.swing.JMenuItem;
 
 /**
  * This simple class handles the top level menu bar. The top level bar contols

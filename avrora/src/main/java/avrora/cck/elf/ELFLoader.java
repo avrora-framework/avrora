@@ -33,10 +33,10 @@
  */
 package avrora.cck.elf;
 
-import java.io.RandomAccessFile;
 import java.io.IOException;
-import java.util.List;
+import java.io.RandomAccessFile;
 import java.util.LinkedList;
+import java.util.List;
 
 /**
  * The <code>ELFLoader</code> class presents a facade to users of the ELF

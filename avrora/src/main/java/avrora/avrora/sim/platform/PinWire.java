@@ -34,10 +34,10 @@ package avrora.avrora.sim.platform;
 
 import avrora.avrora.sim.FiniteStateMachine;
 import avrora.avrora.sim.Simulator;
-import avrora.avrora.sim.output.SimPrinter;
 import avrora.avrora.sim.clock.Clock;
 import avrora.avrora.sim.mcu.ATMegaFamily;
 import avrora.avrora.sim.mcu.Microcontroller;
+import avrora.avrora.sim.output.SimPrinter;
 import avrora.cck.text.Terminal;
 
 /**

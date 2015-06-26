@@ -32,10 +32,14 @@
 
 package avrora.avrora.gui;
 
+import java.awt.Color;
+import java.awt.Dimension;
+import java.awt.FontMetrics;
+import java.awt.Graphics;
+import java.util.LinkedList;
+
 import avrora.cck.text.StringUtil;
 import avrora.cck.util.Util;
-import java.awt.*;
-import java.util.LinkedList;
 
 /**
  * The <code>TimeScale</code> class handles the conversion of time scales in

@@ -32,8 +32,9 @@
 
 package avrora.avrora.gui;
 
+import javax.swing.JPanel;
+
 import avrora.cck.util.Util;
-import javax.swing.*;
 
 /**
  * The <code> MonitorPanel </code> represents a pair of panels for a monitor,

@@ -32,10 +32,11 @@
 
 package avrora.avrora.syntax;
 
+import java.util.HashMap;
+
 import avrora.avrora.syntax.objdump.Token;
 import avrora.cck.parser.AbstractToken;
 import avrora.cck.text.StringUtil;
-import java.util.HashMap;
 
 /**
  * The <code>RawModule</code> is a subclass of <code>Module</code> that allows

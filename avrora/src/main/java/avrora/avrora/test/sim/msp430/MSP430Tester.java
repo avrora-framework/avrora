@@ -39,8 +39,8 @@ import avrora.avrora.arch.AbstractArchitecture;
 import avrora.avrora.arch.msp430.MSP430Architecture;
 import avrora.avrora.core.Program;
 import avrora.avrora.sim.Simulator;
-import avrora.avrora.sim.types.SingleSimulation;
 import avrora.avrora.sim.platform.Platform;
+import avrora.avrora.sim.types.SingleSimulation;
 import avrora.avrora.test.sim.StateAccessor;
 import avrora.avrora.test.sim.Tester;
 

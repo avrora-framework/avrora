@@ -32,20 +32,39 @@
 
 package avrora.avrora.sim.types;
 
+import java.io.IOException;
+import java.util.Iterator;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Random;
+
 import avrora.avrora.Defaults;
 import avrora.avrora.Main;
-import avrora.avrora.core.*;
-import avrora.avrora.sim.*;
+import avrora.avrora.core.LoadableProgram;
+import avrora.avrora.core.Program;
+import avrora.avrora.core.SourceMapping;
+import avrora.avrora.sim.AtmelInterpreter;
+import avrora.avrora.sim.Simulation;
+import avrora.avrora.sim.SimulatorThread;
 import avrora.avrora.sim.clock.RippleSynchronizer;
 import avrora.avrora.sim.platform.Platform;
 import avrora.avrora.sim.platform.PlatformFactory;
-import avrora.avrora.sim.platform.sensors.*;
-import avrora.avrora.sim.radio.*;
+import avrora.avrora.sim.platform.sensors.RandomSensorData;
+import avrora.avrora.sim.platform.sensors.ReplaySensorData;
+import avrora.avrora.sim.platform.sensors.Sensor;
+import avrora.avrora.sim.radio.CC1000Radio;
+import avrora.avrora.sim.radio.CC2420Radio;
+import avrora.avrora.sim.radio.LossyModel;
+import avrora.avrora.sim.radio.Medium;
+import avrora.avrora.sim.radio.Radio;
+import avrora.avrora.sim.radio.RadiusModel;
+import avrora.avrora.sim.radio.Topology;
+import avrora.avrora.sim.radio.noise;
 import avrora.cck.text.StringUtil;
-import avrora.cck.util.*;
-
-import java.io.IOException;
-import java.util.*;
+import avrora.cck.util.Arithmetic;
+import avrora.cck.util.Option;
+import avrora.cck.util.Options;
+import avrora.cck.util.Util;
 
 /**
  * The <code>SensorSimulation</code> class represents a simulaion type where

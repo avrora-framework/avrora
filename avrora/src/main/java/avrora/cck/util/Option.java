@@ -32,12 +32,12 @@
 
 package avrora.cck.util;
 
-import avrora.cck.text.StringUtil;
-import avrora.cck.text.Terminal;
-
 import java.text.CharacterIterator;
 import java.text.StringCharacterIterator;
-import java.util.*;
+import java.util.Comparator;
+
+import avrora.cck.text.StringUtil;
+import avrora.cck.text.Terminal;
 
 /**
  * The <code>Option</code> class represents an option that has been given on the

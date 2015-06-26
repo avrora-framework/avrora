@@ -33,7 +33,8 @@
 package avrora.avrora.sim.platform.sensors;
 
 import avrora.avrora.sim.FiniteStateMachine;
-import avrora.avrora.sim.mcu.*;
+import avrora.avrora.sim.mcu.AtmelMicrocontroller;
+import avrora.avrora.sim.mcu.Microcontroller;
 
 /**
  * The <code>AccelSensorPower</code> handles the Power pin for the acceleration

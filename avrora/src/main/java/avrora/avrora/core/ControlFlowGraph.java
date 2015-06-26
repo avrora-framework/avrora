@@ -32,9 +32,15 @@
 
 package avrora.avrora.core;
 
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.LinkedList;
+import java.util.List;
+
 import avrora.avrora.arch.legacy.LegacyInstr;
 import avrora.cck.util.Util;
-import java.util.*;
 
 /**
  * The <code>ControlFlowGraph</code> represents a control flow graph for an

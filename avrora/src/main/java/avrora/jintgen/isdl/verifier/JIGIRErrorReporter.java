@@ -36,8 +36,12 @@ import avrora.cck.parser.AbstractToken;
 import avrora.cck.text.StringUtil;
 import avrora.jintgen.isdl.OperandTypeDecl;
 import avrora.jintgen.isdl.parser.Token;
-import avrora.jintgen.jigir.*;
-import avrora.jintgen.types.*;
+import avrora.jintgen.jigir.Expr;
+import avrora.jintgen.jigir.Literal;
+import avrora.jintgen.jigir.ReturnStmt;
+import avrora.jintgen.types.Type;
+import avrora.jintgen.types.TypeErrorReporter;
+import avrora.jintgen.types.TypeRef;
 
 /**
  * @author Ben L. Titzer

@@ -32,7 +32,12 @@
 
 package avrora.cck.text;
 
-import java.io.*;
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.FileReader;
+import java.io.IOException;
 
 /**
  * The <code>SectionFile</code> class represents a file that can be used to for

@@ -36,7 +36,10 @@ package avrora.jintgen.jigir;
 
 import avrora.cck.parser.SourcePoint;
 import avrora.jintgen.isdl.parser.Token;
-import avrora.jintgen.types.*;
+import avrora.jintgen.types.Type;
+import avrora.jintgen.types.TypeCon;
+import avrora.jintgen.types.TypeEnv;
+import avrora.jintgen.types.Typeable;
 
 /**
  * The <code>BinOp</code> inner class represents an operation on two integers

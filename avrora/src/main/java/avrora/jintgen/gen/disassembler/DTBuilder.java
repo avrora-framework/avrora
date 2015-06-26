@@ -32,9 +32,15 @@
 
 package avrora.jintgen.gen.disassembler;
 
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Map;
+
 import avrora.cck.text.Verbose;
 import avrora.cck.util.Util;
-import java.util.*;
 
 /**
  * The <code>DTBuilder</code> class represents a node in the decoding tree for a

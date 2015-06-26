@@ -33,8 +33,15 @@
  */
 package avrora.jintgen.gen;
 
-import avrora.jintgen.jigir.*;
 import java.util.List;
+
+import avrora.jintgen.jigir.DeclStmt;
+import avrora.jintgen.jigir.Expr;
+import avrora.jintgen.jigir.ReadExpr;
+import avrora.jintgen.jigir.Stmt;
+import avrora.jintgen.jigir.StmtRebuilder;
+import avrora.jintgen.jigir.VarExpr;
+import avrora.jintgen.jigir.WriteStmt;
 
 /**
  * @author Ben L. Titzer

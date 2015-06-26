@@ -32,12 +32,15 @@
 
 package avrora.avrora.sim.mcu;
 
+import java.text.CharacterIterator;
+import java.text.StringCharacterIterator;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.NoSuchElementException;
+
 import avrora.cck.text.StringUtil;
 import avrora.cck.util.Arithmetic;
 import avrora.cck.util.Util;
-import java.text.CharacterIterator;
-import java.text.StringCharacterIterator;
-import java.util.*;
 
 /**
  * The <code>RegisterLayout</code> class stores information about the IO

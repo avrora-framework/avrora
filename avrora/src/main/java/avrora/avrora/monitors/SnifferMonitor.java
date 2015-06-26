@@ -21,17 +21,22 @@
 
 package avrora.avrora.monitors;
 
+import java.io.BufferedWriter;
+import java.io.FileWriter;
+import java.text.DecimalFormat;
+import java.util.Date;
+import java.util.LinkedList;
+import java.util.List;
+
 import avrora.avrora.sim.Simulator;
 import avrora.avrora.sim.clock.Clock;
-import avrora.avrora.sim.platform.Platform;
-import avrora.avrora.sim.radio.*;
 import avrora.avrora.sim.output.SimPrinter;
-import avrora.cck.text.*;
+import avrora.avrora.sim.platform.Platform;
+import avrora.avrora.sim.radio.Medium;
+import avrora.avrora.sim.radio.Radio;
+import avrora.cck.text.StringUtil;
+import avrora.cck.text.Terminal;
 import avrora.cck.util.Option;
-
-import java.util.*;
-import java.io.*;
-import java.text.DecimalFormat;
 
 /**
  * Sniffer monitor implementation. This class logs the number of packets, RSSI,

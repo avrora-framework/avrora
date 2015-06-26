@@ -32,9 +32,9 @@
 
 package avrora.cck.stat;
 
-import avrora.cck.text.Printer;
-
 import java.util.LinkedList;
+
+import avrora.cck.text.Printer;
 
 /**
  * This class represents the proportion of different items with respect to one

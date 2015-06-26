@@ -32,11 +32,14 @@
 
 package avrora.avrora.sim.util;
 
-import avrora.avrora.sim.*;
+import java.io.BufferedWriter;
+import java.io.FileWriter;
+
+import avrora.avrora.sim.AtmelInterpreter;
+import avrora.avrora.sim.Simulator;
+import avrora.avrora.sim.State;
 import avrora.cck.text.StringUtil;
 import avrora.cck.text.Terminal;
-
-import java.io.*;
 
 /**
  * <code>MemPrint</code> is a simple utility that allows the simulated program

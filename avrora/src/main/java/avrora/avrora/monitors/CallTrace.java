@@ -33,9 +33,13 @@
  */
 package avrora.avrora.monitors;
 
-import avrora.avrora.arch.legacy.*;
+import avrora.avrora.arch.legacy.LegacyInstr;
+import avrora.avrora.arch.legacy.LegacyRegister;
+import avrora.avrora.arch.legacy.LegacyState;
 import avrora.avrora.core.Program;
-import avrora.avrora.sim.*;
+import avrora.avrora.sim.InterruptTable;
+import avrora.avrora.sim.Simulator;
+import avrora.avrora.sim.State;
 
 /**
  * The <code>CallTrace</code> class represents a trace of the call/return and

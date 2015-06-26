@@ -34,7 +34,9 @@ package avrora.avrora.monitors;
 
 import avrora.avrora.sim.Simulator;
 import avrora.cck.stat.TimeSequence;
-import avrora.cck.text.*;
+import avrora.cck.text.StringUtil;
+import avrora.cck.text.TermUtil;
+import avrora.cck.text.Terminal;
 import avrora.cck.util.Option;
 
 /**

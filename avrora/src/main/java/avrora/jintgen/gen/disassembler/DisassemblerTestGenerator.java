@@ -32,11 +32,19 @@
 
 package avrora.jintgen.gen.disassembler;
 
+import java.io.File;
+import java.util.HashMap;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Map;
+
 import avrora.cck.text.Printer;
 import avrora.cck.util.Util;
-import avrora.jintgen.isdl.*;
-import java.io.*;
-import java.util.*;
+import avrora.jintgen.isdl.AddrModeDecl;
+import avrora.jintgen.isdl.ArchDecl;
+import avrora.jintgen.isdl.InstrDecl;
+import avrora.jintgen.isdl.OperandTypeDecl;
+import avrora.jintgen.isdl.Property;
 
 /**
  * @author Ben L. Titzer

@@ -32,14 +32,22 @@
 
 package avrora.avrora;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.util.Properties;
+
 import avrora.avrora.actions.Action;
 import avrora.avrora.core.Program;
 import avrora.avrora.core.ProgramReader;
 import avrora.cck.help.HelpCategory;
-import avrora.cck.text.*;
-import avrora.cck.util.*;
-import java.io.*;
-import java.util.*;
+import avrora.cck.text.Status;
+import avrora.cck.text.StringUtil;
+import avrora.cck.text.Terminal;
+import avrora.cck.text.Verbose;
+import avrora.cck.util.Option;
+import avrora.cck.util.Options;
+import avrora.cck.util.Util;
 
 /**
  * This is the main entrypoint to Avrora. It is responsible for parsing the

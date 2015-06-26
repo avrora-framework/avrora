@@ -34,15 +34,16 @@
 
 package avrora.avrora.monitors;
 
+import avrora.avrora.arch.AbstractInstr;
+import avrora.avrora.arch.legacy.LegacyInstr;
+import avrora.avrora.arch.legacy.LegacyState;
+import avrora.avrora.core.Program;
+import avrora.avrora.core.SourceMapping;
 import avrora.avrora.sim.Simulator;
 import avrora.avrora.sim.State;
 import avrora.avrora.sim.output.SimPrinter;
-import avrora.avrora.core.SourceMapping;
-import avrora.avrora.core.Program;
-import avrora.avrora.arch.AbstractInstr;
-import avrora.avrora.arch.legacy.*;
-import avrora.cck.text.Terminal;
 import avrora.cck.text.StringUtil;
+import avrora.cck.text.Terminal;
 import avrora.cck.util.Option;
 
 /**

@@ -35,16 +35,18 @@
 
 package avrora.avrora.monitors;
 
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.LinkedList;
+
 import avrora.avrora.arch.legacy.LegacyInstr;
 import avrora.avrora.core.ControlFlowGraph.Block;
 import avrora.avrora.core.Program;
 import avrora.avrora.core.SourceMapping;
 import avrora.avrora.sim.Simulator;
 import avrora.avrora.sim.State;
-import avrora.cck.text.Terminal;
 import avrora.cck.text.TermUtil;
-
-import java.util.*;
+import avrora.cck.text.Terminal;
 
 /**
  * The <code>EnergyProfiler</code> class is a monitor that tracks the power

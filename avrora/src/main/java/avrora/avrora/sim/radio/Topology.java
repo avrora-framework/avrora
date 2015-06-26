@@ -36,12 +36,11 @@
 
 package avrora.avrora.sim.radio;
 
-import avrora.avrora.sim.Simulation;
+import java.util.ArrayList;
 
+import avrora.avrora.sim.Simulation;
 import avrora.cck.help.HelpCategory;
 import avrora.cck.util.Options;
-
-import java.util.*;
 
 /**
  * handles node positions.

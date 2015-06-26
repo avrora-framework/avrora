@@ -32,12 +32,12 @@
 
 package avrora.avrora.gui;
 
+import java.util.LinkedList;
+import java.util.List;
+
 import avrora.avrora.sim.Simulation;
 import avrora.cck.util.ClassMap;
 import avrora.cck.util.Option;
-
-import java.util.LinkedList;
-import java.util.List;
 
 /**
  * Any and all "random" data that needs to be stored about the GUI or sim is

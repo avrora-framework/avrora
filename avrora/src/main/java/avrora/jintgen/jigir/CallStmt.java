@@ -32,10 +32,11 @@
 
 package avrora.jintgen.jigir;
 
+import java.util.List;
+
 import avrora.cck.text.StringUtil;
 import avrora.jintgen.isdl.SubroutineDecl;
 import avrora.jintgen.isdl.parser.Token;
-import java.util.List;
 
 /**
  * The <code>CallStmt</code> class represents a call to a subroutine that does

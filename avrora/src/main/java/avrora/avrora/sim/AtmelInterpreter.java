@@ -34,11 +34,15 @@ package avrora.avrora.sim;
 
 import avrora.avrora.arch.AbstractInstr;
 import avrora.avrora.arch.avr.AVRProperties;
-import avrora.avrora.arch.legacy.*;
+import avrora.avrora.arch.legacy.LegacyInstr;
+import avrora.avrora.arch.legacy.LegacyInstrVisitor;
+import avrora.avrora.arch.legacy.LegacyRegister;
+import avrora.avrora.arch.legacy.LegacyState;
 import avrora.avrora.core.Program;
 import avrora.avrora.sim.mcu.RegisterSet;
-import avrora.avrora.sim.util.*;
 import avrora.avrora.sim.state.VolatileBehavior;
+import avrora.avrora.sim.util.MulticastProbe;
+import avrora.avrora.sim.util.MulticastWatch;
 import avrora.cck.util.Arithmetic;
 import avrora.cck.util.Util;
 

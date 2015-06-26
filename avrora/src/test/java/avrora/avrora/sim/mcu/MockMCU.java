@@ -2,7 +2,6 @@ package avrora.avrora.sim.mcu;
 
 import avrora.avrora.sim.Simulator;
 import avrora.avrora.sim.clock.ClockDomain;
-import avrora.avrora.sim.mcu.Microcontroller;
 import avrora.avrora.sim.platform.Platform;
 import avrora.avrora.util.TestUtil;
 

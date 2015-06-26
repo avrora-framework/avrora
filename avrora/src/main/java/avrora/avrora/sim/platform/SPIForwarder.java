@@ -32,15 +32,18 @@
 
 package avrora.avrora.sim.platform;
 
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.net.ServerSocket;
+import java.net.Socket;
+
 import avrora.avrora.sim.Simulator;
 import avrora.avrora.sim.clock.Clock;
 import avrora.avrora.sim.mcu.SPI;
 import avrora.avrora.sim.mcu.SPIDevice;
 import avrora.cck.text.Terminal;
 import avrora.cck.util.Util;
-import java.io.*;
-import java.net.ServerSocket;
-import java.net.Socket;
 
 /**
  * The <code>SerialForwarder</code> class implements a serial forwarder that

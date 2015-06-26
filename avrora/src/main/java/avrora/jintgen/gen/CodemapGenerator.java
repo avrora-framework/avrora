@@ -32,15 +32,39 @@
 
 package avrora.jintgen.gen;
 
-import avrora.cck.text.*;
-import avrora.cck.util.Option;
-import avrora.cck.util.Util;
-import avrora.jintgen.isdl.*;
-import avrora.jintgen.isdl.parser.Token;
-import avrora.jintgen.jigir.*;
 import java.io.PrintStream;
 import java.util.HashMap;
 import java.util.List;
+
+import avrora.cck.text.Printer;
+import avrora.cck.text.SectionFile;
+import avrora.cck.text.StringUtil;
+import avrora.cck.util.Option;
+import avrora.cck.util.Util;
+import avrora.jintgen.isdl.AddrModeDecl;
+import avrora.jintgen.isdl.InstrDecl;
+import avrora.jintgen.isdl.parser.Token;
+import avrora.jintgen.jigir.AssignStmt;
+import avrora.jintgen.jigir.BinOpExpr;
+import avrora.jintgen.jigir.CallExpr;
+import avrora.jintgen.jigir.CallStmt;
+import avrora.jintgen.jigir.CodeVisitor;
+import avrora.jintgen.jigir.CommentStmt;
+import avrora.jintgen.jigir.ConversionExpr;
+import avrora.jintgen.jigir.DeclStmt;
+import avrora.jintgen.jigir.DotExpr;
+import avrora.jintgen.jigir.Expr;
+import avrora.jintgen.jigir.FixedRangeExpr;
+import avrora.jintgen.jigir.IfStmt;
+import avrora.jintgen.jigir.IndexExpr;
+import avrora.jintgen.jigir.Literal;
+import avrora.jintgen.jigir.ReadExpr;
+import avrora.jintgen.jigir.ReturnStmt;
+import avrora.jintgen.jigir.Stmt;
+import avrora.jintgen.jigir.StmtVisitor;
+import avrora.jintgen.jigir.UnOpExpr;
+import avrora.jintgen.jigir.VarExpr;
+import avrora.jintgen.jigir.WriteStmt;
 
 /**
  * @author Ben L. Titzer

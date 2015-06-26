@@ -32,9 +32,10 @@
 
 package avrora.jintgen.isdl;
 
-import avrora.jintgen.isdl.parser.Token;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
+
+import avrora.jintgen.isdl.parser.Token;
 
 /**
  * The <code>Item</code> class represents the base class of many different types

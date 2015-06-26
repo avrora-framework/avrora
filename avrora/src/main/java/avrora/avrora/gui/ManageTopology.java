@@ -32,14 +32,18 @@
 
 package avrora.avrora.gui;
 
-import avrora.avrora.sim.Simulation;
-import avrora.avrora.sim.Simulation.GuiMonitor;
-
-import javax.swing.*;
-import javax.swing.table.DefaultTableModel;
-import java.awt.*;
+import java.awt.Dimension;
 import java.util.Iterator;
 import java.util.Vector;
+
+import javax.swing.BorderFactory;
+import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JTable;
+import javax.swing.table.DefaultTableModel;
+
+import avrora.avrora.sim.Simulation;
+import avrora.avrora.sim.Simulation.GuiMonitor;
 
 /**
  * This manages the topology window within the GUI. Currently, since only the

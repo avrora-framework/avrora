@@ -32,7 +32,9 @@
 
 package avrora.avrora.syntax;
 
-import avrora.avrora.arch.legacy.*;
+import avrora.avrora.arch.legacy.LegacyInstrProto;
+import avrora.avrora.arch.legacy.LegacyOperand;
+import avrora.avrora.arch.legacy.LegacyRegister;
 import avrora.cck.parser.AbstractToken;
 import avrora.cck.util.Util;
 

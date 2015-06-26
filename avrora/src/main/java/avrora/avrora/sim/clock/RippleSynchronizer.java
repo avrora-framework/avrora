@@ -6,11 +6,11 @@
  */
 package avrora.avrora.sim.clock;
 
-import avrora.avrora.sim.*;
-
 import java.util.HashMap;
 
+import avrora.avrora.sim.Simulation;
 import avrora.avrora.sim.Simulator;
+import avrora.avrora.sim.SimulatorThread;
 import avrora.cck.util.Util;
 
 /**

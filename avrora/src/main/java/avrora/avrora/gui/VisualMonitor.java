@@ -32,8 +32,9 @@
 
 package avrora.avrora.gui;
 
+import javax.swing.JPanel;
+
 import avrora.avrora.monitors.Monitor;
-import javax.swing.*;
 
 /**
  * The <code>VisualMonitor</code> class represents a monitor attached to a

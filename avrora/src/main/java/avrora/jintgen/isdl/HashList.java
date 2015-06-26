@@ -1,6 +1,10 @@
 package avrora.jintgen.isdl;
 
-import java.util.*;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.LinkedList;
+import java.util.Map;
+import java.util.Set;
 
 /**
  * @author Ben L. Titzer

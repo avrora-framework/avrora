@@ -32,10 +32,11 @@
 
 package avrora.avrora.sim;
 
+import java.util.Arrays;
+
 import avrora.avrora.sim.util.MulticastWatch;
 import avrora.cck.text.StringUtil;
 import avrora.cck.util.Util;
-import java.util.Arrays;
 
 /**
  * The <code>Segment</code> class represents a segment of byte-addressable

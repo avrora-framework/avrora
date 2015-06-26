@@ -1,8 +1,9 @@
 package avrora.avrora.arch.avr;
 
+import java.util.Arrays;
+
 import avrora.avrora.arch.AbstractDisassembler;
 import avrora.avrora.arch.AbstractInstr;
-import java.util.Arrays;
 
 /**
  * The <code>AVRDisassembler</code> class decodes bit patterns into

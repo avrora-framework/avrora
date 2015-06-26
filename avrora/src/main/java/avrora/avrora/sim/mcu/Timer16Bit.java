@@ -34,8 +34,8 @@ package avrora.avrora.sim.mcu;
 
 import avrora.avrora.sim.RWRegister;
 import avrora.avrora.sim.Simulator;
-import avrora.avrora.sim.state.BooleanView;
 import avrora.avrora.sim.clock.Clock;
+import avrora.avrora.sim.state.BooleanView;
 
 /**
  * The <code>Timer16Bit</code> class emulates the functionality and behavior of

@@ -34,6 +34,8 @@
 
 package avrora.avrora.sim.radio;
 
+import java.util.Random;
+
 import avrora.avrora.Defaults;
 import avrora.avrora.sim.Simulation;
 import avrora.avrora.sim.Simulator;
@@ -42,8 +44,6 @@ import avrora.avrora.sim.output.SimPrinter;
 import avrora.cck.text.StringUtil;
 import avrora.cck.util.Option;
 import avrora.cck.util.Util;
-
-import java.util.*;
 
 /**
  * A simple mobility model

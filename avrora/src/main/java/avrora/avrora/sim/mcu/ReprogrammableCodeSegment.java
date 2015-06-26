@@ -32,9 +32,16 @@
 
 package avrora.avrora.sim.mcu;
 
-import avrora.avrora.arch.legacy.*;
+import avrora.avrora.arch.legacy.LegacyDisassembler;
+import avrora.avrora.arch.legacy.LegacyInstr;
+import avrora.avrora.arch.legacy.LegacyInstrVisitor;
+import avrora.avrora.arch.legacy.LegacyOperand;
+import avrora.avrora.arch.legacy.LegacyRegister;
 import avrora.avrora.core.Program;
-import avrora.avrora.sim.*;
+import avrora.avrora.sim.AtmelInterpreter;
+import avrora.avrora.sim.CodeSegment;
+import avrora.avrora.sim.RWRegister;
+import avrora.avrora.sim.Simulator;
 import avrora.avrora.sim.clock.MainClock;
 import avrora.avrora.sim.output.SimPrinter;
 import avrora.cck.text.StringUtil;

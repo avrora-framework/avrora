@@ -34,8 +34,10 @@
 
 package avrora.avrora.sim.mcu;
 
+import java.util.HashMap;
+import java.util.NoSuchElementException;
+
 import avrora.cck.text.StringUtil;
-import java.util.*;
 
 /**
  * @author Ben L. Titzer

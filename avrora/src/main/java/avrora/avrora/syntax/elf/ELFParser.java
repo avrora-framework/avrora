@@ -32,18 +32,29 @@
 
 package avrora.avrora.syntax.elf;
 
-import avrora.avrora.Main;
-import avrora.avrora.actions.ELFDumpAction;
-import avrora.avrora.arch.*;
-import avrora.avrora.arch.AbstractInstr;
-import avrora.avrora.core.*;
-import avrora.cck.elf.*;
-import avrora.cck.text.StringUtil;
-import avrora.cck.util.Option;
-import avrora.cck.util.Util;
 import java.io.IOException;
 import java.io.RandomAccessFile;
 import java.util.List;
+
+import avrora.avrora.Main;
+import avrora.avrora.actions.ELFDumpAction;
+import avrora.avrora.arch.AbstractArchitecture;
+import avrora.avrora.arch.AbstractDisassembler;
+import avrora.avrora.arch.AbstractInstr;
+import avrora.avrora.arch.ArchitectureRegistry;
+import avrora.avrora.core.Program;
+import avrora.avrora.core.ProgramReader;
+import avrora.avrora.core.SourceMapping;
+import avrora.cck.elf.ELFDataInputStream;
+import avrora.cck.elf.ELFHeader;
+import avrora.cck.elf.ELFLoader;
+import avrora.cck.elf.ELFProgramHeaderTable;
+import avrora.cck.elf.ELFSectionHeaderTable;
+import avrora.cck.elf.ELFStringTable;
+import avrora.cck.elf.ELFSymbolTable;
+import avrora.cck.text.StringUtil;
+import avrora.cck.util.Option;
+import avrora.cck.util.Util;
 
 /**
  * The <code>ELFParser</code> class is capable of loading ELF (Executable and

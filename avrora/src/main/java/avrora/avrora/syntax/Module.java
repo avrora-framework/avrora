@@ -32,16 +32,24 @@
 
 package avrora.avrora.syntax;
 
-import avrora.avrora.arch.legacy.*;
-import avrora.avrora.core.*;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.util.HashMap;
+import java.util.LinkedList;
+import java.util.List;
+
+import avrora.avrora.arch.legacy.LegacyArchitecture;
+import avrora.avrora.arch.legacy.LegacyInstr;
+import avrora.avrora.arch.legacy.LegacyInstrProto;
+import avrora.avrora.arch.legacy.LegacyInstrSet;
+import avrora.avrora.arch.legacy.LegacyRegister;
+import avrora.avrora.core.Program;
+import avrora.avrora.core.SourceMapping;
 import avrora.avrora.syntax.atmel.AtmelParser;
 import avrora.cck.parser.AbstractParseException;
 import avrora.cck.parser.AbstractToken;
 import avrora.cck.text.StringUtil;
 import avrora.cck.text.Verbose;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.util.*;
 
 /**
  * The <code>Module</code> class collects together the instructions and data

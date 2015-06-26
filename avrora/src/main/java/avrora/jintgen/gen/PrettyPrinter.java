@@ -32,11 +32,32 @@
 
 package avrora.jintgen.gen;
 
+import java.util.List;
+
 import avrora.cck.text.Printer;
 import avrora.jintgen.isdl.parser.Token;
-import avrora.jintgen.jigir.*;
+import avrora.jintgen.jigir.AssignStmt;
+import avrora.jintgen.jigir.BinOpExpr;
+import avrora.jintgen.jigir.CallExpr;
+import avrora.jintgen.jigir.CallStmt;
+import avrora.jintgen.jigir.CodeVisitor;
+import avrora.jintgen.jigir.CommentStmt;
+import avrora.jintgen.jigir.ConversionExpr;
+import avrora.jintgen.jigir.DeclStmt;
+import avrora.jintgen.jigir.DotExpr;
+import avrora.jintgen.jigir.Expr;
+import avrora.jintgen.jigir.FixedRangeExpr;
+import avrora.jintgen.jigir.IfStmt;
+import avrora.jintgen.jigir.IndexExpr;
+import avrora.jintgen.jigir.Literal;
+import avrora.jintgen.jigir.ReadExpr;
+import avrora.jintgen.jigir.ReturnStmt;
+import avrora.jintgen.jigir.Stmt;
+import avrora.jintgen.jigir.StmtVisitor;
+import avrora.jintgen.jigir.UnOpExpr;
+import avrora.jintgen.jigir.VarExpr;
+import avrora.jintgen.jigir.WriteStmt;
 import avrora.jintgen.types.TypeRef;
-import java.util.List;
 
 /**
  * @author Ben L. Titzer
