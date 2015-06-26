@@ -64,6 +64,8 @@ public class SerialForwarder implements USART.USARTDevice
     protected int portNumber;
     private final Simulator simulator;
 
+    private RandomAccessFile handle;
+
 
     /**
      * Connects the traffic to and from a socket and directs it into the UART
@@ -219,7 +221,7 @@ public class SerialForwarder implements USART.USARTDevice
                 out = new FileOutputStream(outfile);
             } else
             {
-                RandomAccessFile handle = new RandomAccessFile(infile, "rw");
+                handle = new RandomAccessFile(infile, "rw");
                 in = new FileInputStream(handle.getFD());
                 out = new FileOutputStream(handle.getFD());
             }
@@ -304,6 +306,7 @@ public class SerialForwarder implements USART.USARTDevice
     public void stop()
     {
         if (serverSocket != null)
+        {
             try
             {
                 closeSocketInOut();
@@ -313,6 +316,17 @@ public class SerialForwarder implements USART.USARTDevice
             {
                 throw Util.unexpected(e);
             }
+        }
+        if (null != handle)
+        {
+            try
+            {
+                handle.close();
+            }
+            catch (IOException e)
+            {
+            }
+        }
     }
 
     private class SFTicker implements Simulator.Event
