@@ -1139,11 +1139,11 @@ public class AVRDisassembler implements AbstractDisassembler
      */
     private int state;
 
-    /**
-     * The <code>pc</code> field stores the current PC, which is needed for
-     * PC-relative calculations in loading some operand types.
-     */
-    private int pc;
+//    /**
+//     * The <code>pc</code> field stores the current PC, which is needed for
+//     * PC-relative calculations in loading some operand types.
+//     */
+//    private int pc;
 
     /**
      * The <code>state</code> field is set to <code>MOVE</code> at the beginning
@@ -1609,7 +1609,7 @@ public class AVRDisassembler implements AbstractDisassembler
     {
         word0 = ((code[index] & 0xFF)) | ((code[index + 1] & 0xFF) << 8);
         word1 = ((code[index + 2] & 0xFF)) | ((code[index + 3] & 0xFF) << 8);
-        pc = base + index;
+//        pc = base + index;
         return decode_root();
     }
 
@@ -1635,7 +1635,7 @@ public class AVRDisassembler implements AbstractDisassembler
     {
         word0 = (code[index]);
         word1 = (code[index + 1]);
-        pc = base + index * 2;
+//        pc = base + index * 2;
         return decode_root();
     }
 
@@ -1661,7 +1661,7 @@ public class AVRDisassembler implements AbstractDisassembler
     {
         word0 = ((code[index] & 0xFFFF));
         word1 = ((code[index + 1] & 0xFFFF));
-        pc = base + index * 2;
+//        pc = base + index * 2;
         return decode_root();
     }
 
