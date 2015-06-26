@@ -72,8 +72,8 @@ public abstract class ATMegaClassic extends ATMegaFamilyNew
             AtmelMicrocontroller.Pin pin = (AtmelMicrocontroller.Pin) m
                     .getPin("OC" + timerNumber);
             int interrupt = m.properties.getInterrupt(acfName);
-            addComparator(Comparator._,
-                    new OutputCompareUnit(n, m, Comparator._, interrupt, pin));
+            addComparator(Comparator.__,
+                    new OutputCompareUnit(n, m, Comparator.__, interrupt, pin));
 
             String ocfn = "OCF" + n;
             String ocrn = "OCR" + n;
@@ -167,7 +167,7 @@ public abstract class ATMegaClassic extends ATMegaFamilyNew
             m.installIOReg("TCNT" + n + "L", TCNTnL_reg);
 
             addComparator(Comparator.I,
-                    new InputCompareUnit(n, m, Comparator._,
+                    new InputCompareUnit(n, m, Comparator.__,
                             m.properties.getInterrupt(cfn[0]),
                             (Pin) m.getPin("IC" + timerNumber)));
             addComparator(Comparator.A,
