@@ -127,8 +127,7 @@ public class SerialMonitor extends MonitorFactory
 
     class CommandConnection extends Connection
     {
-        String[] command;
-
+        String[] command = {};
 
         void connect(USART usart)
         {
