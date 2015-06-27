@@ -102,8 +102,7 @@ public class SimAction extends Action
      */
     public void run(String[] args) throws Exception
     {
-        SimUtil.REPORT_SECONDS = REPORT_SECONDS.get();
-        SimUtil.SECONDS_PRECISION = (int) SECONDS_PRECISION.get();
+        setupSecondsAntPrecision();
 
         simulation = Defaults.getSimulation(SIMULATION.get());
         simulation.process(options, args);
@@ -127,6 +126,13 @@ public class SimAction extends Action
             exitSimulation(null);
             Runtime.getRuntime().removeShutdownHook(shutdownThread);
         }
+    }
+
+
+    private void setupSecondsAntPrecision()
+    {
+        SimUtil.REPORT_SECONDS = REPORT_SECONDS.get();
+        SimUtil.SECONDS_PRECISION = (int) SECONDS_PRECISION.get();
     }
 
 
