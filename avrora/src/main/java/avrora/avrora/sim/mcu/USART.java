@@ -508,7 +508,7 @@ public class USART extends AtmelInternalDevice
         {
             // bits 0 and 1 are R/W, all others read only. writing a 1 to bit 6
             // clears it.
-            if ((val & 0x40) == 1)
+            if ((val & 0x40) != 0)
                 value &= 0xBF;
             value = (byte) ((value & 0xFC) | (val & 0x3));
             // since RCX and UDRE cannot be changed, no sync is necessary
