@@ -2732,11 +2732,10 @@ public class ISDLParser implements ISDLParserConstants
     }
 
 
-    public void ReInit(InputStream stream)
-    {
-        ReInit(stream);
-    }
-
+    // public void ReInit(InputStream stream)
+    // {
+    // ReInit(stream);
+    // }
 
     public void ReInit(InputStream stream, String encoding)
     {
