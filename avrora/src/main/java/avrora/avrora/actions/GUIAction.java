@@ -62,8 +62,7 @@ public class GUIAction extends Action
     public void run(String[] args) throws Exception
     {
 
-        // Let's turn off colors
-        Terminal.useColors = false;
+        disableColors();
 
         // Provide nothing to the array if it's empty
         if (args.length < 1)
@@ -77,6 +76,13 @@ public class GUIAction extends Action
         // thread thing
         AvroraGui.init(options, args);
         AvroraGui.instance.showGui();
+    }
+
+
+    private void disableColors()
+    {
+        // Let's turn off colors
+        Terminal.useColors = false;
     }
 
 
