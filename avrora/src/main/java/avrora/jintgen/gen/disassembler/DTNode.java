@@ -312,7 +312,7 @@ public class DTNode
      */
     public void addPreOrder(List<DTNode> list, Set<Integer> seen)
     {
-        if (seen.contains(this))
+        if (seen.contains(this.number))
             return;
         seen.add(number);
         list.add(this);
