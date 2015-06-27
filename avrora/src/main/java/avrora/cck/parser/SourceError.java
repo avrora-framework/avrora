@@ -123,8 +123,20 @@ public class SourceError extends Util.Error
     public boolean equals(Object o)
     {
         if (this == o)
+        {
             return true;
-        return o instanceof String && errorType.equals(o);
+        }
+        if (o instanceof SourceError)
+        {
+            return errorType.equals(((SourceError) o).errorType);
+        }
+
+        if (o instanceof String)
+        {
+            throw new IllegalStateException(
+                    "call of equals() with Sring operand");
+        }
+        return false;
     }
 
 
