@@ -55,7 +55,7 @@ public class DisassemblerTestGenerator
     ArchDecl archDecl;
     File directory;
     String dname;
-    Printer printer = null;
+    Printer printer = Printer.STDOUT;
     HashMap<OperandTypeDecl, ValueSet> operandValues  = new HashMap<>();
 
     public abstract class ValueSet
