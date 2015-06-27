@@ -70,11 +70,17 @@ public class TestAction extends Action
      */
     public void run(String[] args) throws Exception
     {
-        TestEngine.LONG_REPORT = DETAIL.get();
-        Status.ENABLED = false;
+        enableLongReport();
         TestEngine engine = new TestEngine(Defaults.getTestHarnessMap());
         boolean r = engine.runTests(args);
         if (!r)
             System.exit(1);
+    }
+
+
+    private void enableLongReport()
+    {
+        TestEngine.LONG_REPORT = DETAIL.get();
+        Status.ENABLED = false;
     }
 }
