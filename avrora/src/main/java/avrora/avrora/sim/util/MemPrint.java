@@ -183,7 +183,7 @@ public class MemPrint extends Simulator.Watch.Empty
 
         synchronized (Terminal.class)
         {
-            if (!ret & fil.length() != 0)
+            if (!ret && fil.length() != 0)
                 Terminal.println(buf.toString());// print in screen if not
                                                  // return line and something to
                                                  // print
