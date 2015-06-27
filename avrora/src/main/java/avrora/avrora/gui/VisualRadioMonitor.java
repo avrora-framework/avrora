@@ -76,17 +76,17 @@ public class VisualRadioMonitor extends MonitorFactory
 
     static
     {
-        masterPanel = new JPanel();
-        masterPanel.setLayout(new GridLayout(1, 1));
-        optionsPanel = new JPanel(false);
+        VisualRadioMonitor.masterPanel = new JPanel();
+        VisualRadioMonitor.masterPanel.setLayout(new GridLayout(1, 1));
+        VisualRadioMonitor.optionsPanel = new JPanel(false);
         JLabel optionsFiller = new JLabel(
                 "Options for the monitor can be set here. ");
-        optionsPanel.setLayout(new GridLayout(1, 1));
-        optionsPanel.add(optionsFiller);
-        isDisplayed = false;
-        allCurrentMonitors = new Vector<VisualMonitor>();
-        allCurrentGraphEvents = new Vector<GraphEvents>();
-        numofnodes = 1;
+        VisualRadioMonitor.optionsPanel.setLayout(new GridLayout(1, 1));
+        VisualRadioMonitor.optionsPanel.add(optionsFiller);
+        VisualRadioMonitor.isDisplayed = false;
+        VisualRadioMonitor.allCurrentMonitors = new Vector<VisualMonitor>();
+        VisualRadioMonitor.allCurrentGraphEvents = new Vector<GraphEvents>();
+        VisualRadioMonitor.numofnodes = 1;
     }
 
     public class VisualMonitor implements avrora.avrora.gui.VisualMonitor
@@ -137,7 +137,8 @@ public class VisualRadioMonitor extends MonitorFactory
         public void setVisualPanel(JPanel thePanel, JPanel theOptionsPanel)
         {
 
-            allCurrentMonitors.add(this); // for global access
+            VisualRadioMonitor.allCurrentMonitors.add(this); // for global
+                                                             // access
 
             visualPanel = thePanel;
 
@@ -148,7 +149,7 @@ public class VisualRadioMonitor extends MonitorFactory
 
             theGraph = new GraphEvents(0, 500, 3);
 
-            allCurrentGraphEvents.add(theGraph);
+            VisualRadioMonitor.allCurrentGraphEvents.add(theGraph);
 
             theGraph.setParentPanel(visualPanel);
             visualPanel.add(theGraph.chalkboardAndBar(), BorderLayout.CENTER);
