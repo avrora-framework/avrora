@@ -936,7 +936,7 @@ public abstract class ATMegaTimer extends AtmelInternalDevice
 
         public void write(byte val)
         {
-            reg.write((tempHighReg.read() << 8) + val);
+            reg.write((tempHighReg.read() << 8) + (val & 0xFF));
         }
 
 
