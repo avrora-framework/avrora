@@ -89,7 +89,7 @@ public abstract class SingleNodeMonitor implements Simulation.GuiMonitor
     {
         for (Simulation.Node node : nodes)
         {
-            if (panelMap.containsKey(nodes))
+            if (panelMap.containsKey(node))
                 continue;
             MonitorPanel p = AvroraGui.instance
                     .createMonitorPanel(monitorName + " - " + node.id);
