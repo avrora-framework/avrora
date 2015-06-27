@@ -171,7 +171,7 @@ public class ConstantPropagator
             HashMap<Integer, Expr> map = mapMap.get(mapname);
             if (map != null)
             {
-                mapMap.remove(new Integer(index));
+                map.remove(new Integer(index));
             }
 
             if (parent != null)
