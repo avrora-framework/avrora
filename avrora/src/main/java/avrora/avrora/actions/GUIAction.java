@@ -42,7 +42,7 @@ import avrora.cck.text.Terminal;
 public class GUIAction extends Action
 {
 
-    public AvroraGui app; // allows us to access GUI
+    public AvroraGui app = AvroraGui.instance; // allows us to access GUI
 
     public static final String HELP = "The \"gui\" action launches a GUI allowing the user to interactively "
             + "create simulations, complete with graphical monitors.";
