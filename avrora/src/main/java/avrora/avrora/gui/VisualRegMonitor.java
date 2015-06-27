@@ -67,13 +67,10 @@ public class VisualRegMonitor extends MonitorFactory
         public JPanel visualOptionsPanel;
         public GraphNumbers theGraph;
 
-        // ugly temp hack
-        GraphEvents tempEvent;
-
 
         public GraphEvents getGraph()
         {
-            return tempEvent;
+            throw new IllegalStateException("unimplemented stub");
         }
 
 
