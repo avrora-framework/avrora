@@ -36,6 +36,8 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 
+import org.omg.CosNaming.IstringHelper;
+
 import avrora.avrora.arch.legacy.LegacyInstr;
 import avrora.avrora.arch.legacy.LegacyRegister;
 import avrora.avrora.core.Program;
@@ -126,6 +128,12 @@ public class Analyzer
     }
 
 
+    private static void setRunning(boolean isRunning)
+    {
+        Analyzer.running = isRunning;
+    }
+
+
     /**
      * The <code>run()</code> method begins the analysis. The entrypoint of the
      * program with an initial default state serves as the first state to start
@@ -133,7 +141,7 @@ public class Analyzer
      */
     public void run()
     {
-        Analyzer.running = true;
+        setRunning(true);
         MonitorThread t = null;
         if (MONITOR_STATES)
         {
@@ -235,10 +243,10 @@ public class Analyzer
             int cntr = 0;
             try
             {
-                while (running)
+                while (Analyzer.running)
                 {
                     sleep(5000);
-                    if (!running)
+                    if (!Analyzer.running)
                         break;
                     if (cntr % 10 == 0)
                     {
