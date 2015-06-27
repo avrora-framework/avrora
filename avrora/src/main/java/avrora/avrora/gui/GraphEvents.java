@@ -486,7 +486,8 @@ public class GraphEvents extends JPanel
                 // Here we do this check to see if we start our area
                 // with a light enabled
                 boolean startColorOn = false;
-                if (i % 2 == 1)
+                if (i % 2 != 0) // comparison to 0 is necessary since if i<0
+                                // this holds (a/b)*b+(a%b)
                 {
                     // if odd, then we start with a color being on from the
                     // beginning
