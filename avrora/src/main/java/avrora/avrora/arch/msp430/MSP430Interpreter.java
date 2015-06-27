@@ -81,7 +81,6 @@ public class MSP430Interpreter extends MSP430InstrInterpreter
     protected final RegisterSet registers;
     protected final MSP430Instr[] shared_instr;
     protected final STOP_instr STOP;
-    protected boolean innerLoop;
     protected boolean shouldRun;
     protected boolean sleeping;
 
