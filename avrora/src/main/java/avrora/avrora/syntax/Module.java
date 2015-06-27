@@ -467,7 +467,10 @@ public class Module implements Context
         {
             Item.Label li = (Item.Label) labels.get(name);
             if (li == null)
+            {
                 ERROR.UnknownVariable(tok);
+                throw new IllegalStateException("unknown variable");
+            }
             if (li.segment == programSegment && !useByteAddresses)
                 return li.getByteAddress() >> 1;
             else

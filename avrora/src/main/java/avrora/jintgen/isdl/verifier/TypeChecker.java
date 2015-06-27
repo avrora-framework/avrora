@@ -271,7 +271,10 @@ public class TypeChecker extends VerifierPass
     {
         SubroutineDecl d = env.resolveSubroutine(method.image);
         if (d == null)
+        {
             ERROR.UnresolvedSubroutine(method);
+            throw new IllegalArgumentException("unresolved subroutine");
+        }
         Iterator<Expr> eiter = args.iterator();
         if (d.getParams().size() != args.size())
             ERROR.ArityMismatch(method);
@@ -369,7 +372,10 @@ public class TypeChecker extends VerifierPass
         Type rt = typeOf(e.right, env);
         TypeCon.BinOp binop = typeEnv.resolveBinOp(lt, rt, e.operation.image);
         if (binop == null)
+        {
             ERROR.UnresolvedOperator(e.operation, lt, rt);
+            throw new IllegalStateException("unresolved operator");
+        }
         e.setBinOp((BinOpExpr.BinOpImpl) binop);
         return binop.typeCheck(typeEnv, e.left, e.right);
     }
@@ -493,7 +499,10 @@ public class TypeChecker extends VerifierPass
         Type lt = typeOf(e.expr, env);
         TypeCon.UnOp unop = typeEnv.resolveUnOp(lt, e.operation.image);
         if (unop == null)
+        {
             ERROR.UnresolvedOperator(e.operation, lt);
+            throw new IllegalStateException("unresolved operator");
+        }
         e.setUnOp((UnOpExpr.UnOpImpl) unop);
         return unop.typeCheck(typeEnv, e.expr);
     }
@@ -503,7 +512,10 @@ public class TypeChecker extends VerifierPass
     {
         Decl d = env.resolveDecl(e.variable.image);
         if (d == null)
+        {
             ERROR.UnresolvedVariable(e.variable);
+            throw new IllegalStateException("unresolved variable");
+        }
         e.setDecl(d);
         return d.getType();
     }
@@ -536,6 +548,7 @@ public class TypeChecker extends VerifierPass
                 if (subOperand == null)
                 {
                     ERROR.UnresolvedSubOperand(e.field);
+                    throw new IllegalStateException("unresolved operand");
                 }
 
                 return subOperand.typeRef.resolve(arch.typeEnv);
@@ -573,7 +586,10 @@ public class TypeChecker extends VerifierPass
     {
         Decl d = env.resolveDecl(o.image);
         if (d == null)
+        {
             ERROR.UnresolvedVariable(o);
+            throw new IllegalStateException("unresolved variable");
+        }
         Type t = d.getType();
         TypeCon tc = t.getTypeCon();
         if (!(tc instanceof JIGIRTypeEnv.TYPE_operand))

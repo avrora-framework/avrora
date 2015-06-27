@@ -431,7 +431,10 @@ public class JIGIRTypeEnv extends TypeEnv
     {
         TypeCon tc = resolveTypeCon(tok.image);
         if (tc == null)
+        {
             ERROR.UnresolvedType(tok);
+            throw new IllegalStateException("unresolved type");
+        }
         return tc.newType(this);
     }
 
