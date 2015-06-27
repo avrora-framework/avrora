@@ -128,7 +128,7 @@ public class Analyzer
     }
 
 
-    private static void setRunning(boolean isRunning)
+    private void setRunning(boolean isRunning)
     {
         Analyzer.running = isRunning;
     }
