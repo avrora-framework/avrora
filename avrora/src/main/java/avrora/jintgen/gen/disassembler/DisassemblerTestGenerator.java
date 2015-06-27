@@ -55,8 +55,8 @@ public class DisassemblerTestGenerator
     ArchDecl archDecl;
     File directory;
     String dname;
-    Printer printer;
-    HashMap<OperandTypeDecl, ValueSet> operandValues;
+    Printer printer = null;
+    HashMap<OperandTypeDecl, ValueSet> operandValues  = new HashMap<>();
 
     public abstract class ValueSet
     {
@@ -247,7 +247,9 @@ public class DisassemblerTestGenerator
         {
             syntax = syntax.replaceAll('%' + e.getKey(), e.getValue());
         }
-        printer.print(d.name + " " + syntax);
+        if ( null != printer ) {
+            printer.print(d.name + " " + syntax);
+        }
     }
 
 }
