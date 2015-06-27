@@ -935,7 +935,7 @@ public class AtmelParserTokenManager implements AtmelParserConstants
     private int jjMoveStringLiteralDfa5_0(long old0, long active0, long old1,
             long active1, long old2, long active2)
     {
-        if (((active0 &= old0) | (active1 &= old1) | (active2 &= old2)) == 0L)
+        if (((active0 & old0) | (active1 &= old1) | (active2 &= old2)) == 0L)
             return jjStartNfa_0(3, old0, old1, old2);
         try
         {
@@ -971,7 +971,7 @@ public class AtmelParserTokenManager implements AtmelParserConstants
     private int jjMoveStringLiteralDfa6_0(long old1, long active1, long old2,
             long active2)
     {
-        if (((active1 &= old1) | (active2 &= old2)) == 0L)
+        if (((active1 & old1) | (active2 &= old2)) == 0L)
             return jjStartNfa_0(4, 0L, old1, old2);
         try
         {
