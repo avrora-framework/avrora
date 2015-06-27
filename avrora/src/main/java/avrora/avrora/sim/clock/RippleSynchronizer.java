@@ -33,7 +33,7 @@ public class RippleSynchronizer extends Synchronizer
     protected final HashMap<SimulatorThread, NotifyEvent> threadMap;
     protected final Simulator.Event action;
 
-    protected int goal;
+    protected int goal = 0;
     protected long wallTime;
     protected int meet_count;
     protected int wait_count;
