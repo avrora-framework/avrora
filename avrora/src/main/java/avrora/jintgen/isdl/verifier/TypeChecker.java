@@ -326,7 +326,11 @@ public class TypeChecker extends VerifierPass
     public Environment visit(ReturnStmt s, Environment env)
     {
         if (retType == null)
+        {
             ERROR.ReturnStmtNotInSubroutine(s);
+            throw new IllegalStateException(
+                    "retrun statement not in subroutine");
+        }
         typeCheck("return", s.expr, retType, env);
         return env;
     }
