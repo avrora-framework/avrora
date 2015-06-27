@@ -217,8 +217,8 @@ public class ConstantPropagator
 
     public ConstantPropagator()
     {
-        trackedMaps = new HashSet<String>();
-        trackedMaps.add("regs"); // this is all for now
+        ConstantPropagator.trackedMaps = new HashSet<String>();
+        ConstantPropagator.trackedMaps.add("regs"); // this is all for now
     }
 
 

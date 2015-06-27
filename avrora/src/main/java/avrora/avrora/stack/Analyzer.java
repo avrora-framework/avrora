@@ -133,7 +133,7 @@ public class Analyzer
      */
     public void run()
     {
-        running = true;
+        Analyzer.running = true;
         MonitorThread t = null;
         if (MONITOR_STATES)
         {

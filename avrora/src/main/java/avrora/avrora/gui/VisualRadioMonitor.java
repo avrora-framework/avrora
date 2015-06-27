@@ -179,8 +179,8 @@ public class VisualRadioMonitor extends MonitorFactory
                                   // queue...
             // we better take it out
             // destroy our static vector of monitors
-            allCurrentMonitors = new Vector<VisualMonitor>();
-            allCurrentGraphEvents = new Vector<GraphEvents>();
+            VisualRadioMonitor.allCurrentMonitors = new Vector<VisualMonitor>();
+            VisualRadioMonitor.allCurrentGraphEvents = new Vector<GraphEvents>();
         }
 
     }
