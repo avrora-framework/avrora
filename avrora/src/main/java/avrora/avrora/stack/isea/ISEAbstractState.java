@@ -32,6 +32,8 @@
 
 package avrora.avrora.stack.isea;
 
+import java.util.Arrays;
+
 import avrora.cck.text.StringUtil;
 import avrora.cck.text.Terminal;
 import avrora.cck.util.Util;
@@ -61,27 +63,34 @@ public class ISEAbstractState
     }
 
 
-    public boolean equals(Object o)
+    @Override
+    public int hashCode()
     {
-        if (!(o instanceof ISEAbstractState))
+        final int prime = 31;
+        int result = 1;
+        result = prime * result + depth;
+        result = prime * result + Arrays.hashCode(elements);
+        result = prime * result + Arrays.hashCode(stack);
+        return result;
+    }
+
+
+    @Override
+    public boolean equals(Object obj)
+    {
+        if (this == obj)
+            return true;
+        if (obj == null)
             return false;
-        ISEAbstractState s = (ISEAbstractState) o;
-        if (depth != s.depth)
+        if (getClass() != obj.getClass())
             return false;
-        // check that the elements are the same
-        for (int cntr = 0; cntr < elements.length; cntr++)
-        {
-            if (elements[cntr].read != s.elements[cntr].read)
-                return false;
-            if (elements[cntr].value != s.elements[cntr].value)
-                return false;
-        }
-        // check that the stack contents are the same
-        for (int cntr = 0; cntr < depth; cntr++)
-        {
-            if (stack[cntr] != s.stack[cntr])
-                return false;
-        }
+        ISEAbstractState other = (ISEAbstractState) obj;
+        if (depth != other.depth)
+            return false;
+        if (!Arrays.equals(elements, other.elements))
+            return false;
+        if (!Arrays.equals(stack, other.stack))
+            return false;
         return true;
     }
 
@@ -153,6 +162,42 @@ public class ISEAbstractState
         public Element copy()
         {
             return new Element(name, value, read);
+        }
+
+
+        @Override
+        public int hashCode()
+        {
+            final int prime = 31;
+            int result = 1;
+            result = prime * result + ((name == null) ? 0 : name.hashCode());
+            result = prime * result + (read ? 1231 : 1237);
+            result = prime * result + value;
+            return result;
+        }
+
+
+        @Override
+        public boolean equals(Object obj)
+        {
+            if (this == obj)
+                return true;
+            if (obj == null)
+                return false;
+            if (getClass() != obj.getClass())
+                return false;
+            Element other = (Element) obj;
+            if (name == null)
+            {
+                if (other.name != null)
+                    return false;
+            } else if (!name.equals(other.name))
+                return false;
+            if (read != other.read)
+                return false;
+            if (value != other.value)
+                return false;
+            return true;
         }
     }
 
