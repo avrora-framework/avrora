@@ -62,7 +62,7 @@ public class ConstantPropagator
     protected static Literal.BoolExpr TRUE = new Literal.BoolExpr(true);
     protected static Literal.BoolExpr FALSE = new Literal.BoolExpr(false);
 
-    protected static HashSet<String> trackedMaps;
+    private static HashSet<String> trackedMaps;
 
     public class Environ
     {
