@@ -316,7 +316,7 @@ public class BarrierSynchronizer extends Synchronizer
                 e.waitSlot.numWaiters--;
                 wait_count--;
             }
-            threadMap.remove(t);
+            threadMap.remove(st);
             goal--;
             // signal any other threads (and wake waiters as necessary) but
             // don't wait
