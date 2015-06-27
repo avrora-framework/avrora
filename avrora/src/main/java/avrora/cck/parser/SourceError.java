@@ -120,23 +120,42 @@ public class SourceError extends Util.Error
     }
 
 
-    public boolean equals(Object o)
+    @Override
+    public int hashCode()
     {
-        if (this == o)
-        {
-            return true;
-        }
-        if (o instanceof SourceError)
-        {
-            return errorType.equals(((SourceError) o).errorType);
-        }
+        final int prime = 31;
+        int result = 1;
+        result = prime * result
+                + ((errorType == null) ? 0 : errorType.hashCode());
+        return result;
+    }
 
-        if (o instanceof String)
+
+    @Override
+    public boolean equals(Object obj)
+    {
+        if (this == obj)
+            return true;
+        if (obj == null)
+            return false;
+        if (getClass() != obj.getClass())
+            return false;
+        SourceError other = (SourceError) obj;
+        if (errorType == null)
+        {
+            if (other.errorType != null)
+                return false;
+        } else if (!errorType.equals(other.errorType))
+            return false;
+
+        // TODO: remove string check when we know it's not necessary
+        if (obj.getClass().equals(String.class))
         {
             throw new IllegalStateException(
                     "call of equals() with Sring operand");
         }
-        return false;
+
+        return true;
     }
 
 
