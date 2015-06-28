@@ -58,7 +58,7 @@ public class VersionTag
      */
     public static VersionTag getVersionTag(String module)
     {
-        return (VersionTag) tags.get(module);
+        return tags.get(module);
     }
 
     /**
