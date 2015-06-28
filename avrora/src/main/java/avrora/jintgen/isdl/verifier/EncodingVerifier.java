@@ -182,7 +182,10 @@ public class EncodingVerifier extends VerifierPass
         {
             OperandTypeDecl ot = op.getOperandType();
             if (ot == null)
+            {
                 ERROR.UnresolvedOperandType(op.typeRef.getToken());
+                throw new IllegalStateException("unresolved opersnd");
+            }
             if (ot.isCompound())
             {
                 OperandTypeDecl.Compound cd = (OperandTypeDecl.Compound) ot;
