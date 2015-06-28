@@ -247,7 +247,7 @@ public class ISEInterpreter implements LegacyInstrVisitor
 
     private ISEState mergeState(int pc, ISEState s)
     {
-        ISEState es = (ISEState) states.get(new Integer(pc));
+        ISEState es = states.get(new Integer(pc));
         if (es != null)
         {
             if (es.equals(s))
