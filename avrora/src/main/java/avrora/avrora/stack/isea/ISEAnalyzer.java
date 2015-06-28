@@ -109,7 +109,7 @@ public class ISEAnalyzer implements ISEInterpreter.SummaryCache
                     + StringUtil.addrToString(start));
         }
         analyzeProcedure(block);
-        return (ISEState) procedureSummaries.get(block);
+        return procedureSummaries.get(block);
     }
 
 
@@ -130,7 +130,7 @@ public class ISEAnalyzer implements ISEInterpreter.SummaryCache
 
     public ISEState getReturnSummary(int retaddr)
     {
-        return (ISEState) returnSummaries.get(new Integer(retaddr));
+        return returnSummaries.get(new Integer(retaddr));
     }
 
 
