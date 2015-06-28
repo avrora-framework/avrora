@@ -147,9 +147,11 @@ public class SensorSimulation extends Simulation
             try
             {
                 Sensor s = (Sensor) p.getDevice(sensor + "-sensor");
-                if (s == null) {
+                if (s == null)
+                {
                     Util.userError("Sensor device does not exist", sensor);
-                    throw new IllegalStateException("sensor dvice does not exist");
+                    throw new IllegalStateException(
+                            "sensor dvice does not exist");
                 }
                 if (".".equals(fname))
                     s.setSensorData(new RandomSensorData(getRandom()));
@@ -456,7 +458,7 @@ public class SensorSimulation extends Simulation
         for (int arg = 0; arg < args.length; arg++)
         {
             int count = i.hasNext()
-                    ? StringUtil.evaluateIntegerLiteral((String) i.next()) : 1;
+                    ? StringUtil.evaluateIntegerLiteral(i.next()) : 1;
             LoadableProgram lp = new LoadableProgram(args[arg]);
             lp.load();
 
