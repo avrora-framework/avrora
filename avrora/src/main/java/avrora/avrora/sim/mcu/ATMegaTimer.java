@@ -146,7 +146,7 @@ public abstract class ATMegaTimer extends AtmelInternalDevice
 
     protected Comparator getComparator(String name)
     {
-        return (Comparator) comparators.get(name);
+        return comparators.get(name);
     }
 
 
