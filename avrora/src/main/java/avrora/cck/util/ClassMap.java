@@ -211,7 +211,15 @@ public class ClassMap
 
         try
         {
-            return c.newInstance();
+            if (c != null)
+            {
+                return c.newInstance();
+            }
+            throw new NullPointerException();
+        }
+        catch (NullPointerException npe)
+        {
+            throw new IllegalStateException("clals not found");
         }
         catch (InstantiationException e)
         {
@@ -222,10 +230,6 @@ public class ClassMap
         catch (IllegalAccessException e)
         {
             Util.userError("Illegal access to class", clname);
-        }
-        catch (NullPointerException npe)
-        {
-            throw new IllegalStateException("clals not found");
         }
 
         // UNREACHABLE
