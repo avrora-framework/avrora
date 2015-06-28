@@ -386,7 +386,7 @@ public class RippleSynchronizer extends Synchronizer
     {
         // get the current simulator thread
         SimulatorThread thread = (SimulatorThread) Thread.currentThread();
-        NotifyEvent event = (NotifyEvent) threadMap.get(thread);
+        NotifyEvent event = threadMap.get(thread);
         try
         {
             long now = thread.getSimulator().getClock().getCount();
