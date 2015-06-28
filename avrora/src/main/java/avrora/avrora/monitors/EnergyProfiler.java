@@ -285,7 +285,7 @@ public class EnergyProfiler extends MonitorFactory
                     }
                 }
                 lastChange = simulator.getState().getCycles();
-                currentMode = (EnergyProfile) labelLookup.get(new Integer(pc));
+                currentMode = labelLookup.get(new Integer(pc));
             }
 
         }
