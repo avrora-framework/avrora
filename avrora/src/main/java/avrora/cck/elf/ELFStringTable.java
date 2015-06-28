@@ -111,7 +111,7 @@ public class ELFStringTable
     {
         if (ind >= data.length)
             return "";
-        String str = (String) map.get(new Integer(ind));
+        String str = map.get(new Integer(ind));
         if (str == null)
         {
             StringBuffer buf = new StringBuffer();
