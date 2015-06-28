@@ -359,7 +359,7 @@ public class StateTransitionGraph
         Iterator<StateCache.State> i = cache.getStateIterator();
         while (i.hasNext())
         {
-            StateCache.State state = (StateCache.State) i.next();
+            StateCache.State state = i.next();
             state.info.stateSet = null;
         }
     }
@@ -378,7 +378,7 @@ public class StateTransitionGraph
         i = cache.getStateIterator();
         while (i.hasNext())
         {
-            StateCache.State state = (StateCache.State) i.next();
+            StateCache.State state = i.next();
             for (Edge e = state.info.forwardEdges; e != null; e = e.forwardLink)
             {
                 StringBuffer buf = dumpToBuffer(e);
