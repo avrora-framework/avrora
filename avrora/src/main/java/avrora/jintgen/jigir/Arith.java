@@ -336,7 +336,7 @@ public class Arith
         public Type typeCheck(TypeEnv env, Typeable inner)
         {
             // JIGIRTypeEnv jenv = (JIGIRTypeEnv)env;
-            return (JIGIRTypeEnv.TYPE_int) inner.getType();
+            return inner.getType();
         }
 
 
