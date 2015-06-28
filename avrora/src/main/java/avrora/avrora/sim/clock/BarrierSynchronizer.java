@@ -345,7 +345,7 @@ public class BarrierSynchronizer extends Synchronizer
 
         // get the current simulator thread
         SimulatorThread thread = (SimulatorThread) Thread.currentThread();
-        SynchEvent event = (SynchEvent) threadMap.get(thread);
+        SynchEvent event = threadMap.get(thread);
         // if the current thread is not in the synchronizer, do nothing
         if (event == null)
             return;
