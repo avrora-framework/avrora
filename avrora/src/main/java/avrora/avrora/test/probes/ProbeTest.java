@@ -266,7 +266,7 @@ public class ProbeTest
         @Override
         void execute()
         {
-            TestEntity en = (TestEntity) entities.get(name);
+            TestEntity en = entities.get(name);
             en.insert(value);
         }
     }
@@ -287,7 +287,7 @@ public class ProbeTest
         @Override
         void execute()
         {
-            TestEntity en = (TestEntity) entities.get(name);
+            TestEntity en = entities.get(name);
             en.remove(value);
         }
     }
@@ -454,8 +454,8 @@ public class ProbeTest
                 throw new Failure("too few events recorded");
             }
 
-            Event expect = (Event) e.next();
-            Event recorded = (Event) r.next();
+            Event expect = e.next();
+            Event recorded = r.next();
 
             if (printer != null)
             {
