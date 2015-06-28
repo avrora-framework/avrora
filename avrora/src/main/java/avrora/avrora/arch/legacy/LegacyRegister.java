@@ -160,7 +160,7 @@ public class LegacyRegister
      */
     public static LegacyRegister getRegisterByName(String name)
     {
-        return (LegacyRegister) registers.get(name);
+        return registers.get(name);
     }
 
 
