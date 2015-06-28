@@ -227,7 +227,7 @@ public class RegisterLayout
      */
     public int getIOReg(String n)
     {
-        RegisterInfo i = (RegisterInfo) ioregAssignments.get(n);
+        RegisterInfo i = ioregAssignments.get(n);
         if (i == null)
             throw new NoSuchElementException(
                     StringUtil.quote(n) + " IO register not found");
