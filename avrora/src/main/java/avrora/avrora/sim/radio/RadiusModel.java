@@ -103,8 +103,8 @@ public class RadiusModel implements Medium.Arbitrator
     protected double distanceSq(Medium.Transmitter t, Medium.Receiver r)
     {
         double distSq = 0;
-        Topology.Position a = (Topology.Position) positions.get(t);
-        Topology.Position b = (Topology.Position) positions.get(r);
+        Topology.Position a = positions.get(t);
+        Topology.Position b = positions.get(r);
         if (a != null && b != null)
         {
             double dx = a.x - b.x;
