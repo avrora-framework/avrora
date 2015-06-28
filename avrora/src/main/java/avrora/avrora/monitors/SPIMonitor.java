@@ -105,7 +105,7 @@ public class SPIMonitor extends MonitorFactory
          */
         Monitor(Simulator s)
         {
-            Connection conn = (Connection) portMap.get(new Integer(s.getID()));
+            Connection conn = portMap.get(new Integer(s.getID()));
             if (conn != null)
             {
                 AtmelMicrocontroller mcu = (AtmelMicrocontroller) s
