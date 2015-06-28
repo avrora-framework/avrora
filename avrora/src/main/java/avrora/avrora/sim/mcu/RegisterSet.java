@@ -318,13 +318,11 @@ public class RegisterSet
         {
             // if the field has only one subfield, write the whole field value
             // at once
-            srw[cntr] = new TotalFieldWriter(sf,
-                    (FieldWriter) fields.get(field.name));
+            srw[cntr] = new TotalFieldWriter(sf, fields.get(field.name));
         } else
         {
             // otherwise, this subfield is for a field that is fragmented
-            srw[cntr] = new SubFieldWriter(sf,
-                    (FieldWriter) fields.get(field.name));
+            srw[cntr] = new SubFieldWriter(sf, fields.get(field.name));
         }
     }
 
@@ -389,7 +387,7 @@ public class RegisterSet
 
     private FieldWriter getFieldWriter(String fname)
     {
-        FieldWriter fwriter = ((FieldWriter) fields.get(fname));
+        FieldWriter fwriter = fields.get(fname);
         if (fwriter == null)
         {
             throw Util.failure("Field not found in RegisterSet: "
