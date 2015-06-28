@@ -145,7 +145,10 @@ public class MemoryMonitor extends MonitorFactory
                         // treat it as a label, try to convert it to address
                         SourceMapping.Location loc = sm.getLocation(val);
                         if (loc == null)
+                        {
                             Util.userError("Label unknown", val);
+                            throw new IllegalStateException("label unknown");
+                        }
                         int addr = loc.vma_addr & 0xffff;
                         for (int i = 0; i < loc.size; i++)
                             locset.add(new Integer(addr + i));
