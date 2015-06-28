@@ -89,7 +89,7 @@ public class AVRSymbol
 
     public static GPR get_GPR(String name)
     {
-        return (GPR) GPR.set.get(name);
+        return GPR.set.get(name);
     }
 
     public static class ADR extends AVRSymbol
@@ -119,7 +119,7 @@ public class AVRSymbol
 
     public static ADR get_ADR(String name)
     {
-        return (ADR) ADR.set.get(name);
+        return ADR.set.get(name);
     }
 
     public static class HGPR extends AVRSymbol.GPR
@@ -172,7 +172,7 @@ public class AVRSymbol
 
     public static HGPR get_HGPR(String name)
     {
-        return (HGPR) HGPR.set.get(name);
+        return HGPR.set.get(name);
     }
 
     public static class EGPR extends AVRSymbol.GPR
@@ -225,7 +225,7 @@ public class AVRSymbol
 
     public static EGPR get_EGPR(String name)
     {
-        return (EGPR) EGPR.set.get(name);
+        return EGPR.set.get(name);
     }
 
     public static class MGPR extends AVRSymbol.GPR
@@ -270,7 +270,7 @@ public class AVRSymbol
 
     public static MGPR get_MGPR(String name)
     {
-        return (MGPR) MGPR.set.get(name);
+        return MGPR.set.get(name);
     }
 
     public static class YZ extends AVRSymbol.ADR
@@ -309,7 +309,7 @@ public class AVRSymbol
 
     public static YZ get_YZ(String name)
     {
-        return (YZ) YZ.set.get(name);
+        return YZ.set.get(name);
     }
 
     public static class RDL extends AVRSymbol.GPR
@@ -350,7 +350,7 @@ public class AVRSymbol
 
     public static RDL get_RDL(String name)
     {
-        return (RDL) RDL.set.get(name);
+        return RDL.set.get(name);
     }
 
     public static class R0 extends AVRSymbol.GPR
@@ -388,7 +388,7 @@ public class AVRSymbol
 
     public static R0 get_R0(String name)
     {
-        return (R0) R0.set.get(name);
+        return R0.set.get(name);
     }
 
     public static class RZ extends AVRSymbol.ADR
@@ -426,7 +426,7 @@ public class AVRSymbol
 
     public static RZ get_RZ(String name)
     {
-        return (RZ) RZ.set.get(name);
+        return RZ.set.get(name);
     }
 
 }
