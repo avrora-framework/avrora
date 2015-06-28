@@ -342,7 +342,7 @@ public class StateCache
     public State getStateFor(MutableState s)
     {
         State is = new State(s);
-        State cs = (State) stateMap.get(is);
+        State cs = stateMap.get(is);
 
         if (cs != null)
         {
