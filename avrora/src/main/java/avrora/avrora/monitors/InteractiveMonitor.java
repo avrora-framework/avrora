@@ -73,7 +73,10 @@ public class InteractiveMonitor extends MonitorFactory
             {
                 SourceMapping.Location l = sourceMap.getLocation(str);
                 if (l == null)
+                {
                     Util.userError("Label not found", str);
+                    throw new IllegalStateException("label not found");
+                }
                 simulator.insertProbe(new BreakPointProbe(), l.lma_addr);
             }
         }
