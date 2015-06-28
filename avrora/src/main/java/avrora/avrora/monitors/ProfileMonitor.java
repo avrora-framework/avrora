@@ -335,7 +335,7 @@ public class ProfileMonitor extends MonitorFactory
                 if (i == null)
                     continue;
                 String variant = i.getName();
-                InstrProfileEntry entry = (InstrProfileEntry) cmap.get(variant);
+                InstrProfileEntry entry = cmap.get(variant);
                 if (entry == null)
                 {
                     entry = new InstrProfileEntry();
