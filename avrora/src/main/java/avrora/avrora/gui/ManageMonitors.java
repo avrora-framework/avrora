@@ -213,7 +213,7 @@ public class ManageMonitors
             LinkedList<Node> nodes = getNodeList();
             for (int j = 0; j < toMONITORS.size(); j++)
             {
-                String currentMonitor = (String) toMONITORS.elementAt(j);
+                String currentMonitor = toMONITORS.elementAt(j);
                 Simulation.GuiMonitor mf = getMonitorFactory(currentMonitor);
                 mf.attach(AvroraGui.instance.getSimulation(), nodes);
             }
