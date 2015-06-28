@@ -187,7 +187,7 @@ public class LegacyInstrSet
      */
     public static LegacyInstrProto getPrototype(String name)
     {
-        return (LegacyInstrProto) instructions.get(name.toLowerCase());
+        return instructions.get(name.toLowerCase());
     }
 
 }
