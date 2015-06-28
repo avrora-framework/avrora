@@ -163,8 +163,8 @@ public class LossyModel implements Medium.Arbitrator
     {
         // Distance computed from mote 3D coordinates of topology file
         double dist = 0;
-        Topology.Position a = (Topology.Position) positions.get(t);
-        Topology.Position b = (Topology.Position) positions.get(r);
+        Topology.Position a = positions.get(t);
+        Topology.Position b = positions.get(r);
         if (a != null && b != null)
         {
             double dx = a.x - b.x;
@@ -183,8 +183,8 @@ public class LossyModel implements Medium.Arbitrator
          * and receiver motes inserted in topology file
          */
         double rho = 0D;
-        Topology.Position a = (Topology.Position) positions.get(t);
-        Topology.Position b = (Topology.Position) positions.get(r);
+        Topology.Position a = positions.get(t);
+        Topology.Position b = positions.get(r);
         if (a != null && b != null)
         {
             rho = Math.max(a.rho, b.rho);
