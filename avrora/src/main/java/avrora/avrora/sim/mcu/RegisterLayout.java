@@ -414,7 +414,7 @@ public class RegisterLayout
 
     private Field getField(String name)
     {
-        Field f = (Field) fields.get(name);
+        Field f = fields.get(name);
         if (f == null)
         {
             f = new Field(name);
