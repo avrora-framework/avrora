@@ -165,7 +165,7 @@ public class ClassMap
         Object o = objMap.get(shortName);
         if (o != null)
             return o.getClass();
-        return (Class<?>) classMap.get(shortName);
+        return classMap.get(shortName);
     }
 
 
@@ -188,7 +188,7 @@ public class ClassMap
 
         String clname = StringUtil.quote(name);
 
-        Class<?> c = (Class<?>) classMap.get(name);
+        Class<?> c = classMap.get(name);
         if (c == null)
         {
             try
@@ -249,9 +249,9 @@ public class ClassMap
      */
     public String getAlias(Object o)
     {
-        String s = (String) reverseMap.get(o);
+        String s = reverseMap.get(o);
         if (s == null)
-            s = (String) reverseMap.get(o.getClass());
+            s = reverseMap.get(o.getClass());
         if (s == null)
             s = o.getClass().getName();
         return s;
