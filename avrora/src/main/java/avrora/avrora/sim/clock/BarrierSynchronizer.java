@@ -310,7 +310,7 @@ public class BarrierSynchronizer extends Synchronizer
             return;
         synchronized (condition)
         {
-            SynchEvent e = (SynchEvent) threadMap.get(st);
+            SynchEvent e = threadMap.get(st);
             e.removed = true; // just in case the thread is still running, don't
                               // let it synch
             if (e.met)
