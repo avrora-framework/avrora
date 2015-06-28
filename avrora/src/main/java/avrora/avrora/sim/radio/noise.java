@@ -104,7 +104,7 @@ public class noise
 
     public static int getNoise(int index)
     {
-        return ((Integer) noise.get(index)).intValue();
+        return noise.get(index);
     }
 
 

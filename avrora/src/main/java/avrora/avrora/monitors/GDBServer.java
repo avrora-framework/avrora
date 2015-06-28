@@ -827,7 +827,7 @@ public class GDBServer extends MonitorFactory
     public Monitor newMonitor(Simulator s)
     {
         // get port for this node
-        Integer port = (Integer) portMap.get(new Integer(s.getID()));
+        Integer port = portMap.get(new Integer(s.getID()));
         if (port == null)
         {
             // no port given, install empty monitor

@@ -395,7 +395,7 @@ public class ProbeParser implements ProbeParserConstants
         int[][] exptokseq = new int[jj_expentries.size()][];
         for (int i = 0; i < jj_expentries.size(); i++)
         {
-            exptokseq[i] = (int[]) jj_expentries.elementAt(i);
+            exptokseq[i] = jj_expentries.elementAt(i);
         }
         return new ParseException(token, exptokseq, tokenImage);
     }

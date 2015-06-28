@@ -470,7 +470,7 @@ public class Module implements Context
     {
         String name = labelName(tok);
 
-        Integer v = (Integer) constants.get(name);
+        Integer v = constants.get(name);
         if (v == null)
         {
             Item.Label li = (Item.Label) labels.get(name);

@@ -56,7 +56,7 @@ public class Medium
     private static final int BYTE_SIZE = 8;
 
     private static int Pn = -95;// Noise Power in dBm
-    private static double Pr = (double) Pn;// Received Power in dBm
+    private static double Pr = Pn;// Received Power in dBm
 
     public interface Arbitrator
     {

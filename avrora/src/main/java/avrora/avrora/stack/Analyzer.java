@@ -639,7 +639,7 @@ public class Analyzer
             {
                 // cycle detected. check that the depth when reentering is the
                 // same
-                int prevdepth = ((Integer) stack.get(t)).intValue();
+                int prevdepth = stack.get(t);
                 if (depth + edge.weight != prevdepth)
                 {
                     stack.remove(s);
