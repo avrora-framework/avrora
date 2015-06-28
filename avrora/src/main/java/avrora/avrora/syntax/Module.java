@@ -398,7 +398,12 @@ public class Module implements Context
     {
         Item.Instruction instr = null;
         if (i instanceof Item.Instruction)
+        {
             instr = (Item.Instruction) i;
+        } else
+        {
+            throw new IllegalStateException("i is no instanceof Item.Instruction");
+        }
 
         try
         {
