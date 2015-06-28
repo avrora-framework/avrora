@@ -115,6 +115,7 @@ public class Verbose
         }
 
 
+        @Override
         public void println(String s)
         {
             if (enabled)
@@ -122,6 +123,7 @@ public class Verbose
         }
 
 
+        @Override
         public void print(String s)
         {
             if (enabled)
@@ -129,6 +131,7 @@ public class Verbose
         }
 
 
+        @Override
         public void nextln()
         {
             if (enabled)
@@ -136,6 +139,7 @@ public class Verbose
         }
 
 
+        @Override
         public void indent()
         {
             if (enabled)
@@ -143,6 +147,7 @@ public class Verbose
         }
 
 
+        @Override
         public void spaces()
         {
             if (enabled)
@@ -150,6 +155,7 @@ public class Verbose
         }
 
 
+        @Override
         public void unindent()
         {
             if (enabled)
@@ -157,6 +163,7 @@ public class Verbose
         }
 
 
+        @Override
         public void startblock()
         {
             if (enabled)
@@ -164,6 +171,7 @@ public class Verbose
         }
 
 
+        @Override
         public void startblock(String name)
         {
             if (enabled)
@@ -171,6 +179,7 @@ public class Verbose
         }
 
 
+        @Override
         public void endblock()
         {
             if (enabled)

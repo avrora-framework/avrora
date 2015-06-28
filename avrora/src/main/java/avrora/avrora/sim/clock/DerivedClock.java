@@ -95,6 +95,7 @@ public class DerivedClock extends Clock
      *
      * @return the count in cycles of this clock
      */
+    @Override
     public long getCount()
     {
         return (long) (driveClock.getCount() / divider);
@@ -111,6 +112,7 @@ public class DerivedClock extends Clock
      * @param delta
      *            the number of cycles in the future at which to event
      */
+    @Override
     public void insertEvent(Simulator.Event e, long delta)
     {
         long driverCount = driveClock.getCount();
@@ -128,6 +130,7 @@ public class DerivedClock extends Clock
      * @param e
      *            the event to remove
      */
+    @Override
     public void removeEvent(Simulator.Event e)
     {
         driveClock.removeEvent(e);

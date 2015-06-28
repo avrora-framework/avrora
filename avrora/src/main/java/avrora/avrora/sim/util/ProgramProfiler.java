@@ -87,6 +87,7 @@ public class ProgramProfiler extends Simulator.Probe.Empty
      * @param pc
      *            the address at which this instruction resides
      */
+    @Override
     public void fireBefore(State state, int pc)
     {
         icount[pc]++;

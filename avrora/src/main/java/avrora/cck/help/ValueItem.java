@@ -80,6 +80,7 @@ public class ValueItem implements HelpItem
      *
      * @return a help string
      */
+    @Override
     public String getHelp()
     {
         return help;
@@ -91,6 +92,7 @@ public class ValueItem implements HelpItem
      * paragraph for this option and its value, containing the specified help
      * text.
      */
+    @Override
     public void printHelp()
     {
         Terminal.print(StringUtil.space(indent));

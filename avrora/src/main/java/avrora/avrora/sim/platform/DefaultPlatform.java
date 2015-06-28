@@ -108,6 +108,7 @@ public class DefaultPlatform extends Platform
          *            instance of the <code>Platform</code> interface for this
          *            platform
          */
+        @Override
         public Platform newPlatform(int id, Simulation sim, Program p)
         {
             ClockDomain cd = new ClockDomain(mainClockSpeed);

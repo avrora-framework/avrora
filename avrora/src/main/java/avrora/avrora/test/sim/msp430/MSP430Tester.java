@@ -49,6 +49,7 @@ import avrora.avrora.test.sim.Tester;
  */
 public class MSP430Tester extends Tester
 {
+    @Override
     public Simulator newSimulator(Program p)
     {
         Platform platform = Defaults.getPlatform("telos").newPlatform(0,
@@ -57,12 +58,14 @@ public class MSP430Tester extends Tester
     }
 
 
+    @Override
     public AbstractArchitecture getArchitecture()
     {
         return MSP430Architecture.INSTANCE;
     }
 
 
+    @Override
     public StateAccessor getAccessor(Simulator sim)
     {
         return new MSP430StateAccessor(sim.getProgram(), sim);

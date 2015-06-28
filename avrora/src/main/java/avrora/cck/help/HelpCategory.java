@@ -69,6 +69,7 @@ public class HelpCategory implements HelpItem
     private final LinkedList<Section> sections;
 
     public static final Comparator<HelpCategory> COMPARATOR = new Comparator<HelpCategory>() {
+        @Override
         public int compare(HelpCategory c1, HelpCategory c2)
         {
             return String.CASE_INSENSITIVE_ORDER.compare(c1.name, c2.name);
@@ -211,6 +212,7 @@ public class HelpCategory implements HelpItem
         }
 
 
+        @Override
         void printHelp()
         {
             if (title != null)
@@ -238,6 +240,7 @@ public class HelpCategory implements HelpItem
         }
 
 
+        @Override
         void printHelp()
         {
             Terminal.printBrightBlue("OPTIONS");
@@ -275,6 +278,7 @@ public class HelpCategory implements HelpItem
         }
 
 
+        @Override
         void printHelp()
         {
             if (title != null)
@@ -322,6 +326,7 @@ public class HelpCategory implements HelpItem
      *
      * @return a help string for this item
      */
+    @Override
     public String getHelp()
     {
         return help;
@@ -460,6 +465,7 @@ public class HelpCategory implements HelpItem
      * The <code>printHelp()</code> method prints out all of the help sections
      * in order for this category.
      */
+    @Override
     public void printHelp()
     {
         for (Section s : sections)

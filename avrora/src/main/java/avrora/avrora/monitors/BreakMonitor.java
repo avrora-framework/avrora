@@ -86,6 +86,7 @@ public class BreakMonitor extends MonitorFactory
         public class BreakProbe extends Simulator.Probe.Empty
         {
 
+            @Override
             public void fireBefore(State state, int pc)
             {
                 LegacyState s = (LegacyState) simulator.getState();
@@ -106,6 +107,7 @@ public class BreakMonitor extends MonitorFactory
         }
 
 
+        @Override
         public void report()
         {
             // do nothing
@@ -122,6 +124,7 @@ public class BreakMonitor extends MonitorFactory
     }
 
 
+    @Override
     public Monitor newMonitor(Simulator s)
     {
         return new Mon(s);

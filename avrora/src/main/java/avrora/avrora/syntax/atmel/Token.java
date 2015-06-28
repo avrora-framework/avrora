@@ -81,6 +81,7 @@ public class Token extends AbstractToken
     }
 
 
+    @Override
     public AbstractToken getNextToken()
     {
         return next;

@@ -54,6 +54,7 @@ public class ADC extends AtmelInternalDevice
     public static final float GND_LEVEL = 0.0f;
 
     private final ADCInput VBG_INPUT = new ADCInput() {
+        @Override
         public float getVoltage()
         {
             return voltageRef;
@@ -61,6 +62,7 @@ public class ADC extends AtmelInternalDevice
     };
 
     private static final ADCInput GND_INPUT = new ADCInput() {
+        @Override
         public float getVoltage()
         {
             return GND_LEVEL;
@@ -243,6 +245,7 @@ public class ADC extends AtmelInternalDevice
         }
 
 
+        @Override
         public void write(byte nval)
         {
 
@@ -325,6 +328,7 @@ public class ADC extends AtmelInternalDevice
         private class ConversionEvent implements Simulator.Event
         {
 
+            @Override
             public void fire()
             {
 
@@ -383,6 +387,7 @@ public class ADC extends AtmelInternalDevice
         }
 
 
+        @Override
         public void force(int inum)
         {
             // set the interrupt flag accordingly
@@ -390,6 +395,7 @@ public class ADC extends AtmelInternalDevice
         }
 
 
+        @Override
         public void invoke(int inum)
         {
             unpostADCInterrupt();

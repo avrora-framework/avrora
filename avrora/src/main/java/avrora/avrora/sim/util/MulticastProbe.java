@@ -57,6 +57,7 @@ public class MulticastProbe extends TransactionalList implements Simulator.Probe
      * @param pc
      *            the address at which this instruction resides
      */
+    @Override
     public void fireBefore(State state, int pc)
     {
         beginTransaction();
@@ -76,6 +77,7 @@ public class MulticastProbe extends TransactionalList implements Simulator.Probe
      * @param pc
      *            the address at which this instruction resides
      */
+    @Override
     public void fireAfter(State state, int pc)
     {
         for (Link pos = head; pos != null; pos = pos.next)

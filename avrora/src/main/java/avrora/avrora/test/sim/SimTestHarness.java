@@ -94,6 +94,7 @@ public class SimTestHarness implements TestEngine.Harness
         }
 
 
+        @Override
         public void run() throws Exception
         {
             Program p = readProgram();
@@ -123,6 +124,7 @@ public class SimTestHarness implements TestEngine.Harness
         }
 
 
+        @Override
         public TestResult match(Throwable t)
         {
             if (t != null)
@@ -162,6 +164,7 @@ public class SimTestHarness implements TestEngine.Harness
         }
 
 
+        @Override
         public void longReport()
         {
             Terminal.println(message);
@@ -170,6 +173,7 @@ public class SimTestHarness implements TestEngine.Harness
     }
 
 
+    @Override
     public TestCase newTestCase(String fname, Properties props) throws Exception
     {
         return new SimulatorTest(fname, props);

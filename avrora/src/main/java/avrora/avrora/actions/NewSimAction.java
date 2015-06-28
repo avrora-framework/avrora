@@ -57,6 +57,7 @@ public class NewSimAction extends Action
     }
 
 
+    @Override
     public void run(String[] args) throws Exception
     {
         if (args.length != 1)

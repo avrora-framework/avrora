@@ -101,6 +101,7 @@ public class SnifferMonitor extends MonitorFactory
         }
 
 
+        @Override
         public void fireBeforeTransmit(Medium.Transmitter t, byte val)
         {
             if (showTransmitted)
@@ -113,6 +114,7 @@ public class SnifferMonitor extends MonitorFactory
         }
 
 
+        @Override
         public void fireBeforeTransmitEnd(Medium.Transmitter t)
         {
             if (showTransmitted)
@@ -131,6 +133,7 @@ public class SnifferMonitor extends MonitorFactory
         }
 
 
+        @Override
         public void fireAfterReceive(Medium.Receiver r, char val)
         {
             if (showReceived)
@@ -145,6 +148,7 @@ public class SnifferMonitor extends MonitorFactory
         }
 
 
+        @Override
         public void fireAfterReceiveEnd(Medium.Receiver r)
         {
             if (showReceived)
@@ -296,6 +300,7 @@ public class SnifferMonitor extends MonitorFactory
         }
 
 
+        @Override
         public void report()
         {
             if (monitors != null)
@@ -321,6 +326,7 @@ public class SnifferMonitor extends MonitorFactory
      *
      * @see MonitorFactory#newMonitor(Simulator)
      */
+    @Override
     public Monitor newMonitor(Simulator s)
     {
         return new Mon(s);

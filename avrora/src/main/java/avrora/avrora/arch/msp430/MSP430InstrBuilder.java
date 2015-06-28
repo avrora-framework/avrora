@@ -17,6 +17,7 @@ public abstract class MSP430InstrBuilder
 
     public static class ADD_builder extends MSP430InstrBuilder
     {
+        @Override
         public MSP430Instr build(int size, MSP430AddrMode am)
         {
             return new MSP430Instr.ADD(size, (MSP430AddrMode.DOUBLE_W) am);
@@ -25,6 +26,7 @@ public abstract class MSP430InstrBuilder
 
     public static class ADD_B_builder extends MSP430InstrBuilder
     {
+        @Override
         public MSP430Instr build(int size, MSP430AddrMode am)
         {
             return new MSP430Instr.ADD_B(size, (MSP430AddrMode.DOUBLE_B) am);
@@ -33,6 +35,7 @@ public abstract class MSP430InstrBuilder
 
     public static class ADDC_builder extends MSP430InstrBuilder
     {
+        @Override
         public MSP430Instr build(int size, MSP430AddrMode am)
         {
             return new MSP430Instr.ADDC(size, (MSP430AddrMode.DOUBLE_W) am);
@@ -41,6 +44,7 @@ public abstract class MSP430InstrBuilder
 
     public static class ADDC_B_builder extends MSP430InstrBuilder
     {
+        @Override
         public MSP430Instr build(int size, MSP430AddrMode am)
         {
             return new MSP430Instr.ADDC_B(size, (MSP430AddrMode.DOUBLE_B) am);
@@ -49,6 +53,7 @@ public abstract class MSP430InstrBuilder
 
     public static class AND_builder extends MSP430InstrBuilder
     {
+        @Override
         public MSP430Instr build(int size, MSP430AddrMode am)
         {
             return new MSP430Instr.AND(size, (MSP430AddrMode.DOUBLE_W) am);
@@ -57,6 +62,7 @@ public abstract class MSP430InstrBuilder
 
     public static class AND_B_builder extends MSP430InstrBuilder
     {
+        @Override
         public MSP430Instr build(int size, MSP430AddrMode am)
         {
             return new MSP430Instr.AND_B(size, (MSP430AddrMode.DOUBLE_B) am);
@@ -65,6 +71,7 @@ public abstract class MSP430InstrBuilder
 
     public static class BIC_builder extends MSP430InstrBuilder
     {
+        @Override
         public MSP430Instr build(int size, MSP430AddrMode am)
         {
             return new MSP430Instr.BIC(size, (MSP430AddrMode.DOUBLE_W) am);
@@ -73,6 +80,7 @@ public abstract class MSP430InstrBuilder
 
     public static class BIC_B_builder extends MSP430InstrBuilder
     {
+        @Override
         public MSP430Instr build(int size, MSP430AddrMode am)
         {
             return new MSP430Instr.BIC_B(size, (MSP430AddrMode.DOUBLE_B) am);
@@ -81,6 +89,7 @@ public abstract class MSP430InstrBuilder
 
     public static class BIS_builder extends MSP430InstrBuilder
     {
+        @Override
         public MSP430Instr build(int size, MSP430AddrMode am)
         {
             return new MSP430Instr.BIS(size, (MSP430AddrMode.DOUBLE_W) am);
@@ -89,6 +98,7 @@ public abstract class MSP430InstrBuilder
 
     public static class BIS_B_builder extends MSP430InstrBuilder
     {
+        @Override
         public MSP430Instr build(int size, MSP430AddrMode am)
         {
             return new MSP430Instr.BIS_B(size, (MSP430AddrMode.DOUBLE_B) am);
@@ -97,6 +107,7 @@ public abstract class MSP430InstrBuilder
 
     public static class BIT_builder extends MSP430InstrBuilder
     {
+        @Override
         public MSP430Instr build(int size, MSP430AddrMode am)
         {
             return new MSP430Instr.BIT(size, (MSP430AddrMode.DOUBLE_W) am);
@@ -105,6 +116,7 @@ public abstract class MSP430InstrBuilder
 
     public static class BIT_B_builder extends MSP430InstrBuilder
     {
+        @Override
         public MSP430Instr build(int size, MSP430AddrMode am)
         {
             return new MSP430Instr.BIT_B(size, (MSP430AddrMode.DOUBLE_B) am);
@@ -113,6 +125,7 @@ public abstract class MSP430InstrBuilder
 
     public static class CALL_builder extends MSP430InstrBuilder
     {
+        @Override
         public MSP430Instr build(int size, MSP430AddrMode am)
         {
             return new MSP430Instr.CALL(size, (MSP430AddrMode.SINGLE_W) am);
@@ -121,6 +134,7 @@ public abstract class MSP430InstrBuilder
 
     public static class CMP_builder extends MSP430InstrBuilder
     {
+        @Override
         public MSP430Instr build(int size, MSP430AddrMode am)
         {
             return new MSP430Instr.CMP(size, (MSP430AddrMode.DOUBLE_W) am);
@@ -129,6 +143,7 @@ public abstract class MSP430InstrBuilder
 
     public static class CMP_B_builder extends MSP430InstrBuilder
     {
+        @Override
         public MSP430Instr build(int size, MSP430AddrMode am)
         {
             return new MSP430Instr.CMP_B(size, (MSP430AddrMode.DOUBLE_B) am);
@@ -137,6 +152,7 @@ public abstract class MSP430InstrBuilder
 
     public static class DADD_builder extends MSP430InstrBuilder
     {
+        @Override
         public MSP430Instr build(int size, MSP430AddrMode am)
         {
             return new MSP430Instr.DADD(size, (MSP430AddrMode.DOUBLE_W) am);
@@ -145,6 +161,7 @@ public abstract class MSP430InstrBuilder
 
     public static class DADD_B_builder extends MSP430InstrBuilder
     {
+        @Override
         public MSP430Instr build(int size, MSP430AddrMode am)
         {
             return new MSP430Instr.DADD_B(size, (MSP430AddrMode.DOUBLE_B) am);
@@ -153,6 +170,7 @@ public abstract class MSP430InstrBuilder
 
     public static class JC_builder extends MSP430InstrBuilder
     {
+        @Override
         public MSP430Instr build(int size, MSP430AddrMode am)
         {
             return new MSP430Instr.JC(size, (MSP430AddrMode.JMP) am);
@@ -161,6 +179,7 @@ public abstract class MSP430InstrBuilder
 
     public static class JHS_builder extends MSP430InstrBuilder
     {
+        @Override
         public MSP430Instr build(int size, MSP430AddrMode am)
         {
             return new MSP430Instr.JHS(size, (MSP430AddrMode.JMP) am);
@@ -169,6 +188,7 @@ public abstract class MSP430InstrBuilder
 
     public static class JEQ_builder extends MSP430InstrBuilder
     {
+        @Override
         public MSP430Instr build(int size, MSP430AddrMode am)
         {
             return new MSP430Instr.JEQ(size, (MSP430AddrMode.JMP) am);
@@ -177,6 +197,7 @@ public abstract class MSP430InstrBuilder
 
     public static class JZ_builder extends MSP430InstrBuilder
     {
+        @Override
         public MSP430Instr build(int size, MSP430AddrMode am)
         {
             return new MSP430Instr.JZ(size, (MSP430AddrMode.JMP) am);
@@ -185,6 +206,7 @@ public abstract class MSP430InstrBuilder
 
     public static class JGE_builder extends MSP430InstrBuilder
     {
+        @Override
         public MSP430Instr build(int size, MSP430AddrMode am)
         {
             return new MSP430Instr.JGE(size, (MSP430AddrMode.JMP) am);
@@ -193,6 +215,7 @@ public abstract class MSP430InstrBuilder
 
     public static class JL_builder extends MSP430InstrBuilder
     {
+        @Override
         public MSP430Instr build(int size, MSP430AddrMode am)
         {
             return new MSP430Instr.JL(size, (MSP430AddrMode.JMP) am);
@@ -201,6 +224,7 @@ public abstract class MSP430InstrBuilder
 
     public static class JMP_builder extends MSP430InstrBuilder
     {
+        @Override
         public MSP430Instr build(int size, MSP430AddrMode am)
         {
             return new MSP430Instr.JMP(size, (MSP430AddrMode.JMP) am);
@@ -209,6 +233,7 @@ public abstract class MSP430InstrBuilder
 
     public static class JN_builder extends MSP430InstrBuilder
     {
+        @Override
         public MSP430Instr build(int size, MSP430AddrMode am)
         {
             return new MSP430Instr.JN(size, (MSP430AddrMode.JMP) am);
@@ -217,6 +242,7 @@ public abstract class MSP430InstrBuilder
 
     public static class JNC_builder extends MSP430InstrBuilder
     {
+        @Override
         public MSP430Instr build(int size, MSP430AddrMode am)
         {
             return new MSP430Instr.JNC(size, (MSP430AddrMode.JMP) am);
@@ -225,6 +251,7 @@ public abstract class MSP430InstrBuilder
 
     public static class JLO_builder extends MSP430InstrBuilder
     {
+        @Override
         public MSP430Instr build(int size, MSP430AddrMode am)
         {
             return new MSP430Instr.JLO(size, (MSP430AddrMode.JMP) am);
@@ -233,6 +260,7 @@ public abstract class MSP430InstrBuilder
 
     public static class JNE_builder extends MSP430InstrBuilder
     {
+        @Override
         public MSP430Instr build(int size, MSP430AddrMode am)
         {
             return new MSP430Instr.JNE(size, (MSP430AddrMode.JMP) am);
@@ -241,6 +269,7 @@ public abstract class MSP430InstrBuilder
 
     public static class JNZ_builder extends MSP430InstrBuilder
     {
+        @Override
         public MSP430Instr build(int size, MSP430AddrMode am)
         {
             return new MSP430Instr.JNZ(size, (MSP430AddrMode.JMP) am);
@@ -249,6 +278,7 @@ public abstract class MSP430InstrBuilder
 
     public static class MOV_builder extends MSP430InstrBuilder
     {
+        @Override
         public MSP430Instr build(int size, MSP430AddrMode am)
         {
             return new MSP430Instr.MOV(size, (MSP430AddrMode.DOUBLE_W) am);
@@ -257,6 +287,7 @@ public abstract class MSP430InstrBuilder
 
     public static class MOV_B_builder extends MSP430InstrBuilder
     {
+        @Override
         public MSP430Instr build(int size, MSP430AddrMode am)
         {
             return new MSP430Instr.MOV_B(size, (MSP430AddrMode.DOUBLE_B) am);
@@ -265,6 +296,7 @@ public abstract class MSP430InstrBuilder
 
     public static class PUSH_builder extends MSP430InstrBuilder
     {
+        @Override
         public MSP430Instr build(int size, MSP430AddrMode am)
         {
             return new MSP430Instr.PUSH(size, (MSP430AddrMode.SINGLE_W) am);
@@ -273,6 +305,7 @@ public abstract class MSP430InstrBuilder
 
     public static class PUSH_B_builder extends MSP430InstrBuilder
     {
+        @Override
         public MSP430Instr build(int size, MSP430AddrMode am)
         {
             return new MSP430Instr.PUSH_B(size, (MSP430AddrMode.SINGLE_B) am);
@@ -281,6 +314,7 @@ public abstract class MSP430InstrBuilder
 
     public static class RETI_builder extends MSP430InstrBuilder
     {
+        @Override
         public MSP430Instr build(int size, MSP430AddrMode am)
         {
             return new MSP430Instr.RETI(size);
@@ -289,6 +323,7 @@ public abstract class MSP430InstrBuilder
 
     public static class RRA_builder extends MSP430InstrBuilder
     {
+        @Override
         public MSP430Instr build(int size, MSP430AddrMode am)
         {
             return new MSP430Instr.RRA(size, (MSP430AddrMode.SINGLE_W) am);
@@ -297,6 +332,7 @@ public abstract class MSP430InstrBuilder
 
     public static class RRA_B_builder extends MSP430InstrBuilder
     {
+        @Override
         public MSP430Instr build(int size, MSP430AddrMode am)
         {
             return new MSP430Instr.RRA_B(size, (MSP430AddrMode.SINGLE_B) am);
@@ -305,6 +341,7 @@ public abstract class MSP430InstrBuilder
 
     public static class RRC_builder extends MSP430InstrBuilder
     {
+        @Override
         public MSP430Instr build(int size, MSP430AddrMode am)
         {
             return new MSP430Instr.RRC(size, (MSP430AddrMode.SINGLE_W) am);
@@ -313,6 +350,7 @@ public abstract class MSP430InstrBuilder
 
     public static class RRC_B_builder extends MSP430InstrBuilder
     {
+        @Override
         public MSP430Instr build(int size, MSP430AddrMode am)
         {
             return new MSP430Instr.RRC_B(size, (MSP430AddrMode.SINGLE_B) am);
@@ -321,6 +359,7 @@ public abstract class MSP430InstrBuilder
 
     public static class SUB_builder extends MSP430InstrBuilder
     {
+        @Override
         public MSP430Instr build(int size, MSP430AddrMode am)
         {
             return new MSP430Instr.SUB(size, (MSP430AddrMode.DOUBLE_W) am);
@@ -329,6 +368,7 @@ public abstract class MSP430InstrBuilder
 
     public static class SUB_B_builder extends MSP430InstrBuilder
     {
+        @Override
         public MSP430Instr build(int size, MSP430AddrMode am)
         {
             return new MSP430Instr.SUB_B(size, (MSP430AddrMode.DOUBLE_B) am);
@@ -337,6 +377,7 @@ public abstract class MSP430InstrBuilder
 
     public static class SUBC_builder extends MSP430InstrBuilder
     {
+        @Override
         public MSP430Instr build(int size, MSP430AddrMode am)
         {
             return new MSP430Instr.SUBC(size, (MSP430AddrMode.DOUBLE_W) am);
@@ -345,6 +386,7 @@ public abstract class MSP430InstrBuilder
 
     public static class SUBC_B_builder extends MSP430InstrBuilder
     {
+        @Override
         public MSP430Instr build(int size, MSP430AddrMode am)
         {
             return new MSP430Instr.SUBC_B(size, (MSP430AddrMode.DOUBLE_B) am);
@@ -353,6 +395,7 @@ public abstract class MSP430InstrBuilder
 
     public static class SWPB_builder extends MSP430InstrBuilder
     {
+        @Override
         public MSP430Instr build(int size, MSP430AddrMode am)
         {
             return new MSP430Instr.SWPB(size, (MSP430AddrMode.SINGLE_W) am);
@@ -361,6 +404,7 @@ public abstract class MSP430InstrBuilder
 
     public static class SXT_builder extends MSP430InstrBuilder
     {
+        @Override
         public MSP430Instr build(int size, MSP430AddrMode am)
         {
             return new MSP430Instr.SXT(size, (MSP430AddrMode.SINGLE_W) am);
@@ -369,6 +413,7 @@ public abstract class MSP430InstrBuilder
 
     public static class TST_builder extends MSP430InstrBuilder
     {
+        @Override
         public MSP430Instr build(int size, MSP430AddrMode am)
         {
             return new MSP430Instr.TST(size, (MSP430AddrMode.SINGLE_W) am);
@@ -377,6 +422,7 @@ public abstract class MSP430InstrBuilder
 
     public static class TST_B_builder extends MSP430InstrBuilder
     {
+        @Override
         public MSP430Instr build(int size, MSP430AddrMode am)
         {
             return new MSP430Instr.TST_B(size, (MSP430AddrMode.SINGLE_B) am);
@@ -385,6 +431,7 @@ public abstract class MSP430InstrBuilder
 
     public static class XOR_builder extends MSP430InstrBuilder
     {
+        @Override
         public MSP430Instr build(int size, MSP430AddrMode am)
         {
             return new MSP430Instr.XOR(size, (MSP430AddrMode.DOUBLE_W) am);
@@ -393,6 +440,7 @@ public abstract class MSP430InstrBuilder
 
     public static class XOR_B_builder extends MSP430InstrBuilder
     {
+        @Override
         public MSP430Instr build(int size, MSP430AddrMode am)
         {
             return new MSP430Instr.XOR_B(size, (MSP430AddrMode.DOUBLE_B) am);

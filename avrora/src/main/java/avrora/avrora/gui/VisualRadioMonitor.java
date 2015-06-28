@@ -101,6 +101,7 @@ public class VisualRadioMonitor extends MonitorFactory
         public Object vSync;
 
 
+        @Override
         public void updateDataAndPaint()
         {
             // So if there are new numbers that we added,
@@ -123,6 +124,7 @@ public class VisualRadioMonitor extends MonitorFactory
 
         // This is a quick hack to get things working...we'll have to
         // go back and rewrite to make things more generalized
+        @Override
         public GraphEvents getGraph()
         {
             return theGraph;
@@ -134,6 +136,7 @@ public class VisualRadioMonitor extends MonitorFactory
         // it is also where we init our graph and start the paint thread
         // Think of it as the constructor for the visual elements of this
         // monitor
+        @Override
         public void setVisualPanel(JPanel thePanel, JPanel theOptionsPanel)
         {
 
@@ -174,6 +177,7 @@ public class VisualRadioMonitor extends MonitorFactory
          * simulation is complete. The report does nothing in this case, because
          * this is a visual monitor
          */
+        @Override
         public void report()
         {
             updateDataAndPaint(); // in case there is still stuff in the
@@ -220,6 +224,7 @@ public class VisualRadioMonitor extends MonitorFactory
      * @return an instance of the <code>Monitor</code> interface for the
      *         specified simulator
      */
+    @Override
     public Monitor newMonitor(Simulator s)
     {
         return new VisualMonitor(s);

@@ -67,6 +67,7 @@ public abstract class Option
      * alphabetically for printing in the help system.
      */
     public static final Comparator<Option> COMPARATOR = new Comparator<Option>() {
+        @Override
         public int compare(Option opt1, Option opt2)
         {
             return String.CASE_INSENSITIVE_ORDER.compare(opt1.getName(),
@@ -224,6 +225,7 @@ public abstract class Option
          * @param val
          *            a string representation of the new value of the option.
          */
+        @Override
         public void set(String val)
         {
             try
@@ -256,6 +258,7 @@ public abstract class Option
          *
          * @return a string representation of the value of the option.
          */
+        @Override
         public String stringValue()
         {
             return String.valueOf(value);
@@ -266,6 +269,7 @@ public abstract class Option
          * The <code>printHelp()</code> method prints out a textual paragraph of
          * the help item for this option to the terminal.
          */
+        @Override
         public void printHelp()
         {
             printHeader("long", String.valueOf(defvalue));
@@ -313,6 +317,7 @@ public abstract class Option
          * @param val
          *            a string representation of the new value of the option.
          */
+        @Override
         public void set(String val)
         {
             try
@@ -345,6 +350,7 @@ public abstract class Option
          *
          * @return a string representation of the value of the option.
          */
+        @Override
         public String stringValue()
         {
             return String.valueOf(value);
@@ -355,6 +361,7 @@ public abstract class Option
          * The <code>printHelp()</code> method prints out a textual paragraph of
          * the help item for this option to the terminal.
          */
+        @Override
         public void printHelp()
         {
             printHeader("double", String.valueOf(defvalue));
@@ -411,6 +418,7 @@ public abstract class Option
          * @param val
          *            a string representation of the new value of the option.
          */
+        @Override
         public void set(String val)
         {
             CharacterIterator iter = new StringCharacterIterator(val);
@@ -474,6 +482,7 @@ public abstract class Option
          *
          * @return a string representation of the value of the option.
          */
+        @Override
         public String stringValue()
         {
             return "[" + low + ", " + high + ']';
@@ -484,6 +493,7 @@ public abstract class Option
          * The <code>printHelp()</code> method prints out a textual paragraph of
          * the help item for this option to the terminal.
          */
+        @Override
         public void printHelp()
         {
             printHeader("interval",
@@ -532,6 +542,7 @@ public abstract class Option
          * @param val
          *            a string representation of the new value of the option.
          */
+        @Override
         public void set(String val)
         {
             value = val;
@@ -573,6 +584,7 @@ public abstract class Option
          *
          * @return a string representation of the value of the option.
          */
+        @Override
         public String stringValue()
         {
             return value;
@@ -583,6 +595,7 @@ public abstract class Option
          * The <code>printHelp()</code> method prints out a textual paragraph of
          * the help item for this option to the terminal.
          */
+        @Override
         public void printHelp()
         {
             printHeader("string", defvalue);
@@ -631,6 +644,7 @@ public abstract class Option
          * @param val
          *            a string representation of the new value of the option.
          */
+        @Override
         public void set(String val)
         {
             parseString(val);
@@ -671,6 +685,7 @@ public abstract class Option
          *
          * @return a string representation of the value of the option.
          */
+        @Override
         public String stringValue()
         {
             return orig;
@@ -700,6 +715,7 @@ public abstract class Option
          * The <code>printHelp()</code> method prints out a textual paragraph of
          * the help item for this option to the terminal.
          */
+        @Override
         public void printHelp()
         {
             String defvalue = "".equals(orig) ? "(null)" : orig;
@@ -748,6 +764,7 @@ public abstract class Option
          * @param val
          *            a string representation of the new value of the option.
          */
+        @Override
         public void set(String val)
         {
             if ("true".equals(val) || "".equals(val))
@@ -780,6 +797,7 @@ public abstract class Option
          *
          * @return a string representation of the value of the option.
          */
+        @Override
         public String stringValue()
         {
             return String.valueOf(value);
@@ -790,6 +808,7 @@ public abstract class Option
          * The <code>printHelp()</code> method prints out a textual paragraph of
          * the help item for this option to the terminal.
          */
+        @Override
         public void printHelp()
         {
             printHeader("boolean", String.valueOf(defvalue));

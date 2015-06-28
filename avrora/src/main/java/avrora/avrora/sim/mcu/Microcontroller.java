@@ -249,6 +249,7 @@ public interface Microcontroller
             }
 
 
+            @Override
             public void registerListener(InputListener listener)
             {
                 if (listeners == null)
@@ -259,6 +260,7 @@ public interface Microcontroller
             }
 
 
+            @Override
             public void unregisterListener(InputListener listener)
             {
                 if (listeners != null)

@@ -751,12 +751,14 @@ public abstract class Simulation extends HelpCategory
         }
 
 
+        @Override
         public boolean hasNext()
         {
             return cursor < nodes.length;
         }
 
 
+        @Override
         public Node next()
         {
             if (cursor >= nodes.length)
@@ -779,6 +781,7 @@ public abstract class Simulation extends HelpCategory
         }
 
 
+        @Override
         public void remove()
         {
             throw Util.unimplemented();

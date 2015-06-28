@@ -61,6 +61,7 @@ public abstract class AbstractToken
     /**
      * Returns the image.
      */
+    @Override
     public String toString()
     {
         return image;
@@ -86,6 +87,7 @@ public abstract class AbstractToken
     public static AbstractToken newToken(String img, SourcePoint pt)
     {
         AbstractToken t = new AbstractToken() {
+            @Override
             public AbstractToken getNextToken()
             {
                 return null;

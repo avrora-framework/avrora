@@ -238,6 +238,7 @@ public class Analyzer
          * running. Every five seconds it reports the number of states, edges,
          * frontier states, propagations, etc.
          */
+        @Override
         public void run()
         {
             int cntr = 0;
@@ -856,6 +857,7 @@ public class Analyzer
          *         the policy, and the abstract interpreter should not be
          *         concerned.
          */
+        @Override
         public MutableState call(MutableState s, int target_address)
         {
             if (isea != null)
@@ -886,6 +888,7 @@ public class Analyzer
          * @return the state of the program after the interrupt, null if there
          *         is no next state
          */
+        @Override
         public MutableState interrupt(MutableState s, int num)
         {
             s.setFlag_I(AbstractArithmetic.FALSE);
@@ -912,6 +915,7 @@ public class Analyzer
          *         the policy, and the abstract interpreter should not be
          *         concerned.
          */
+        @Override
         public MutableState ret(MutableState s)
         {
             frontierState.setType(RET_STATE);
@@ -935,6 +939,7 @@ public class Analyzer
          *         the policy, and the abstract interpreter should not be
          *         concerned.
          */
+        @Override
         public MutableState reti(MutableState s)
         {
             frontierState.setType(RETI_STATE);
@@ -965,6 +970,7 @@ public class Analyzer
          *         the policy, and the abstract interpreter should not be
          *         concerned.
          */
+        @Override
         public MutableState indirectCall(MutableState s, char addr_low,
                 char addr_hi)
         {
@@ -1000,6 +1006,7 @@ public class Analyzer
          *         the policy, and the abstract interpreter should not be
          *         concerned.
          */
+        @Override
         public MutableState indirectJump(MutableState s, char addr_low,
                 char addr_hi)
         {
@@ -1038,6 +1045,7 @@ public class Analyzer
          *         the policy, and the abstract interpreter should not be
          *         concerned.
          */
+        @Override
         public MutableState indirectCall(MutableState s, char addr_low,
                 char addr_hi, char ext)
         {
@@ -1064,6 +1072,7 @@ public class Analyzer
          *         the policy, and the abstract interpreter should not be
          *         concerned.
          */
+        @Override
         public MutableState indirectJump(MutableState s, char addr_low,
                 char addr_hi, char ext)
         {
@@ -1082,6 +1091,7 @@ public class Analyzer
          * @param val
          *            the abstract value to push onto the stack
          */
+        @Override
         public void push(MutableState s, char val)
         {
             edgeType = PUSH_EDGE;
@@ -1098,6 +1108,7 @@ public class Analyzer
          *            the current abstract state
          * @return the abstract value popped from the stack
          */
+        @Override
         public char pop(MutableState s)
         {
             edgeType = POP_EDGE;
@@ -1115,6 +1126,7 @@ public class Analyzer
          * @param newState
          *            the new state created
          */
+        @Override
         public void pushState(MutableState newState)
         {
             addEdge(frontierState, edgeType, newState);

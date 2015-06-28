@@ -100,12 +100,14 @@ public class SPI extends AtmelInternalDevice
     }
 
 
+    @Override
     public void connect(SPIDevice d)
     {
         connectedDevice = d;
     }
 
 
+    @Override
     public Frame exchange(Frame frame)
     {
         Frame result = newFrame(SPDR_reg.transmitReg.read());
@@ -185,6 +187,7 @@ public class SPI extends AtmelInternalDevice
         }
 
 
+        @Override
         public void fire()
         {
             if (SPCR_reg._enabled.getValue())
@@ -204,12 +207,14 @@ public class SPI extends AtmelInternalDevice
     }
 
 
+    @Override
     public void force(int inum)
     {
         SPSR_reg.setSPIF();
     }
 
 
+    @Override
     public void invoke(int inum)
     {
         unpostSPIInterrupt();
@@ -229,6 +234,7 @@ public class SPI extends AtmelInternalDevice
         protected class TransmitRegister extends RWRegister
         {
 
+            @Override
             public void write(byte val)
             {
                 super.write(val);
@@ -250,6 +256,7 @@ public class SPI extends AtmelInternalDevice
          *
          * @return the value from the receive buffer
          */
+        @Override
         public byte read()
         {
             if (spifAccessed)
@@ -264,6 +271,7 @@ public class SPI extends AtmelInternalDevice
          * @param val
          *            the value to transmit buffer
          */
+        @Override
         public void write(byte val)
         {
             // TODO: implement write collision detection
@@ -290,6 +298,7 @@ public class SPI extends AtmelInternalDevice
         final RegisterView _spr = RegisterUtil.bitRangeView(this, SPR0, SPR1);
 
 
+        @Override
         public void write(byte val)
         {
             if (devicePrinter != null)
@@ -356,6 +365,7 @@ public class SPI extends AtmelInternalDevice
         byte prev_value;
 
 
+        @Override
         public void write(byte val)
         {
             if (devicePrinter != null)
@@ -365,6 +375,7 @@ public class SPI extends AtmelInternalDevice
         }
 
 
+        @Override
         public byte read()
         {
             if (_spif.getValue())

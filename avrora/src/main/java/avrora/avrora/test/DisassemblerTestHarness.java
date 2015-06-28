@@ -71,6 +71,7 @@ public class DisassemblerTestHarness implements TestEngine.Harness
         }
 
 
+        @Override
         public void run() throws Exception
         {
             ProgramReader r = new ObjDump2ProgramReader();
@@ -97,6 +98,7 @@ public class DisassemblerTestHarness implements TestEngine.Harness
         }
 
 
+        @Override
         public TestResult match(Throwable t)
         {
 
@@ -122,6 +124,7 @@ public class DisassemblerTestHarness implements TestEngine.Harness
     }
 
 
+    @Override
     public TestCase newTestCase(String fname, Properties props) throws Exception
     {
         return new DisassemblerTest(fname, props);

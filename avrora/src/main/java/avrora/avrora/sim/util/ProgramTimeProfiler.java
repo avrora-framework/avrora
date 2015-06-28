@@ -90,6 +90,7 @@ public class ProgramTimeProfiler implements Simulator.Probe
      * @param pc
      *            the address at which this instruction resides
      */
+    @Override
     public void fireBefore(State state, int pc)
     {
         timeBegan = state.getCycles();
@@ -107,6 +108,7 @@ public class ProgramTimeProfiler implements Simulator.Probe
      * @param pc
      *            the address at which this instruction resides
      */
+    @Override
     public void fireAfter(State state, int pc)
     {
         itime[pc] += state.getCycles() - timeBegan;

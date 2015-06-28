@@ -124,6 +124,7 @@ public class ProfileMonitor extends MonitorFactory
             }
 
 
+            @Override
             public void fire()
             {
                 icount[simulator.getState().getPC()]++;
@@ -141,6 +142,7 @@ public class ProfileMonitor extends MonitorFactory
             protected long timeBegan;
 
 
+            @Override
             public void fireBefore(State state, int pc)
             {
                 icount[pc]++;
@@ -148,6 +150,7 @@ public class ProfileMonitor extends MonitorFactory
             }
 
 
+            @Override
             public void fireAfter(State state, int pc)
             {
                 itime[pc] += state.getCycles() - timeBegan;
@@ -162,6 +165,7 @@ public class ProfileMonitor extends MonitorFactory
         public class CProbe extends Simulator.Probe.Empty
         {
 
+            @Override
             public void fireBefore(State state, int pc)
             {
                 icount[pc]++;
@@ -169,6 +173,7 @@ public class ProfileMonitor extends MonitorFactory
         }
 
 
+        @Override
         public void report()
         {
 
@@ -271,6 +276,7 @@ public class ProfileMonitor extends MonitorFactory
             long cycles;
 
 
+            @Override
             public int compareTo(InstrProfileEntry other)
             {
                 if (this.cycles > 0)
@@ -358,6 +364,7 @@ public class ProfileMonitor extends MonitorFactory
     }
 
 
+    @Override
     public Monitor newMonitor(Simulator s)
     {
         return new Mon(s);

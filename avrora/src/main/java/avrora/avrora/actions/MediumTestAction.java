@@ -63,6 +63,7 @@ public class MediumTestAction extends Action
     }
 
 
+    @Override
     public void run(String[] args) throws Exception
     {
         // create a medium and test it.
@@ -72,6 +73,7 @@ public class MediumTestAction extends Action
         final Medium.Receiver r = new TestReceiver(m, c);
 
         Simulator.Event send = new Simulator.Event() {
+            @Override
             public void fire()
             {
                 // power and frequency are doubles now
@@ -80,6 +82,7 @@ public class MediumTestAction extends Action
         };
 
         Simulator.Event recv = new Simulator.Event() {
+            @Override
             public void fire()
             {
                 r.beginReceive(2.4);
@@ -108,6 +111,7 @@ public class MediumTestAction extends Action
         }
 
 
+        @Override
         public byte nextByte()
         {
             byte val = (byte) (counter++);
@@ -125,6 +129,7 @@ public class MediumTestAction extends Action
         }
 
 
+        @Override
         public byte nextByte(boolean lock, byte b)
         {
             if (lock)
@@ -149,12 +154,14 @@ public class MediumTestAction extends Action
         }
 
 
+        @Override
         public void setRSSI(double PRec)
         {
             // do nothing
         }
 
 
+        @Override
         public void setBER(double BER)
         {
             // do nothing

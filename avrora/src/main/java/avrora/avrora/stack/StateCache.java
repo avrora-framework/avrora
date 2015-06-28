@@ -82,12 +82,14 @@ public class StateCache
         }
 
 
+        @Override
         public int hashCode()
         {
             return hashCode;
         }
 
 
+        @Override
         public boolean equals(Object o)
         {
             if (this == o)
@@ -147,12 +149,14 @@ public class StateCache
             boolean done;
 
 
+            @Override
             public boolean hasNext()
             {
                 return !done && oneState != null;
             }
 
 
+            @Override
             public State next()
             {
                 done = true;
@@ -160,6 +164,7 @@ public class StateCache
             }
 
 
+            @Override
             public void remove()
             {
                 throw Util.unimplemented();

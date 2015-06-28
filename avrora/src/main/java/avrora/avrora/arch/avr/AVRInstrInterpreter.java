@@ -430,6 +430,7 @@ public abstract class AVRInstrInterpreter extends AVRState
     }
 
 
+    @Override
     public void visit(AVRInstr.ADC i)
     {
         $write_int8(i.rd, performAddition($read_int8(i.rd) & 255,
@@ -437,6 +438,7 @@ public abstract class AVRInstrInterpreter extends AVRState
     }
 
 
+    @Override
     public void visit(AVRInstr.ADD i)
     {
         $write_int8(i.rd, performAddition($read_int8(i.rd) & 255,
@@ -444,6 +446,7 @@ public abstract class AVRInstrInterpreter extends AVRState
     }
 
 
+    @Override
     public void visit(AVRInstr.ADIW i)
     {
         int r1 = $read_uint16(i.rd);
@@ -459,18 +462,21 @@ public abstract class AVRInstrInterpreter extends AVRState
     }
 
 
+    @Override
     public void visit(AVRInstr.AND i)
     {
         $write_int8(i.rd, performAnd($read_int8(i.rd), $read_int8(i.rr)));
     }
 
 
+    @Override
     public void visit(AVRInstr.ANDI i)
     {
         $write_int8(i.rd, performAnd($read_int8(i.rd), i.imm.value));
     }
 
 
+    @Override
     public void visit(AVRInstr.ASR i)
     {
         int r1 = $read_int8(i.rd);
@@ -478,12 +484,14 @@ public abstract class AVRInstrInterpreter extends AVRState
     }
 
 
+    @Override
     public void visit(AVRInstr.BCLR i)
     {
         setIORbit(SREG, i.bit.value, false);
     }
 
 
+    @Override
     public void visit(AVRInstr.BLD i)
     {
         int val = $read_int8(i.rr);
@@ -492,6 +500,7 @@ public abstract class AVRInstrInterpreter extends AVRState
     }
 
 
+    @Override
     public void visit(AVRInstr.BRBC i)
     {
         if (!getIORbit(SREG, i.bit.value))
@@ -501,6 +510,7 @@ public abstract class AVRInstrInterpreter extends AVRState
     }
 
 
+    @Override
     public void visit(AVRInstr.BRBS i)
     {
         if (getIORbit(SREG, i.bit.value))
@@ -510,6 +520,7 @@ public abstract class AVRInstrInterpreter extends AVRState
     }
 
 
+    @Override
     public void visit(AVRInstr.BRCC i)
     {
         if (!C)
@@ -519,6 +530,7 @@ public abstract class AVRInstrInterpreter extends AVRState
     }
 
 
+    @Override
     public void visit(AVRInstr.BRCS i)
     {
         if (C)
@@ -528,12 +540,14 @@ public abstract class AVRInstrInterpreter extends AVRState
     }
 
 
+    @Override
     public void visit(AVRInstr.BREAK i)
     {
         stop();
     }
 
 
+    @Override
     public void visit(AVRInstr.BREQ i)
     {
         if (Z)
@@ -543,6 +557,7 @@ public abstract class AVRInstrInterpreter extends AVRState
     }
 
 
+    @Override
     public void visit(AVRInstr.BRGE i)
     {
         if (!S)
@@ -552,6 +567,7 @@ public abstract class AVRInstrInterpreter extends AVRState
     }
 
 
+    @Override
     public void visit(AVRInstr.BRHC i)
     {
         if (!H)
@@ -561,6 +577,7 @@ public abstract class AVRInstrInterpreter extends AVRState
     }
 
 
+    @Override
     public void visit(AVRInstr.BRHS i)
     {
         if (H)
@@ -570,6 +587,7 @@ public abstract class AVRInstrInterpreter extends AVRState
     }
 
 
+    @Override
     public void visit(AVRInstr.BRID i)
     {
         if (!I)
@@ -579,6 +597,7 @@ public abstract class AVRInstrInterpreter extends AVRState
     }
 
 
+    @Override
     public void visit(AVRInstr.BRIE i)
     {
         if (I)
@@ -588,6 +607,7 @@ public abstract class AVRInstrInterpreter extends AVRState
     }
 
 
+    @Override
     public void visit(AVRInstr.BRLO i)
     {
         if (C)
@@ -597,6 +617,7 @@ public abstract class AVRInstrInterpreter extends AVRState
     }
 
 
+    @Override
     public void visit(AVRInstr.BRLT i)
     {
         if (S)
@@ -606,6 +627,7 @@ public abstract class AVRInstrInterpreter extends AVRState
     }
 
 
+    @Override
     public void visit(AVRInstr.BRMI i)
     {
         if (N)
@@ -615,6 +637,7 @@ public abstract class AVRInstrInterpreter extends AVRState
     }
 
 
+    @Override
     public void visit(AVRInstr.BRNE i)
     {
         if (!Z)
@@ -624,6 +647,7 @@ public abstract class AVRInstrInterpreter extends AVRState
     }
 
 
+    @Override
     public void visit(AVRInstr.BRPL i)
     {
         if (!N)
@@ -633,6 +657,7 @@ public abstract class AVRInstrInterpreter extends AVRState
     }
 
 
+    @Override
     public void visit(AVRInstr.BRSH i)
     {
         if (!C)
@@ -642,6 +667,7 @@ public abstract class AVRInstrInterpreter extends AVRState
     }
 
 
+    @Override
     public void visit(AVRInstr.BRTC i)
     {
         if (!T)
@@ -651,6 +677,7 @@ public abstract class AVRInstrInterpreter extends AVRState
     }
 
 
+    @Override
     public void visit(AVRInstr.BRTS i)
     {
         if (T)
@@ -660,6 +687,7 @@ public abstract class AVRInstrInterpreter extends AVRState
     }
 
 
+    @Override
     public void visit(AVRInstr.BRVC i)
     {
         if (!V)
@@ -669,6 +697,7 @@ public abstract class AVRInstrInterpreter extends AVRState
     }
 
 
+    @Override
     public void visit(AVRInstr.BRVS i)
     {
         if (V)
@@ -678,18 +707,21 @@ public abstract class AVRInstrInterpreter extends AVRState
     }
 
 
+    @Override
     public void visit(AVRInstr.BSET i)
     {
         setIORbit(SREG, i.bit.value, true);
     }
 
 
+    @Override
     public void visit(AVRInstr.BST i)
     {
         T = bit_get($read_int8(i.rr), i.bit.value);
     }
 
 
+    @Override
     public void visit(AVRInstr.CALL i)
     {
         pushPC(nextpc);
@@ -697,42 +729,49 @@ public abstract class AVRInstrInterpreter extends AVRState
     }
 
 
+    @Override
     public void visit(AVRInstr.CBI i)
     {
         setIORbit(i.ior.value, i.bit.value, false);
     }
 
 
+    @Override
     public void visit(AVRInstr.CBR i)
     {
         $write_int8(i.rd, performAnd($read_int8(i.rd), ~i.imm.value));
     }
 
 
+    @Override
     public void visit(AVRInstr.CLC i)
     {
         C = false;
     }
 
 
+    @Override
     public void visit(AVRInstr.CLH i)
     {
         H = false;
     }
 
 
+    @Override
     public void visit(AVRInstr.CLI i)
     {
         disableInterrupts();
     }
 
 
+    @Override
     public void visit(AVRInstr.CLN i)
     {
         N = false;
     }
 
 
+    @Override
     public void visit(AVRInstr.CLR i)
     {
         S = false;
@@ -743,30 +782,35 @@ public abstract class AVRInstrInterpreter extends AVRState
     }
 
 
+    @Override
     public void visit(AVRInstr.CLS i)
     {
         S = false;
     }
 
 
+    @Override
     public void visit(AVRInstr.CLT i)
     {
         T = false;
     }
 
 
+    @Override
     public void visit(AVRInstr.CLV i)
     {
         V = false;
     }
 
 
+    @Override
     public void visit(AVRInstr.CLZ i)
     {
         Z = false;
     }
 
 
+    @Override
     public void visit(AVRInstr.COM i)
     {
         int result = 255 - $read_int8(i.rd);
@@ -779,24 +823,28 @@ public abstract class AVRInstrInterpreter extends AVRState
     }
 
 
+    @Override
     public void visit(AVRInstr.CP i)
     {
         performSubtraction($read_int8(i.rd), $read_int8(i.rr), 0);
     }
 
 
+    @Override
     public void visit(AVRInstr.CPC i)
     {
         performSubtractionPZ($read_int8(i.rd), $read_int8(i.rr), bit(C));
     }
 
 
+    @Override
     public void visit(AVRInstr.CPI i)
     {
         performSubtraction($read_int8(i.rd), i.imm.value, 0);
     }
 
 
+    @Override
     public void visit(AVRInstr.CPSE i)
     {
         int r1 = $read_int8(i.rd);
@@ -809,6 +857,7 @@ public abstract class AVRInstrInterpreter extends AVRState
     }
 
 
+    @Override
     public void visit(AVRInstr.DEC i)
     {
         int r1 = $read_int8(i.rd) & 255;
@@ -821,16 +870,19 @@ public abstract class AVRInstrInterpreter extends AVRState
     }
 
 
+    @Override
     public void visit(AVRInstr.EICALL i)
     {
     }
 
 
+    @Override
     public void visit(AVRInstr.EIJMP i)
     {
     }
 
 
+    @Override
     public void visit(AVRInstr.EOR i)
     {
         int result = $read_int8(i.rd) ^ $read_int8(i.rr);
@@ -842,6 +894,7 @@ public abstract class AVRInstrInterpreter extends AVRState
     }
 
 
+    @Override
     public void visit(AVRInstr.FMUL i)
     {
         int result = ($read_int8(i.rd) & 255) * ($read_int8(i.rr) & 255) << 1;
@@ -851,6 +904,7 @@ public abstract class AVRInstrInterpreter extends AVRState
     }
 
 
+    @Override
     public void visit(AVRInstr.FMULS i)
     {
         int result = $read_int8(i.rd) * $read_int8(i.rr) << 1;
@@ -860,6 +914,7 @@ public abstract class AVRInstrInterpreter extends AVRState
     }
 
 
+    @Override
     public void visit(AVRInstr.FMULSU i)
     {
         int result = $read_int8(i.rd) * ($read_int8(i.rr) & 255) << 1;
@@ -869,6 +924,7 @@ public abstract class AVRInstrInterpreter extends AVRState
     }
 
 
+    @Override
     public void visit(AVRInstr.ICALL i)
     {
         pushPC(nextpc);
@@ -876,18 +932,21 @@ public abstract class AVRInstrInterpreter extends AVRState
     }
 
 
+    @Override
     public void visit(AVRInstr.IJMP i)
     {
         nextpc = absolute(get_wreg(30));
     }
 
 
+    @Override
     public void visit(AVRInstr.IN i)
     {
         $write_int8(i.rd, map_get(ioregs, i.imm.value));
     }
 
 
+    @Override
     public void visit(AVRInstr.INC i)
     {
         int r1 = $read_int8(i.rd) & 255;
@@ -900,54 +959,63 @@ public abstract class AVRInstrInterpreter extends AVRState
     }
 
 
+    @Override
     public void visit(AVRInstr.JMP i)
     {
         nextpc = absolute(i.target.value);
     }
 
 
+    @Override
     public void visit(AVRInstr.LDD i)
     {
         $write_int8(i.rd, map_get(sram, $read_uint16(i.ar) + i.imm.value));
     }
 
 
+    @Override
     public void visit(AVRInstr.LDI i)
     {
         $write_int8(i.rd, i.imm.value);
     }
 
 
+    @Override
     public void visit(AVRInstr.LDS i)
     {
         $write_int8(i.rd, map_get(sram, i.addr.value));
     }
 
 
+    @Override
     public void visit(AVRInstr.LSL i)
     {
         $write_int8(i.rd, performLeftShift($read_int8(i.rd), false));
     }
 
 
+    @Override
     public void visit(AVRInstr.LSR i)
     {
         $write_int8(i.rd, performRightShift($read_int8(i.rd), false));
     }
 
 
+    @Override
     public void visit(AVRInstr.MOV i)
     {
         $write_int8(i.rd, $read_int8(i.rr));
     }
 
 
+    @Override
     public void visit(AVRInstr.MOVW i)
     {
         $write_uint16(i.rd, $read_uint16(i.rr));
     }
 
 
+    @Override
     public void visit(AVRInstr.MUL i)
     {
         int result = ($read_int8(i.rd) & 255) * ($read_int8(i.rr) & 255);
@@ -957,6 +1025,7 @@ public abstract class AVRInstrInterpreter extends AVRState
     }
 
 
+    @Override
     public void visit(AVRInstr.MULS i)
     {
         int result = $read_int8(i.rd) * $read_int8(i.rr);
@@ -966,6 +1035,7 @@ public abstract class AVRInstrInterpreter extends AVRState
     }
 
 
+    @Override
     public void visit(AVRInstr.MULSU i)
     {
         int result = $read_int8(i.rd) * ($read_int8(i.rr) & 255);
@@ -975,47 +1045,55 @@ public abstract class AVRInstrInterpreter extends AVRState
     }
 
 
+    @Override
     public void visit(AVRInstr.NEG i)
     {
         $write_int8(i.rd, performSubtraction(0, $read_int8(i.rd), 0));
     }
 
 
+    @Override
     public void visit(AVRInstr.NOP i)
     {
     }
 
 
+    @Override
     public void visit(AVRInstr.OR i)
     {
         $write_int8(i.rd, performOr($read_int8(i.rd), $read_int8(i.rr)));
     }
 
 
+    @Override
     public void visit(AVRInstr.ORI i)
     {
         $write_int8(i.rd, performOr($read_int8(i.rd), i.imm.value));
     }
 
 
+    @Override
     public void visit(AVRInstr.OUT i)
     {
         map_set(ioregs, i.ior.value, $read_int8(i.rr));
     }
 
 
+    @Override
     public void visit(AVRInstr.POP i)
     {
         $write_int8(i.rd, popByte());
     }
 
 
+    @Override
     public void visit(AVRInstr.PUSH i)
     {
         pushByte($read_int8(i.rd));
     }
 
 
+    @Override
     public void visit(AVRInstr.RCALL i)
     {
         pushPC(nextpc);
@@ -1023,12 +1101,14 @@ public abstract class AVRInstrInterpreter extends AVRState
     }
 
 
+    @Override
     public void visit(AVRInstr.RET i)
     {
         nextpc = popPC();
     }
 
 
+    @Override
     public void visit(AVRInstr.RETI i)
     {
         nextpc = popPC();
@@ -1037,24 +1117,28 @@ public abstract class AVRInstrInterpreter extends AVRState
     }
 
 
+    @Override
     public void visit(AVRInstr.RJMP i)
     {
         nextpc = relative(i.target.value);
     }
 
 
+    @Override
     public void visit(AVRInstr.ROL i)
     {
         $write_int8(i.rd, performLeftShift($read_int8(i.rd) & 255, C));
     }
 
 
+    @Override
     public void visit(AVRInstr.ROR i)
     {
         $write_int8(i.rd, performRightShift($read_int8(i.rd), C));
     }
 
 
+    @Override
     public void visit(AVRInstr.SBC i)
     {
         $write_int8(i.rd, performSubtractionPZ($read_int8(i.rd),
@@ -1062,6 +1146,7 @@ public abstract class AVRInstrInterpreter extends AVRState
     }
 
 
+    @Override
     public void visit(AVRInstr.SBCI i)
     {
         $write_int8(i.rd,
@@ -1069,12 +1154,14 @@ public abstract class AVRInstrInterpreter extends AVRState
     }
 
 
+    @Override
     public void visit(AVRInstr.SBI i)
     {
         setIORbit(i.ior.value, i.bit.value, true);
     }
 
 
+    @Override
     public void visit(AVRInstr.SBIC i)
     {
         if (!getIORbit(i.ior.value, i.bit.value))
@@ -1084,6 +1171,7 @@ public abstract class AVRInstrInterpreter extends AVRState
     }
 
 
+    @Override
     public void visit(AVRInstr.SBIS i)
     {
         if (getIORbit(i.ior.value, i.bit.value))
@@ -1093,6 +1181,7 @@ public abstract class AVRInstrInterpreter extends AVRState
     }
 
 
+    @Override
     public void visit(AVRInstr.SBIW i)
     {
         int val = $read_uint16(i.rd);
@@ -1108,12 +1197,14 @@ public abstract class AVRInstrInterpreter extends AVRState
     }
 
 
+    @Override
     public void visit(AVRInstr.SBR i)
     {
         $write_int8(i.rd, performOr($read_int8(i.rd), i.imm.value));
     }
 
 
+    @Override
     public void visit(AVRInstr.SBRC i)
     {
         if (!bit_get($read_int8(i.rr), i.bit.value))
@@ -1123,6 +1214,7 @@ public abstract class AVRInstrInterpreter extends AVRState
     }
 
 
+    @Override
     public void visit(AVRInstr.SBRS i)
     {
         if (bit_get($read_int8(i.rr), i.bit.value))
@@ -1132,84 +1224,98 @@ public abstract class AVRInstrInterpreter extends AVRState
     }
 
 
+    @Override
     public void visit(AVRInstr.SEC i)
     {
         C = true;
     }
 
 
+    @Override
     public void visit(AVRInstr.SEH i)
     {
         H = true;
     }
 
 
+    @Override
     public void visit(AVRInstr.SEI i)
     {
         enableInterrupts();
     }
 
 
+    @Override
     public void visit(AVRInstr.SEN i)
     {
         N = true;
     }
 
 
+    @Override
     public void visit(AVRInstr.SER i)
     {
         $write_int8(i.rd, low(255));
     }
 
 
+    @Override
     public void visit(AVRInstr.SES i)
     {
         S = true;
     }
 
 
+    @Override
     public void visit(AVRInstr.SET i)
     {
         T = true;
     }
 
 
+    @Override
     public void visit(AVRInstr.SEV i)
     {
         V = true;
     }
 
 
+    @Override
     public void visit(AVRInstr.SEZ i)
     {
         Z = true;
     }
 
 
+    @Override
     public void visit(AVRInstr.SLEEP i)
     {
         enterSleepMode();
     }
 
 
+    @Override
     public void visit(AVRInstr.SPM i)
     {
         storeProgramMemory();
     }
 
 
+    @Override
     public void visit(AVRInstr.STD i)
     {
         map_set(sram, $read_uint16(i.ar) + i.imm.value, $read_int8(i.rr));
     }
 
 
+    @Override
     public void visit(AVRInstr.STS i)
     {
         map_set(sram, i.addr.value, $read_int8(i.rr));
     }
 
 
+    @Override
     public void visit(AVRInstr.SUB i)
     {
         $write_int8(i.rd,
@@ -1217,12 +1323,14 @@ public abstract class AVRInstrInterpreter extends AVRState
     }
 
 
+    @Override
     public void visit(AVRInstr.SUBI i)
     {
         $write_int8(i.rd, performSubtraction($read_int8(i.rd), i.imm.value, 0));
     }
 
 
+    @Override
     public void visit(AVRInstr.SWAP i)
     {
         int val = $read_int8(i.rd) & 255;
@@ -1233,6 +1341,7 @@ public abstract class AVRInstrInterpreter extends AVRState
     }
 
 
+    @Override
     public void visit(AVRInstr.TST i)
     {
         int r1 = $read_int8(i.rd);
@@ -1243,11 +1352,13 @@ public abstract class AVRInstrInterpreter extends AVRState
     }
 
 
+    @Override
     public void visit(AVRInstr.WDR i)
     {
     }
 
 
+    @Override
     public void visit(AVRInstr.ELPM i)
     {
         int addr = extended($read_poly_uint16(i.source));
@@ -1255,6 +1366,7 @@ public abstract class AVRInstrInterpreter extends AVRState
     }
 
 
+    @Override
     public void visit(AVRInstr.LPM i)
     {
         int addr = $read_poly_uint16(i.source);
@@ -1262,6 +1374,7 @@ public abstract class AVRInstrInterpreter extends AVRState
     }
 
 
+    @Override
     public void visit(AVRInstr.LD i)
     {
         int addr = $read_poly_uint16(i.ar);
@@ -1269,6 +1382,7 @@ public abstract class AVRInstrInterpreter extends AVRState
     }
 
 
+    @Override
     public void visit(AVRInstr.ST i)
     {
         int addr = $read_poly_uint16(i.ar);

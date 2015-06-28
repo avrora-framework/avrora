@@ -56,6 +56,7 @@ public class RetAddrWatch extends MonitorFactory
 
     protected class WatchRetAddr extends Simulator.Watch.Empty
     {
+        @Override
         public void fireBeforeWrite(State state, int data_addr, byte value)
         {
             state.getSimulator().getPrinter()
@@ -74,6 +75,7 @@ public class RetAddrWatch extends MonitorFactory
     // decremented.
     protected class ProbeCall extends Simulator.Probe.Empty
     {
+        @Override
         public void fireAfter(State state, int pc)
         {
             int sp = state.getSP();
@@ -84,6 +86,7 @@ public class RetAddrWatch extends MonitorFactory
 
     protected class ProbeInterrupt extends Simulator.InterruptProbe.Empty
     {
+        @Override
         public void fireAfterInvoke(State state, int inum)
         {
             int sp = state.getSP();
@@ -94,6 +97,7 @@ public class RetAddrWatch extends MonitorFactory
 
     protected class ProbeReturn extends Simulator.Probe.Empty
     {
+        @Override
         public void fireBefore(State state, int pc)
         {
             int sp = state.getSP();
@@ -162,6 +166,7 @@ public class RetAddrWatch extends MonitorFactory
         }
 
 
+        @Override
         public void report()
         {
             // nothing to report
@@ -191,6 +196,7 @@ public class RetAddrWatch extends MonitorFactory
      * @return a new monitor that adds watches for each return address on the
      *         stack
      */
+    @Override
     public Monitor newMonitor(Simulator s)
     {
         return new Mon(s);

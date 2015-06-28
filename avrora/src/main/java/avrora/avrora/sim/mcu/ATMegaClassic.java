@@ -89,30 +89,35 @@ public abstract class ATMegaClassic extends ATMegaFamilyNew
         }
 
 
+        @Override
         public int getCounter()
         {
             return TCNTn_reg.read();
         }
 
 
+        @Override
         public void setCounter(int count)
         {
             TCNTn_reg.write((byte) count);
         }
 
 
+        @Override
         public String getCounterName()
         {
             return "TCNT" + timerNumber;
         }
 
 
+        @Override
         public int getMax()
         {
             return 0xFF;
         }
 
 
+        @Override
         public void resetMode(int WGMn)
         {
             mode = modes[WGMn];
@@ -134,12 +139,14 @@ public abstract class ATMegaClassic extends ATMegaFamilyNew
             }
 
 
+            @Override
             int read()
             {
                 return OCRn_reg.read16();
             }
 
 
+            @Override
             int readBuffer()
             {
                 return OCRn_reg.readBuffer();
@@ -235,30 +242,35 @@ public abstract class ATMegaClassic extends ATMegaFamilyNew
         }
 
 
+        @Override
         public int getCounter()
         {
             return TCNTn_reg.read16();
         }
 
 
+        @Override
         public void setCounter(int count)
         {
             TCNTn_reg.write(count);
         }
 
 
+        @Override
         public String getCounterName()
         {
             return "TCNT" + timerNumber;
         }
 
 
+        @Override
         public int getMax()
         {
             return 0xFFFF;
         }
 
 
+        @Override
         public void resetMode(int WGMn)
         {
             mode = modes[WGMn];
@@ -286,12 +298,14 @@ public abstract class ATMegaClassic extends ATMegaFamilyNew
             }
 
 
+            @Override
             int read()
             {
                 return OCRnX_reg.read16();
             }
 
 
+            @Override
             int readBuffer()
             {
                 return OCRnX_reg.readBuffer();
@@ -323,12 +337,14 @@ public abstract class ATMegaClassic extends ATMegaFamilyNew
             }
 
 
+            @Override
             int read()
             {
                 return OCRnX_reg.read16();
             }
 
 
+            @Override
             int readBuffer()
             {
                 return OCRnX_reg.readBuffer();
@@ -360,6 +376,7 @@ public abstract class ATMegaClassic extends ATMegaFamilyNew
             static final int TCR0UB = 0;
 
 
+            @Override
             public void write(byte val)
             {
                 super.write((byte) (0xf & val));

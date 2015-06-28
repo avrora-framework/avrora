@@ -78,6 +78,7 @@ public class Mica2 extends Platform
          *            the program to load onto the node @return a new instance
          *            of the <code>Mica2</code> platform
          */
+        @Override
         public Platform newPlatform(int id, Simulation sim, Program p)
         {
             ClockDomain cd = new ClockDomain(MAIN_HZ);

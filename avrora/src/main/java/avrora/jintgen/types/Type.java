@@ -97,6 +97,7 @@ public class Type
      * 
      * @return a string representation of this type
      */
+    @Override
     public String toString()
     {
         StringBuffer buf = new StringBuffer();

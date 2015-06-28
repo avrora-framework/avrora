@@ -117,12 +117,14 @@ public class Environment
         }
 
 
+        @Override
         public String getName()
         {
             return name;
         }
 
 
+        @Override
         public Type getType()
         {
             return type;

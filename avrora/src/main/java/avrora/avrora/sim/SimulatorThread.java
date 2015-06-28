@@ -106,6 +106,7 @@ public class SimulatorThread extends Thread
      * <code>start()</code> method of the <code>Simulator</code> instance
      * associated with this thread.
      */
+    @Override
     public void run()
     {
         try

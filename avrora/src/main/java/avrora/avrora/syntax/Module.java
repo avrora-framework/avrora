@@ -445,6 +445,7 @@ public class Module implements Context
     }
 
 
+    @Override
     public LegacyRegister getRegister(AbstractToken tok)
     {
         String name = labelName(tok);
@@ -458,6 +459,7 @@ public class Module implements Context
     }
 
 
+    @Override
     public int getVariable(AbstractToken tok)
     {
         String name = labelName(tok);

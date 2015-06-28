@@ -73,6 +73,7 @@ public class SubcategoryItem implements HelpItem
      *
      * @return a help string for this item.
      */
+    @Override
     public String getHelp()
     {
         return helpCat.getHelp();
@@ -83,6 +84,7 @@ public class SubcategoryItem implements HelpItem
      * The <code>printHelp()</code> method prints out a well-formatted paragraph
      * containing the help for this subcategory.
      */
+    @Override
     public void printHelp()
     {
         String h = getHelp();

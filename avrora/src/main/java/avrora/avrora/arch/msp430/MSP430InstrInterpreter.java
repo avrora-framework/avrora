@@ -569,6 +569,7 @@ public abstract class MSP430InstrInterpreter extends MSP430State
     }
 
 
+    @Override
     public void visit(MSP430Instr.ADD i)
     {
         int r1 = $read_poly_uint16(i.source);
@@ -578,6 +579,7 @@ public abstract class MSP430InstrInterpreter extends MSP430State
     }
 
 
+    @Override
     public void visit(MSP430Instr.ADD_B i)
     {
         int r1 = $read_poly_int8(i.source);
@@ -587,6 +589,7 @@ public abstract class MSP430InstrInterpreter extends MSP430State
     }
 
 
+    @Override
     public void visit(MSP430Instr.ADDC i)
     {
         int r1 = $read_poly_uint16(i.source);
@@ -596,6 +599,7 @@ public abstract class MSP430InstrInterpreter extends MSP430State
     }
 
 
+    @Override
     public void visit(MSP430Instr.ADDC_B i)
     {
         int r1 = $read_poly_int8(i.source);
@@ -605,6 +609,7 @@ public abstract class MSP430InstrInterpreter extends MSP430State
     }
 
 
+    @Override
     public void visit(MSP430Instr.AND i)
     {
         int r1 = $read_poly_uint16(i.source);
@@ -614,6 +619,7 @@ public abstract class MSP430InstrInterpreter extends MSP430State
     }
 
 
+    @Override
     public void visit(MSP430Instr.AND_B i)
     {
         int r1 = $read_poly_int8(i.source);
@@ -623,6 +629,7 @@ public abstract class MSP430InstrInterpreter extends MSP430State
     }
 
 
+    @Override
     public void visit(MSP430Instr.BIC i)
     {
         $write_poly_uint16(i.dest,
@@ -630,6 +637,7 @@ public abstract class MSP430InstrInterpreter extends MSP430State
     }
 
 
+    @Override
     public void visit(MSP430Instr.BIC_B i)
     {
         $write_poly_int8(i.dest,
@@ -637,6 +645,7 @@ public abstract class MSP430InstrInterpreter extends MSP430State
     }
 
 
+    @Override
     public void visit(MSP430Instr.BIS i)
     {
         $write_poly_uint16(i.dest,
@@ -644,6 +653,7 @@ public abstract class MSP430InstrInterpreter extends MSP430State
     }
 
 
+    @Override
     public void visit(MSP430Instr.BIS_B i)
     {
         $write_poly_int8(i.dest,
@@ -651,18 +661,21 @@ public abstract class MSP430InstrInterpreter extends MSP430State
     }
 
 
+    @Override
     public void visit(MSP430Instr.BIT i)
     {
         performAndW($read_poly_uint16(i.source), $read_poly_uint16(i.dest));
     }
 
 
+    @Override
     public void visit(MSP430Instr.BIT_B i)
     {
         performAndW($read_poly_int8(i.source), $read_poly_int8(i.dest));
     }
 
 
+    @Override
     public void visit(MSP430Instr.CALL i)
     {
         int temp = $read_poly_uint16(i.source);
@@ -671,6 +684,7 @@ public abstract class MSP430InstrInterpreter extends MSP430State
     }
 
 
+    @Override
     public void visit(MSP430Instr.CMP i)
     {
         performAdditionW($read_poly_uint16(i.source),
@@ -678,12 +692,14 @@ public abstract class MSP430InstrInterpreter extends MSP430State
     }
 
 
+    @Override
     public void visit(MSP430Instr.CMP_B i)
     {
         performAddition($read_poly_int8(i.source), ~$read_poly_int8(i.dest), 1);
     }
 
 
+    @Override
     public void visit(MSP430Instr.DADD i)
     {
         $write_poly_uint16(i.dest, performDeciAddCW($read_poly_uint16(i.source),
@@ -691,6 +707,7 @@ public abstract class MSP430InstrInterpreter extends MSP430State
     }
 
 
+    @Override
     public void visit(MSP430Instr.DADD_B i)
     {
         $write_poly_int8(i.dest, performDeciAddC($read_poly_int8(i.source),
@@ -698,6 +715,7 @@ public abstract class MSP430InstrInterpreter extends MSP430State
     }
 
 
+    @Override
     public void visit(MSP430Instr.JC i)
     {
         if (C)
@@ -707,6 +725,7 @@ public abstract class MSP430InstrInterpreter extends MSP430State
     }
 
 
+    @Override
     public void visit(MSP430Instr.JHS i)
     {
         if (C)
@@ -716,6 +735,7 @@ public abstract class MSP430InstrInterpreter extends MSP430State
     }
 
 
+    @Override
     public void visit(MSP430Instr.JEQ i)
     {
         if (Z)
@@ -725,6 +745,7 @@ public abstract class MSP430InstrInterpreter extends MSP430State
     }
 
 
+    @Override
     public void visit(MSP430Instr.JZ i)
     {
         if (Z)
@@ -734,6 +755,7 @@ public abstract class MSP430InstrInterpreter extends MSP430State
     }
 
 
+    @Override
     public void visit(MSP430Instr.JGE i)
     {
         if (Z != N)
@@ -743,6 +765,7 @@ public abstract class MSP430InstrInterpreter extends MSP430State
     }
 
 
+    @Override
     public void visit(MSP430Instr.JL i)
     {
         if (N != V)
@@ -752,12 +775,14 @@ public abstract class MSP430InstrInterpreter extends MSP430State
     }
 
 
+    @Override
     public void visit(MSP430Instr.JMP i)
     {
         nextpc = $read_uint16(i.target);
     }
 
 
+    @Override
     public void visit(MSP430Instr.JN i)
     {
         if (N)
@@ -767,6 +792,7 @@ public abstract class MSP430InstrInterpreter extends MSP430State
     }
 
 
+    @Override
     public void visit(MSP430Instr.JNC i)
     {
         if (!C)
@@ -776,6 +802,7 @@ public abstract class MSP430InstrInterpreter extends MSP430State
     }
 
 
+    @Override
     public void visit(MSP430Instr.JLO i)
     {
         if (!C)
@@ -785,6 +812,7 @@ public abstract class MSP430InstrInterpreter extends MSP430State
     }
 
 
+    @Override
     public void visit(MSP430Instr.JNE i)
     {
         if (!Z)
@@ -794,6 +822,7 @@ public abstract class MSP430InstrInterpreter extends MSP430State
     }
 
 
+    @Override
     public void visit(MSP430Instr.JNZ i)
     {
         if (!Z)
@@ -803,30 +832,35 @@ public abstract class MSP430InstrInterpreter extends MSP430State
     }
 
 
+    @Override
     public void visit(MSP430Instr.MOV i)
     {
         $write_poly_uint16(i.dest, $read_poly_uint16(i.source));
     }
 
 
+    @Override
     public void visit(MSP430Instr.MOV_B i)
     {
         $write_poly_int8(i.dest, $read_poly_int8(i.source));
     }
 
 
+    @Override
     public void visit(MSP430Instr.PUSH i)
     {
         pushWord($read_poly_uint16(i.source));
     }
 
 
+    @Override
     public void visit(MSP430Instr.PUSH_B i)
     {
         pushByte($read_poly_int8(i.source));
     }
 
 
+    @Override
     public void visit(MSP430Instr.RETI i)
     {
         sreg = popWord();
@@ -834,6 +868,7 @@ public abstract class MSP430InstrInterpreter extends MSP430State
     }
 
 
+    @Override
     public void visit(MSP430Instr.RRA i)
     {
         int temp = $read_poly_uint16(i.source);
@@ -846,6 +881,7 @@ public abstract class MSP430InstrInterpreter extends MSP430State
     }
 
 
+    @Override
     public void visit(MSP430Instr.RRA_B i)
     {
         int temp = $read_poly_int8(i.source);
@@ -858,6 +894,7 @@ public abstract class MSP430InstrInterpreter extends MSP430State
     }
 
 
+    @Override
     public void visit(MSP430Instr.RRC i)
     {
         int temp = $read_poly_uint16(i.source);
@@ -871,6 +908,7 @@ public abstract class MSP430InstrInterpreter extends MSP430State
     }
 
 
+    @Override
     public void visit(MSP430Instr.RRC_B i)
     {
         int temp = $read_poly_int8(i.source);
@@ -884,6 +922,7 @@ public abstract class MSP430InstrInterpreter extends MSP430State
     }
 
 
+    @Override
     public void visit(MSP430Instr.SUB i)
     {
         int r1 = $read_poly_uint16(i.source);
@@ -893,6 +932,7 @@ public abstract class MSP430InstrInterpreter extends MSP430State
     }
 
 
+    @Override
     public void visit(MSP430Instr.SUB_B i)
     {
         int r1 = $read_poly_int8(i.source);
@@ -902,6 +942,7 @@ public abstract class MSP430InstrInterpreter extends MSP430State
     }
 
 
+    @Override
     public void visit(MSP430Instr.SUBC i)
     {
         int r1 = $read_poly_uint16(i.source);
@@ -911,6 +952,7 @@ public abstract class MSP430InstrInterpreter extends MSP430State
     }
 
 
+    @Override
     public void visit(MSP430Instr.SUBC_B i)
     {
         int r1 = $read_poly_int8(i.source);
@@ -920,6 +962,7 @@ public abstract class MSP430InstrInterpreter extends MSP430State
     }
 
 
+    @Override
     public void visit(MSP430Instr.SWPB i)
     {
         int temp1 = $read_poly_uint16(i.source);
@@ -930,6 +973,7 @@ public abstract class MSP430InstrInterpreter extends MSP430State
     }
 
 
+    @Override
     public void visit(MSP430Instr.SXT i)
     {
         int r1 = $read_poly_uint16(i.source) << 24 >> 24;
@@ -941,6 +985,7 @@ public abstract class MSP430InstrInterpreter extends MSP430State
     }
 
 
+    @Override
     public void visit(MSP430Instr.TST i)
     {
         int r1 = $read_poly_uint16(i.source);
@@ -951,6 +996,7 @@ public abstract class MSP430InstrInterpreter extends MSP430State
     }
 
 
+    @Override
     public void visit(MSP430Instr.TST_B i)
     {
         int r1 = $read_poly_int8(i.source);
@@ -961,6 +1007,7 @@ public abstract class MSP430InstrInterpreter extends MSP430State
     }
 
 
+    @Override
     public void visit(MSP430Instr.XOR i)
     {
         int src = $read_poly_uint16(i.source);
@@ -974,6 +1021,7 @@ public abstract class MSP430InstrInterpreter extends MSP430State
     }
 
 
+    @Override
     public void visit(MSP430Instr.XOR_B i)
     {
         int src = $read_poly_int8(i.source);

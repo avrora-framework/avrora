@@ -65,12 +65,14 @@ public class SubroutineDecl extends Item
         }
 
 
+        @Override
         public String getName()
         {
             return name.image;
         }
 
 
+        @Override
         public Type getType()
         {
             return type.getType();

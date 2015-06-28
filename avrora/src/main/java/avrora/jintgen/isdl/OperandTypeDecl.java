@@ -174,12 +174,14 @@ public abstract class OperandTypeDecl extends Item
         }
 
 
+        @Override
         public boolean isValue()
         {
             return true;
         }
 
 
+        @Override
         public void addSubOperand(AddrModeDecl.Operand o)
         {
             throw Util
@@ -187,6 +189,7 @@ public abstract class OperandTypeDecl extends Item
         }
 
 
+        @Override
         public boolean isRelative()
         {
             Type t = typeRef.getType();
@@ -198,6 +201,7 @@ public abstract class OperandTypeDecl extends Item
         }
 
 
+        @Override
         public boolean isEnum()
         {
             TypeCon typeCon = typeRef.getType().getTypeCon();
@@ -205,12 +209,14 @@ public abstract class OperandTypeDecl extends Item
         }
 
 
+        @Override
         public boolean isSigned()
         {
             return signed;
         }
 
 
+        @Override
         public boolean isAddress()
         {
             return typeRef.isBasedOn("address");
@@ -230,6 +236,7 @@ public abstract class OperandTypeDecl extends Item
         }
 
 
+        @Override
         public boolean isCompound()
         {
             return true;
@@ -252,6 +259,7 @@ public abstract class OperandTypeDecl extends Item
         }
 
 
+        @Override
         public boolean isUnion()
         {
             return true;

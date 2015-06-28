@@ -109,6 +109,7 @@ public class IORegMonitor extends MonitorFactory
         }
 
 
+        @Override
         public void report()
         {
             // we don't need to generate a report.
@@ -137,12 +138,14 @@ public class IORegMonitor extends MonitorFactory
              * @param value
              *            the value being written to the memory location
              */
+            @Override
             public void fireBeforeWrite(State state, int data_addr, byte value)
             {
                 printer.println(name + "    <=   " + render(value));
             }
 
 
+            @Override
             public void fireAfterRead(State state, int data_addr, byte val)
             {
                 printer.println(name + "      -> " + render(val));
@@ -165,6 +168,7 @@ public class IORegMonitor extends MonitorFactory
     }
 
 
+    @Override
     public avrora.avrora.monitors.Monitor newMonitor(Simulator s)
     {
         return new Monitor(s);

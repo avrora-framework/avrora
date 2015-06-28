@@ -267,6 +267,7 @@ public class CC1000Radio implements Radio
         }
 
 
+        @Override
         protected void decode(byte val)
         {
         }
@@ -311,6 +312,7 @@ public class CC1000Radio implements Radio
         }
 
 
+        @Override
         protected void decode(byte val)
         {
 
@@ -392,6 +394,7 @@ public class CC1000Radio implements Radio
         }
 
 
+        @Override
         protected void printStatus()
         {
             String rxtxS = rxtx ? "TX" : "RX";
@@ -473,6 +476,7 @@ public class CC1000Radio implements Radio
             }
 
 
+            @Override
             protected void decode(byte val)
             {
                 updateFrequency();
@@ -527,6 +531,7 @@ public class CC1000Radio implements Radio
             }
 
 
+            @Override
             protected void decode(byte val)
             {
                 updateFrequencySeparation();
@@ -561,6 +566,7 @@ public class CC1000Radio implements Radio
         }
 
 
+        @Override
         protected void decode(byte val)
         {
             vcoCurrent = VCO_CURRENT[(val & 0xf0) >> 4];
@@ -569,6 +575,7 @@ public class CC1000Radio implements Radio
         }
 
 
+        @Override
         protected void printStatus()
         {
             radioPrinter.println("CC1000[CURRENT]: vco current: " + vcoCurrent
@@ -601,6 +608,7 @@ public class CC1000Radio implements Radio
         }
 
 
+        @Override
         protected void decode(byte val)
         {
             bufCurrent = BUF_CURRENT[(val & 0x20) >> 5];
@@ -626,6 +634,7 @@ public class CC1000Radio implements Radio
         }
 
 
+        @Override
         protected void decode(byte val)
         {
             paHighPower = (value & 0xf0) >> 4;
@@ -647,6 +656,7 @@ public class CC1000Radio implements Radio
         }
 
 
+        @Override
         protected void printStatus()
         {
             radioPrinter.println("CC1000[PA_POW]: PA high power: " + paHighPower
@@ -670,6 +680,7 @@ public class CC1000Radio implements Radio
         }
 
 
+        @Override
         protected void decode(byte val)
         {
             extFilter = Arithmetic.getBit(val, 7);
@@ -727,6 +738,7 @@ public class CC1000Radio implements Radio
         }
 
 
+        @Override
         protected void decode(byte val)
         {
             lockSelect = (val & 0xf0) >> 4;
@@ -740,6 +752,7 @@ public class CC1000Radio implements Radio
         }
 
 
+        @Override
         protected void printStatus()
         {
             StringBuffer buf = new StringBuffer(100);
@@ -794,6 +807,7 @@ public class CC1000Radio implements Radio
         boolean calibrating;
 
 
+        @Override
         protected void decode(byte val)
         {
             boolean oldCalStart = calStart;
@@ -824,6 +838,7 @@ public class CC1000Radio implements Radio
         }
 
 
+        @Override
         protected void printStatus()
         {
             StringBuffer buf = new StringBuffer(100);
@@ -846,6 +861,7 @@ public class CC1000Radio implements Radio
         protected class Calibrate implements Simulator.Event
         {
 
+            @Override
             public void fire()
             {
                 // TODO: multiple calls to decode()
@@ -880,6 +896,7 @@ public class CC1000Radio implements Radio
         }
 
 
+        @Override
         protected void decode(byte val)
         {
             peakDetect = Arithmetic.getBit(val, 7);
@@ -910,6 +927,7 @@ public class CC1000Radio implements Radio
         }
 
 
+        @Override
         protected void decode(byte val)
         {
             mlimit = (val & 0xe0) >> 5;
@@ -952,6 +970,7 @@ public class CC1000Radio implements Radio
         }
 
 
+        @Override
         protected void decode(byte val)
         {
 
@@ -982,6 +1001,7 @@ public class CC1000Radio implements Radio
         }
 
 
+        @Override
         protected void printStatus()
         {
             radioPrinter.println("CC1000[MODEM0]: " + baudrate + " baud, "
@@ -1002,6 +1022,7 @@ public class CC1000Radio implements Radio
         }
 
 
+        @Override
         protected void decode(byte val)
         {
             rxMatch = (val & 0xf0) >> 4;
@@ -1023,6 +1044,7 @@ public class CC1000Radio implements Radio
         }
 
 
+        @Override
         protected void decode(byte val)
         {
             fsResetN = Arithmetic.getBit(val, 0);
@@ -1049,6 +1071,7 @@ public class CC1000Radio implements Radio
         }
 
 
+        @Override
         protected void decode(byte val)
         {
             preSwing = PRE_SWING[(val & 0xc0) >> 6];
@@ -1100,6 +1123,7 @@ public class CC1000Radio implements Radio
             protected boolean last;
 
 
+            @Override
             public void write(boolean level)
             {
                 // only trigger on level changes
@@ -1123,6 +1147,7 @@ public class CC1000Radio implements Radio
         protected class PDATAOutput implements Microcontroller.Pin.Output
         {
 
+            @Override
             public void write(boolean level)
             {
                 inputPin = level;
@@ -1134,6 +1159,7 @@ public class CC1000Radio implements Radio
             protected boolean last;
 
 
+            @Override
             public void write(boolean level)
             {
                 if (level == last)
@@ -1273,6 +1299,7 @@ public class CC1000Radio implements Radio
         protected boolean activated;
 
 
+        @Override
         public void fire()
         {
             // exchange a byte with the SPI device.
@@ -1312,6 +1339,7 @@ public class CC1000Radio implements Radio
         }
 
 
+        @Override
         public byte nextByte()
         {
             if (radioPrinter != null)
@@ -1332,18 +1360,21 @@ public class CC1000Radio implements Radio
 
 
         // cc2420 functions that have to be written by radio
+        @Override
         public void setRSSI(double PRec)
         {
             // do nothing
         }
 
 
+        @Override
         public void setBER(double BER)
         {
             // do nothing
         }
 
 
+        @Override
         public byte nextByte(boolean lock, byte val)
         {
             if (lock)
@@ -1373,6 +1404,7 @@ public class CC1000Radio implements Radio
 
     private class RSSIOutput implements ADC.ADCInput
     {
+        @Override
         public float getVoltage()
         {
             if (receiver.isChannelClear(0, 0))
@@ -1401,24 +1433,28 @@ public class CC1000Radio implements Radio
     }
 
 
+    @Override
     public Simulator getSimulator()
     {
         return sim;
     }
 
 
+    @Override
     public Medium.Transmitter getTransmitter()
     {
         return transmitter;
     }
 
 
+    @Override
     public Medium.Receiver getReceiver()
     {
         return receiver;
     }
 
 
+    @Override
     public void setMedium(Medium m)
     {
         medium = m;
@@ -1427,6 +1463,7 @@ public class CC1000Radio implements Radio
     }
 
 
+    @Override
     public Medium getMedium()
     {
         return medium;

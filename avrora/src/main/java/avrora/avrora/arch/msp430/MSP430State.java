@@ -88,6 +88,7 @@ public abstract class MSP430State extends Interpreter implements State
      *
      * @return the program counter as a byte address
      */
+    @Override
     public int getPC()
     {
         return pc;
@@ -102,6 +103,7 @@ public abstract class MSP430State extends Interpreter implements State
      *
      * @return the value of the stack pointer as a byte address
      */
+    @Override
     public int getSP()
     {
         // register 1 is the stack pointer
@@ -182,6 +184,7 @@ public abstract class MSP430State extends Interpreter implements State
      *
      * @return the number of clock cycles elapsed in the simulation
      */
+    @Override
     public long getCycles()
     {
         return clock.getCount();
@@ -252,12 +255,14 @@ public abstract class MSP430State extends Interpreter implements State
      *
      * @return a reference to the simulator associated with this state instance.
      */
+    @Override
     public Simulator getSimulator()
     {
         return simulator;
     }
 
 
+    @Override
     public AbstractInstr getInstr(int address)
     {
         return data.readInstr(address);

@@ -82,6 +82,7 @@ public class SPIMonitor extends MonitorFactory
         int port;
 
 
+        @Override
         void connect(SPI spi)
         {
             new SPIForwarder(spi, port, (int) BPS.get(), MASTER.get());
@@ -115,6 +116,7 @@ public class SPIMonitor extends MonitorFactory
         }
 
 
+        @Override
         public void report()
         {
             // no report
@@ -138,6 +140,7 @@ public class SPIMonitor extends MonitorFactory
     }
 
 
+    @Override
     public void processOptions(Options o)
     {
         super.processOptions(o);
@@ -172,6 +175,7 @@ public class SPIMonitor extends MonitorFactory
      * @return an instance of the <code>Monitor</code> interface for the
      *         specified simulator
      */
+    @Override
     public avrora.avrora.monitors.Monitor newMonitor(Simulator s)
     {
         return new Monitor(s);

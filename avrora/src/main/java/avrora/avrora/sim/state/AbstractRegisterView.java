@@ -24,6 +24,7 @@ public abstract class AbstractRegisterView implements RegisterView
     }
 
 
+    @Override
     public void registerValueSetListener(RegisterValueSetListener listener)
     {
         if (listeners == null)

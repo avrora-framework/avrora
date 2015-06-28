@@ -75,6 +75,7 @@ public class ClockCycleTimeout implements Simulator.Event
      * been reached. This exception then falls through the <code>run()</code>
      * method of the caller of the simulator.
      */
+    @Override
     public void fire()
     {
         State state = simulator.getState();

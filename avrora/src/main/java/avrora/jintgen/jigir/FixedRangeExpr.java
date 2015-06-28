@@ -115,6 +115,7 @@ public class FixedRangeExpr extends Expr
      * @return true if this expression can be evaluated to a constant; false
      *         otherwise
      */
+    @Override
     public boolean isConstantExpr()
     {
         return expr.isConstantExpr();
@@ -128,6 +129,7 @@ public class FixedRangeExpr extends Expr
      *
      * @return true
      */
+    @Override
     public boolean isBitRangeExpr()
     {
         return true;
@@ -142,6 +144,7 @@ public class FixedRangeExpr extends Expr
      * @param v
      *            the visitor to accept
      */
+    @Override
     public void accept(CodeVisitor v)
     {
         v.visit(this);
@@ -159,6 +162,7 @@ public class FixedRangeExpr extends Expr
      * @return the result of calling the appropriate <code>visit()</code> method
      *         of the rebuilder
      */
+    @Override
     public <Res, Env> Res accept(CodeAccumulator<Res, Env> r, Env env)
     {
         return r.visit(this, env);
@@ -173,6 +177,7 @@ public class FixedRangeExpr extends Expr
      *
      * @return a string representation of this expression
      */
+    @Override
     public String toString()
     {
         return innerString(expr) + '[' + low_bit + ':' + high_bit + ']';
@@ -188,18 +193,21 @@ public class FixedRangeExpr extends Expr
      * @return an integer representing the precedence of this expression; higher
      *         numbers are higher precedence
      */
+    @Override
     public int getPrecedence()
     {
         return PREC_TERM;
     }
 
 
+    @Override
     public SourcePoint getSourcePoint()
     {
         return expr.getSourcePoint();
     }
 
 
+    @Override
     public boolean isLvalue()
     {
         return true;

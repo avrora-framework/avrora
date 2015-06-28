@@ -323,6 +323,7 @@ public class AVRDisassembler implements AbstractDisassembler
         }
 
 
+        @Override
         AVRAddrMode read(AVRDisassembler d)
         {
             d.size = size;
@@ -341,6 +342,7 @@ public class AVRDisassembler implements AbstractDisassembler
     static class LD_ST_PD_XYZ_0_reader extends OperandReader
     {
 
+        @Override
         AVRAddrMode read(AVRDisassembler d)
         {
             d.size = 2;
@@ -354,6 +356,7 @@ public class AVRDisassembler implements AbstractDisassembler
     static class $rjmp$_0_reader extends OperandReader
     {
 
+        @Override
         AVRAddrMode read(AVRDisassembler d)
         {
             d.size = 2;
@@ -366,6 +369,7 @@ public class AVRDisassembler implements AbstractDisassembler
     static class $ldd$_0_reader extends OperandReader
     {
 
+        @Override
         AVRAddrMode read(AVRDisassembler d)
         {
             d.size = 2;
@@ -380,6 +384,7 @@ public class AVRDisassembler implements AbstractDisassembler
     static class LD_ST_PD_XYZ_1_reader extends OperandReader
     {
 
+        @Override
         AVRAddrMode read(AVRDisassembler d)
         {
             d.size = 2;
@@ -393,6 +398,7 @@ public class AVRDisassembler implements AbstractDisassembler
     static class $jmp$_0_reader extends OperandReader
     {
 
+        @Override
         AVRAddrMode read(AVRDisassembler d)
         {
             d.size = 4;
@@ -404,6 +410,7 @@ public class AVRDisassembler implements AbstractDisassembler
     static class $bld$_0_reader extends OperandReader
     {
 
+        @Override
         AVRAddrMode read(AVRDisassembler d)
         {
             d.size = 2;
@@ -417,6 +424,7 @@ public class AVRDisassembler implements AbstractDisassembler
     static class $rcall$_0_reader extends OperandReader
     {
 
+        @Override
         AVRAddrMode read(AVRDisassembler d)
         {
             d.size = 2;
@@ -429,6 +437,7 @@ public class AVRDisassembler implements AbstractDisassembler
     static class $bst$_0_reader extends OperandReader
     {
 
+        @Override
         AVRAddrMode read(AVRDisassembler d)
         {
             d.size = 2;
@@ -442,6 +451,7 @@ public class AVRDisassembler implements AbstractDisassembler
     static class $fmulsu$_0_reader extends OperandReader
     {
 
+        @Override
         AVRAddrMode read(AVRDisassembler d)
         {
             d.size = 2;
@@ -456,6 +466,7 @@ public class AVRDisassembler implements AbstractDisassembler
     static class GPR_0_reader extends OperandReader
     {
 
+        @Override
         AVRAddrMode read(AVRDisassembler d)
         {
             d.size = 2;
@@ -468,6 +479,7 @@ public class AVRDisassembler implements AbstractDisassembler
     static class $call$_0_reader extends OperandReader
     {
 
+        @Override
         AVRAddrMode read(AVRDisassembler d)
         {
             d.size = 4;
@@ -479,6 +491,7 @@ public class AVRDisassembler implements AbstractDisassembler
     static class LD_ST_AI_XYZ_0_reader extends OperandReader
     {
 
+        @Override
         AVRAddrMode read(AVRDisassembler d)
         {
             d.size = 2;
@@ -492,6 +505,7 @@ public class AVRDisassembler implements AbstractDisassembler
     static class $cbi$_0_reader extends OperandReader
     {
 
+        @Override
         AVRAddrMode read(AVRDisassembler d)
         {
             d.size = 2;
@@ -504,6 +518,7 @@ public class AVRDisassembler implements AbstractDisassembler
     static class XLPM_REG_0_reader extends OperandReader
     {
 
+        @Override
         AVRAddrMode read(AVRDisassembler d)
         {
             d.size = 2;
@@ -516,6 +531,7 @@ public class AVRDisassembler implements AbstractDisassembler
     static class BRANCH_0_reader extends OperandReader
     {
 
+        @Override
         AVRAddrMode read(AVRDisassembler d)
         {
             d.size = 2;
@@ -528,6 +544,7 @@ public class AVRDisassembler implements AbstractDisassembler
     static class LD_ST_XYZ_0_reader extends OperandReader
     {
 
+        @Override
         AVRAddrMode read(AVRDisassembler d)
         {
             d.size = 2;
@@ -541,6 +558,7 @@ public class AVRDisassembler implements AbstractDisassembler
     static class LD_ST_PD_XYZ_2_reader extends OperandReader
     {
 
+        @Override
         AVRAddrMode read(AVRDisassembler d)
         {
             d.size = 2;
@@ -554,6 +572,7 @@ public class AVRDisassembler implements AbstractDisassembler
     static class $muls$_0_reader extends OperandReader
     {
 
+        @Override
         AVRAddrMode read(AVRDisassembler d)
         {
             d.size = 2;
@@ -568,6 +587,7 @@ public class AVRDisassembler implements AbstractDisassembler
     static class LD_ST_XYZ_2_reader extends OperandReader
     {
 
+        @Override
         AVRAddrMode read(AVRDisassembler d)
         {
             d.size = 2;
@@ -581,6 +601,7 @@ public class AVRDisassembler implements AbstractDisassembler
     static class $movw$_0_reader extends OperandReader
     {
 
+        @Override
         AVRAddrMode read(AVRDisassembler d)
         {
             d.size = 2;
@@ -595,6 +616,7 @@ public class AVRDisassembler implements AbstractDisassembler
     static class $sbrs$_0_reader extends OperandReader
     {
 
+        @Override
         AVRAddrMode read(AVRDisassembler d)
         {
             d.size = 2;
@@ -608,6 +630,7 @@ public class AVRDisassembler implements AbstractDisassembler
     static class $sbic$_0_reader extends OperandReader
     {
 
+        @Override
         AVRAddrMode read(AVRDisassembler d)
         {
             d.size = 2;
@@ -620,6 +643,7 @@ public class AVRDisassembler implements AbstractDisassembler
     static class $fmul$_0_reader extends OperandReader
     {
 
+        @Override
         AVRAddrMode read(AVRDisassembler d)
         {
             d.size = 2;
@@ -634,6 +658,7 @@ public class AVRDisassembler implements AbstractDisassembler
     static class $std$_0_reader extends OperandReader
     {
 
+        @Override
         AVRAddrMode read(AVRDisassembler d)
         {
             d.size = 2;
@@ -648,6 +673,7 @@ public class AVRDisassembler implements AbstractDisassembler
     static class $sbi$_0_reader extends OperandReader
     {
 
+        @Override
         AVRAddrMode read(AVRDisassembler d)
         {
             d.size = 2;
@@ -660,6 +686,7 @@ public class AVRDisassembler implements AbstractDisassembler
     static class XLPM_INC_0_reader extends OperandReader
     {
 
+        @Override
         AVRAddrMode read(AVRDisassembler d)
         {
             d.size = 2;
@@ -674,6 +701,7 @@ public class AVRDisassembler implements AbstractDisassembler
     static class LD_ST_XYZ_1_reader extends OperandReader
     {
 
+        @Override
         AVRAddrMode read(AVRDisassembler d)
         {
             d.size = 2;
@@ -687,6 +715,7 @@ public class AVRDisassembler implements AbstractDisassembler
     static class $sbrc$_0_reader extends OperandReader
     {
 
+        @Override
         AVRAddrMode read(AVRDisassembler d)
         {
             d.size = 2;
@@ -700,6 +729,7 @@ public class AVRDisassembler implements AbstractDisassembler
     static class $sbis$_0_reader extends OperandReader
     {
 
+        @Override
         AVRAddrMode read(AVRDisassembler d)
         {
             d.size = 2;
@@ -712,6 +742,7 @@ public class AVRDisassembler implements AbstractDisassembler
     static class XLPM_D_0_reader extends OperandReader
     {
 
+        @Override
         AVRAddrMode read(AVRDisassembler d)
         {
             d.size = 2;
@@ -725,6 +756,7 @@ public class AVRDisassembler implements AbstractDisassembler
     static class LD_ST_AI_XYZ_1_reader extends OperandReader
     {
 
+        @Override
         AVRAddrMode read(AVRDisassembler d)
         {
             d.size = 2;
@@ -738,6 +770,7 @@ public class AVRDisassembler implements AbstractDisassembler
     static class GPRGPR_0_reader extends OperandReader
     {
 
+        @Override
         AVRAddrMode read(AVRDisassembler d)
         {
             d.size = 2;
@@ -752,6 +785,7 @@ public class AVRDisassembler implements AbstractDisassembler
     static class $adiw$_0_reader extends OperandReader
     {
 
+        @Override
         AVRAddrMode read(AVRDisassembler d)
         {
             d.size = 2;
@@ -765,6 +799,7 @@ public class AVRDisassembler implements AbstractDisassembler
     static class $mulsu$_0_reader extends OperandReader
     {
 
+        @Override
         AVRAddrMode read(AVRDisassembler d)
         {
             d.size = 2;
@@ -779,6 +814,7 @@ public class AVRDisassembler implements AbstractDisassembler
     static class $out$_0_reader extends OperandReader
     {
 
+        @Override
         AVRAddrMode read(AVRDisassembler d)
         {
             d.size = 2;
@@ -792,6 +828,7 @@ public class AVRDisassembler implements AbstractDisassembler
     static class $fmuls$_0_reader extends OperandReader
     {
 
+        @Override
         AVRAddrMode read(AVRDisassembler d)
         {
             d.size = 2;
@@ -806,6 +843,7 @@ public class AVRDisassembler implements AbstractDisassembler
     static class $in$_0_reader extends OperandReader
     {
 
+        @Override
         AVRAddrMode read(AVRDisassembler d)
         {
             d.size = 2;
@@ -819,6 +857,7 @@ public class AVRDisassembler implements AbstractDisassembler
     static class LD_ST_AI_XYZ_2_reader extends OperandReader
     {
 
+        @Override
         AVRAddrMode read(AVRDisassembler d)
         {
             d.size = 2;
@@ -832,6 +871,7 @@ public class AVRDisassembler implements AbstractDisassembler
     static class $lds$_0_reader extends OperandReader
     {
 
+        @Override
         AVRAddrMode read(AVRDisassembler d)
         {
             d.size = 4;
@@ -845,6 +885,7 @@ public class AVRDisassembler implements AbstractDisassembler
     static class $sbiw$_0_reader extends OperandReader
     {
 
+        @Override
         AVRAddrMode read(AVRDisassembler d)
         {
             d.size = 2;
@@ -858,6 +899,7 @@ public class AVRDisassembler implements AbstractDisassembler
     static class $sts$_0_reader extends OperandReader
     {
 
+        @Override
         AVRAddrMode read(AVRDisassembler d)
         {
             d.size = 4;
@@ -871,6 +913,7 @@ public class AVRDisassembler implements AbstractDisassembler
     static class HGPRIMM8_0_reader extends OperandReader
     {
 
+        @Override
         AVRAddrMode read(AVRDisassembler d)
         {
             d.size = 2;
@@ -925,6 +968,7 @@ public class AVRDisassembler implements AbstractDisassembler
         }
 
 
+        @Override
         DTNode move(AVRDisassembler d, int val)
         {
             if (action != null)
@@ -954,6 +998,7 @@ public class AVRDisassembler implements AbstractDisassembler
         }
 
 
+        @Override
         DTNode move(AVRDisassembler d, int val)
         {
             if (action != null)
@@ -979,6 +1024,7 @@ public class AVRDisassembler implements AbstractDisassembler
         }
 
 
+        @Override
         DTNode move(AVRDisassembler d, int bits)
         {
             d.state = ERR;
@@ -1012,6 +1058,7 @@ public class AVRDisassembler implements AbstractDisassembler
     static class ErrorAction extends Action
     {
 
+        @Override
         void execute(AVRDisassembler d)
         {
             d.state = ERR;
@@ -1034,6 +1081,7 @@ public class AVRDisassembler implements AbstractDisassembler
         }
 
 
+        @Override
         DTNode move(AVRDisassembler d, int val)
         {
             d.state = OK;
@@ -1065,6 +1113,7 @@ public class AVRDisassembler implements AbstractDisassembler
         }
 
 
+        @Override
         void execute(AVRDisassembler d)
         {
             d.builder = builder;
@@ -1085,6 +1134,7 @@ public class AVRDisassembler implements AbstractDisassembler
         }
 
 
+        @Override
         DTNode move(AVRDisassembler d, int bits)
         {
             d.state = OK;
@@ -1583,6 +1633,7 @@ public class AVRDisassembler implements AbstractDisassembler
      *         instruction at that location; null if the binary data at the
      *         specified location does not represent a valid instruction
      */
+    @Override
     public AbstractInstr disassemble(int base, int index, byte[] code)
     {
         return decode(base, index, code);

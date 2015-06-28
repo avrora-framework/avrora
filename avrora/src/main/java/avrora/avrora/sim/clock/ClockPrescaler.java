@@ -101,6 +101,7 @@ public class ClockPrescaler extends Clock
      *
      * @return the number of elapsed time ticks in clock cycles
      */
+    @Override
     public long getCount()
     {
         return (driveClock.getCount() - base) / divider;
@@ -135,6 +136,7 @@ public class ClockPrescaler extends Clock
      * @param delta
      *            the number of (scaled) cycles in the future at which to fire
      */
+    @Override
     public void insertEvent(Simulator.Event e, long delta)
     {
         long driverCount = driveClock.getCount() - base;
@@ -151,6 +153,7 @@ public class ClockPrescaler extends Clock
      * @param e
      *            the event to remove
      */
+    @Override
     public void removeEvent(Simulator.Event e)
     {
         driveClock.removeEvent(e);

@@ -370,18 +370,21 @@ public class ISEInterpreter implements LegacyInstrVisitor
     }
 
 
+    @Override
     public void visit(LegacyInstr.ADC i)
     {
         binop(i.r1, i.r2);
     }
 
 
+    @Override
     public void visit(LegacyInstr.ADD i)
     {
         binop(i.r1, i.r2);
     }
 
 
+    @Override
     public void visit(LegacyInstr.ADIW i)
     {
         readRegister(i.r1);
@@ -392,24 +395,28 @@ public class ISEInterpreter implements LegacyInstrVisitor
     }
 
 
+    @Override
     public void visit(LegacyInstr.AND i)
     {
         binop(i.r1, i.r2);
     }
 
 
+    @Override
     public void visit(LegacyInstr.ANDI i)
     {
         unop(i.r1);
     }
 
 
+    @Override
     public void visit(LegacyInstr.ASR i)
     {
         unop(i.r1);
     }
 
 
+    @Override
     public void visit(LegacyInstr.BCLR i)
     {
         writeIORegister(i.imm1, ISEValue.UNKNOWN);
@@ -417,6 +424,7 @@ public class ISEInterpreter implements LegacyInstrVisitor
     }
 
 
+    @Override
     public void visit(LegacyInstr.BLD i)
     {
         readRegister(i.r1);
@@ -426,132 +434,154 @@ public class ISEInterpreter implements LegacyInstrVisitor
     }
 
 
+    @Override
     public void visit(LegacyInstr.BRBC i)
     {
         branch(relative(i.imm1));
     }
 
 
+    @Override
     public void visit(LegacyInstr.BRBS i)
     {
         branch(relative(i.imm1));
     }
 
 
+    @Override
     public void visit(LegacyInstr.BRCC i)
     {
         branch(relative(i.imm1));
     }
 
 
+    @Override
     public void visit(LegacyInstr.BRCS i)
     {
         branch(relative(i.imm1));
     }
 
 
+    @Override
     public void visit(LegacyInstr.BREAK i)
     {
         end();
     }
 
 
+    @Override
     public void visit(LegacyInstr.BREQ i)
     {
         branch(relative(i.imm1));
     }
 
 
+    @Override
     public void visit(LegacyInstr.BRGE i)
     {
         branch(relative(i.imm1));
     }
 
 
+    @Override
     public void visit(LegacyInstr.BRHC i)
     {
         branch(relative(i.imm1));
     }
 
 
+    @Override
     public void visit(LegacyInstr.BRHS i)
     {
         branch(relative(i.imm1));
     }
 
 
+    @Override
     public void visit(LegacyInstr.BRID i)
     {
         branch(relative(i.imm1));
     }
 
 
+    @Override
     public void visit(LegacyInstr.BRIE i)
     {
         branch(relative(i.imm1));
     }
 
 
+    @Override
     public void visit(LegacyInstr.BRLO i)
     {
         branch(relative(i.imm1));
     }
 
 
+    @Override
     public void visit(LegacyInstr.BRLT i)
     {
         branch(relative(i.imm1));
     }
 
 
+    @Override
     public void visit(LegacyInstr.BRMI i)
     {
         branch(relative(i.imm1));
     }
 
 
+    @Override
     public void visit(LegacyInstr.BRNE i)
     {
         branch(relative(i.imm1));
     }
 
 
+    @Override
     public void visit(LegacyInstr.BRPL i)
     {
         branch(relative(i.imm1));
     }
 
 
+    @Override
     public void visit(LegacyInstr.BRSH i)
     {
         branch(relative(i.imm1));
     }
 
 
+    @Override
     public void visit(LegacyInstr.BRTC i)
     {
         branch(relative(i.imm1));
     }
 
 
+    @Override
     public void visit(LegacyInstr.BRTS i)
     {
         branch(relative(i.imm1));
     }
 
 
+    @Override
     public void visit(LegacyInstr.BRVC i)
     {
         branch(relative(i.imm1));
     }
 
 
+    @Override
     public void visit(LegacyInstr.BRVS i)
     {
         branch(relative(i.imm1));
     }
 
 
+    @Override
     public void visit(LegacyInstr.BSET i)
     {
         writeIORegister(i.imm1, ISEValue.UNKNOWN);
@@ -559,6 +589,7 @@ public class ISEInterpreter implements LegacyInstrVisitor
     }
 
 
+    @Override
     public void visit(LegacyInstr.BST i)
     {
         readRegister(i.r1);
@@ -566,6 +597,7 @@ public class ISEInterpreter implements LegacyInstrVisitor
     }
 
 
+    @Override
     public void visit(LegacyInstr.CALL i)
     {
         int target = absolute(i.imm1);
@@ -576,6 +608,7 @@ public class ISEInterpreter implements LegacyInstrVisitor
     }
 
 
+    @Override
     public void visit(LegacyInstr.CBI i)
     {
         writeIORegister(i.imm1, ISEValue.UNKNOWN);
@@ -583,12 +616,14 @@ public class ISEInterpreter implements LegacyInstrVisitor
     }
 
 
+    @Override
     public void visit(LegacyInstr.CBR i)
     {
         unop(i.r1);
     }
 
 
+    @Override
     public void visit(LegacyInstr.CLC i)
     {
         writeSREG(ISEValue.UNKNOWN);
@@ -596,6 +631,7 @@ public class ISEInterpreter implements LegacyInstrVisitor
     }
 
 
+    @Override
     public void visit(LegacyInstr.CLH i)
     {
         writeSREG(ISEValue.UNKNOWN);
@@ -603,6 +639,7 @@ public class ISEInterpreter implements LegacyInstrVisitor
     }
 
 
+    @Override
     public void visit(LegacyInstr.CLI i)
     {
         writeSREG(ISEValue.UNKNOWN);
@@ -610,6 +647,7 @@ public class ISEInterpreter implements LegacyInstrVisitor
     }
 
 
+    @Override
     public void visit(LegacyInstr.CLN i)
     {
         writeSREG(ISEValue.UNKNOWN);
@@ -617,6 +655,7 @@ public class ISEInterpreter implements LegacyInstrVisitor
     }
 
 
+    @Override
     public void visit(LegacyInstr.CLR i)
     {
         writeSREG(ISEValue.UNKNOWN);
@@ -624,6 +663,7 @@ public class ISEInterpreter implements LegacyInstrVisitor
     }
 
 
+    @Override
     public void visit(LegacyInstr.CLS i)
     {
         writeSREG(ISEValue.UNKNOWN);
@@ -631,6 +671,7 @@ public class ISEInterpreter implements LegacyInstrVisitor
     }
 
 
+    @Override
     public void visit(LegacyInstr.CLT i)
     {
         writeSREG(ISEValue.UNKNOWN);
@@ -638,6 +679,7 @@ public class ISEInterpreter implements LegacyInstrVisitor
     }
 
 
+    @Override
     public void visit(LegacyInstr.CLV i)
     {
         writeSREG(ISEValue.UNKNOWN);
@@ -645,6 +687,7 @@ public class ISEInterpreter implements LegacyInstrVisitor
     }
 
 
+    @Override
     public void visit(LegacyInstr.CLZ i)
     {
         writeSREG(ISEValue.UNKNOWN);
@@ -652,12 +695,14 @@ public class ISEInterpreter implements LegacyInstrVisitor
     }
 
 
+    @Override
     public void visit(LegacyInstr.COM i)
     {
         unop(i.r1);
     }
 
 
+    @Override
     public void visit(LegacyInstr.CP i)
     {
         readRegister(i.r1);
@@ -666,6 +711,7 @@ public class ISEInterpreter implements LegacyInstrVisitor
     }
 
 
+    @Override
     public void visit(LegacyInstr.CPC i)
     {
         readRegister(i.r1);
@@ -674,6 +720,7 @@ public class ISEInterpreter implements LegacyInstrVisitor
     }
 
 
+    @Override
     public void visit(LegacyInstr.CPI i)
     {
         readRegister(i.r1);
@@ -681,6 +728,7 @@ public class ISEInterpreter implements LegacyInstrVisitor
     }
 
 
+    @Override
     public void visit(LegacyInstr.CPSE i)
     {
         readRegister(i.r1);
@@ -690,24 +738,28 @@ public class ISEInterpreter implements LegacyInstrVisitor
     }
 
 
+    @Override
     public void visit(LegacyInstr.DEC i)
     {
         unop(i.r1);
     }
 
 
+    @Override
     public void visit(LegacyInstr.EICALL i)
     {
         throw Util.unimplemented();
     }
 
 
+    @Override
     public void visit(LegacyInstr.EIJMP i)
     {
         throw Util.unimplemented();
     }
 
 
+    @Override
     public void visit(LegacyInstr.ELPM i)
     {
         readRegister(LegacyRegister.Z);
@@ -716,6 +768,7 @@ public class ISEInterpreter implements LegacyInstrVisitor
     }
 
 
+    @Override
     public void visit(LegacyInstr.ELPMD i)
     {
         readRegister(LegacyRegister.Z);
@@ -724,6 +777,7 @@ public class ISEInterpreter implements LegacyInstrVisitor
     }
 
 
+    @Override
     public void visit(LegacyInstr.ELPMPI i)
     {
         readRegister(LegacyRegister.Z);
@@ -734,6 +788,7 @@ public class ISEInterpreter implements LegacyInstrVisitor
     }
 
 
+    @Override
     public void visit(LegacyInstr.EOR i)
     {
         if (i.r1 == i.r2)
@@ -748,24 +803,28 @@ public class ISEInterpreter implements LegacyInstrVisitor
     }
 
 
+    @Override
     public void visit(LegacyInstr.FMUL i)
     {
         mult(i.r1, i.r2);
     }
 
 
+    @Override
     public void visit(LegacyInstr.FMULS i)
     {
         mult(i.r1, i.r2);
     }
 
 
+    @Override
     public void visit(LegacyInstr.FMULSU i)
     {
         mult(i.r1, i.r2);
     }
 
 
+    @Override
     public void visit(LegacyInstr.ICALL i)
     {
         List<Integer> iedges = program.getIndirectEdges(pc);
@@ -783,6 +842,7 @@ public class ISEInterpreter implements LegacyInstrVisitor
     }
 
 
+    @Override
     public void visit(LegacyInstr.IJMP i)
     {
         List<Integer> iedges = program.getIndirectEdges(pc);
@@ -797,42 +857,49 @@ public class ISEInterpreter implements LegacyInstrVisitor
     }
 
 
+    @Override
     public void visit(LegacyInstr.IN i)
     {
         writeRegister(i.r1, readIORegister(i.imm1));
     }
 
 
+    @Override
     public void visit(LegacyInstr.INC i)
     {
         unop(i.r1);
     }
 
 
+    @Override
     public void visit(LegacyInstr.JMP i)
     {
         jump(absolute(i.imm1));
     }
 
 
+    @Override
     public void visit(LegacyInstr.LD i)
     {
         writeRegister(i.r1, ISEValue.UNKNOWN);
     }
 
 
+    @Override
     public void visit(LegacyInstr.LDD i)
     {
         writeRegister(i.r1, ISEValue.UNKNOWN);
     }
 
 
+    @Override
     public void visit(LegacyInstr.LDI i)
     {
         writeRegister(i.r1, ISEValue.UNKNOWN);
     }
 
 
+    @Override
     public void visit(LegacyInstr.LDPD i)
     {
         writeRegister(i.r1, ISEValue.UNKNOWN);
@@ -841,6 +908,7 @@ public class ISEInterpreter implements LegacyInstrVisitor
     }
 
 
+    @Override
     public void visit(LegacyInstr.LDPI i)
     {
         writeRegister(i.r1, ISEValue.UNKNOWN);
@@ -849,12 +917,14 @@ public class ISEInterpreter implements LegacyInstrVisitor
     }
 
 
+    @Override
     public void visit(LegacyInstr.LDS i)
     {
         writeRegister(i.r1, ISEValue.UNKNOWN);
     }
 
 
+    @Override
     public void visit(LegacyInstr.LPM i)
     {
         readRegister(LegacyRegister.Z);
@@ -863,6 +933,7 @@ public class ISEInterpreter implements LegacyInstrVisitor
     }
 
 
+    @Override
     public void visit(LegacyInstr.LPMD i)
     {
         readRegister(LegacyRegister.Z);
@@ -871,6 +942,7 @@ public class ISEInterpreter implements LegacyInstrVisitor
     }
 
 
+    @Override
     public void visit(LegacyInstr.LPMPI i)
     {
         readRegister(LegacyRegister.Z);
@@ -881,24 +953,28 @@ public class ISEInterpreter implements LegacyInstrVisitor
     }
 
 
+    @Override
     public void visit(LegacyInstr.LSL i)
     {
         unop(i.r1);
     }
 
 
+    @Override
     public void visit(LegacyInstr.LSR i)
     {
         unop(i.r1);
     }
 
 
+    @Override
     public void visit(LegacyInstr.MOV i)
     {
         writeRegister(i.r1, getRegister(i.r2));
     }
 
 
+    @Override
     public void visit(LegacyInstr.MOVW i)
     {
         writeRegister(i.r1, getRegister(i.r2));
@@ -906,66 +982,77 @@ public class ISEInterpreter implements LegacyInstrVisitor
     }
 
 
+    @Override
     public void visit(LegacyInstr.MUL i)
     {
         mult(i.r1, i.r2);
     }
 
 
+    @Override
     public void visit(LegacyInstr.MULS i)
     {
         mult(i.r1, i.r2);
     }
 
 
+    @Override
     public void visit(LegacyInstr.MULSU i)
     {
         mult(i.r1, i.r2);
     }
 
 
+    @Override
     public void visit(LegacyInstr.NEG i)
     {
         unop(i.r1);
     }
 
 
+    @Override
     public void visit(LegacyInstr.NOP i)
     {
         // do nothing.
     }
 
 
+    @Override
     public void visit(LegacyInstr.OR i)
     {
         binop(i.r1, i.r2);
     }
 
 
+    @Override
     public void visit(LegacyInstr.ORI i)
     {
         unop(i.r1);
     }
 
 
+    @Override
     public void visit(LegacyInstr.OUT i)
     {
         writeIORegister(i.imm1, readRegister(i.r1));
     }
 
 
+    @Override
     public void visit(LegacyInstr.POP i)
     {
         writeRegister(i.r1, popByte());
     }
 
 
+    @Override
     public void visit(LegacyInstr.PUSH i)
     {
         pushByte(getRegister(i.r1));
     }
 
 
+    @Override
     public void visit(LegacyInstr.RCALL i)
     {
         int target = relative(i.imm1);
@@ -982,6 +1069,7 @@ public class ISEInterpreter implements LegacyInstrVisitor
     }
 
 
+    @Override
     public void visit(LegacyInstr.RET i)
     {
         postReturn(state);
@@ -989,6 +1077,7 @@ public class ISEInterpreter implements LegacyInstrVisitor
     }
 
 
+    @Override
     public void visit(LegacyInstr.RETI i)
     {
         postReturnFromInterrupt(state);
@@ -996,36 +1085,42 @@ public class ISEInterpreter implements LegacyInstrVisitor
     }
 
 
+    @Override
     public void visit(LegacyInstr.RJMP i)
     {
         jump(relative(i.imm1));
     }
 
 
+    @Override
     public void visit(LegacyInstr.ROL i)
     {
         unop(i.r1);
     }
 
 
+    @Override
     public void visit(LegacyInstr.ROR i)
     {
         unop(i.r1);
     }
 
 
+    @Override
     public void visit(LegacyInstr.SBC i)
     {
         binop(i.r1, i.r2);
     }
 
 
+    @Override
     public void visit(LegacyInstr.SBCI i)
     {
         unop(i.r1);
     }
 
 
+    @Override
     public void visit(LegacyInstr.SBI i)
     {
         writeIORegister(i.imm1, ISEValue.UNKNOWN);
@@ -1033,6 +1128,7 @@ public class ISEInterpreter implements LegacyInstrVisitor
     }
 
 
+    @Override
     public void visit(LegacyInstr.SBIC i)
     {
         readIORegister(i.imm1);
@@ -1040,6 +1136,7 @@ public class ISEInterpreter implements LegacyInstrVisitor
     }
 
 
+    @Override
     public void visit(LegacyInstr.SBIS i)
     {
         readIORegister(i.imm1);
@@ -1047,6 +1144,7 @@ public class ISEInterpreter implements LegacyInstrVisitor
     }
 
 
+    @Override
     public void visit(LegacyInstr.SBIW i)
     {
         readRegister(i.r1);
@@ -1057,12 +1155,14 @@ public class ISEInterpreter implements LegacyInstrVisitor
     }
 
 
+    @Override
     public void visit(LegacyInstr.SBR i)
     {
         unop(i.r1);
     }
 
 
+    @Override
     public void visit(LegacyInstr.SBRC i)
     {
         readRegister(i.r1);
@@ -1070,6 +1170,7 @@ public class ISEInterpreter implements LegacyInstrVisitor
     }
 
 
+    @Override
     public void visit(LegacyInstr.SBRS i)
     {
         readRegister(i.r1);
@@ -1077,6 +1178,7 @@ public class ISEInterpreter implements LegacyInstrVisitor
     }
 
 
+    @Override
     public void visit(LegacyInstr.SEC i)
     {
         writeSREG(ISEValue.UNKNOWN);
@@ -1084,6 +1186,7 @@ public class ISEInterpreter implements LegacyInstrVisitor
     }
 
 
+    @Override
     public void visit(LegacyInstr.SEH i)
     {
         writeSREG(ISEValue.UNKNOWN);
@@ -1091,6 +1194,7 @@ public class ISEInterpreter implements LegacyInstrVisitor
     }
 
 
+    @Override
     public void visit(LegacyInstr.SEI i)
     {
         writeSREG(ISEValue.UNKNOWN);
@@ -1098,6 +1202,7 @@ public class ISEInterpreter implements LegacyInstrVisitor
     }
 
 
+    @Override
     public void visit(LegacyInstr.SEN i)
     {
         writeSREG(ISEValue.UNKNOWN);
@@ -1105,12 +1210,14 @@ public class ISEInterpreter implements LegacyInstrVisitor
     }
 
 
+    @Override
     public void visit(LegacyInstr.SER i)
     {
         writeRegister(i.r1, ISEValue.UNKNOWN);
     }
 
 
+    @Override
     public void visit(LegacyInstr.SES i)
     {
         writeSREG(ISEValue.UNKNOWN);
@@ -1118,6 +1225,7 @@ public class ISEInterpreter implements LegacyInstrVisitor
     }
 
 
+    @Override
     public void visit(LegacyInstr.SET i)
     {
         writeSREG(ISEValue.UNKNOWN);
@@ -1125,6 +1233,7 @@ public class ISEInterpreter implements LegacyInstrVisitor
     }
 
 
+    @Override
     public void visit(LegacyInstr.SEV i)
     {
         writeSREG(ISEValue.UNKNOWN);
@@ -1132,6 +1241,7 @@ public class ISEInterpreter implements LegacyInstrVisitor
     }
 
 
+    @Override
     public void visit(LegacyInstr.SEZ i)
     {
         writeSREG(ISEValue.UNKNOWN);
@@ -1139,12 +1249,14 @@ public class ISEInterpreter implements LegacyInstrVisitor
     }
 
 
+    @Override
     public void visit(LegacyInstr.SLEEP i)
     {
         // do nothing.
     }
 
 
+    @Override
     public void visit(LegacyInstr.SPM i)
     {
         readRegister(LegacyRegister.R0);
@@ -1154,6 +1266,7 @@ public class ISEInterpreter implements LegacyInstrVisitor
     }
 
 
+    @Override
     public void visit(LegacyInstr.ST i)
     {
         readRegister(i.r1);
@@ -1162,6 +1275,7 @@ public class ISEInterpreter implements LegacyInstrVisitor
     }
 
 
+    @Override
     public void visit(LegacyInstr.STD i)
     {
         readRegister(i.r1);
@@ -1170,6 +1284,7 @@ public class ISEInterpreter implements LegacyInstrVisitor
     }
 
 
+    @Override
     public void visit(LegacyInstr.STPD i)
     {
         readRegister(i.r1);
@@ -1180,6 +1295,7 @@ public class ISEInterpreter implements LegacyInstrVisitor
     }
 
 
+    @Override
     public void visit(LegacyInstr.STPI i)
     {
         readRegister(i.r1);
@@ -1190,30 +1306,35 @@ public class ISEInterpreter implements LegacyInstrVisitor
     }
 
 
+    @Override
     public void visit(LegacyInstr.STS i)
     {
         readRegister(i.r1);
     }
 
 
+    @Override
     public void visit(LegacyInstr.SUB i)
     {
         binop(i.r1, i.r2);
     }
 
 
+    @Override
     public void visit(LegacyInstr.SUBI i)
     {
         unop(i.r1);
     }
 
 
+    @Override
     public void visit(LegacyInstr.SWAP i)
     {
         unop(i.r1);
     }
 
 
+    @Override
     public void visit(LegacyInstr.TST i)
     {
         readRegister(i.r1);
@@ -1221,6 +1342,7 @@ public class ISEInterpreter implements LegacyInstrVisitor
     }
 
 
+    @Override
     public void visit(LegacyInstr.WDR i)
     {
         // do nothing.

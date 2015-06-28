@@ -89,12 +89,14 @@ public class Register extends AbstractRegisterView implements RegisterView
 
         public static class Empty implements Watch
         {
+            @Override
             public void fireAfterWrite(Register r, int oldv, int newv)
             {
                 // do nothing.
             }
 
 
+            @Override
             public void fireAfterRead(Register r, int oldv, int newv)
             {
                 // do nothing.
@@ -192,6 +194,7 @@ public class Register extends AbstractRegisterView implements RegisterView
      * @param val
      *            the value to which to set the register
      */
+    @Override
     public void setValue(int val)
     {
         int oldVal = value;
@@ -208,6 +211,7 @@ public class Register extends AbstractRegisterView implements RegisterView
      * 
      * @return the value of this register
      */
+    @Override
     public int getValue()
     {
         return value;
@@ -220,6 +224,7 @@ public class Register extends AbstractRegisterView implements RegisterView
      * 
      * @return the width of this view in bits.
      */
+    @Override
     public int getWidth()
     {
         return width;

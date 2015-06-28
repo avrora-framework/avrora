@@ -76,6 +76,7 @@ public class SectionFile extends FileOutputStream
     }
 
 
+    @Override
     public void write(byte[] b) throws IOException
     {
         readHeader();
@@ -83,6 +84,7 @@ public class SectionFile extends FileOutputStream
     }
 
 
+    @Override
     public void write(byte[] b, int off, int len) throws IOException
     {
         readHeader();
@@ -91,6 +93,7 @@ public class SectionFile extends FileOutputStream
     }
 
 
+    @Override
     public void write(int b) throws IOException
     {
         readHeader();
@@ -106,6 +109,7 @@ public class SectionFile extends FileOutputStream
     }
 
 
+    @Override
     public void close() throws IOException
     {
         readHeader();

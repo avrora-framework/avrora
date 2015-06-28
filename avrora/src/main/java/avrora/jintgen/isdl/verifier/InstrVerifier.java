@@ -57,6 +57,7 @@ public class InstrVerifier extends VerifierPass
     }
 
 
+    @Override
     public void verify()
     {
         uniqueCheck("Instr", "Instruction", arch.instructions);

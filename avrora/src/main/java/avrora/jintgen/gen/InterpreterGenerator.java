@@ -69,6 +69,7 @@ public class InterpreterGenerator extends Generator
     CodeSimplifier ncg;
 
 
+    @Override
     public void generate() throws IOException
     {
         initStatics();
@@ -292,6 +293,7 @@ public class InterpreterGenerator extends Generator
         }
 
 
+        @Override
         protected String getVariable(Token variable)
         {
             String var = variableMap.get(variable.image);
@@ -301,6 +303,7 @@ public class InterpreterGenerator extends Generator
         }
 
 
+        @Override
         public void visit(ConversionExpr e)
         {
             print('(' + renderType(e.typeRef) + ')');
@@ -308,6 +311,7 @@ public class InterpreterGenerator extends Generator
         }
 
 
+        @Override
         public void visit(BinOpExpr e)
         {
             String operation = e.operation.image;
@@ -321,12 +325,14 @@ public class InterpreterGenerator extends Generator
         }
 
 
+        @Override
         public void visit(Literal.EnumVal e)
         {
             print("$symbol.$1.$2", e.token, e.entry.name);
         }
 
 
+        @Override
         protected String renderType(TypeRef tr)
         {
             return InterpreterGenerator.this.renderType(tr);

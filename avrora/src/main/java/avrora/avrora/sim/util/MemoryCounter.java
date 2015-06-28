@@ -73,6 +73,7 @@ public class MemoryCounter extends Simulator.Watch.Empty
      * @param data_addr
      *            the address of the data being referenced
      */
+    @Override
     public void fireBeforeRead(State state, int data_addr)
     {
         rcount++;
@@ -92,6 +93,7 @@ public class MemoryCounter extends Simulator.Watch.Empty
      * @param value
      *            the value being written to the memory location
      */
+    @Override
     public void fireBeforeWrite(State state, int data_addr, byte value)
     {
         wcount++;

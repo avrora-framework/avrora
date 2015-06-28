@@ -81,6 +81,7 @@ public class IndexExpr extends Expr
      * @return true if this expression can be evaluated to a constant; false
      *         otherwise
      */
+    @Override
     public boolean isConstantExpr()
     {
         return expr.isConstantExpr() && index.isConstantExpr();
@@ -95,6 +96,7 @@ public class IndexExpr extends Expr
      * @param v
      *            the visitor to accept
      */
+    @Override
     public void accept(CodeVisitor v)
     {
         v.visit(this);
@@ -112,6 +114,7 @@ public class IndexExpr extends Expr
      * @return the result of calling the appropriate <code>visit()</code> method
      *         of the rebuilder
      */
+    @Override
     public <Res, Env> Res accept(CodeAccumulator<Res, Env> r, Env env)
     {
         return r.visit(this, env);
@@ -126,6 +129,7 @@ public class IndexExpr extends Expr
      *
      * @return a string representation of this expression
      */
+    @Override
     public String toString()
     {
         return innerString(expr) + '[' + index.toString() + ']';
@@ -141,18 +145,21 @@ public class IndexExpr extends Expr
      * @return an integer representing the precedence of this expression; higher
      *         numbers are higher precedence
      */
+    @Override
     public int getPrecedence()
     {
         return PREC_TERM;
     }
 
 
+    @Override
     public SourcePoint getSourcePoint()
     {
         return new SourcePoint(expr.getSourcePoint(), index.getSourcePoint());
     }
 
 
+    @Override
     public boolean isLvalue()
     {
         return true;

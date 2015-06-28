@@ -146,6 +146,7 @@ public class RegisterSet
         }
 
 
+        @Override
         void write(byte val)
         {
             int wval = (val >> ior_low_bit) & mask;
@@ -168,6 +169,7 @@ public class RegisterSet
         }
 
 
+        @Override
         void write(byte val)
         {
             int value = (val >> ior_low_bit) & mask;
@@ -184,6 +186,7 @@ public class RegisterSet
         }
 
 
+        @Override
         void write(byte val)
         {
             // TODO: check that all writes are zeroes
@@ -199,6 +202,7 @@ public class RegisterSet
         }
 
 
+        @Override
         void write(byte val)
         {
             // do nothing.
@@ -223,12 +227,14 @@ public class RegisterSet
         }
 
 
+        @Override
         public byte read()
         {
             return value;
         }
 
 
+        @Override
         public void write(byte nval)
         {
             this.value = nval;

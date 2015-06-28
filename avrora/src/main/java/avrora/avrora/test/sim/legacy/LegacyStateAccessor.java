@@ -118,12 +118,14 @@ public class LegacyStateAccessor extends StateAccessor
         LegacyRegister reg;
 
 
+        @Override
         protected int get()
         {
             return interpreter.getRegisterByte(reg);
         }
 
 
+        @Override
         protected void set(int val)
         {
             interpreter.writeRegisterByte(reg.getNumber(), (byte) val);
@@ -135,12 +137,14 @@ public class LegacyStateAccessor extends StateAccessor
         LegacyRegister reg;
 
 
+        @Override
         protected int get()
         {
             return interpreter.getRegisterWord(reg);
         }
 
 
+        @Override
         protected void set(int val)
         {
             interpreter.writeRegisterWord(reg.getNumber(), val);
@@ -149,12 +153,14 @@ public class LegacyStateAccessor extends StateAccessor
 
     class PC extends Accessor
     {
+        @Override
         protected int get()
         {
             return interpreter.getState().getPC();
         }
 
 
+        @Override
         protected void set(int val)
         {
             interpreter.setBootPC(val);
@@ -163,12 +169,14 @@ public class LegacyStateAccessor extends StateAccessor
 
     class SP extends Accessor
     {
+        @Override
         protected int get()
         {
             return interpreter.getState().getSP();
         }
 
 
+        @Override
         protected void set(int val)
         {
             interpreter.setSP(val);
@@ -177,24 +185,28 @@ public class LegacyStateAccessor extends StateAccessor
 
     class SRAM extends Accessor
     {
+        @Override
         protected int get()
         {
             return 0;
         }
 
 
+        @Override
         protected void set(int val)
         {
             // do nothing.
         }
 
 
+        @Override
         protected int getIndex(int ind)
         {
             return interpreter.getDataByte(ind);
         }
 
 
+        @Override
         protected void setIndex(int ind, int val)
         {
             interpreter.writeDataByte(ind, (byte) val);
@@ -203,24 +215,28 @@ public class LegacyStateAccessor extends StateAccessor
 
     class FLASH extends Accessor
     {
+        @Override
         protected int get()
         {
             return 0;
         }
 
 
+        @Override
         protected void set(int val)
         {
             // do nothing.
         }
 
 
+        @Override
         protected int getIndex(int ind)
         {
             return interpreter.getFlashByte(ind);
         }
 
 
+        @Override
         protected void setIndex(int ind, int val)
         {
             interpreter.writeFlashByte(ind, (byte) val);
@@ -238,12 +254,14 @@ public class LegacyStateAccessor extends StateAccessor
         }
 
 
+        @Override
         protected int get()
         {
             return interpreter.getFlag(bit) ? 1 : 0;
         }
 
 
+        @Override
         protected void set(int val)
         {
             interpreter.setFlag(bit, val != 0);
@@ -252,12 +270,14 @@ public class LegacyStateAccessor extends StateAccessor
 
     class Cycles extends Accessor
     {
+        @Override
         protected int get()
         {
             return (int) interpreter.getState().getCycles();
         }
 
 
+        @Override
         protected void set(int val)
         {
             interpreter.getMainClock().advance(val);

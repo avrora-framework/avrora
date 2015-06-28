@@ -63,24 +63,28 @@ public class AVRArchitecture implements AbstractArchitecture
      * @return an instance of the <code>AbstractDisassembler</code> interface
      *         appropriate for this architecture
      */
+    @Override
     public AbstractDisassembler getDisassembler()
     {
         return new AVRDisassembler();
     }
 
 
+    @Override
     public AbstractAssembler getAssembler()
     {
         throw Util.unimplemented();
     }
 
 
+    @Override
     public AbstractParser getParser()
     {
         throw Util.unimplemented();
     }
 
 
+    @Override
     public AbstractInstr[] newInstrArray(int len)
     {
         return new AVRInstr[len];

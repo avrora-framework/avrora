@@ -82,12 +82,14 @@ public class LED implements Microcontroller.Pin.Output
         }
 
 
+        @Override
         public void fireBeforeTransition(int beforeState, int afterState)
         {
             // do nothing
         }
 
 
+        @Override
         public void fireAfterTransition(int beforeState, int afterState)
         {
             if (beforeState == afterState)
@@ -129,6 +131,7 @@ public class LED implements Microcontroller.Pin.Output
     }
 
 
+    @Override
     public void write(boolean level)
     {
         // NOTE: there is an inverter between the port and the LED, we reverse

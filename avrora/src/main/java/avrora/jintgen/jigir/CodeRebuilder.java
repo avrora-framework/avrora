@@ -45,6 +45,7 @@ import java.util.List;
 public class CodeRebuilder<Env> implements CodeAccumulator<Expr, Env>
 {
 
+    @Override
     public Expr visit(BinOpExpr e, Env env)
     {
         Expr left = e.left;
@@ -67,6 +68,7 @@ public class CodeRebuilder<Env> implements CodeAccumulator<Expr, Env>
     }
 
 
+    @Override
     public Expr visit(IndexExpr e, Env env)
     {
         Expr i = visitExpr(e.expr, env);
@@ -77,6 +79,7 @@ public class CodeRebuilder<Env> implements CodeAccumulator<Expr, Env>
     }
 
 
+    @Override
     public Expr visit(FixedRangeExpr e, Env env)
     {
         Expr o = visitExpr(e.expr, env);
@@ -86,6 +89,7 @@ public class CodeRebuilder<Env> implements CodeAccumulator<Expr, Env>
     }
 
 
+    @Override
     public List<Expr> visitExprList(List<Expr> l, Env env)
     {
         List<Expr> nl = new LinkedList<Expr>();
@@ -106,6 +110,7 @@ public class CodeRebuilder<Env> implements CodeAccumulator<Expr, Env>
     }
 
 
+    @Override
     public Expr visit(CallExpr e, Env env)
     {
         List<Expr> nargs = visitExprList(e.args, env);
@@ -126,6 +131,7 @@ public class CodeRebuilder<Env> implements CodeAccumulator<Expr, Env>
     }
 
 
+    @Override
     public Expr visit(ReadExpr e, Env env)
     {
         // terminal node in the tree
@@ -133,6 +139,7 @@ public class CodeRebuilder<Env> implements CodeAccumulator<Expr, Env>
     }
 
 
+    @Override
     public Expr visit(ConversionExpr e, Env env)
     {
         Expr ne = visitExpr(e.expr, env);
@@ -142,6 +149,7 @@ public class CodeRebuilder<Env> implements CodeAccumulator<Expr, Env>
     }
 
 
+    @Override
     public Expr visit(Literal.BoolExpr e, Env env)
     {
         // terminal node in the tree
@@ -149,6 +157,7 @@ public class CodeRebuilder<Env> implements CodeAccumulator<Expr, Env>
     }
 
 
+    @Override
     public Expr visit(Literal.IntExpr e, Env env)
     {
         // terminal node in the tree
@@ -156,6 +165,7 @@ public class CodeRebuilder<Env> implements CodeAccumulator<Expr, Env>
     }
 
 
+    @Override
     public Expr visit(Literal.EnumVal e, Env env)
     {
         // terminal node in the tree
@@ -163,6 +173,7 @@ public class CodeRebuilder<Env> implements CodeAccumulator<Expr, Env>
     }
 
 
+    @Override
     public Expr visit(UnOpExpr e, Env env)
     {
         Expr ne = visitExpr(e.expr, env);
@@ -183,6 +194,7 @@ public class CodeRebuilder<Env> implements CodeAccumulator<Expr, Env>
     }
 
 
+    @Override
     public Expr visit(VarExpr e, Env env)
     {
         // terminal node in the tree
@@ -190,6 +202,7 @@ public class CodeRebuilder<Env> implements CodeAccumulator<Expr, Env>
     }
 
 
+    @Override
     public Expr visit(DotExpr e, Env env)
     {
         // terminal node in the tree

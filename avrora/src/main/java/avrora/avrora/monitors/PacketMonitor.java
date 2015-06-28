@@ -155,6 +155,7 @@ public class PacketMonitor extends MonitorFactory
         }
 
 
+        @Override
         public void fireBeforeTransmit(Medium.Transmitter t, byte val)
         {
             if (bufferPos == 0)
@@ -164,6 +165,7 @@ public class PacketMonitor extends MonitorFactory
         }
 
 
+        @Override
         public void fireBeforeTransmitEnd(Medium.Transmitter t)
         {
             packetsTransmitted++;
@@ -175,6 +177,7 @@ public class PacketMonitor extends MonitorFactory
         }
 
 
+        @Override
         public void fireAfterReceive(Medium.Receiver r, char val)
         {
             if (bufferPos == 0)
@@ -186,6 +189,7 @@ public class PacketMonitor extends MonitorFactory
         }
 
 
+        @Override
         public void fireAfterReceiveEnd(Medium.Receiver r)
         {
             if (bufferPos == 0 || bufferData == null)
@@ -363,6 +367,7 @@ public class PacketMonitor extends MonitorFactory
         }
 
 
+        @Override
         public void report()
         {
             if (monitors != null)
@@ -420,6 +425,7 @@ public class PacketMonitor extends MonitorFactory
      *
      * @see MonitorFactory#newMonitor(Simulator)
      */
+    @Override
     public Monitor newMonitor(Simulator s)
     {
         return new Mon(s);

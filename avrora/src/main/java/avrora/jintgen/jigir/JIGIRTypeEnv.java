@@ -92,6 +92,7 @@ public class JIGIRTypeEnv extends TypeEnv
         }
 
 
+        @Override
         public Type newType(TypeEnv te, HashMap<String, List<Object>> dims)
         {
             HashMap<String, Object> dimInst = buildDimensions(te, dims);
@@ -138,6 +139,7 @@ public class JIGIRTypeEnv extends TypeEnv
         }
 
 
+        @Override
         public Type newType(TypeEnv te, HashMap<String, List<Object>> dims)
         {
             HashMap<String, Object> dimInst = buildDimensions(te, dims);
@@ -202,6 +204,7 @@ public class JIGIRTypeEnv extends TypeEnv
         }
 
 
+        @Override
         public String toString()
         {
             return (signed ? "-int." : "+int.") + size;
@@ -246,6 +249,7 @@ public class JIGIRTypeEnv extends TypeEnv
         }
 
 
+        @Override
         public String toString()
         {
             return (relative ? "-address." : "address.") + align;

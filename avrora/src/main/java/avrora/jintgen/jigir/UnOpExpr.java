@@ -92,6 +92,7 @@ public class UnOpExpr extends Expr
      * @return true if this expression can be evaluated to a constant; false
      *         otherwise
      */
+    @Override
     public boolean isConstantExpr()
     {
         return expr.isConstantExpr();
@@ -106,6 +107,7 @@ public class UnOpExpr extends Expr
      *
      * @return a string representation of this expression
      */
+    @Override
     public String toString()
     {
         return operation + innerString(expr);
@@ -121,6 +123,7 @@ public class UnOpExpr extends Expr
      * @return an integer representing the precedence of this expression; higher
      *         numbers are higher precedence
      */
+    @Override
     public int getPrecedence()
     {
         return PREC_UN;
@@ -135,6 +138,7 @@ public class UnOpExpr extends Expr
      * @return a <code>SourcePoint</code> instance that represents this
      *         expression in the source program
      */
+    @Override
     public SourcePoint getSourcePoint()
     {
         return operation.getSourcePoint();
@@ -184,6 +188,7 @@ public class UnOpExpr extends Expr
      * @param v
      *            the visitor to accept
      */
+    @Override
     public void accept(CodeVisitor v)
     {
         v.visit(this);
@@ -201,6 +206,7 @@ public class UnOpExpr extends Expr
      * @return the result of calling the appropriate <code>visit()</code> method
      *         of the rebuilder
      */
+    @Override
     public <Res, Env> Res accept(CodeAccumulator<Res, Env> r, Env env)
     {
         return r.visit(this, env);
@@ -224,6 +230,7 @@ public class UnOpExpr extends Expr
         }
 
 
+        @Override
         public String getOperation()
         {
             return operation;
@@ -233,6 +240,7 @@ public class UnOpExpr extends Expr
         public abstract Literal evaluate(Literal inner);
 
 
+        @Override
         public abstract Type typeCheck(TypeEnv env, Typeable inner);
     }
 }

@@ -94,6 +94,7 @@ public abstract class Pattern
         }
 
 
+        @Override
         public boolean isBeginChar(char c)
         {
             return ch == c;
@@ -120,6 +121,7 @@ public abstract class Pattern
         }
 
 
+        @Override
         public boolean isBeginChar(char c)
         {
             return beginChar == c;

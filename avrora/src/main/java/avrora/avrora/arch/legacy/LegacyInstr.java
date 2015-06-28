@@ -91,6 +91,7 @@ public abstract class LegacyInstr implements LegacyInstrProto, AbstractInstr
      *
      * @return the variant of the instruction that this prototype represents
      */
+    @Override
     public String getVariant()
     {
         return properties.variant;
@@ -103,6 +104,7 @@ public abstract class LegacyInstr implements LegacyInstrProto, AbstractInstr
      *
      * @return the size of this instruction in bytes
      */
+    @Override
     public int getSize()
     {
         return properties.size;
@@ -118,6 +120,7 @@ public abstract class LegacyInstr implements LegacyInstrProto, AbstractInstr
      *
      * @return the name of the instruction
      */
+    @Override
     public String getName()
     {
         return properties.name;
@@ -131,6 +134,7 @@ public abstract class LegacyInstr implements LegacyInstrProto, AbstractInstr
      * 
      * @return a string representation of this instruction
      */
+    @Override
     public String toString()
     {
         return getVariant() + ' ' + getOperands();
@@ -176,6 +180,7 @@ public abstract class LegacyInstr implements LegacyInstrProto, AbstractInstr
      * 
      * @return a reference to the architecture that contains this instruction
      */
+    @Override
     public AbstractArchitecture getArchitecture()
     {
         return LegacyArchitecture.INSTANCE;
@@ -536,12 +541,14 @@ public abstract class LegacyInstr implements LegacyInstrProto, AbstractInstr
         }
 
 
+        @Override
         public String getOperands()
         {
             return r1 + ", " + r2;
         }
 
 
+        @Override
         public LegacyInstr build(int pc, LegacyOperand[] ops)
         {
             need(2, ops);
@@ -549,6 +556,7 @@ public abstract class LegacyInstr implements LegacyInstrProto, AbstractInstr
         }
 
 
+        @Override
         public boolean equals(Object o)
         {
             // is the other object the same as this one?
@@ -587,12 +595,14 @@ public abstract class LegacyInstr implements LegacyInstrProto, AbstractInstr
         }
 
 
+        @Override
         public String getOperands()
         {
             return r1 + ", " + imm1;
         }
 
 
+        @Override
         public LegacyInstr build(int pc, LegacyOperand[] ops)
         {
             need(2, ops);
@@ -600,6 +610,7 @@ public abstract class LegacyInstr implements LegacyInstrProto, AbstractInstr
         }
 
 
+        @Override
         public boolean equals(Object o)
         {
             // is the other object the same as this one?
@@ -637,12 +648,14 @@ public abstract class LegacyInstr implements LegacyInstrProto, AbstractInstr
         }
 
 
+        @Override
         public String getOperands()
         {
             return imm1 + ", " + r1;
         }
 
 
+        @Override
         public LegacyInstr build(int pc, LegacyOperand[] ops)
         {
             need(2, ops);
@@ -650,6 +663,7 @@ public abstract class LegacyInstr implements LegacyInstrProto, AbstractInstr
         }
 
 
+        @Override
         public boolean equals(Object o)
         {
             // is the other object the same as this one?
@@ -685,12 +699,14 @@ public abstract class LegacyInstr implements LegacyInstrProto, AbstractInstr
         }
 
 
+        @Override
         public String getOperands()
         {
             return r1.toString();
         }
 
 
+        @Override
         public LegacyInstr build(int pc, LegacyOperand[] ops)
         {
             need(1, ops);
@@ -698,6 +714,7 @@ public abstract class LegacyInstr implements LegacyInstrProto, AbstractInstr
         }
 
 
+        @Override
         public boolean equals(Object o)
         {
             // is the other object the same as this one?
@@ -733,12 +750,14 @@ public abstract class LegacyInstr implements LegacyInstrProto, AbstractInstr
         }
 
 
+        @Override
         public String getOperands()
         {
             return imm1 + ", " + imm2;
         }
 
 
+        @Override
         public LegacyInstr build(int pc, LegacyOperand[] ops)
         {
             need(2, ops);
@@ -746,6 +765,7 @@ public abstract class LegacyInstr implements LegacyInstrProto, AbstractInstr
         }
 
 
+        @Override
         public boolean equals(Object o)
         {
             // is the other object the same as this one?
@@ -783,12 +803,14 @@ public abstract class LegacyInstr implements LegacyInstrProto, AbstractInstr
         }
 
 
+        @Override
         public String getOperands()
         {
             return imm1 + ", " + imm2;
         }
 
 
+        @Override
         public boolean equals(Object o)
         {
             // is the other object the same as this one?
@@ -809,6 +831,7 @@ public abstract class LegacyInstr implements LegacyInstrProto, AbstractInstr
         }
 
 
+        @Override
         public LegacyInstr build(int pc, LegacyOperand[] ops)
         {
             need(2, ops);
@@ -831,12 +854,14 @@ public abstract class LegacyInstr implements LegacyInstrProto, AbstractInstr
         }
 
 
+        @Override
         public String getOperands()
         {
             return "" + imm1;
         }
 
 
+        @Override
         public LegacyInstr build(int pc, LegacyOperand[] ops)
         {
             need(1, ops);
@@ -844,6 +869,7 @@ public abstract class LegacyInstr implements LegacyInstrProto, AbstractInstr
         }
 
 
+        @Override
         public boolean equals(Object o)
         {
             // is the other object the same as this one?
@@ -877,12 +903,14 @@ public abstract class LegacyInstr implements LegacyInstrProto, AbstractInstr
         }
 
 
+        @Override
         public String getOperands()
         {
             return "" + imm1;
         }
 
 
+        @Override
         public LegacyInstr build(int pc, LegacyOperand[] ops)
         {
             need(1, ops);
@@ -890,6 +918,7 @@ public abstract class LegacyInstr implements LegacyInstrProto, AbstractInstr
         }
 
 
+        @Override
         public boolean equals(Object o)
         {
             // is the other object the same as this one?
@@ -928,12 +957,14 @@ public abstract class LegacyInstr implements LegacyInstrProto, AbstractInstr
         }
 
 
+        @Override
         public String getOperands()
         {
             return r1 + ", " + r2 + '+' + imm1;
         }
 
 
+        @Override
         public LegacyInstr build(int pc, LegacyOperand[] ops)
         {
             need(3, ops);
@@ -941,6 +972,7 @@ public abstract class LegacyInstr implements LegacyInstrProto, AbstractInstr
         }
 
 
+        @Override
         public boolean equals(Object o)
         {
             // is the other object the same as this one?
@@ -984,12 +1016,14 @@ public abstract class LegacyInstr implements LegacyInstrProto, AbstractInstr
         }
 
 
+        @Override
         public String getOperands()
         {
             return r1 + "+" + imm1 + ", " + r2;
         }
 
 
+        @Override
         public LegacyInstr build(int pc, LegacyOperand[] ops)
         {
             need(3, ops);
@@ -997,6 +1031,7 @@ public abstract class LegacyInstr implements LegacyInstrProto, AbstractInstr
         }
 
 
+        @Override
         public boolean equals(Object o)
         {
             // is the other object the same as this one?
@@ -1032,12 +1067,14 @@ public abstract class LegacyInstr implements LegacyInstrProto, AbstractInstr
         }
 
 
+        @Override
         public String getOperands()
         {
             return "";
         }
 
 
+        @Override
         public LegacyInstr build(int pc, LegacyOperand[] ops)
         {
             need(0, ops);
@@ -1045,6 +1082,7 @@ public abstract class LegacyInstr implements LegacyInstrProto, AbstractInstr
         }
 
 
+        @Override
         public boolean equals(Object o)
         {
             // is the other object the same as this one?
@@ -1100,6 +1138,7 @@ public abstract class LegacyInstr implements LegacyInstrProto, AbstractInstr
                 GPR_default);
 
 
+        @Override
         LegacyInstr allocate(int pc, LegacyRegister a, LegacyRegister b)
         {
             return new ADC(pc, a, b);
@@ -1112,6 +1151,7 @@ public abstract class LegacyInstr implements LegacyInstrProto, AbstractInstr
         }
 
 
+        @Override
         public void accept(LegacyInstrVisitor v)
         {
             v.visit(this);
@@ -1126,6 +1166,7 @@ public abstract class LegacyInstr implements LegacyInstrProto, AbstractInstr
                 GPR_default);
 
 
+        @Override
         LegacyInstr allocate(int pc, LegacyRegister a, LegacyRegister b)
         {
             return new ADD(pc, a, b);
@@ -1138,6 +1179,7 @@ public abstract class LegacyInstr implements LegacyInstrProto, AbstractInstr
         }
 
 
+        @Override
         public void accept(LegacyInstrVisitor v)
         {
             v.visit(this);
@@ -1152,6 +1194,7 @@ public abstract class LegacyInstr implements LegacyInstrProto, AbstractInstr
                 IMM6_default);
 
 
+        @Override
         LegacyInstr allocate(int pc, LegacyRegister a, int b)
         {
             return new ADIW(pc, a, b);
@@ -1164,6 +1207,7 @@ public abstract class LegacyInstr implements LegacyInstrProto, AbstractInstr
         }
 
 
+        @Override
         public void accept(LegacyInstrVisitor v)
         {
             v.visit(this);
@@ -1178,6 +1222,7 @@ public abstract class LegacyInstr implements LegacyInstrProto, AbstractInstr
                 GPR_default);
 
 
+        @Override
         LegacyInstr allocate(int pc, LegacyRegister a, LegacyRegister b)
         {
             return new AND(pc, a, b);
@@ -1190,6 +1235,7 @@ public abstract class LegacyInstr implements LegacyInstrProto, AbstractInstr
         }
 
 
+        @Override
         public void accept(LegacyInstrVisitor v)
         {
             v.visit(this);
@@ -1204,6 +1250,7 @@ public abstract class LegacyInstr implements LegacyInstrProto, AbstractInstr
                 IMM8_default);
 
 
+        @Override
         LegacyInstr allocate(int pc, LegacyRegister a, int b)
         {
             return new ANDI(pc, a, b);
@@ -1216,6 +1263,7 @@ public abstract class LegacyInstr implements LegacyInstrProto, AbstractInstr
         }
 
 
+        @Override
         public void accept(LegacyInstrVisitor v)
         {
             v.visit(this);
@@ -1229,6 +1277,7 @@ public abstract class LegacyInstr implements LegacyInstrProto, AbstractInstr
         static final LegacyInstrProto prototype = new ASR(0, GPR_default);
 
 
+        @Override
         LegacyInstr allocate(int pc, LegacyRegister a)
         {
             return new ASR(pc, a);
@@ -1241,6 +1290,7 @@ public abstract class LegacyInstr implements LegacyInstrProto, AbstractInstr
         }
 
 
+        @Override
         public void accept(LegacyInstrVisitor v)
         {
             v.visit(this);
@@ -1254,6 +1304,7 @@ public abstract class LegacyInstr implements LegacyInstrProto, AbstractInstr
         static final LegacyInstrProto prototype = new BCLR(0, IMM3_default);
 
 
+        @Override
         LegacyInstr allocate(int pc, int a)
         {
             return new BCLR(pc, a);
@@ -1266,6 +1317,7 @@ public abstract class LegacyInstr implements LegacyInstrProto, AbstractInstr
         }
 
 
+        @Override
         public void accept(LegacyInstrVisitor v)
         {
             v.visit(this);
@@ -1280,6 +1332,7 @@ public abstract class LegacyInstr implements LegacyInstrProto, AbstractInstr
                 IMM3_default);
 
 
+        @Override
         LegacyInstr allocate(int pc, LegacyRegister a, int b)
         {
             return new BLD(pc, a, b);
@@ -1292,6 +1345,7 @@ public abstract class LegacyInstr implements LegacyInstrProto, AbstractInstr
         }
 
 
+        @Override
         public void accept(LegacyInstrVisitor v)
         {
             v.visit(this);
@@ -1306,6 +1360,7 @@ public abstract class LegacyInstr implements LegacyInstrProto, AbstractInstr
                 SREL_default);
 
 
+        @Override
         LegacyInstr allocate(int pc, int a, int b)
         {
             return new BRBC(pc, a, b);
@@ -1318,6 +1373,7 @@ public abstract class LegacyInstr implements LegacyInstrProto, AbstractInstr
         }
 
 
+        @Override
         public void accept(LegacyInstrVisitor v)
         {
             v.visit(this);
@@ -1332,6 +1388,7 @@ public abstract class LegacyInstr implements LegacyInstrProto, AbstractInstr
                 SREL_default);
 
 
+        @Override
         LegacyInstr allocate(int pc, int a, int b)
         {
             return new BRBS(pc, a, b);
@@ -1344,6 +1401,7 @@ public abstract class LegacyInstr implements LegacyInstrProto, AbstractInstr
         }
 
 
+        @Override
         public void accept(LegacyInstrVisitor v)
         {
             v.visit(this);
@@ -1357,6 +1415,7 @@ public abstract class LegacyInstr implements LegacyInstrProto, AbstractInstr
         static final LegacyInstrProto prototype = new BRCC(0, SREL_default);
 
 
+        @Override
         LegacyInstr allocate(int pc, int a)
         {
             return new BRCC(pc, a);
@@ -1369,6 +1428,7 @@ public abstract class LegacyInstr implements LegacyInstrProto, AbstractInstr
         }
 
 
+        @Override
         public void accept(LegacyInstrVisitor v)
         {
             v.visit(this);
@@ -1382,6 +1442,7 @@ public abstract class LegacyInstr implements LegacyInstrProto, AbstractInstr
         static final LegacyInstrProto prototype = new BRCS(0, SREL_default);
 
 
+        @Override
         LegacyInstr allocate(int pc, int a)
         {
             return new BRCS(pc, a);
@@ -1394,6 +1455,7 @@ public abstract class LegacyInstr implements LegacyInstrProto, AbstractInstr
         }
 
 
+        @Override
         public void accept(LegacyInstrVisitor v)
         {
             v.visit(this);
@@ -1407,6 +1469,7 @@ public abstract class LegacyInstr implements LegacyInstrProto, AbstractInstr
         static final LegacyInstrProto prototype = new BREAK(0);
 
 
+        @Override
         LegacyInstr allocate(int pc)
         {
             return new BREAK(pc);
@@ -1419,6 +1482,7 @@ public abstract class LegacyInstr implements LegacyInstrProto, AbstractInstr
         }
 
 
+        @Override
         public void accept(LegacyInstrVisitor v)
         {
             v.visit(this);
@@ -1432,6 +1496,7 @@ public abstract class LegacyInstr implements LegacyInstrProto, AbstractInstr
         static final LegacyInstrProto prototype = new BREQ(0, SREL_default);
 
 
+        @Override
         LegacyInstr allocate(int pc, int a)
         {
             return new BREQ(pc, a);
@@ -1444,6 +1509,7 @@ public abstract class LegacyInstr implements LegacyInstrProto, AbstractInstr
         }
 
 
+        @Override
         public void accept(LegacyInstrVisitor v)
         {
             v.visit(this);
@@ -1457,6 +1523,7 @@ public abstract class LegacyInstr implements LegacyInstrProto, AbstractInstr
         static final LegacyInstrProto prototype = new BRGE(0, SREL_default);
 
 
+        @Override
         LegacyInstr allocate(int pc, int a)
         {
             return new BRGE(pc, a);
@@ -1469,6 +1536,7 @@ public abstract class LegacyInstr implements LegacyInstrProto, AbstractInstr
         }
 
 
+        @Override
         public void accept(LegacyInstrVisitor v)
         {
             v.visit(this);
@@ -1482,6 +1550,7 @@ public abstract class LegacyInstr implements LegacyInstrProto, AbstractInstr
         static final LegacyInstrProto prototype = new BRHC(0, SREL_default);
 
 
+        @Override
         LegacyInstr allocate(int pc, int a)
         {
             return new BRHC(pc, a);
@@ -1494,6 +1563,7 @@ public abstract class LegacyInstr implements LegacyInstrProto, AbstractInstr
         }
 
 
+        @Override
         public void accept(LegacyInstrVisitor v)
         {
             v.visit(this);
@@ -1507,6 +1577,7 @@ public abstract class LegacyInstr implements LegacyInstrProto, AbstractInstr
         static final LegacyInstrProto prototype = new BRHS(0, SREL_default);
 
 
+        @Override
         LegacyInstr allocate(int pc, int a)
         {
             return new BRHS(pc, a);
@@ -1519,6 +1590,7 @@ public abstract class LegacyInstr implements LegacyInstrProto, AbstractInstr
         }
 
 
+        @Override
         public void accept(LegacyInstrVisitor v)
         {
             v.visit(this);
@@ -1532,6 +1604,7 @@ public abstract class LegacyInstr implements LegacyInstrProto, AbstractInstr
         static final LegacyInstrProto prototype = new BRID(0, SREL_default);
 
 
+        @Override
         LegacyInstr allocate(int pc, int a)
         {
             return new BRID(pc, a);
@@ -1544,6 +1617,7 @@ public abstract class LegacyInstr implements LegacyInstrProto, AbstractInstr
         }
 
 
+        @Override
         public void accept(LegacyInstrVisitor v)
         {
             v.visit(this);
@@ -1557,6 +1631,7 @@ public abstract class LegacyInstr implements LegacyInstrProto, AbstractInstr
         static final LegacyInstrProto prototype = new BRIE(0, SREL_default);
 
 
+        @Override
         LegacyInstr allocate(int pc, int a)
         {
             return new BRIE(pc, a);
@@ -1569,6 +1644,7 @@ public abstract class LegacyInstr implements LegacyInstrProto, AbstractInstr
         }
 
 
+        @Override
         public void accept(LegacyInstrVisitor v)
         {
             v.visit(this);
@@ -1582,6 +1658,7 @@ public abstract class LegacyInstr implements LegacyInstrProto, AbstractInstr
         static final LegacyInstrProto prototype = new BRLO(0, SREL_default);
 
 
+        @Override
         LegacyInstr allocate(int pc, int a)
         {
             return new BRLO(pc, a);
@@ -1594,6 +1671,7 @@ public abstract class LegacyInstr implements LegacyInstrProto, AbstractInstr
         }
 
 
+        @Override
         public void accept(LegacyInstrVisitor v)
         {
             v.visit(this);
@@ -1607,6 +1685,7 @@ public abstract class LegacyInstr implements LegacyInstrProto, AbstractInstr
         static final LegacyInstrProto prototype = new BRLT(0, SREL_default);
 
 
+        @Override
         LegacyInstr allocate(int pc, int a)
         {
             return new BRLT(pc, a);
@@ -1619,6 +1698,7 @@ public abstract class LegacyInstr implements LegacyInstrProto, AbstractInstr
         }
 
 
+        @Override
         public void accept(LegacyInstrVisitor v)
         {
             v.visit(this);
@@ -1632,6 +1712,7 @@ public abstract class LegacyInstr implements LegacyInstrProto, AbstractInstr
         static final LegacyInstrProto prototype = new BRMI(0, SREL_default);
 
 
+        @Override
         LegacyInstr allocate(int pc, int a)
         {
             return new BRMI(pc, a);
@@ -1644,6 +1725,7 @@ public abstract class LegacyInstr implements LegacyInstrProto, AbstractInstr
         }
 
 
+        @Override
         public void accept(LegacyInstrVisitor v)
         {
             v.visit(this);
@@ -1657,6 +1739,7 @@ public abstract class LegacyInstr implements LegacyInstrProto, AbstractInstr
         static final LegacyInstrProto prototype = new BRNE(0, SREL_default);
 
 
+        @Override
         LegacyInstr allocate(int pc, int a)
         {
             return new BRNE(pc, a);
@@ -1669,6 +1752,7 @@ public abstract class LegacyInstr implements LegacyInstrProto, AbstractInstr
         }
 
 
+        @Override
         public void accept(LegacyInstrVisitor v)
         {
             v.visit(this);
@@ -1682,6 +1766,7 @@ public abstract class LegacyInstr implements LegacyInstrProto, AbstractInstr
         static final LegacyInstrProto prototype = new BRPL(0, SREL_default);
 
 
+        @Override
         LegacyInstr allocate(int pc, int a)
         {
             return new BRPL(pc, a);
@@ -1694,6 +1779,7 @@ public abstract class LegacyInstr implements LegacyInstrProto, AbstractInstr
         }
 
 
+        @Override
         public void accept(LegacyInstrVisitor v)
         {
             v.visit(this);
@@ -1707,6 +1793,7 @@ public abstract class LegacyInstr implements LegacyInstrProto, AbstractInstr
         static final LegacyInstrProto prototype = new BRSH(0, SREL_default);
 
 
+        @Override
         LegacyInstr allocate(int pc, int a)
         {
             return new BRSH(pc, a);
@@ -1719,6 +1806,7 @@ public abstract class LegacyInstr implements LegacyInstrProto, AbstractInstr
         }
 
 
+        @Override
         public void accept(LegacyInstrVisitor v)
         {
             v.visit(this);
@@ -1732,6 +1820,7 @@ public abstract class LegacyInstr implements LegacyInstrProto, AbstractInstr
         static final LegacyInstrProto prototype = new BRTC(0, SREL_default);
 
 
+        @Override
         LegacyInstr allocate(int pc, int a)
         {
             return new BRTC(pc, a);
@@ -1744,6 +1833,7 @@ public abstract class LegacyInstr implements LegacyInstrProto, AbstractInstr
         }
 
 
+        @Override
         public void accept(LegacyInstrVisitor v)
         {
             v.visit(this);
@@ -1757,6 +1847,7 @@ public abstract class LegacyInstr implements LegacyInstrProto, AbstractInstr
         static final LegacyInstrProto prototype = new BRTS(0, SREL_default);
 
 
+        @Override
         LegacyInstr allocate(int pc, int a)
         {
             return new BRTS(pc, a);
@@ -1769,6 +1860,7 @@ public abstract class LegacyInstr implements LegacyInstrProto, AbstractInstr
         }
 
 
+        @Override
         public void accept(LegacyInstrVisitor v)
         {
             v.visit(this);
@@ -1782,6 +1874,7 @@ public abstract class LegacyInstr implements LegacyInstrProto, AbstractInstr
         static final LegacyInstrProto prototype = new BRVC(0, SREL_default);
 
 
+        @Override
         LegacyInstr allocate(int pc, int a)
         {
             return new BRVC(pc, a);
@@ -1794,6 +1887,7 @@ public abstract class LegacyInstr implements LegacyInstrProto, AbstractInstr
         }
 
 
+        @Override
         public void accept(LegacyInstrVisitor v)
         {
             v.visit(this);
@@ -1807,6 +1901,7 @@ public abstract class LegacyInstr implements LegacyInstrProto, AbstractInstr
         static final LegacyInstrProto prototype = new BRVS(0, SREL_default);
 
 
+        @Override
         LegacyInstr allocate(int pc, int a)
         {
             return new BRVS(pc, a);
@@ -1819,6 +1914,7 @@ public abstract class LegacyInstr implements LegacyInstrProto, AbstractInstr
         }
 
 
+        @Override
         public void accept(LegacyInstrVisitor v)
         {
             v.visit(this);
@@ -1832,6 +1928,7 @@ public abstract class LegacyInstr implements LegacyInstrProto, AbstractInstr
         static final LegacyInstrProto prototype = new BSET(0, IMM3_default);
 
 
+        @Override
         LegacyInstr allocate(int pc, int a)
         {
             return new BSET(pc, a);
@@ -1844,6 +1941,7 @@ public abstract class LegacyInstr implements LegacyInstrProto, AbstractInstr
         }
 
 
+        @Override
         public void accept(LegacyInstrVisitor v)
         {
             v.visit(this);
@@ -1858,6 +1956,7 @@ public abstract class LegacyInstr implements LegacyInstrProto, AbstractInstr
                 IMM3_default);
 
 
+        @Override
         LegacyInstr allocate(int pc, LegacyRegister a, int b)
         {
             return new BST(pc, a, b);
@@ -1870,6 +1969,7 @@ public abstract class LegacyInstr implements LegacyInstrProto, AbstractInstr
         }
 
 
+        @Override
         public void accept(LegacyInstrVisitor v)
         {
             v.visit(this);
@@ -1883,6 +1983,7 @@ public abstract class LegacyInstr implements LegacyInstrProto, AbstractInstr
         static final LegacyInstrProto prototype = new CALL(0, PADDR_default);
 
 
+        @Override
         LegacyInstr allocate(int pc, int a)
         {
             return new CALL(pc, a);
@@ -1895,6 +1996,7 @@ public abstract class LegacyInstr implements LegacyInstrProto, AbstractInstr
         }
 
 
+        @Override
         public void accept(LegacyInstrVisitor v)
         {
             v.visit(this);
@@ -1909,6 +2011,7 @@ public abstract class LegacyInstr implements LegacyInstrProto, AbstractInstr
                 IMM3_default);
 
 
+        @Override
         LegacyInstr allocate(int pc, int a, int b)
         {
             return new CBI(pc, a, b);
@@ -1921,6 +2024,7 @@ public abstract class LegacyInstr implements LegacyInstrProto, AbstractInstr
         }
 
 
+        @Override
         public void accept(LegacyInstrVisitor v)
         {
             v.visit(this);
@@ -1935,6 +2039,7 @@ public abstract class LegacyInstr implements LegacyInstrProto, AbstractInstr
                 IMM8_default);
 
 
+        @Override
         LegacyInstr allocate(int pc, LegacyRegister a, int b)
         {
             return new CBR(pc, a, b);
@@ -1947,6 +2052,7 @@ public abstract class LegacyInstr implements LegacyInstrProto, AbstractInstr
         }
 
 
+        @Override
         public void accept(LegacyInstrVisitor v)
         {
             v.visit(this);
@@ -1960,6 +2066,7 @@ public abstract class LegacyInstr implements LegacyInstrProto, AbstractInstr
         static final LegacyInstrProto prototype = new CLC(0);
 
 
+        @Override
         LegacyInstr allocate(int pc)
         {
             return new CLC(pc);
@@ -1972,6 +2079,7 @@ public abstract class LegacyInstr implements LegacyInstrProto, AbstractInstr
         }
 
 
+        @Override
         public void accept(LegacyInstrVisitor v)
         {
             v.visit(this);
@@ -1985,6 +2093,7 @@ public abstract class LegacyInstr implements LegacyInstrProto, AbstractInstr
         static final LegacyInstrProto prototype = new CLH(0);
 
 
+        @Override
         LegacyInstr allocate(int pc)
         {
             return new CLH(pc);
@@ -1997,6 +2106,7 @@ public abstract class LegacyInstr implements LegacyInstrProto, AbstractInstr
         }
 
 
+        @Override
         public void accept(LegacyInstrVisitor v)
         {
             v.visit(this);
@@ -2010,6 +2120,7 @@ public abstract class LegacyInstr implements LegacyInstrProto, AbstractInstr
         static final LegacyInstrProto prototype = new CLI(0);
 
 
+        @Override
         LegacyInstr allocate(int pc)
         {
             return new CLI(pc);
@@ -2022,6 +2133,7 @@ public abstract class LegacyInstr implements LegacyInstrProto, AbstractInstr
         }
 
 
+        @Override
         public void accept(LegacyInstrVisitor v)
         {
             v.visit(this);
@@ -2035,6 +2147,7 @@ public abstract class LegacyInstr implements LegacyInstrProto, AbstractInstr
         static final LegacyInstrProto prototype = new CLN(0);
 
 
+        @Override
         LegacyInstr allocate(int pc)
         {
             return new CLN(pc);
@@ -2047,6 +2160,7 @@ public abstract class LegacyInstr implements LegacyInstrProto, AbstractInstr
         }
 
 
+        @Override
         public void accept(LegacyInstrVisitor v)
         {
             v.visit(this);
@@ -2060,6 +2174,7 @@ public abstract class LegacyInstr implements LegacyInstrProto, AbstractInstr
         static final LegacyInstrProto prototype = new CLR(0, GPR_default);
 
 
+        @Override
         LegacyInstr allocate(int pc, LegacyRegister a)
         {
             return new CLR(pc, a);
@@ -2072,6 +2187,7 @@ public abstract class LegacyInstr implements LegacyInstrProto, AbstractInstr
         }
 
 
+        @Override
         public void accept(LegacyInstrVisitor v)
         {
             v.visit(this);
@@ -2085,6 +2201,7 @@ public abstract class LegacyInstr implements LegacyInstrProto, AbstractInstr
         static final LegacyInstrProto prototype = new CLS(0);
 
 
+        @Override
         LegacyInstr allocate(int pc)
         {
             return new CLS(pc);
@@ -2097,6 +2214,7 @@ public abstract class LegacyInstr implements LegacyInstrProto, AbstractInstr
         }
 
 
+        @Override
         public void accept(LegacyInstrVisitor v)
         {
             v.visit(this);
@@ -2110,6 +2228,7 @@ public abstract class LegacyInstr implements LegacyInstrProto, AbstractInstr
         static final LegacyInstrProto prototype = new CLT(0);
 
 
+        @Override
         LegacyInstr allocate(int pc)
         {
             return new CLT(pc);
@@ -2122,6 +2241,7 @@ public abstract class LegacyInstr implements LegacyInstrProto, AbstractInstr
         }
 
 
+        @Override
         public void accept(LegacyInstrVisitor v)
         {
             v.visit(this);
@@ -2135,6 +2255,7 @@ public abstract class LegacyInstr implements LegacyInstrProto, AbstractInstr
         static final LegacyInstrProto prototype = new CLV(0);
 
 
+        @Override
         LegacyInstr allocate(int pc)
         {
             return new CLV(pc);
@@ -2147,6 +2268,7 @@ public abstract class LegacyInstr implements LegacyInstrProto, AbstractInstr
         }
 
 
+        @Override
         public void accept(LegacyInstrVisitor v)
         {
             v.visit(this);
@@ -2160,6 +2282,7 @@ public abstract class LegacyInstr implements LegacyInstrProto, AbstractInstr
         static final LegacyInstrProto prototype = new CLZ(0);
 
 
+        @Override
         LegacyInstr allocate(int pc)
         {
             return new CLZ(pc);
@@ -2172,6 +2295,7 @@ public abstract class LegacyInstr implements LegacyInstrProto, AbstractInstr
         }
 
 
+        @Override
         public void accept(LegacyInstrVisitor v)
         {
             v.visit(this);
@@ -2185,6 +2309,7 @@ public abstract class LegacyInstr implements LegacyInstrProto, AbstractInstr
         static final LegacyInstrProto prototype = new COM(0, GPR_default);
 
 
+        @Override
         LegacyInstr allocate(int pc, LegacyRegister a)
         {
             return new COM(pc, a);
@@ -2197,6 +2322,7 @@ public abstract class LegacyInstr implements LegacyInstrProto, AbstractInstr
         }
 
 
+        @Override
         public void accept(LegacyInstrVisitor v)
         {
             v.visit(this);
@@ -2211,6 +2337,7 @@ public abstract class LegacyInstr implements LegacyInstrProto, AbstractInstr
                 GPR_default);
 
 
+        @Override
         LegacyInstr allocate(int pc, LegacyRegister a, LegacyRegister b)
         {
             return new CP(pc, a, b);
@@ -2223,6 +2350,7 @@ public abstract class LegacyInstr implements LegacyInstrProto, AbstractInstr
         }
 
 
+        @Override
         public void accept(LegacyInstrVisitor v)
         {
             v.visit(this);
@@ -2237,6 +2365,7 @@ public abstract class LegacyInstr implements LegacyInstrProto, AbstractInstr
                 GPR_default);
 
 
+        @Override
         LegacyInstr allocate(int pc, LegacyRegister a, LegacyRegister b)
         {
             return new CPC(pc, a, b);
@@ -2249,6 +2378,7 @@ public abstract class LegacyInstr implements LegacyInstrProto, AbstractInstr
         }
 
 
+        @Override
         public void accept(LegacyInstrVisitor v)
         {
             v.visit(this);
@@ -2263,6 +2393,7 @@ public abstract class LegacyInstr implements LegacyInstrProto, AbstractInstr
                 IMM8_default);
 
 
+        @Override
         LegacyInstr allocate(int pc, LegacyRegister a, int b)
         {
             return new CPI(pc, a, b);
@@ -2275,6 +2406,7 @@ public abstract class LegacyInstr implements LegacyInstrProto, AbstractInstr
         }
 
 
+        @Override
         public void accept(LegacyInstrVisitor v)
         {
             v.visit(this);
@@ -2289,6 +2421,7 @@ public abstract class LegacyInstr implements LegacyInstrProto, AbstractInstr
                 GPR_default);
 
 
+        @Override
         LegacyInstr allocate(int pc, LegacyRegister a, LegacyRegister b)
         {
             return new CPSE(pc, a, b);
@@ -2301,6 +2434,7 @@ public abstract class LegacyInstr implements LegacyInstrProto, AbstractInstr
         }
 
 
+        @Override
         public void accept(LegacyInstrVisitor v)
         {
             v.visit(this);
@@ -2314,6 +2448,7 @@ public abstract class LegacyInstr implements LegacyInstrProto, AbstractInstr
         static final LegacyInstrProto prototype = new DEC(0, GPR_default);
 
 
+        @Override
         LegacyInstr allocate(int pc, LegacyRegister a)
         {
             return new DEC(pc, a);
@@ -2326,6 +2461,7 @@ public abstract class LegacyInstr implements LegacyInstrProto, AbstractInstr
         }
 
 
+        @Override
         public void accept(LegacyInstrVisitor v)
         {
             v.visit(this);
@@ -2339,6 +2475,7 @@ public abstract class LegacyInstr implements LegacyInstrProto, AbstractInstr
         static final LegacyInstrProto prototype = new EICALL(0);
 
 
+        @Override
         LegacyInstr allocate(int pc)
         {
             return new EICALL(pc);
@@ -2351,6 +2488,7 @@ public abstract class LegacyInstr implements LegacyInstrProto, AbstractInstr
         }
 
 
+        @Override
         public void accept(LegacyInstrVisitor v)
         {
             v.visit(this);
@@ -2364,6 +2502,7 @@ public abstract class LegacyInstr implements LegacyInstrProto, AbstractInstr
         static final LegacyInstrProto prototype = new EIJMP(0);
 
 
+        @Override
         LegacyInstr allocate(int pc)
         {
             return new EIJMP(pc);
@@ -2376,6 +2515,7 @@ public abstract class LegacyInstr implements LegacyInstrProto, AbstractInstr
         }
 
 
+        @Override
         public void accept(LegacyInstrVisitor v)
         {
             v.visit(this);
@@ -2389,6 +2529,7 @@ public abstract class LegacyInstr implements LegacyInstrProto, AbstractInstr
         static final LegacyInstrProto prototype = new ELPM(0);
 
 
+        @Override
         LegacyInstr allocate(int pc)
         {
             return new ELPM(pc);
@@ -2401,6 +2542,7 @@ public abstract class LegacyInstr implements LegacyInstrProto, AbstractInstr
         }
 
 
+        @Override
         public void accept(LegacyInstrVisitor v)
         {
             v.visit(this);
@@ -2415,6 +2557,7 @@ public abstract class LegacyInstr implements LegacyInstrProto, AbstractInstr
                 Z_default);
 
 
+        @Override
         LegacyInstr allocate(int pc, LegacyRegister a, LegacyRegister b)
         {
             return new ELPMD(pc, a, b);
@@ -2427,6 +2570,7 @@ public abstract class LegacyInstr implements LegacyInstrProto, AbstractInstr
         }
 
 
+        @Override
         public void accept(LegacyInstrVisitor v)
         {
             v.visit(this);
@@ -2441,6 +2585,7 @@ public abstract class LegacyInstr implements LegacyInstrProto, AbstractInstr
                 Z_default);
 
 
+        @Override
         LegacyInstr allocate(int pc, LegacyRegister a, LegacyRegister b)
         {
             return new ELPMPI(pc, a, b);
@@ -2453,6 +2598,7 @@ public abstract class LegacyInstr implements LegacyInstrProto, AbstractInstr
         }
 
 
+        @Override
         public void accept(LegacyInstrVisitor v)
         {
             v.visit(this);
@@ -2467,6 +2613,7 @@ public abstract class LegacyInstr implements LegacyInstrProto, AbstractInstr
                 GPR_default);
 
 
+        @Override
         LegacyInstr allocate(int pc, LegacyRegister a, LegacyRegister b)
         {
             return new EOR(pc, a, b);
@@ -2479,6 +2626,7 @@ public abstract class LegacyInstr implements LegacyInstrProto, AbstractInstr
         }
 
 
+        @Override
         public void accept(LegacyInstrVisitor v)
         {
             v.visit(this);
@@ -2493,6 +2641,7 @@ public abstract class LegacyInstr implements LegacyInstrProto, AbstractInstr
                 MGPR_default);
 
 
+        @Override
         LegacyInstr allocate(int pc, LegacyRegister a, LegacyRegister b)
         {
             return new FMUL(pc, a, b);
@@ -2505,6 +2654,7 @@ public abstract class LegacyInstr implements LegacyInstrProto, AbstractInstr
         }
 
 
+        @Override
         public void accept(LegacyInstrVisitor v)
         {
             v.visit(this);
@@ -2519,6 +2669,7 @@ public abstract class LegacyInstr implements LegacyInstrProto, AbstractInstr
                 MGPR_default);
 
 
+        @Override
         LegacyInstr allocate(int pc, LegacyRegister a, LegacyRegister b)
         {
             return new FMULS(pc, a, b);
@@ -2531,6 +2682,7 @@ public abstract class LegacyInstr implements LegacyInstrProto, AbstractInstr
         }
 
 
+        @Override
         public void accept(LegacyInstrVisitor v)
         {
             v.visit(this);
@@ -2545,6 +2697,7 @@ public abstract class LegacyInstr implements LegacyInstrProto, AbstractInstr
                 MGPR_default);
 
 
+        @Override
         LegacyInstr allocate(int pc, LegacyRegister a, LegacyRegister b)
         {
             return new FMULSU(pc, a, b);
@@ -2557,6 +2710,7 @@ public abstract class LegacyInstr implements LegacyInstrProto, AbstractInstr
         }
 
 
+        @Override
         public void accept(LegacyInstrVisitor v)
         {
             v.visit(this);
@@ -2570,6 +2724,7 @@ public abstract class LegacyInstr implements LegacyInstrProto, AbstractInstr
         static final LegacyInstrProto prototype = new ICALL(0);
 
 
+        @Override
         LegacyInstr allocate(int pc)
         {
             return new ICALL(pc);
@@ -2582,6 +2737,7 @@ public abstract class LegacyInstr implements LegacyInstrProto, AbstractInstr
         }
 
 
+        @Override
         public void accept(LegacyInstrVisitor v)
         {
             v.visit(this);
@@ -2595,6 +2751,7 @@ public abstract class LegacyInstr implements LegacyInstrProto, AbstractInstr
         static final LegacyInstrProto prototype = new IJMP(0);
 
 
+        @Override
         LegacyInstr allocate(int pc)
         {
             return new IJMP(pc);
@@ -2607,6 +2764,7 @@ public abstract class LegacyInstr implements LegacyInstrProto, AbstractInstr
         }
 
 
+        @Override
         public void accept(LegacyInstrVisitor v)
         {
             v.visit(this);
@@ -2621,6 +2779,7 @@ public abstract class LegacyInstr implements LegacyInstrProto, AbstractInstr
                 IMM6_default);
 
 
+        @Override
         LegacyInstr allocate(int pc, LegacyRegister a, int b)
         {
             return new IN(pc, a, b);
@@ -2633,6 +2792,7 @@ public abstract class LegacyInstr implements LegacyInstrProto, AbstractInstr
         }
 
 
+        @Override
         public void accept(LegacyInstrVisitor v)
         {
             v.visit(this);
@@ -2646,6 +2806,7 @@ public abstract class LegacyInstr implements LegacyInstrProto, AbstractInstr
         static final LegacyInstrProto prototype = new INC(0, GPR_default);
 
 
+        @Override
         LegacyInstr allocate(int pc, LegacyRegister a)
         {
             return new INC(pc, a);
@@ -2658,6 +2819,7 @@ public abstract class LegacyInstr implements LegacyInstrProto, AbstractInstr
         }
 
 
+        @Override
         public void accept(LegacyInstrVisitor v)
         {
             v.visit(this);
@@ -2671,6 +2833,7 @@ public abstract class LegacyInstr implements LegacyInstrProto, AbstractInstr
         static final LegacyInstrProto prototype = new JMP(0, PADDR_default);
 
 
+        @Override
         LegacyInstr allocate(int pc, int a)
         {
             return new JMP(pc, a);
@@ -2683,6 +2846,7 @@ public abstract class LegacyInstr implements LegacyInstrProto, AbstractInstr
         }
 
 
+        @Override
         public void accept(LegacyInstrVisitor v)
         {
             v.visit(this);
@@ -2697,6 +2861,7 @@ public abstract class LegacyInstr implements LegacyInstrProto, AbstractInstr
                 ADR_default);
 
 
+        @Override
         LegacyInstr allocate(int pc, LegacyRegister a, LegacyRegister b)
         {
             return new LD(pc, a, b);
@@ -2709,6 +2874,7 @@ public abstract class LegacyInstr implements LegacyInstrProto, AbstractInstr
         }
 
 
+        @Override
         public void accept(LegacyInstrVisitor v)
         {
             v.visit(this);
@@ -2723,6 +2889,7 @@ public abstract class LegacyInstr implements LegacyInstrProto, AbstractInstr
                 YZ_default, IMM6_default);
 
 
+        @Override
         LegacyInstr allocate(int pc, LegacyRegister a, LegacyRegister b, int c)
         {
             return new LDD(pc, a, b, c);
@@ -2735,6 +2902,7 @@ public abstract class LegacyInstr implements LegacyInstrProto, AbstractInstr
         }
 
 
+        @Override
         public void accept(LegacyInstrVisitor v)
         {
             v.visit(this);
@@ -2749,6 +2917,7 @@ public abstract class LegacyInstr implements LegacyInstrProto, AbstractInstr
                 IMM8_default);
 
 
+        @Override
         LegacyInstr allocate(int pc, LegacyRegister a, int b)
         {
             return new LDI(pc, a, b);
@@ -2761,6 +2930,7 @@ public abstract class LegacyInstr implements LegacyInstrProto, AbstractInstr
         }
 
 
+        @Override
         public void accept(LegacyInstrVisitor v)
         {
             v.visit(this);
@@ -2775,6 +2945,7 @@ public abstract class LegacyInstr implements LegacyInstrProto, AbstractInstr
                 ADR_default);
 
 
+        @Override
         LegacyInstr allocate(int pc, LegacyRegister a, LegacyRegister b)
         {
             return new LDPD(pc, a, b);
@@ -2787,6 +2958,7 @@ public abstract class LegacyInstr implements LegacyInstrProto, AbstractInstr
         }
 
 
+        @Override
         public void accept(LegacyInstrVisitor v)
         {
             v.visit(this);
@@ -2801,6 +2973,7 @@ public abstract class LegacyInstr implements LegacyInstrProto, AbstractInstr
                 ADR_default);
 
 
+        @Override
         LegacyInstr allocate(int pc, LegacyRegister a, LegacyRegister b)
         {
             return new LDPI(pc, a, b);
@@ -2813,6 +2986,7 @@ public abstract class LegacyInstr implements LegacyInstrProto, AbstractInstr
         }
 
 
+        @Override
         public void accept(LegacyInstrVisitor v)
         {
             v.visit(this);
@@ -2827,6 +3001,7 @@ public abstract class LegacyInstr implements LegacyInstrProto, AbstractInstr
                 DADDR_default);
 
 
+        @Override
         LegacyInstr allocate(int pc, LegacyRegister a, int b)
         {
             return new LDS(pc, a, b);
@@ -2839,6 +3014,7 @@ public abstract class LegacyInstr implements LegacyInstrProto, AbstractInstr
         }
 
 
+        @Override
         public void accept(LegacyInstrVisitor v)
         {
             v.visit(this);
@@ -2852,6 +3028,7 @@ public abstract class LegacyInstr implements LegacyInstrProto, AbstractInstr
         static final LegacyInstrProto prototype = new LPM(0);
 
 
+        @Override
         LegacyInstr allocate(int pc)
         {
             return new LPM(pc);
@@ -2864,6 +3041,7 @@ public abstract class LegacyInstr implements LegacyInstrProto, AbstractInstr
         }
 
 
+        @Override
         public void accept(LegacyInstrVisitor v)
         {
             v.visit(this);
@@ -2878,6 +3056,7 @@ public abstract class LegacyInstr implements LegacyInstrProto, AbstractInstr
                 Z_default);
 
 
+        @Override
         LegacyInstr allocate(int pc, LegacyRegister a, LegacyRegister b)
         {
             return new LPMD(pc, a, b);
@@ -2890,6 +3069,7 @@ public abstract class LegacyInstr implements LegacyInstrProto, AbstractInstr
         }
 
 
+        @Override
         public void accept(LegacyInstrVisitor v)
         {
             v.visit(this);
@@ -2904,6 +3084,7 @@ public abstract class LegacyInstr implements LegacyInstrProto, AbstractInstr
                 Z_default);
 
 
+        @Override
         LegacyInstr allocate(int pc, LegacyRegister a, LegacyRegister b)
         {
             return new LPMPI(pc, a, b);
@@ -2916,6 +3097,7 @@ public abstract class LegacyInstr implements LegacyInstrProto, AbstractInstr
         }
 
 
+        @Override
         public void accept(LegacyInstrVisitor v)
         {
             v.visit(this);
@@ -2929,6 +3111,7 @@ public abstract class LegacyInstr implements LegacyInstrProto, AbstractInstr
         static final LegacyInstrProto prototype = new LSL(0, GPR_default);
 
 
+        @Override
         LegacyInstr allocate(int pc, LegacyRegister a)
         {
             return new LSL(pc, a);
@@ -2941,6 +3124,7 @@ public abstract class LegacyInstr implements LegacyInstrProto, AbstractInstr
         }
 
 
+        @Override
         public void accept(LegacyInstrVisitor v)
         {
             v.visit(this);
@@ -2954,6 +3138,7 @@ public abstract class LegacyInstr implements LegacyInstrProto, AbstractInstr
         static final LegacyInstrProto prototype = new LSR(0, GPR_default);
 
 
+        @Override
         LegacyInstr allocate(int pc, LegacyRegister a)
         {
             return new LSR(pc, a);
@@ -2966,6 +3151,7 @@ public abstract class LegacyInstr implements LegacyInstrProto, AbstractInstr
         }
 
 
+        @Override
         public void accept(LegacyInstrVisitor v)
         {
             v.visit(this);
@@ -2980,6 +3166,7 @@ public abstract class LegacyInstr implements LegacyInstrProto, AbstractInstr
                 GPR_default);
 
 
+        @Override
         LegacyInstr allocate(int pc, LegacyRegister a, LegacyRegister b)
         {
             return new MOV(pc, a, b);
@@ -2992,6 +3179,7 @@ public abstract class LegacyInstr implements LegacyInstrProto, AbstractInstr
         }
 
 
+        @Override
         public void accept(LegacyInstrVisitor v)
         {
             v.visit(this);
@@ -3006,6 +3194,7 @@ public abstract class LegacyInstr implements LegacyInstrProto, AbstractInstr
                 EGPR_default);
 
 
+        @Override
         LegacyInstr allocate(int pc, LegacyRegister a, LegacyRegister b)
         {
             return new MOVW(pc, a, b);
@@ -3018,6 +3207,7 @@ public abstract class LegacyInstr implements LegacyInstrProto, AbstractInstr
         }
 
 
+        @Override
         public void accept(LegacyInstrVisitor v)
         {
             v.visit(this);
@@ -3032,6 +3222,7 @@ public abstract class LegacyInstr implements LegacyInstrProto, AbstractInstr
                 GPR_default);
 
 
+        @Override
         LegacyInstr allocate(int pc, LegacyRegister a, LegacyRegister b)
         {
             return new MUL(pc, a, b);
@@ -3044,6 +3235,7 @@ public abstract class LegacyInstr implements LegacyInstrProto, AbstractInstr
         }
 
 
+        @Override
         public void accept(LegacyInstrVisitor v)
         {
             v.visit(this);
@@ -3058,6 +3250,7 @@ public abstract class LegacyInstr implements LegacyInstrProto, AbstractInstr
                 HGPR_default);
 
 
+        @Override
         LegacyInstr allocate(int pc, LegacyRegister a, LegacyRegister b)
         {
             return new MULS(pc, a, b);
@@ -3070,6 +3263,7 @@ public abstract class LegacyInstr implements LegacyInstrProto, AbstractInstr
         }
 
 
+        @Override
         public void accept(LegacyInstrVisitor v)
         {
             v.visit(this);
@@ -3084,6 +3278,7 @@ public abstract class LegacyInstr implements LegacyInstrProto, AbstractInstr
                 MGPR_default);
 
 
+        @Override
         LegacyInstr allocate(int pc, LegacyRegister a, LegacyRegister b)
         {
             return new MULSU(pc, a, b);
@@ -3096,6 +3291,7 @@ public abstract class LegacyInstr implements LegacyInstrProto, AbstractInstr
         }
 
 
+        @Override
         public void accept(LegacyInstrVisitor v)
         {
             v.visit(this);
@@ -3109,6 +3305,7 @@ public abstract class LegacyInstr implements LegacyInstrProto, AbstractInstr
         static final LegacyInstrProto prototype = new NEG(0, GPR_default);
 
 
+        @Override
         LegacyInstr allocate(int pc, LegacyRegister a)
         {
             return new NEG(pc, a);
@@ -3121,6 +3318,7 @@ public abstract class LegacyInstr implements LegacyInstrProto, AbstractInstr
         }
 
 
+        @Override
         public void accept(LegacyInstrVisitor v)
         {
             v.visit(this);
@@ -3134,6 +3332,7 @@ public abstract class LegacyInstr implements LegacyInstrProto, AbstractInstr
         static final LegacyInstrProto prototype = new NOP(0);
 
 
+        @Override
         LegacyInstr allocate(int pc)
         {
             return new NOP(pc);
@@ -3146,6 +3345,7 @@ public abstract class LegacyInstr implements LegacyInstrProto, AbstractInstr
         }
 
 
+        @Override
         public void accept(LegacyInstrVisitor v)
         {
             v.visit(this);
@@ -3160,6 +3360,7 @@ public abstract class LegacyInstr implements LegacyInstrProto, AbstractInstr
                 GPR_default);
 
 
+        @Override
         LegacyInstr allocate(int pc, LegacyRegister a, LegacyRegister b)
         {
             return new OR(pc, a, b);
@@ -3172,6 +3373,7 @@ public abstract class LegacyInstr implements LegacyInstrProto, AbstractInstr
         }
 
 
+        @Override
         public void accept(LegacyInstrVisitor v)
         {
             v.visit(this);
@@ -3186,6 +3388,7 @@ public abstract class LegacyInstr implements LegacyInstrProto, AbstractInstr
                 IMM8_default);
 
 
+        @Override
         LegacyInstr allocate(int pc, LegacyRegister a, int b)
         {
             return new ORI(pc, a, b);
@@ -3198,6 +3401,7 @@ public abstract class LegacyInstr implements LegacyInstrProto, AbstractInstr
         }
 
 
+        @Override
         public void accept(LegacyInstrVisitor v)
         {
             v.visit(this);
@@ -3212,6 +3416,7 @@ public abstract class LegacyInstr implements LegacyInstrProto, AbstractInstr
                 GPR_default);
 
 
+        @Override
         LegacyInstr allocate(int pc, int a, LegacyRegister b)
         {
             return new OUT(pc, a, b);
@@ -3224,6 +3429,7 @@ public abstract class LegacyInstr implements LegacyInstrProto, AbstractInstr
         }
 
 
+        @Override
         public void accept(LegacyInstrVisitor v)
         {
             v.visit(this);
@@ -3237,6 +3443,7 @@ public abstract class LegacyInstr implements LegacyInstrProto, AbstractInstr
         static final LegacyInstrProto prototype = new POP(0, GPR_default);
 
 
+        @Override
         LegacyInstr allocate(int pc, LegacyRegister a)
         {
             return new POP(pc, a);
@@ -3249,6 +3456,7 @@ public abstract class LegacyInstr implements LegacyInstrProto, AbstractInstr
         }
 
 
+        @Override
         public void accept(LegacyInstrVisitor v)
         {
             v.visit(this);
@@ -3262,6 +3470,7 @@ public abstract class LegacyInstr implements LegacyInstrProto, AbstractInstr
         static final LegacyInstrProto prototype = new PUSH(0, GPR_default);
 
 
+        @Override
         LegacyInstr allocate(int pc, LegacyRegister a)
         {
             return new PUSH(pc, a);
@@ -3274,6 +3483,7 @@ public abstract class LegacyInstr implements LegacyInstrProto, AbstractInstr
         }
 
 
+        @Override
         public void accept(LegacyInstrVisitor v)
         {
             v.visit(this);
@@ -3287,6 +3497,7 @@ public abstract class LegacyInstr implements LegacyInstrProto, AbstractInstr
         static final LegacyInstrProto prototype = new RCALL(0, LREL_default);
 
 
+        @Override
         LegacyInstr allocate(int pc, int a)
         {
             return new RCALL(pc, a);
@@ -3299,6 +3510,7 @@ public abstract class LegacyInstr implements LegacyInstrProto, AbstractInstr
         }
 
 
+        @Override
         public void accept(LegacyInstrVisitor v)
         {
             v.visit(this);
@@ -3312,6 +3524,7 @@ public abstract class LegacyInstr implements LegacyInstrProto, AbstractInstr
         static final LegacyInstrProto prototype = new RET(0);
 
 
+        @Override
         LegacyInstr allocate(int pc)
         {
             return new RET(pc);
@@ -3324,6 +3537,7 @@ public abstract class LegacyInstr implements LegacyInstrProto, AbstractInstr
         }
 
 
+        @Override
         public void accept(LegacyInstrVisitor v)
         {
             v.visit(this);
@@ -3337,6 +3551,7 @@ public abstract class LegacyInstr implements LegacyInstrProto, AbstractInstr
         static final LegacyInstrProto prototype = new RETI(0);
 
 
+        @Override
         LegacyInstr allocate(int pc)
         {
             return new RETI(pc);
@@ -3349,6 +3564,7 @@ public abstract class LegacyInstr implements LegacyInstrProto, AbstractInstr
         }
 
 
+        @Override
         public void accept(LegacyInstrVisitor v)
         {
             v.visit(this);
@@ -3362,6 +3578,7 @@ public abstract class LegacyInstr implements LegacyInstrProto, AbstractInstr
         static final LegacyInstrProto prototype = new RJMP(0, LREL_default);
 
 
+        @Override
         LegacyInstr allocate(int pc, int a)
         {
             return new RJMP(pc, a);
@@ -3374,6 +3591,7 @@ public abstract class LegacyInstr implements LegacyInstrProto, AbstractInstr
         }
 
 
+        @Override
         public void accept(LegacyInstrVisitor v)
         {
             v.visit(this);
@@ -3387,6 +3605,7 @@ public abstract class LegacyInstr implements LegacyInstrProto, AbstractInstr
         static final LegacyInstrProto prototype = new ROL(0, GPR_default);
 
 
+        @Override
         LegacyInstr allocate(int pc, LegacyRegister a)
         {
             return new ROL(pc, a);
@@ -3399,6 +3618,7 @@ public abstract class LegacyInstr implements LegacyInstrProto, AbstractInstr
         }
 
 
+        @Override
         public void accept(LegacyInstrVisitor v)
         {
             v.visit(this);
@@ -3412,6 +3632,7 @@ public abstract class LegacyInstr implements LegacyInstrProto, AbstractInstr
         static final LegacyInstrProto prototype = new ROR(0, GPR_default);
 
 
+        @Override
         LegacyInstr allocate(int pc, LegacyRegister a)
         {
             return new ROR(pc, a);
@@ -3424,6 +3645,7 @@ public abstract class LegacyInstr implements LegacyInstrProto, AbstractInstr
         }
 
 
+        @Override
         public void accept(LegacyInstrVisitor v)
         {
             v.visit(this);
@@ -3438,6 +3660,7 @@ public abstract class LegacyInstr implements LegacyInstrProto, AbstractInstr
                 GPR_default);
 
 
+        @Override
         LegacyInstr allocate(int pc, LegacyRegister a, LegacyRegister b)
         {
             return new SBC(pc, a, b);
@@ -3450,6 +3673,7 @@ public abstract class LegacyInstr implements LegacyInstrProto, AbstractInstr
         }
 
 
+        @Override
         public void accept(LegacyInstrVisitor v)
         {
             v.visit(this);
@@ -3464,6 +3688,7 @@ public abstract class LegacyInstr implements LegacyInstrProto, AbstractInstr
                 IMM8_default);
 
 
+        @Override
         LegacyInstr allocate(int pc, LegacyRegister a, int b)
         {
             return new SBCI(pc, a, b);
@@ -3476,6 +3701,7 @@ public abstract class LegacyInstr implements LegacyInstrProto, AbstractInstr
         }
 
 
+        @Override
         public void accept(LegacyInstrVisitor v)
         {
             v.visit(this);
@@ -3490,6 +3716,7 @@ public abstract class LegacyInstr implements LegacyInstrProto, AbstractInstr
                 IMM3_default);
 
 
+        @Override
         LegacyInstr allocate(int pc, int a, int b)
         {
             return new SBI(pc, a, b);
@@ -3502,6 +3729,7 @@ public abstract class LegacyInstr implements LegacyInstrProto, AbstractInstr
         }
 
 
+        @Override
         public void accept(LegacyInstrVisitor v)
         {
             v.visit(this);
@@ -3516,6 +3744,7 @@ public abstract class LegacyInstr implements LegacyInstrProto, AbstractInstr
                 IMM3_default);
 
 
+        @Override
         LegacyInstr allocate(int pc, int a, int b)
         {
             return new SBIC(pc, a, b);
@@ -3528,6 +3757,7 @@ public abstract class LegacyInstr implements LegacyInstrProto, AbstractInstr
         }
 
 
+        @Override
         public void accept(LegacyInstrVisitor v)
         {
             v.visit(this);
@@ -3542,6 +3772,7 @@ public abstract class LegacyInstr implements LegacyInstrProto, AbstractInstr
                 IMM3_default);
 
 
+        @Override
         LegacyInstr allocate(int pc, int a, int b)
         {
             return new SBIS(pc, a, b);
@@ -3554,6 +3785,7 @@ public abstract class LegacyInstr implements LegacyInstrProto, AbstractInstr
         }
 
 
+        @Override
         public void accept(LegacyInstrVisitor v)
         {
             v.visit(this);
@@ -3568,6 +3800,7 @@ public abstract class LegacyInstr implements LegacyInstrProto, AbstractInstr
                 IMM6_default);
 
 
+        @Override
         LegacyInstr allocate(int pc, LegacyRegister a, int b)
         {
             return new SBIW(pc, a, b);
@@ -3580,6 +3813,7 @@ public abstract class LegacyInstr implements LegacyInstrProto, AbstractInstr
         }
 
 
+        @Override
         public void accept(LegacyInstrVisitor v)
         {
             v.visit(this);
@@ -3594,6 +3828,7 @@ public abstract class LegacyInstr implements LegacyInstrProto, AbstractInstr
                 IMM8_default);
 
 
+        @Override
         LegacyInstr allocate(int pc, LegacyRegister a, int b)
         {
             return new SBR(pc, a, b);
@@ -3606,6 +3841,7 @@ public abstract class LegacyInstr implements LegacyInstrProto, AbstractInstr
         }
 
 
+        @Override
         public void accept(LegacyInstrVisitor v)
         {
             v.visit(this);
@@ -3620,6 +3856,7 @@ public abstract class LegacyInstr implements LegacyInstrProto, AbstractInstr
                 IMM3_default);
 
 
+        @Override
         LegacyInstr allocate(int pc, LegacyRegister a, int b)
         {
             return new SBRC(pc, a, b);
@@ -3632,6 +3869,7 @@ public abstract class LegacyInstr implements LegacyInstrProto, AbstractInstr
         }
 
 
+        @Override
         public void accept(LegacyInstrVisitor v)
         {
             v.visit(this);
@@ -3646,6 +3884,7 @@ public abstract class LegacyInstr implements LegacyInstrProto, AbstractInstr
                 IMM3_default);
 
 
+        @Override
         LegacyInstr allocate(int pc, LegacyRegister a, int b)
         {
             return new SBRS(pc, a, b);
@@ -3658,6 +3897,7 @@ public abstract class LegacyInstr implements LegacyInstrProto, AbstractInstr
         }
 
 
+        @Override
         public void accept(LegacyInstrVisitor v)
         {
             v.visit(this);
@@ -3671,6 +3911,7 @@ public abstract class LegacyInstr implements LegacyInstrProto, AbstractInstr
         static final LegacyInstrProto prototype = new SEC(0);
 
 
+        @Override
         LegacyInstr allocate(int pc)
         {
             return new SEC(pc);
@@ -3683,6 +3924,7 @@ public abstract class LegacyInstr implements LegacyInstrProto, AbstractInstr
         }
 
 
+        @Override
         public void accept(LegacyInstrVisitor v)
         {
             v.visit(this);
@@ -3696,6 +3938,7 @@ public abstract class LegacyInstr implements LegacyInstrProto, AbstractInstr
         static final LegacyInstrProto prototype = new SEH(0);
 
 
+        @Override
         LegacyInstr allocate(int pc)
         {
             return new SEH(pc);
@@ -3708,6 +3951,7 @@ public abstract class LegacyInstr implements LegacyInstrProto, AbstractInstr
         }
 
 
+        @Override
         public void accept(LegacyInstrVisitor v)
         {
             v.visit(this);
@@ -3721,6 +3965,7 @@ public abstract class LegacyInstr implements LegacyInstrProto, AbstractInstr
         static final LegacyInstrProto prototype = new SEI(0);
 
 
+        @Override
         LegacyInstr allocate(int pc)
         {
             return new SEI(pc);
@@ -3733,6 +3978,7 @@ public abstract class LegacyInstr implements LegacyInstrProto, AbstractInstr
         }
 
 
+        @Override
         public void accept(LegacyInstrVisitor v)
         {
             v.visit(this);
@@ -3746,6 +3992,7 @@ public abstract class LegacyInstr implements LegacyInstrProto, AbstractInstr
         static final LegacyInstrProto prototype = new SEN(0);
 
 
+        @Override
         LegacyInstr allocate(int pc)
         {
             return new SEN(pc);
@@ -3758,6 +4005,7 @@ public abstract class LegacyInstr implements LegacyInstrProto, AbstractInstr
         }
 
 
+        @Override
         public void accept(LegacyInstrVisitor v)
         {
             v.visit(this);
@@ -3771,6 +4019,7 @@ public abstract class LegacyInstr implements LegacyInstrProto, AbstractInstr
         static final LegacyInstrProto prototype = new SER(0, GPR_default);
 
 
+        @Override
         LegacyInstr allocate(int pc, LegacyRegister a)
         {
             return new SER(pc, a);
@@ -3783,6 +4032,7 @@ public abstract class LegacyInstr implements LegacyInstrProto, AbstractInstr
         }
 
 
+        @Override
         public void accept(LegacyInstrVisitor v)
         {
             v.visit(this);
@@ -3796,6 +4046,7 @@ public abstract class LegacyInstr implements LegacyInstrProto, AbstractInstr
         static final LegacyInstrProto prototype = new SES(0);
 
 
+        @Override
         LegacyInstr allocate(int pc)
         {
             return new SES(pc);
@@ -3808,6 +4059,7 @@ public abstract class LegacyInstr implements LegacyInstrProto, AbstractInstr
         }
 
 
+        @Override
         public void accept(LegacyInstrVisitor v)
         {
             v.visit(this);
@@ -3821,6 +4073,7 @@ public abstract class LegacyInstr implements LegacyInstrProto, AbstractInstr
         static final LegacyInstrProto prototype = new SET(0);
 
 
+        @Override
         LegacyInstr allocate(int pc)
         {
             return new SET(pc);
@@ -3833,6 +4086,7 @@ public abstract class LegacyInstr implements LegacyInstrProto, AbstractInstr
         }
 
 
+        @Override
         public void accept(LegacyInstrVisitor v)
         {
             v.visit(this);
@@ -3846,6 +4100,7 @@ public abstract class LegacyInstr implements LegacyInstrProto, AbstractInstr
         static final LegacyInstrProto prototype = new SEV(0);
 
 
+        @Override
         LegacyInstr allocate(int pc)
         {
             return new SEV(pc);
@@ -3858,6 +4113,7 @@ public abstract class LegacyInstr implements LegacyInstrProto, AbstractInstr
         }
 
 
+        @Override
         public void accept(LegacyInstrVisitor v)
         {
             v.visit(this);
@@ -3871,6 +4127,7 @@ public abstract class LegacyInstr implements LegacyInstrProto, AbstractInstr
         static final LegacyInstrProto prototype = new SEZ(0);
 
 
+        @Override
         LegacyInstr allocate(int pc)
         {
             return new SEZ(pc);
@@ -3883,6 +4140,7 @@ public abstract class LegacyInstr implements LegacyInstrProto, AbstractInstr
         }
 
 
+        @Override
         public void accept(LegacyInstrVisitor v)
         {
             v.visit(this);
@@ -3896,6 +4154,7 @@ public abstract class LegacyInstr implements LegacyInstrProto, AbstractInstr
         static final LegacyInstrProto prototype = new SLEEP(0);
 
 
+        @Override
         LegacyInstr allocate(int pc)
         {
             return new SLEEP(pc);
@@ -3908,6 +4167,7 @@ public abstract class LegacyInstr implements LegacyInstrProto, AbstractInstr
         }
 
 
+        @Override
         public void accept(LegacyInstrVisitor v)
         {
             v.visit(this);
@@ -3921,6 +4181,7 @@ public abstract class LegacyInstr implements LegacyInstrProto, AbstractInstr
         static final LegacyInstrProto prototype = new SPM(0);
 
 
+        @Override
         LegacyInstr allocate(int pc)
         {
             return new SPM(pc);
@@ -3933,6 +4194,7 @@ public abstract class LegacyInstr implements LegacyInstrProto, AbstractInstr
         }
 
 
+        @Override
         public void accept(LegacyInstrVisitor v)
         {
             v.visit(this);
@@ -3947,6 +4209,7 @@ public abstract class LegacyInstr implements LegacyInstrProto, AbstractInstr
                 GPR_default);
 
 
+        @Override
         LegacyInstr allocate(int pc, LegacyRegister a, LegacyRegister b)
         {
             return new ST(pc, a, b);
@@ -3959,6 +4222,7 @@ public abstract class LegacyInstr implements LegacyInstrProto, AbstractInstr
         }
 
 
+        @Override
         public void accept(LegacyInstrVisitor v)
         {
             v.visit(this);
@@ -3973,6 +4237,7 @@ public abstract class LegacyInstr implements LegacyInstrProto, AbstractInstr
                 IMM6_default, GPR_default);
 
 
+        @Override
         LegacyInstr allocate(int pc, LegacyRegister a, int b, LegacyRegister c)
         {
             return new STD(pc, a, b, c);
@@ -3985,6 +4250,7 @@ public abstract class LegacyInstr implements LegacyInstrProto, AbstractInstr
         }
 
 
+        @Override
         public void accept(LegacyInstrVisitor v)
         {
             v.visit(this);
@@ -3999,6 +4265,7 @@ public abstract class LegacyInstr implements LegacyInstrProto, AbstractInstr
                 GPR_default);
 
 
+        @Override
         LegacyInstr allocate(int pc, LegacyRegister a, LegacyRegister b)
         {
             return new STPD(pc, a, b);
@@ -4011,6 +4278,7 @@ public abstract class LegacyInstr implements LegacyInstrProto, AbstractInstr
         }
 
 
+        @Override
         public void accept(LegacyInstrVisitor v)
         {
             v.visit(this);
@@ -4025,6 +4293,7 @@ public abstract class LegacyInstr implements LegacyInstrProto, AbstractInstr
                 GPR_default);
 
 
+        @Override
         LegacyInstr allocate(int pc, LegacyRegister a, LegacyRegister b)
         {
             return new STPI(pc, a, b);
@@ -4037,6 +4306,7 @@ public abstract class LegacyInstr implements LegacyInstrProto, AbstractInstr
         }
 
 
+        @Override
         public void accept(LegacyInstrVisitor v)
         {
             v.visit(this);
@@ -4051,6 +4321,7 @@ public abstract class LegacyInstr implements LegacyInstrProto, AbstractInstr
                 GPR_default);
 
 
+        @Override
         LegacyInstr allocate(int pc, int a, LegacyRegister b)
         {
             return new STS(pc, a, b);
@@ -4063,6 +4334,7 @@ public abstract class LegacyInstr implements LegacyInstrProto, AbstractInstr
         }
 
 
+        @Override
         public void accept(LegacyInstrVisitor v)
         {
             v.visit(this);
@@ -4077,6 +4349,7 @@ public abstract class LegacyInstr implements LegacyInstrProto, AbstractInstr
                 GPR_default);
 
 
+        @Override
         LegacyInstr allocate(int pc, LegacyRegister a, LegacyRegister b)
         {
             return new SUB(pc, a, b);
@@ -4089,6 +4362,7 @@ public abstract class LegacyInstr implements LegacyInstrProto, AbstractInstr
         }
 
 
+        @Override
         public void accept(LegacyInstrVisitor v)
         {
             v.visit(this);
@@ -4103,6 +4377,7 @@ public abstract class LegacyInstr implements LegacyInstrProto, AbstractInstr
                 IMM8_default);
 
 
+        @Override
         LegacyInstr allocate(int pc, LegacyRegister a, int b)
         {
             return new SUBI(pc, a, b);
@@ -4115,6 +4390,7 @@ public abstract class LegacyInstr implements LegacyInstrProto, AbstractInstr
         }
 
 
+        @Override
         public void accept(LegacyInstrVisitor v)
         {
             v.visit(this);
@@ -4128,6 +4404,7 @@ public abstract class LegacyInstr implements LegacyInstrProto, AbstractInstr
         static final LegacyInstrProto prototype = new SWAP(0, GPR_default);
 
 
+        @Override
         LegacyInstr allocate(int pc, LegacyRegister a)
         {
             return new SWAP(pc, a);
@@ -4140,6 +4417,7 @@ public abstract class LegacyInstr implements LegacyInstrProto, AbstractInstr
         }
 
 
+        @Override
         public void accept(LegacyInstrVisitor v)
         {
             v.visit(this);
@@ -4153,6 +4431,7 @@ public abstract class LegacyInstr implements LegacyInstrProto, AbstractInstr
         static final LegacyInstrProto prototype = new TST(0, GPR_default);
 
 
+        @Override
         LegacyInstr allocate(int pc, LegacyRegister a)
         {
             return new TST(pc, a);
@@ -4165,6 +4444,7 @@ public abstract class LegacyInstr implements LegacyInstrProto, AbstractInstr
         }
 
 
+        @Override
         public void accept(LegacyInstrVisitor v)
         {
             v.visit(this);
@@ -4178,6 +4458,7 @@ public abstract class LegacyInstr implements LegacyInstrProto, AbstractInstr
         static final LegacyInstrProto prototype = new WDR(0);
 
 
+        @Override
         LegacyInstr allocate(int pc)
         {
             return new WDR(pc);
@@ -4190,6 +4471,7 @@ public abstract class LegacyInstr implements LegacyInstrProto, AbstractInstr
         }
 
 
+        @Override
         public void accept(LegacyInstrVisitor v)
         {
             v.visit(this);

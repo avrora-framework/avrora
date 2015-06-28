@@ -62,6 +62,7 @@ public class ParseException extends AbstractParseException
      * during the printing of the final stack trace, and hence the correct error
      * message gets displayed.
      */
+    @Override
     public String getMessage()
     {
         if (!specialConstructor)
@@ -121,6 +122,7 @@ public class ParseException extends AbstractParseException
      * Used to convert raw characters to their escaped version when these raw
      * version cannot be used as part of an ASCII string literal.
      */
+    @Override
     protected String add_escapes(String str)
     {
         StringBuffer retval = new StringBuffer();

@@ -74,6 +74,7 @@ public class SystemClock extends Clock
      *
      * @return the number of elapsed time ticks in clock cycles
      */
+    @Override
     public long getCount()
     {
         return System.currentTimeMillis();
@@ -90,6 +91,7 @@ public class SystemClock extends Clock
      * @param cycles
      *            the number of cycles in the future at which to fire
      */
+    @Override
     public void insertEvent(Simulator.Event e, long cycles)
     {
         throw Util.unimplemented();
@@ -104,6 +106,7 @@ public class SystemClock extends Clock
      * @param e
      *            the event to remove
      */
+    @Override
     public void removeEvent(Simulator.Event e)
     {
         throw Util.unimplemented();

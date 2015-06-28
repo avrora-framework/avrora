@@ -85,6 +85,7 @@ public class SourceException extends SourceError
      * for the user. For source errors, this method will report the file, line
      * number, and column number where this error occurred.
      */
+    @Override
     public void report()
     {
         Terminal.print("");

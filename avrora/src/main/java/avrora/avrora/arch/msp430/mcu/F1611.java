@@ -81,24 +81,28 @@ public class F1611 extends DefaultMCU
     }
 
 
+    @Override
     public void sleep()
     {
         // do nothing.
     }
 
 
+    @Override
     public int wakeup()
     {
         return 0;
     }
 
 
+    @Override
     public Microcontroller.Pin getPin(String n)
     {
         return getPin(PROPS.getPin(n));
     }
 
 
+    @Override
     public MCUProperties getProperties()
     {
         return PROPS;

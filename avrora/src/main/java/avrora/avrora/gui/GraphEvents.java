@@ -388,6 +388,7 @@ public class GraphEvents extends JPanel
      * everytime its called (to improve performance, we could make use of an
      * update function) The code here is actually faily ugly but eh..
      */
+    @Override
     public void paint(Graphics g)
     {
 
@@ -553,6 +554,7 @@ public class GraphEvents extends JPanel
      * @param e
      *            Information about what event occured
      */
+    @Override
     public void stateChanged(ChangeEvent e)
     {
         if (e.getSource() == stepsizeVisual)
@@ -567,6 +569,7 @@ public class GraphEvents extends JPanel
      * If the scroll bar was adjusted, we should repaint. This method takes care
      * of that
      */
+    @Override
     public void adjustmentValueChanged(AdjustmentEvent e)
     {
         repaint();

@@ -218,6 +218,7 @@ public class EnergyProfiler extends MonitorFactory
          * it during program execution. Addionally the number of cycles spent in
          * sleep mode is provided.
          */
+        @Override
         public void report()
         {
             // log current state
@@ -267,6 +268,7 @@ public class EnergyProfiler extends MonitorFactory
              *
              * @see Simulator.Probe#fireBefore(State,int)
              */
+            @Override
             public void fireBefore(State s, int pc)
             {
                 long cycles = simulator.getState().getCycles() - lastChange;
@@ -301,6 +303,7 @@ public class EnergyProfiler extends MonitorFactory
              *
              * @see Simulator.Probe#fireBefore(State,int)
              */
+            @Override
             public void fireBefore(State s, int pc)
             {
                 long cycles = simulator.getState().getCycles() - lastChange;
@@ -347,6 +350,7 @@ public class EnergyProfiler extends MonitorFactory
      * @return an instance of the <code>Monitor</code> interface for the
      *         specified simulator
      */
+    @Override
     public avrora.avrora.monitors.Monitor newMonitor(Simulator s)
     {
         return new Monitor(s);

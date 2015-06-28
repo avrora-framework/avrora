@@ -143,6 +143,7 @@ public abstract class TypeEnv
         }
 
 
+        @Override
         public boolean contains(TypeCon a, TypeCon b)
         {
             TypeEnv.Relation.Node n = nodes.get(a);

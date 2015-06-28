@@ -151,6 +151,7 @@ public class FormatDecl extends Item
         }
 
 
+        @Override
         public int getBitWidth()
         {
             if (bitWidth < 0)

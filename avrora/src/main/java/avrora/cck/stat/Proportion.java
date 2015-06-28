@@ -61,6 +61,7 @@ public class Proportion implements DataItem
     }
 
 
+    @Override
     public String getName()
     {
         return name;
@@ -72,6 +73,7 @@ public class Proportion implements DataItem
      * 
      * @param printer
      */
+    @Override
     public void print(Printer printer)
     {
         printer.print("\n " + name);
@@ -141,6 +143,7 @@ public class Proportion implements DataItem
     /**
      * Do the computations and compute the proportions of each share.
      */
+    @Override
     public void process()
     {
         total = 0;
@@ -155,6 +158,7 @@ public class Proportion implements DataItem
     /**
      * Return true if this proportion has any information available.
      */
+    @Override
     public boolean empty()
     {
         return (shares.isEmpty());

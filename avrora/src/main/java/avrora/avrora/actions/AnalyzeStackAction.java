@@ -109,6 +109,7 @@ public class AnalyzeStackAction extends Action
      * @throws Exception
      *             if the program cannot be loaded correctly
      */
+    @Override
     public void run(String[] args) throws Exception
     {
         Program p = Main.loadProgram(args);

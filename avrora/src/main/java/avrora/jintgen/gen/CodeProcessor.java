@@ -58,24 +58,28 @@ public abstract class CodeProcessor<Env> extends StmtRebuilder<Env>
     }
 
 
+    @Override
     public Expr visit(VarExpr e, Env env)
     {
         return renamer.getVarExpr(e);
     }
 
 
+    @Override
     public Expr visit(ReadExpr e, Env env)
     {
         return renamer.getReadExpr(e);
     }
 
 
+    @Override
     public Stmt visit(DeclStmt s, Env env)
     {
         return renamer.getDecl((DeclStmt) super.visit(s, env));
     }
 
 
+    @Override
     public Stmt visit(WriteStmt s, Env env)
     {
         return renamer.getWrite((WriteStmt) super.visit(s, env));

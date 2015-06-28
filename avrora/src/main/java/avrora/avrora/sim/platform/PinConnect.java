@@ -474,6 +474,7 @@ public class PinConnect
 
     protected class PinEvent implements Simulator.Event
     {
+        @Override
         public void fire()
         {
             // iterator over PinLinks

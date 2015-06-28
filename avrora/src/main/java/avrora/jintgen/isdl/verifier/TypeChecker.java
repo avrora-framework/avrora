@@ -100,6 +100,7 @@ public class TypeChecker extends VerifierPass
     }
 
 
+    @Override
     public void verify()
     {
         typeCheckAccessMethods();
@@ -222,6 +223,7 @@ public class TypeChecker extends VerifierPass
     }
 
 
+    @Override
     public Environment visit(CallStmt s, Environment env)
     {
         SubroutineDecl d = typeCheckCall(env, s.method, s.args);
@@ -230,6 +232,7 @@ public class TypeChecker extends VerifierPass
     }
 
 
+    @Override
     public Environment visit(WriteStmt s, Environment env)
     {
         OperandTypeDecl d = operandTypeOf(s.operand, env);
@@ -287,12 +290,14 @@ public class TypeChecker extends VerifierPass
     }
 
 
+    @Override
     public Environment visit(CommentStmt s, Environment env)
     {
         return env;
     }
 
 
+    @Override
     public Environment visit(DeclStmt s, Environment env)
     {
         if (env.isDefinedLocally(s.name.image))
@@ -304,6 +309,7 @@ public class TypeChecker extends VerifierPass
     }
 
 
+    @Override
     public Environment visit(IfStmt s, Environment env)
     {
         typeCheck("if condition", s.cond, typeEnv.BOOLEAN, env);
@@ -315,6 +321,7 @@ public class TypeChecker extends VerifierPass
     }
 
 
+    @Override
     public List<Environment> visitStmtList(List<Stmt> l, Environment env)
     {
         for (Stmt s : l)
@@ -323,6 +330,7 @@ public class TypeChecker extends VerifierPass
     }
 
 
+    @Override
     public Environment visit(ReturnStmt s, Environment env)
     {
         if (retType == null)
@@ -336,6 +344,7 @@ public class TypeChecker extends VerifierPass
     }
 
 
+    @Override
     public Environment visit(AssignStmt s, Environment env)
     {
         if (!s.dest.isLvalue())
@@ -346,30 +355,35 @@ public class TypeChecker extends VerifierPass
     }
 
 
+    @Override
     public Environment visit(AssignStmt.Var s, Environment env)
     {
         throw Util.unimplemented();
     }
 
 
+    @Override
     public Environment visit(AssignStmt.Map s, Environment env)
     {
         throw Util.unimplemented();
     }
 
 
+    @Override
     public Environment visit(AssignStmt.Bit s, Environment env)
     {
         throw Util.unimplemented();
     }
 
 
+    @Override
     public Environment visit(AssignStmt.FixedRange s, Environment env)
     {
         throw Util.unimplemented();
     }
 
 
+    @Override
     public Type visit(BinOpExpr e, Environment env)
     {
         Type lt = typeOf(e.left, env);
@@ -385,6 +399,7 @@ public class TypeChecker extends VerifierPass
     }
 
 
+    @Override
     public Type visit(IndexExpr e, Environment env)
     {
         Type lt = typeOf(e.expr, env);
@@ -408,6 +423,7 @@ public class TypeChecker extends VerifierPass
     }
 
 
+    @Override
     public Type visit(FixedRangeExpr e, Environment env)
     {
         Type lt = intTypeOf(e.expr, env);
@@ -426,6 +442,7 @@ public class TypeChecker extends VerifierPass
     }
 
 
+    @Override
     public List<Type> visitExprList(List<Expr> l, Environment env)
     {
         List<Type> lt = new LinkedList<Type>();
@@ -435,6 +452,7 @@ public class TypeChecker extends VerifierPass
     }
 
 
+    @Override
     public Type visit(CallExpr e, Environment env)
     {
         SubroutineDecl d = typeCheckCall(env, e.method, e.args);
@@ -443,6 +461,7 @@ public class TypeChecker extends VerifierPass
     }
 
 
+    @Override
     public Type visit(ReadExpr e, Environment env)
     {
         OperandTypeDecl d = operandTypeOf(e.operand, env);
@@ -453,6 +472,7 @@ public class TypeChecker extends VerifierPass
     }
 
 
+    @Override
     public Type visit(ConversionExpr e, Environment env)
     {
         Type ft = typeOf(e.expr, env);
@@ -465,12 +485,14 @@ public class TypeChecker extends VerifierPass
     }
 
 
+    @Override
     public Type visit(Literal.BoolExpr e, Environment env)
     {
         return typeEnv.BOOLEAN;
     }
 
 
+    @Override
     public Type visit(Literal.IntExpr e, Environment env)
     {
         return getTypeOfLiteral(typeEnv, e.value);
@@ -492,12 +514,14 @@ public class TypeChecker extends VerifierPass
     }
 
 
+    @Override
     public Type visit(Literal.EnumVal e, Environment env)
     {
         return typeEnv.resolveType(e.enumDecl.name);
     }
 
 
+    @Override
     public Type visit(UnOpExpr e, Environment env)
     {
         Type lt = typeOf(e.expr, env);
@@ -512,6 +536,7 @@ public class TypeChecker extends VerifierPass
     }
 
 
+    @Override
     public Type visit(VarExpr e, Environment env)
     {
         Decl d = env.resolveDecl(e.variable.image);
@@ -525,6 +550,7 @@ public class TypeChecker extends VerifierPass
     }
 
 
+    @Override
     public Type visit(DotExpr e, Environment env)
     {
         Type t = typeOf(e.expr, env);

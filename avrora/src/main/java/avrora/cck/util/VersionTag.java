@@ -139,6 +139,7 @@ public class VersionTag
      *
      * @return a string representation of this version
      */
+    @Override
     public String toString()
     {
         return string;

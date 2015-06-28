@@ -60,6 +60,7 @@ public class Canonicalizer extends CodeProcessor<Object>
     }
 
 
+    @Override
     public Stmt visit(AssignStmt s, Object env)
     {
         Expr expr = s.expr;
@@ -162,6 +163,7 @@ public class Canonicalizer extends CodeProcessor<Object>
     }
 
 
+    @Override
     public List<Stmt> process(List<Stmt> stmts)
     {
         return visitStmtList(stmts, null);

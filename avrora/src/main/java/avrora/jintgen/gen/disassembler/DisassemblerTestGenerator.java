@@ -80,12 +80,14 @@ public class DisassemblerTestGenerator
         }
 
 
+        @Override
         void getRepresentative(String name, HashMap<String, String> props)
         {
             props.put(name, list.iterator().next());
         }
 
 
+        @Override
         void enumerate(InstrDecl d, String syntax, String name,
                 HashMap<String, String> props)
         {
@@ -108,6 +110,7 @@ public class DisassemblerTestGenerator
         }
 
 
+        @Override
         void getRepresentative(String name, HashMap<String, String> props)
         {
             HashMap<String, String> map = values.iterator().next();
@@ -125,6 +128,7 @@ public class DisassemblerTestGenerator
         }
 
 
+        @Override
         void enumerate(InstrDecl d, String syntax, String name,
                 HashMap<String, String> props)
         {

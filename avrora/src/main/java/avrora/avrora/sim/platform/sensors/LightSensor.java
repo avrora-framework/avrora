@@ -69,6 +69,7 @@ public class LightSensor extends Sensor
 
     class OnPin implements Microcontroller.Pin.Output
     {
+        @Override
         public void write(boolean val)
         {
             on = val;
@@ -87,6 +88,7 @@ public class LightSensor extends Sensor
 
     class ADCInput implements ADC.ADCInput
     {
+        @Override
         public float getVoltage()
         {
             if (data == null)

@@ -42,12 +42,14 @@ public interface AVRAddrMode
         }
 
 
+        @Override
         public void accept(AVRInstr i, AVRAddrModeVisitor v)
         {
             v.visit_GPRGPR(i, rd, rr);
         }
 
 
+        @Override
         public String toString()
         {
             return "" + ' ' + rd + ", " + rr;
@@ -80,12 +82,14 @@ public interface AVRAddrMode
         }
 
 
+        @Override
         public void accept(AVRInstr i, AVRAddrModeVisitor v)
         {
             v.visit_MGPRMGPR(i, rd, rr);
         }
 
 
+        @Override
         public String toString()
         {
             return "" + ' ' + rd + ", " + rr;
@@ -116,12 +120,14 @@ public interface AVRAddrMode
         }
 
 
+        @Override
         public void accept(AVRInstr i, AVRAddrModeVisitor v)
         {
             v.visit_GPR(i, rd);
         }
 
 
+        @Override
         public String toString()
         {
             return "" + ' ' + rd;
@@ -148,12 +154,14 @@ public interface AVRAddrMode
         }
 
 
+        @Override
         public void accept(AVRInstr i, AVRAddrModeVisitor v)
         {
             v.visit_HGPRIMM8(i, rd, imm);
         }
 
 
+        @Override
         public String toString()
         {
             return "" + ' ' + rd + ", " + imm;
@@ -184,12 +192,14 @@ public interface AVRAddrMode
         }
 
 
+        @Override
         public void accept(AVRInstr i, AVRAddrModeVisitor v)
         {
             v.visit_ABS(i, target);
         }
 
 
+        @Override
         public String toString()
         {
             return "" + ' ' + target;
@@ -214,12 +224,14 @@ public interface AVRAddrMode
         }
 
 
+        @Override
         public void accept(AVRInstr i, AVRAddrModeVisitor v)
         {
             v.visit_BRANCH(i, target);
         }
 
 
+        @Override
         public String toString()
         {
             return "" + ' ' + target;
@@ -244,12 +256,14 @@ public interface AVRAddrMode
         }
 
 
+        @Override
         public void accept(AVRInstr i, AVRAddrModeVisitor v)
         {
             v.visit_CALL(i, target);
         }
 
 
+        @Override
         public String toString()
         {
             return "" + ' ' + target;
@@ -270,12 +284,14 @@ public interface AVRAddrMode
         }
 
 
+        @Override
         public void accept(AVRInstr i, AVRAddrModeVisitor v)
         {
             v.visit_WRITEBIT(i);
         }
 
 
+        @Override
         public String toString()
         {
             return "";
@@ -296,24 +312,28 @@ public interface AVRAddrMode
         }
 
 
+        @Override
         public void accept(AVRInstr i, AVRAddrModeVisitor v)
         {
             v.visit_XLPM_REG(i, dest, source);
         }
 
 
+        @Override
         public String toString()
         {
             return "" + " ";
         }
 
 
+        @Override
         public AVROperand get_dest()
         {
             return dest;
         }
 
 
+        @Override
         public AVROperand get_source()
         {
             return source;
@@ -334,24 +354,28 @@ public interface AVRAddrMode
         }
 
 
+        @Override
         public void accept(AVRInstr i, AVRAddrModeVisitor v)
         {
             v.visit_XLPM_D(i, dest, source);
         }
 
 
+        @Override
         public String toString()
         {
             return "" + " " + dest + ", " + source;
         }
 
 
+        @Override
         public AVROperand get_dest()
         {
             return dest;
         }
 
 
+        @Override
         public AVROperand get_source()
         {
             return source;
@@ -372,24 +396,28 @@ public interface AVRAddrMode
         }
 
 
+        @Override
         public void accept(AVRInstr i, AVRAddrModeVisitor v)
         {
             v.visit_XLPM_INC(i, dest, source);
         }
 
 
+        @Override
         public String toString()
         {
             return "" + " " + dest + ", " + source + "+";
         }
 
 
+        @Override
         public AVROperand get_dest()
         {
             return dest;
         }
 
 
+        @Override
         public AVROperand get_source()
         {
             return source;
@@ -410,24 +438,28 @@ public interface AVRAddrMode
         }
 
 
+        @Override
         public void accept(AVRInstr i, AVRAddrModeVisitor v)
         {
             v.visit_LD_ST_XYZ(i, rd, ar);
         }
 
 
+        @Override
         public String toString()
         {
             return "" + " " + rd + ", " + ar;
         }
 
 
+        @Override
         public AVROperand get_rd()
         {
             return rd;
         }
 
 
+        @Override
         public AVROperand get_ar()
         {
             return ar;
@@ -448,24 +480,28 @@ public interface AVRAddrMode
         }
 
 
+        @Override
         public void accept(AVRInstr i, AVRAddrModeVisitor v)
         {
             v.visit_LD_ST_AI_XYZ(i, rd, ar);
         }
 
 
+        @Override
         public String toString()
         {
             return "" + " " + rd + ", " + ar + "+";
         }
 
 
+        @Override
         public AVROperand get_rd()
         {
             return rd;
         }
 
 
+        @Override
         public AVROperand get_ar()
         {
             return ar;
@@ -486,24 +522,28 @@ public interface AVRAddrMode
         }
 
 
+        @Override
         public void accept(AVRInstr i, AVRAddrModeVisitor v)
         {
             v.visit_LD_ST_PD_XYZ(i, rd, ar);
         }
 
 
+        @Override
         public String toString()
         {
             return "" + " " + rd + ", -" + ar;
         }
 
 
+        @Override
         public AVROperand get_rd()
         {
             return rd;
         }
 
 
+        @Override
         public AVROperand get_ar()
         {
             return ar;
@@ -524,12 +564,14 @@ public interface AVRAddrMode
         }
 
 
+        @Override
         public void accept(AVRInstr i, AVRAddrModeVisitor v)
         {
             v.visit_$adiw$(i, rd, imm);
         }
 
 
+        @Override
         public String toString()
         {
             return "" + ' ' + rd + ", " + imm;
@@ -560,12 +602,14 @@ public interface AVRAddrMode
         }
 
 
+        @Override
         public void accept(AVRInstr i, AVRAddrModeVisitor v)
         {
             v.visit_$bclr$(i, bit);
         }
 
 
+        @Override
         public String toString()
         {
             return "" + ' ' + bit;
@@ -592,12 +636,14 @@ public interface AVRAddrMode
         }
 
 
+        @Override
         public void accept(AVRInstr i, AVRAddrModeVisitor v)
         {
             v.visit_$bld$(i, rr, bit);
         }
 
 
+        @Override
         public String toString()
         {
             return "" + ' ' + rr + ", " + bit;
@@ -630,12 +676,14 @@ public interface AVRAddrMode
         }
 
 
+        @Override
         public void accept(AVRInstr i, AVRAddrModeVisitor v)
         {
             v.visit_$brbc$(i, bit, target);
         }
 
 
+        @Override
         public String toString()
         {
             return "" + ' ' + bit + ", " + target;
@@ -668,12 +716,14 @@ public interface AVRAddrMode
         }
 
 
+        @Override
         public void accept(AVRInstr i, AVRAddrModeVisitor v)
         {
             v.visit_$brbs$(i, bit, target);
         }
 
 
+        @Override
         public String toString()
         {
             return "" + ' ' + bit + ", " + target;
@@ -704,12 +754,14 @@ public interface AVRAddrMode
         }
 
 
+        @Override
         public void accept(AVRInstr i, AVRAddrModeVisitor v)
         {
             v.visit_$bset$(i, bit);
         }
 
 
+        @Override
         public String toString()
         {
             return "" + ' ' + bit;
@@ -736,12 +788,14 @@ public interface AVRAddrMode
         }
 
 
+        @Override
         public void accept(AVRInstr i, AVRAddrModeVisitor v)
         {
             v.visit_$bst$(i, rr, bit);
         }
 
 
+        @Override
         public String toString()
         {
             return "" + ' ' + rr + ", " + bit;
@@ -772,12 +826,14 @@ public interface AVRAddrMode
         }
 
 
+        @Override
         public void accept(AVRInstr i, AVRAddrModeVisitor v)
         {
             v.visit_$call$(i, target);
         }
 
 
+        @Override
         public String toString()
         {
             return "" + ' ' + target;
@@ -804,12 +860,14 @@ public interface AVRAddrMode
         }
 
 
+        @Override
         public void accept(AVRInstr i, AVRAddrModeVisitor v)
         {
             v.visit_$cbi$(i, ior, bit);
         }
 
 
+        @Override
         public String toString()
         {
             return "" + ' ' + ior + ", " + bit;
@@ -840,12 +898,14 @@ public interface AVRAddrMode
         }
 
 
+        @Override
         public void accept(AVRInstr i, AVRAddrModeVisitor v)
         {
             v.visit_$clr$(i, rd);
         }
 
 
+        @Override
         public String toString()
         {
             return "" + ' ' + rd;
@@ -872,12 +932,14 @@ public interface AVRAddrMode
         }
 
 
+        @Override
         public void accept(AVRInstr i, AVRAddrModeVisitor v)
         {
             v.visit_$fmul$(i, rd, rr);
         }
 
 
+        @Override
         public String toString()
         {
             return "" + ' ' + rd + ", " + rr;
@@ -910,12 +972,14 @@ public interface AVRAddrMode
         }
 
 
+        @Override
         public void accept(AVRInstr i, AVRAddrModeVisitor v)
         {
             v.visit_$fmuls$(i, rd, rr);
         }
 
 
+        @Override
         public String toString()
         {
             return "" + ' ' + rd + ", " + rr;
@@ -948,12 +1012,14 @@ public interface AVRAddrMode
         }
 
 
+        @Override
         public void accept(AVRInstr i, AVRAddrModeVisitor v)
         {
             v.visit_$fmulsu$(i, rd, rr);
         }
 
 
+        @Override
         public String toString()
         {
             return "" + ' ' + rd + ", " + rr;
@@ -986,12 +1052,14 @@ public interface AVRAddrMode
         }
 
 
+        @Override
         public void accept(AVRInstr i, AVRAddrModeVisitor v)
         {
             v.visit_$in$(i, rd, imm);
         }
 
 
+        @Override
         public String toString()
         {
             return "" + ' ' + rd + ", " + imm;
@@ -1022,12 +1090,14 @@ public interface AVRAddrMode
         }
 
 
+        @Override
         public void accept(AVRInstr i, AVRAddrModeVisitor v)
         {
             v.visit_$jmp$(i, target);
         }
 
 
+        @Override
         public String toString()
         {
             return "" + ' ' + target;
@@ -1057,12 +1127,14 @@ public interface AVRAddrMode
         }
 
 
+        @Override
         public void accept(AVRInstr i, AVRAddrModeVisitor v)
         {
             v.visit_$ldd$(i, rd, ar, imm);
         }
 
 
+        @Override
         public String toString()
         {
             return "" + ' ' + rd + ", " + ar + ", " + imm;
@@ -1101,12 +1173,14 @@ public interface AVRAddrMode
         }
 
 
+        @Override
         public void accept(AVRInstr i, AVRAddrModeVisitor v)
         {
             v.visit_$lds$(i, rd, addr);
         }
 
 
+        @Override
         public String toString()
         {
             return "" + ' ' + rd + ", " + addr;
@@ -1137,12 +1211,14 @@ public interface AVRAddrMode
         }
 
 
+        @Override
         public void accept(AVRInstr i, AVRAddrModeVisitor v)
         {
             v.visit_$lsl$(i, rd);
         }
 
 
+        @Override
         public String toString()
         {
             return "" + ' ' + rd;
@@ -1169,12 +1245,14 @@ public interface AVRAddrMode
         }
 
 
+        @Override
         public void accept(AVRInstr i, AVRAddrModeVisitor v)
         {
             v.visit_$movw$(i, rd, rr);
         }
 
 
+        @Override
         public String toString()
         {
             return "" + ' ' + rd + ", " + rr;
@@ -1207,12 +1285,14 @@ public interface AVRAddrMode
         }
 
 
+        @Override
         public void accept(AVRInstr i, AVRAddrModeVisitor v)
         {
             v.visit_$muls$(i, rd, rr);
         }
 
 
+        @Override
         public String toString()
         {
             return "" + ' ' + rd + ", " + rr;
@@ -1245,12 +1325,14 @@ public interface AVRAddrMode
         }
 
 
+        @Override
         public void accept(AVRInstr i, AVRAddrModeVisitor v)
         {
             v.visit_$mulsu$(i, rd, rr);
         }
 
 
+        @Override
         public String toString()
         {
             return "" + ' ' + rd + ", " + rr;
@@ -1283,12 +1365,14 @@ public interface AVRAddrMode
         }
 
 
+        @Override
         public void accept(AVRInstr i, AVRAddrModeVisitor v)
         {
             v.visit_$out$(i, ior, rr);
         }
 
 
+        @Override
         public String toString()
         {
             return "" + ' ' + ior + ", " + rr;
@@ -1319,12 +1403,14 @@ public interface AVRAddrMode
         }
 
 
+        @Override
         public void accept(AVRInstr i, AVRAddrModeVisitor v)
         {
             v.visit_$rcall$(i, target);
         }
 
 
+        @Override
         public String toString()
         {
             return "" + ' ' + target;
@@ -1349,12 +1435,14 @@ public interface AVRAddrMode
         }
 
 
+        @Override
         public void accept(AVRInstr i, AVRAddrModeVisitor v)
         {
             v.visit_$rjmp$(i, target);
         }
 
 
+        @Override
         public String toString()
         {
             return "" + ' ' + target;
@@ -1379,12 +1467,14 @@ public interface AVRAddrMode
         }
 
 
+        @Override
         public void accept(AVRInstr i, AVRAddrModeVisitor v)
         {
             v.visit_$rol$(i, rd);
         }
 
 
+        @Override
         public String toString()
         {
             return "" + ' ' + rd;
@@ -1411,12 +1501,14 @@ public interface AVRAddrMode
         }
 
 
+        @Override
         public void accept(AVRInstr i, AVRAddrModeVisitor v)
         {
             v.visit_$sbi$(i, ior, bit);
         }
 
 
+        @Override
         public String toString()
         {
             return "" + ' ' + ior + ", " + bit;
@@ -1449,12 +1541,14 @@ public interface AVRAddrMode
         }
 
 
+        @Override
         public void accept(AVRInstr i, AVRAddrModeVisitor v)
         {
             v.visit_$sbic$(i, ior, bit);
         }
 
 
+        @Override
         public String toString()
         {
             return "" + ' ' + ior + ", " + bit;
@@ -1487,12 +1581,14 @@ public interface AVRAddrMode
         }
 
 
+        @Override
         public void accept(AVRInstr i, AVRAddrModeVisitor v)
         {
             v.visit_$sbis$(i, ior, bit);
         }
 
 
+        @Override
         public String toString()
         {
             return "" + ' ' + ior + ", " + bit;
@@ -1525,12 +1621,14 @@ public interface AVRAddrMode
         }
 
 
+        @Override
         public void accept(AVRInstr i, AVRAddrModeVisitor v)
         {
             v.visit_$sbiw$(i, rd, imm);
         }
 
 
+        @Override
         public String toString()
         {
             return "" + ' ' + rd + ", " + imm;
@@ -1563,12 +1661,14 @@ public interface AVRAddrMode
         }
 
 
+        @Override
         public void accept(AVRInstr i, AVRAddrModeVisitor v)
         {
             v.visit_$sbrc$(i, rr, bit);
         }
 
 
+        @Override
         public String toString()
         {
             return "" + ' ' + rr + ", " + bit;
@@ -1601,12 +1701,14 @@ public interface AVRAddrMode
         }
 
 
+        @Override
         public void accept(AVRInstr i, AVRAddrModeVisitor v)
         {
             v.visit_$sbrs$(i, rr, bit);
         }
 
 
+        @Override
         public String toString()
         {
             return "" + ' ' + rr + ", " + bit;
@@ -1637,12 +1739,14 @@ public interface AVRAddrMode
         }
 
 
+        @Override
         public void accept(AVRInstr i, AVRAddrModeVisitor v)
         {
             v.visit_$ser$(i, rd);
         }
 
 
+        @Override
         public String toString()
         {
             return "" + ' ' + rd;
@@ -1672,12 +1776,14 @@ public interface AVRAddrMode
         }
 
 
+        @Override
         public void accept(AVRInstr i, AVRAddrModeVisitor v)
         {
             v.visit_$std$(i, ar, imm, rr);
         }
 
 
+        @Override
         public String toString()
         {
             return "" + ' ' + ar + ", " + imm + ", " + rr;
@@ -1716,12 +1822,14 @@ public interface AVRAddrMode
         }
 
 
+        @Override
         public void accept(AVRInstr i, AVRAddrModeVisitor v)
         {
             v.visit_$sts$(i, addr, rr);
         }
 
 
+        @Override
         public String toString()
         {
             return "" + ' ' + addr + ", " + rr;
@@ -1752,12 +1860,14 @@ public interface AVRAddrMode
         }
 
 
+        @Override
         public void accept(AVRInstr i, AVRAddrModeVisitor v)
         {
             v.visit_$tst$(i, rd);
         }
 
 
+        @Override
         public String toString()
         {
             return "" + ' ' + rd;

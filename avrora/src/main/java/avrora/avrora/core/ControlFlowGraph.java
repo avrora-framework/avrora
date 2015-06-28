@@ -205,6 +205,7 @@ public class ControlFlowGraph
          *
          * @return an integer value that is the hash code of this object
          */
+        @Override
         public int hashCode()
         {
             return address;
@@ -221,6 +222,7 @@ public class ControlFlowGraph
          * @return true if these two basic blocks are equivalent; false
          *         otherwise
          */
+        @Override
         public boolean equals(Object o)
         {
             if (this == o)
@@ -300,6 +302,7 @@ public class ControlFlowGraph
 
     private static class BlockComparator implements Comparator<Block>
     {
+        @Override
         public int compare(Block b1, Block b2)
         {
             return b1.address - b2.address;

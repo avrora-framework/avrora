@@ -119,6 +119,7 @@ public abstract class AtmelInterpreter extends Interpreter
          * @return a reference to the simulator associated with this state
          *         instance.
          */
+        @Override
         public Simulator getSimulator()
         {
             return simulator;
@@ -132,6 +133,7 @@ public abstract class AtmelInterpreter extends Interpreter
          * 
          * @return a reference to the <code>InterruptTable</code> instance
          */
+        @Override
         public InterruptTable getInterruptTable()
         {
             return interrupts;
@@ -145,6 +147,7 @@ public abstract class AtmelInterpreter extends Interpreter
          *            the register to read
          * @return the current value of the register
          */
+        @Override
         public byte getRegisterByte(LegacyRegister reg)
         {
             return sram[reg.getNumber()];
@@ -159,6 +162,7 @@ public abstract class AtmelInterpreter extends Interpreter
          *            the register to read
          * @return the current unsigned value of the register
          */
+        @Override
         public int getRegisterUnsigned(LegacyRegister reg)
         {
             return sram[reg.getNumber()] & 0xff;
@@ -176,6 +180,7 @@ public abstract class AtmelInterpreter extends Interpreter
          *            the low register of the pair to read
          * @return the current unsigned word value of the register pair
          */
+        @Override
         public int getRegisterWord(LegacyRegister reg)
         {
             int number = reg.getNumber();
@@ -190,6 +195,7 @@ public abstract class AtmelInterpreter extends Interpreter
          *
          * @return the value of the status register as a byte.
          */
+        @Override
         public byte getSREG()
         {
             int value = 0;
@@ -227,6 +233,7 @@ public abstract class AtmelInterpreter extends Interpreter
          *
          * @return the value on the top of the stack
          */
+        @Override
         public byte getStackByte()
         {
             int address = getSP();
@@ -242,6 +249,7 @@ public abstract class AtmelInterpreter extends Interpreter
          *
          * @return the value of the stack pointer as a byte address
          */
+        @Override
         public int getSP()
         {
             byte low = SPL_reg.value;
@@ -255,6 +263,7 @@ public abstract class AtmelInterpreter extends Interpreter
          *
          * @return the program counter as a byte address
          */
+        @Override
         public int getPC()
         {
             return pc;
@@ -275,6 +284,7 @@ public abstract class AtmelInterpreter extends Interpreter
          * @return a reference to the <code>LegacyInstr</code> object
          *         representing the instruction at that address in the program
          */
+        @Override
         public AbstractInstr getInstr(int address)
         {
             return flash.readInstr(address);
@@ -291,6 +301,7 @@ public abstract class AtmelInterpreter extends Interpreter
          * @throws ArrayIndexOutOfBoundsException
          *             if the specified address is not the valid memory range
          */
+        @Override
         public byte getDataByte(int address)
         {
             return readSRAM(UNINSTRUMENTED, address);
@@ -314,6 +325,7 @@ public abstract class AtmelInterpreter extends Interpreter
          *             if the specified address is not the valid program memory
          *             range
          */
+        @Override
         public byte getProgramByte(int address)
         {
             return flash.get(address);
@@ -330,6 +342,7 @@ public abstract class AtmelInterpreter extends Interpreter
          *            the IO register number
          * @return the value of the IO register
          */
+        @Override
         public byte getIORegisterByte(int ioreg)
         {
             return getAR(ioreg).read();
@@ -348,6 +361,7 @@ public abstract class AtmelInterpreter extends Interpreter
          * @return a reference to the <code>ActiveRegister</code> instance of
          *         the specified IO register
          */
+        @Override
         public ActiveRegister getIOReg(int ioreg)
         {
             return getAR(ioreg);
@@ -366,6 +380,7 @@ public abstract class AtmelInterpreter extends Interpreter
          *
          * @return the number of clock cycles elapsed in the simulation
          */
+        @Override
         public long getCycles()
         {
             return clock.getCount();
@@ -378,6 +393,7 @@ public abstract class AtmelInterpreter extends Interpreter
          *
          * @return an integer code representing the current sleep mode
          */
+        @Override
         public int getSleepMode()
         {
             throw Util.unimplemented();
@@ -465,6 +481,7 @@ public abstract class AtmelInterpreter extends Interpreter
     }
 
 
+    @Override
     public void start()
     {
         shouldRun = true;
@@ -472,6 +489,7 @@ public abstract class AtmelInterpreter extends Interpreter
     }
 
 
+    @Override
     public void stop()
     {
         shouldRun = false;
@@ -479,6 +497,7 @@ public abstract class AtmelInterpreter extends Interpreter
     }
 
 
+    @Override
     public State getState()
     {
         return state;
@@ -556,6 +575,7 @@ public abstract class AtmelInterpreter extends Interpreter
      * @param addr
      *            the address of the instruction on which to insert the probe
      */
+    @Override
     protected void insertProbe(Simulator.Probe p, int addr)
     {
         flash.insertProbe(addr, p);
@@ -570,6 +590,7 @@ public abstract class AtmelInterpreter extends Interpreter
      * @param watch
      *            The <code>ExceptionWatch</code> instance to add.
      */
+    @Override
     protected void insertErrorWatch(Simulator.Watch watch)
     {
         if (error_watch == null)
@@ -586,6 +607,7 @@ public abstract class AtmelInterpreter extends Interpreter
      * @param p
      *            the probe to insert
      */
+    @Override
     protected void insertProbe(Simulator.Probe p)
     {
         innerLoop = false;
@@ -602,6 +624,7 @@ public abstract class AtmelInterpreter extends Interpreter
      * @param addr
      *            the address of the instruction from which to remove the probe
      */
+    @Override
     protected void removeProbe(Simulator.Probe p, int addr)
     {
         flash.removeProbe(addr, p);
@@ -616,6 +639,7 @@ public abstract class AtmelInterpreter extends Interpreter
      * @param b
      *            the probe to remove
      */
+    @Override
     public void removeProbe(Simulator.Probe b)
     {
         innerLoop = false;
@@ -633,6 +657,7 @@ public abstract class AtmelInterpreter extends Interpreter
      *            the address of the memory location on which to insert the
      *            watch
      */
+    @Override
     protected void insertWatch(Simulator.Watch p, int data_addr)
     {
         if (sram_watches == null)
@@ -657,6 +682,7 @@ public abstract class AtmelInterpreter extends Interpreter
      *            the address of the memory location from which to remove the
      *            watch
      */
+    @Override
     protected void removeWatch(Simulator.Watch p, int data_addr)
     {
         if (sram_watches == null)
@@ -696,6 +722,7 @@ public abstract class AtmelInterpreter extends Interpreter
      * @param cycles
      *            the number of cycles to delay the execution
      */
+    @Override
     protected void delay(long cycles)
     {
         innerLoop = false;
@@ -963,12 +990,14 @@ public abstract class AtmelInterpreter extends Interpreter
         }
 
 
+        @Override
         public int read(int cur)
         {
             return reg.read();
         }
 
 
+        @Override
         public int write(int cur, int nv)
         {
             reg.write((byte) nv);
@@ -978,6 +1007,7 @@ public abstract class AtmelInterpreter extends Interpreter
 
     private class SREGBehavior extends VolatileBehavior
     {
+        @Override
         public int read(int cur)
         {
             int val = 0;
@@ -1001,6 +1031,7 @@ public abstract class AtmelInterpreter extends Interpreter
         }
 
 
+        @Override
         public int write(int cur, int nv)
         {
             boolean enabled = (nv & LegacyState.SREG_I_MASK) != 0;

@@ -99,6 +99,7 @@ public class LCDScreen implements USART.USARTDevice
     }
 
 
+    @Override
     public USART.Frame transmitFrame()
     {
         return new USART.Frame((byte) 0, false, 8);
@@ -151,6 +152,7 @@ public class LCDScreen implements USART.USARTDevice
      * @param frame
      *            the USART frame to receive
      */
+    @Override
     public void receiveFrame(USART.Frame frame)
     {
         int data = frame.value;
@@ -213,6 +215,7 @@ public class LCDScreen implements USART.USARTDevice
      * 
      * @return a string representation of this LCD screen.
      */
+    @Override
     public String toString()
     {
         StringBuffer buf = new StringBuffer(90);

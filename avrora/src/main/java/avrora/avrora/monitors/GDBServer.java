@@ -130,6 +130,7 @@ public class GDBServer extends MonitorFactory
         }
 
 
+        @Override
         public void report()
         {
             try
@@ -633,6 +634,7 @@ public class GDBServer extends MonitorFactory
             }
 
 
+            @Override
             public void fireBeforeRead(State s, int address)
             {
                 if (printer != null)
@@ -646,6 +648,7 @@ public class GDBServer extends MonitorFactory
             }
 
 
+            @Override
             public void fireBeforeWrite(State s, int address, byte val)
             {
                 if (printer != null)
@@ -666,6 +669,7 @@ public class GDBServer extends MonitorFactory
          */
         protected class StartupProbe implements Simulator.Probe
         {
+            @Override
             public void fireBefore(State s, int pc)
             {
                 if (printer != null)
@@ -695,6 +699,7 @@ public class GDBServer extends MonitorFactory
             }
 
 
+            @Override
             public void fireAfter(State s, int pc)
             {
                 // remove ourselves from the beginning of the program after it
@@ -710,6 +715,7 @@ public class GDBServer extends MonitorFactory
          */
         protected class BreakpointProbe extends Simulator.Probe.Empty
         {
+            @Override
             public void fireBefore(State s, int pc)
             {
                 if (printer != null)
@@ -730,6 +736,7 @@ public class GDBServer extends MonitorFactory
          */
         protected class StepProbe implements Simulator.Probe
         {
+            @Override
             public void fireBefore(State s, int pc)
             {
                 if (printer != null)
@@ -743,6 +750,7 @@ public class GDBServer extends MonitorFactory
             }
 
 
+            @Override
             public void fireAfter(State s, int pc)
             {
                 if (printer != null)
@@ -765,6 +773,7 @@ public class GDBServer extends MonitorFactory
     }
 
 
+    @Override
     public void processOptions(Options o)
     {
         super.processOptions(o);
@@ -796,6 +805,7 @@ public class GDBServer extends MonitorFactory
      */
     protected class EmptyMonitor implements Monitor
     {
+        @Override
         public void report()
         {
             // do nothing.
@@ -813,6 +823,7 @@ public class GDBServer extends MonitorFactory
      *            the simulator to create a monitor for
      * @return a new <code>Monitor</code> instance for the specified simulator
      */
+    @Override
     public Monitor newMonitor(Simulator s)
     {
         // get port for this node

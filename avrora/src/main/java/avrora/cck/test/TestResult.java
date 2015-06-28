@@ -112,6 +112,7 @@ public abstract class TestResult
         }
 
 
+        @Override
         public void shortReport()
         {
             Terminal.print("passed");
@@ -149,6 +150,7 @@ public abstract class TestResult
         }
 
 
+        @Override
         public void shortReport()
         {
             Terminal.print(message);
@@ -170,6 +172,7 @@ public abstract class TestResult
         }
 
 
+        @Override
         public void longReport()
         {
             Terminal.println("expected error " + expected + " but received");
@@ -189,6 +192,7 @@ public abstract class TestResult
         }
 
 
+        @Override
         public void longReport()
         {
             Terminal.println("expected pass, but received error");
@@ -220,6 +224,7 @@ public abstract class TestResult
         }
 
 
+        @Override
         public void longReport()
         {
             Terminal.print("encountered internal error\n");
@@ -239,6 +244,7 @@ public abstract class TestResult
         }
 
 
+        @Override
         public void longReport()
         {
             Terminal.print("test did not terminate\n");
@@ -265,6 +271,7 @@ public abstract class TestResult
         }
 
 
+        @Override
         public void longReport()
         {
             Terminal.println("encountered unexpected exception");
@@ -291,6 +298,7 @@ public abstract class TestResult
         }
 
 
+        @Override
         public void shortReport()
         {
             Terminal.print("malformed testcase: " + error);

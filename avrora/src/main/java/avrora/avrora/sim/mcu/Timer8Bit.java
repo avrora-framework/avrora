@@ -162,6 +162,7 @@ public abstract class Timer8Bit extends AtmelInternalDevice
     protected class TCNTnRegister extends RWRegister
     {
 
+        @Override
         public void write(byte val)
         {
             value = val;
@@ -186,6 +187,7 @@ public abstract class Timer8Bit extends AtmelInternalDevice
         }
 
 
+        @Override
         public void write(byte val)
         {
             super.write(val);
@@ -202,6 +204,7 @@ public abstract class Timer8Bit extends AtmelInternalDevice
         }
 
 
+        @Override
         public byte read()
         {
             return register.read();
@@ -234,6 +237,7 @@ public abstract class Timer8Bit extends AtmelInternalDevice
         int scale = -1;
 
 
+        @Override
         public void write(byte val)
         {
             // hardware manual states that high order bit is always read as zero
@@ -307,6 +311,7 @@ public abstract class Timer8Bit extends AtmelInternalDevice
 
     class Mode_Normal implements Simulator.Event
     {
+        @Override
         public void fire()
         {
             int ncount = (int) TCNTn_reg.read() & 0xff;
@@ -328,6 +333,7 @@ public abstract class Timer8Bit extends AtmelInternalDevice
         protected byte increment = 1;
 
 
+        @Override
         public void fire()
         {
             // TODO: OCn handling
@@ -351,6 +357,7 @@ public abstract class Timer8Bit extends AtmelInternalDevice
 
     class Mode_CTC implements Simulator.Event
     {
+        @Override
         public void fire()
         {
             int ncount = (int) TCNTn_reg.read() & 0xff;
@@ -373,6 +380,7 @@ public abstract class Timer8Bit extends AtmelInternalDevice
 
     class Mode_FastPWM implements Simulator.Event
     {
+        @Override
         public void fire()
         {
             // TODO: OCn handling

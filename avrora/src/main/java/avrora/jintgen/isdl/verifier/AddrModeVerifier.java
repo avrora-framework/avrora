@@ -53,6 +53,7 @@ public class AddrModeVerifier extends VerifierPass
     }
 
 
+    @Override
     public void verify()
     {
         uniqueCheck("AddrMode", "Addressing mode", arch.addrModes);

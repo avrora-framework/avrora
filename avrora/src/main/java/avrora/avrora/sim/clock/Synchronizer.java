@@ -146,6 +146,7 @@ public abstract class Synchronizer
          * @param n
          *            the simulator representing the node to add to this group
          */
+        @Override
         public void addNode(Simulation.Node n)
         {
             if (node != null)
@@ -163,6 +164,7 @@ public abstract class Synchronizer
          *            the simulator thread to remove from this synchronization
          *            group
          */
+        @Override
         public void removeNode(Simulation.Node n)
         {
             if (node == n)
@@ -176,6 +178,7 @@ public abstract class Synchronizer
          * catch up to it in execution time. The node will be blocked until the
          * other nodes in other threads catch up in global time.
          */
+        @Override
         public void waitForNeighbors(long time)
         {
             // do nothing
@@ -188,6 +191,7 @@ public abstract class Synchronizer
          * that is necessary to preserve the global timing properties of
          * simulation.
          */
+        @Override
         public void start()
         {
             if (node == null)
@@ -203,6 +207,7 @@ public abstract class Synchronizer
          * through <code>stop()</code> being called, or terminating normally
          * such as through a timeout.
          */
+        @Override
         public void join() throws InterruptedException
         {
             thread.join();
@@ -216,6 +221,7 @@ public abstract class Synchronizer
          * paused and will no longer make progress until the
          * <code>start()</code> method is called again.
          */
+        @Override
         public void pause()
         {
             throw Util.unimplemented();
@@ -227,6 +233,7 @@ public abstract class Synchronizer
          * threads. It is not guaranteed to stop all the simulation threads at
          * the same global time.
          */
+        @Override
         public void stop()
         {
             throw Util.unimplemented();
@@ -243,6 +250,7 @@ public abstract class Synchronizer
          *            the global time in clock cycles to run all threads ahead
          *            to
          */
+        @Override
         public void synch(long globalTime)
         {
             throw Util.unimplemented();

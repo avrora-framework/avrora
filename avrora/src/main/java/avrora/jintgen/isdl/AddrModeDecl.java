@@ -64,12 +64,14 @@ public class AddrModeDecl extends Item
         }
 
 
+        @Override
         public String getName()
         {
             return name.image;
         }
 
 
+        @Override
         public Type getType()
         {
             return typeRef.getType();

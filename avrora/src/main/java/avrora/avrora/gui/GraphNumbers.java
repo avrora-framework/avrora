@@ -332,6 +332,7 @@ public class GraphNumbers extends JPanel
      * @param g
      *            The graphic that represents the panel to be painted
      */
+    @Override
     public void paint(Graphics g)
     {
 
@@ -456,6 +457,7 @@ public class GraphNumbers extends JPanel
      * @param e
      *            Info about the event that happened
      */
+    @Override
     public void stateChanged(ChangeEvent e)
     {
         if (e.getSource() == stepsizeVisual)
@@ -485,6 +487,7 @@ public class GraphNumbers extends JPanel
      * @param e
      *            Info about the event that happened
      */
+    @Override
     public void adjustmentValueChanged(AdjustmentEvent e)
     {
         repaint();

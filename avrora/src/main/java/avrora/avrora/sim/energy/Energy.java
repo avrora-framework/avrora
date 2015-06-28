@@ -113,6 +113,7 @@ public class Energy implements FiniteStateMachine.Probe
      * @param afterState
      *            the after state represented as an integer
      */
+    @Override
     public void fireBeforeTransition(int beforeState, int afterState)
     {
         // we use fireAfterTransition
@@ -129,6 +130,7 @@ public class Energy implements FiniteStateMachine.Probe
      * @param afterState
      *            the after state represented as an integer
      */
+    @Override
     public void fireAfterTransition(int beforeState, int afterState)
     {
         if (afterState != currentMode)

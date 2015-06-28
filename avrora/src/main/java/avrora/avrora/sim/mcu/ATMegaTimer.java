@@ -117,6 +117,7 @@ public abstract class ATMegaTimer extends AtmelInternalDevice
     private RegisterSet.Field newPeriodField()
     {
         return new RegisterSet.Field() {
+            @Override
             public void update()
             {
                 resetPeriod(periods[value]);
@@ -128,6 +129,7 @@ public abstract class ATMegaTimer extends AtmelInternalDevice
     private RegisterSet.Field newWGMField()
     {
         return new RegisterSet.Field() {
+            @Override
             public void update()
             {
                 resetMode(value);
@@ -265,6 +267,7 @@ public abstract class ATMegaTimer extends AtmelInternalDevice
         }
 
 
+        @Override
         public void update()
         {
             if (0 != value)
@@ -289,6 +292,7 @@ public abstract class ATMegaTimer extends AtmelInternalDevice
         }
 
 
+        @Override
         public void force(int inum)
         {
             // XXX: Should assert that this.inum == inum?
@@ -296,6 +300,7 @@ public abstract class ATMegaTimer extends AtmelInternalDevice
         }
 
 
+        @Override
         public void invoke(int inum)
         {
             // XXX: Should assert that this.inum == inum?
@@ -410,6 +415,7 @@ public abstract class ATMegaTimer extends AtmelInternalDevice
         /**
          * Called by the appropriate clock whenever the strategy should tick.
          */
+        @Override
         public void fire()
         {
             int value = getCounter();
@@ -463,6 +469,7 @@ public abstract class ATMegaTimer extends AtmelInternalDevice
         protected class NORMAL extends Strategy
         {
 
+            @Override
             protected int nextValue(int count)
             {
                 count++;
@@ -475,6 +482,7 @@ public abstract class ATMegaTimer extends AtmelInternalDevice
             }
 
 
+            @Override
             protected void registerWritten(BufferedRegister reg)
             {
                 // Flush the buffer immediately
@@ -485,6 +493,7 @@ public abstract class ATMegaTimer extends AtmelInternalDevice
         protected class CTC extends Strategy
         {
 
+            @Override
             protected int nextValue(int count)
             {
                 count++;
@@ -503,6 +512,7 @@ public abstract class ATMegaTimer extends AtmelInternalDevice
             }
 
 
+            @Override
             protected void registerWritten(BufferedRegister reg)
             {
                 // Flush the buffer immediately
@@ -516,6 +526,7 @@ public abstract class ATMegaTimer extends AtmelInternalDevice
             boolean zero = false;
 
 
+            @Override
             protected int nextValue(int count)
             {
                 count++;
@@ -536,6 +547,7 @@ public abstract class ATMegaTimer extends AtmelInternalDevice
             }
 
 
+            @Override
             protected void registerWritten(BufferedRegister reg)
             {
                 // Mask in fixed FASTPWM modes
@@ -547,6 +559,7 @@ public abstract class ATMegaTimer extends AtmelInternalDevice
         protected class PWM extends Strategy
         {
 
+            @Override
             protected int nextValue(int count)
             {
                 if (countUp)
@@ -569,6 +582,7 @@ public abstract class ATMegaTimer extends AtmelInternalDevice
             }
 
 
+            @Override
             protected void registerWritten(BufferedRegister reg)
             {
                 // Mask in fixed FASTPWM modes
@@ -580,6 +594,7 @@ public abstract class ATMegaTimer extends AtmelInternalDevice
         protected class FC_PWM extends Strategy
         {
 
+            @Override
             protected int nextValue(int count)
             {
                 if (countUp)
@@ -602,6 +617,7 @@ public abstract class ATMegaTimer extends AtmelInternalDevice
             }
 
 
+            @Override
             protected void registerWritten(BufferedRegister reg)
             {
                 // Flushing is delayed until bottom
@@ -629,18 +645,21 @@ public abstract class ATMegaTimer extends AtmelInternalDevice
         }
 
 
+        @Override
         public int read16()
         {
             return top;
         }
 
 
+        @Override
         public int mask()
         {
             return top;
         }
 
 
+        @Override
         public void flush()
         {
             throw Util.failure("Fixed top value flushed");
@@ -679,6 +698,7 @@ public abstract class ATMegaTimer extends AtmelInternalDevice
         }
 
 
+        @Override
         public String toString()
         {
             return type + "R" + timerNumber + unit;
@@ -718,6 +738,7 @@ public abstract class ATMegaTimer extends AtmelInternalDevice
             pinmode = rset.getField("COM" + timerNumber + unit);
             force = rset.installField("FOC" + timerNumber + unit,
                     new RegisterSet.Field() {
+                        @Override
                         public void update()
                         {
                             if (1 == value)
@@ -729,6 +750,7 @@ public abstract class ATMegaTimer extends AtmelInternalDevice
         }
 
 
+        @Override
         protected void operate()
         {
             if (null == pin)
@@ -763,6 +785,7 @@ public abstract class ATMegaTimer extends AtmelInternalDevice
         }
 
 
+        @Override
         protected void operate()
         {
             // XXX: Should capture here
@@ -789,6 +812,7 @@ public abstract class ATMegaTimer extends AtmelInternalDevice
         }
 
 
+        @Override
         public void write(byte val)
         {
             register.write(val);
@@ -796,6 +820,7 @@ public abstract class ATMegaTimer extends AtmelInternalDevice
         }
 
 
+        @Override
         public byte read()
         {
             return register.read();
@@ -853,6 +878,7 @@ public abstract class ATMegaTimer extends AtmelInternalDevice
         }
 
 
+        @Override
         public void write(byte val)
         {
             value = val;
@@ -860,6 +886,7 @@ public abstract class ATMegaTimer extends AtmelInternalDevice
         }
 
 
+        @Override
         public void write(int val)
         {
             value = val;
@@ -873,18 +900,21 @@ public abstract class ATMegaTimer extends AtmelInternalDevice
         }
 
 
+        @Override
         public byte read()
         {
             return (byte) read16();
         }
 
 
+        @Override
         public int read16()
         {
             return (null != reg8) ? reg8.read() : reg16.read16();
         }
 
 
+        @Override
         public int mask()
         {
             return 0xffff; // When used as TOP, never mask any bits, independent
@@ -892,6 +922,7 @@ public abstract class ATMegaTimer extends AtmelInternalDevice
         }
 
 
+        @Override
         public void flush()
         {
             if (null != reg8)
@@ -934,12 +965,14 @@ public abstract class ATMegaTimer extends AtmelInternalDevice
         }
 
 
+        @Override
         public void write(byte val)
         {
             reg.write((tempHighReg.read() << 8) + (val & 0xFF));
         }
 
 
+        @Override
         public byte read()
         {
             tempHighReg.write((byte) (reg.read16() >> 8));
@@ -955,12 +988,14 @@ public abstract class ATMegaTimer extends AtmelInternalDevice
     protected class HighRegister implements ActiveRegister
     {
 
+        @Override
         public void write(byte val)
         {
             tempHighReg.write(val);
         }
 
 
+        @Override
         public byte read()
         {
             return tempHighReg.read();
@@ -983,6 +1018,7 @@ public abstract class ATMegaTimer extends AtmelInternalDevice
         }
 
 
+        @Override
         public byte read()
         {
             return (byte) (reg.read16() >> 8);

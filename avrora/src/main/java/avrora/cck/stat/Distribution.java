@@ -112,6 +112,7 @@ public class Distribution extends MinMaxMean
     /**
      * Record the next value and update internal state.
      */
+    @Override
     public synchronized void record(int value)
     {
 
@@ -141,6 +142,7 @@ public class Distribution extends MinMaxMean
      * 
      * @param printer
      */
+    @Override
     public void print(Printer printer)
     {
         printer.print("\n " + name);
@@ -295,6 +297,7 @@ public class Distribution extends MinMaxMean
     }
 
 
+    @Override
     public void process()
     {
         super.process();
@@ -323,6 +326,7 @@ public class Distribution extends MinMaxMean
     /**
      * Merge this statistical information with another.
      */
+    @Override
     public MinMaxMean merge(MinMaxMean m)
     {
         throw Util.unimplemented();

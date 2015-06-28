@@ -61,6 +61,7 @@ public class DTNode
 {
 
     public static Comparator<Map.Entry<Integer, DTNode>> EDGE_COMPARATOR = new Comparator<Map.Entry<Integer, DTNode>>() {
+        @Override
         public int compare(Map.Entry<Integer, DTNode> a,
                 Map.Entry<Integer, DTNode> b)
         {
@@ -143,6 +144,7 @@ public class DTNode
      * 
      * @return an integer hash code for this node
      */
+    @Override
     public int hashCode()
     {
         if (needHash)
@@ -169,6 +171,7 @@ public class DTNode
      *            the object to test equality against
      * @return true if the nodes are equal; false otherwise
      */
+    @Override
     public boolean equals(Object o)
     {
         if (!(o instanceof DTNode))

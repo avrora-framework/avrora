@@ -345,300 +345,350 @@ class CFGBuilder implements LegacyInstrVisitor
     }
 
 
+    @Override
     public void visit(LegacyInstr.ADC i)
     { // add register to register with carry
         add(i);
     }
 
 
+    @Override
     public void visit(LegacyInstr.ADD i)
     { // add register to register
         add(i);
     }
 
 
+    @Override
     public void visit(LegacyInstr.ADIW i)
     { // add immediate to word register
         add(i);
     }
 
 
+    @Override
     public void visit(LegacyInstr.AND i)
     { // and register with register
         add(i);
     }
 
 
+    @Override
     public void visit(LegacyInstr.ANDI i)
     { // and register with immediate
         add(i);
     }
 
 
+    @Override
     public void visit(LegacyInstr.ASR i)
     { // arithmetic shift right
         add(i);
     }
 
 
+    @Override
     public void visit(LegacyInstr.BCLR i)
     { // clear bit in status register
         add(i);
     }
 
 
+    @Override
     public void visit(LegacyInstr.BLD i)
     { // load bit from T flag into register
         add(i);
     }
 
 
+    @Override
     public void visit(LegacyInstr.BRBC i)
     { // branch if bit in status register is clear
         branch(i, relative(i.imm2));
     }
 
 
+    @Override
     public void visit(LegacyInstr.BRBS i)
     { // branch if bit in status register is set
         branch(i, relative(i.imm2));
     }
 
 
+    @Override
     public void visit(LegacyInstr.BRCC i)
     { // branch if carry flag is clear
         branch(i, relative(i.imm1));
     }
 
 
+    @Override
     public void visit(LegacyInstr.BRCS i)
     { // branch if carry flag is set
         branch(i, relative(i.imm1));
     }
 
 
+    @Override
     public void visit(LegacyInstr.BREAK i)
     { // break
         end(i);
     }
 
 
+    @Override
     public void visit(LegacyInstr.BREQ i)
     { // branch if equal
         branch(i, relative(i.imm1));
     }
 
 
+    @Override
     public void visit(LegacyInstr.BRGE i)
     { // branch if greater or equal (signed)
         branch(i, relative(i.imm1));
     }
 
 
+    @Override
     public void visit(LegacyInstr.BRHC i)
     { // branch if H flag is clear
         branch(i, relative(i.imm1));
     }
 
 
+    @Override
     public void visit(LegacyInstr.BRHS i)
     { // branch if H flag is set
         branch(i, relative(i.imm1));
     }
 
 
+    @Override
     public void visit(LegacyInstr.BRID i)
     { // branch if interrupts are disabled
         branch(i, relative(i.imm1));
     }
 
 
+    @Override
     public void visit(LegacyInstr.BRIE i)
     { // branch if interrupts are enabled
         branch(i, relative(i.imm1));
     }
 
 
+    @Override
     public void visit(LegacyInstr.BRLO i)
     { // branch if lower
         branch(i, relative(i.imm1));
     }
 
 
+    @Override
     public void visit(LegacyInstr.BRLT i)
     { // branch if less than zero (signed)
         branch(i, relative(i.imm1));
     }
 
 
+    @Override
     public void visit(LegacyInstr.BRMI i)
     { // branch if minus
         branch(i, relative(i.imm1));
     }
 
 
+    @Override
     public void visit(LegacyInstr.BRNE i)
     { // branch if not equal
         branch(i, relative(i.imm1));
     }
 
 
+    @Override
     public void visit(LegacyInstr.BRPL i)
     { // branch if positive
         branch(i, relative(i.imm1));
     }
 
 
+    @Override
     public void visit(LegacyInstr.BRSH i)
     { // branch if same or higher
         branch(i, relative(i.imm1));
     }
 
 
+    @Override
     public void visit(LegacyInstr.BRTC i)
     { // branch if T flag is clear
         branch(i, relative(i.imm1));
     }
 
 
+    @Override
     public void visit(LegacyInstr.BRTS i)
     { // branch if T flag is set
         branch(i, relative(i.imm1));
     }
 
 
+    @Override
     public void visit(LegacyInstr.BRVC i)
     { // branch if V flag is clear
         branch(i, relative(i.imm1));
     }
 
 
+    @Override
     public void visit(LegacyInstr.BRVS i)
     { // branch if V flag is set
         branch(i, relative(i.imm1));
     }
 
 
+    @Override
     public void visit(LegacyInstr.BSET i)
     { // set flag in status register
         add(i);
     }
 
 
+    @Override
     public void visit(LegacyInstr.BST i)
     { // store bit in register into T flag
         add(i);
     }
 
 
+    @Override
     public void visit(LegacyInstr.CALL i)
     { // call absolute address
         call(i, absolute(i.imm1));
     }
 
 
+    @Override
     public void visit(LegacyInstr.CBI i)
     { // clear bit in IO register
         add(i);
     }
 
 
+    @Override
     public void visit(LegacyInstr.CBR i)
     { // clear bits in register
         add(i);
     }
 
 
+    @Override
     public void visit(LegacyInstr.CLC i)
     { // clear C flag
         add(i);
     }
 
 
+    @Override
     public void visit(LegacyInstr.CLH i)
     { // clear H flag
         add(i);
     }
 
 
+    @Override
     public void visit(LegacyInstr.CLI i)
     { // clear I flag
         add(i);
     }
 
 
+    @Override
     public void visit(LegacyInstr.CLN i)
     { // clear N flag
         add(i);
     }
 
 
+    @Override
     public void visit(LegacyInstr.CLR i)
     { // clear register (set to zero)
         add(i);
     }
 
 
+    @Override
     public void visit(LegacyInstr.CLS i)
     { // clear S flag
         add(i);
     }
 
 
+    @Override
     public void visit(LegacyInstr.CLT i)
     { // clear T flag
         add(i);
     }
 
 
+    @Override
     public void visit(LegacyInstr.CLV i)
     { // clear V flag
         add(i);
     }
 
 
+    @Override
     public void visit(LegacyInstr.CLZ i)
     { // clear Z flag
         add(i);
     }
 
 
+    @Override
     public void visit(LegacyInstr.COM i)
     { // one's compliment register
         add(i);
     }
 
 
+    @Override
     public void visit(LegacyInstr.CP i)
     { // compare registers
         add(i);
     }
 
 
+    @Override
     public void visit(LegacyInstr.CPC i)
     { // compare registers with carry
         add(i);
     }
 
 
+    @Override
     public void visit(LegacyInstr.CPI i)
     { // compare register with immediate
         add(i);
     }
 
 
+    @Override
     public void visit(LegacyInstr.CPSE i)
     { // compare registers and skip if equal
         add(i);
     }
 
 
+    @Override
     public void visit(LegacyInstr.DEC i)
     { // decrement register by one
         add(i);
     }
 
 
+    @Override
     public void visit(LegacyInstr.EICALL i)
     { // extended indirect call
         info[pc].indirect = true;
@@ -646,6 +696,7 @@ class CFGBuilder implements LegacyInstrVisitor
     }
 
 
+    @Override
     public void visit(LegacyInstr.EIJMP i)
     { // extended indirect jump
         info[pc].indirect = true;
@@ -653,48 +704,56 @@ class CFGBuilder implements LegacyInstrVisitor
     }
 
 
+    @Override
     public void visit(LegacyInstr.ELPM i)
     { // extended load program memory to r0
         add(i);
     }
 
 
+    @Override
     public void visit(LegacyInstr.ELPMD i)
     { // extended load program memory to register
         add(i);
     }
 
 
+    @Override
     public void visit(LegacyInstr.ELPMPI i)
     { // extended load program memory to register and post-increment
         add(i);
     }
 
 
+    @Override
     public void visit(LegacyInstr.EOR i)
     { // exclusive or register with register
         add(i);
     }
 
 
+    @Override
     public void visit(LegacyInstr.FMUL i)
     { // fractional multiply register with register to r0
         add(i);
     }
 
 
+    @Override
     public void visit(LegacyInstr.FMULS i)
     { // signed fractional multiply register with register to r0
         add(i);
     }
 
 
+    @Override
     public void visit(LegacyInstr.FMULSU i)
     { // signed/unsigned fractional multiply register with register to r0
         add(i);
     }
 
 
+    @Override
     public void visit(LegacyInstr.ICALL i)
     { // indirect call through Z register
         info[pc].indirect = true;
@@ -702,6 +761,7 @@ class CFGBuilder implements LegacyInstrVisitor
     }
 
 
+    @Override
     public void visit(LegacyInstr.IJMP i)
     { // indirect jump through Z register
         info[pc].indirect = true;
@@ -710,168 +770,196 @@ class CFGBuilder implements LegacyInstrVisitor
     }
 
 
+    @Override
     public void visit(LegacyInstr.IN i)
     { // read from IO register into register
         add(i);
     }
 
 
+    @Override
     public void visit(LegacyInstr.INC i)
     { // increment register by one
         add(i);
     }
 
 
+    @Override
     public void visit(LegacyInstr.JMP i)
     { // absolute jump
         jump(i, absolute(i.imm1));
     }
 
 
+    @Override
     public void visit(LegacyInstr.LD i)
     { // load from SRAM
         add(i);
     }
 
 
+    @Override
     public void visit(LegacyInstr.LDD i)
     { // load from SRAM with displacement
         add(i);
     }
 
 
+    @Override
     public void visit(LegacyInstr.LDI i)
     { // load immediate into register
         add(i);
     }
 
 
+    @Override
     public void visit(LegacyInstr.LDPD i)
     { // load from SRAM with pre-decrement
         add(i);
     }
 
 
+    @Override
     public void visit(LegacyInstr.LDPI i)
     { // load from SRAM with post-increment
         add(i);
     }
 
 
+    @Override
     public void visit(LegacyInstr.LDS i)
     { // load direct from SRAM
         add(i);
     }
 
 
+    @Override
     public void visit(LegacyInstr.LPM i)
     { // load program memory into r0
         add(i);
     }
 
 
+    @Override
     public void visit(LegacyInstr.LPMD i)
     { // load program memory into register
         add(i);
     }
 
 
+    @Override
     public void visit(LegacyInstr.LPMPI i)
     { // load program memory into register and post-increment
         add(i);
     }
 
 
+    @Override
     public void visit(LegacyInstr.LSL i)
     { // logical shift left
         add(i);
     }
 
 
+    @Override
     public void visit(LegacyInstr.LSR i)
     { // logical shift right
         add(i);
     }
 
 
+    @Override
     public void visit(LegacyInstr.MOV i)
     { // copy register to register
         add(i);
     }
 
 
+    @Override
     public void visit(LegacyInstr.MOVW i)
     { // copy two registers to two registers
         add(i);
     }
 
 
+    @Override
     public void visit(LegacyInstr.MUL i)
     { // multiply register with register to r0
         add(i);
     }
 
 
+    @Override
     public void visit(LegacyInstr.MULS i)
     { // signed multiply register with register to r0
         add(i);
     }
 
 
+    @Override
     public void visit(LegacyInstr.MULSU i)
     { // signed/unsigned multiply register with register to r0
         add(i);
     }
 
 
+    @Override
     public void visit(LegacyInstr.NEG i)
     { // two's complement register
         add(i);
     }
 
 
+    @Override
     public void visit(LegacyInstr.NOP i)
     { // do nothing operation
         add(i);
     }
 
 
+    @Override
     public void visit(LegacyInstr.OR i)
     { // or register with register
         add(i);
     }
 
 
+    @Override
     public void visit(LegacyInstr.ORI i)
     { // or register with immediate
         add(i);
     }
 
 
+    @Override
     public void visit(LegacyInstr.OUT i)
     { // write from register to IO register
         add(i);
     }
 
 
+    @Override
     public void visit(LegacyInstr.POP i)
     { // pop from the stack to register
         add(i);
     }
 
 
+    @Override
     public void visit(LegacyInstr.PUSH i)
     { // push register to the stack
         add(i);
     }
 
 
+    @Override
     public void visit(LegacyInstr.RCALL i)
     { // relative call
         call(i, relative(i.imm1));
     }
 
 
+    @Override
     public void visit(LegacyInstr.RET i)
     { // return to caller
         info[pc].ret = true;
@@ -879,6 +967,7 @@ class CFGBuilder implements LegacyInstrVisitor
     }
 
 
+    @Override
     public void visit(LegacyInstr.RETI i)
     { // return from interrupt
         info[pc].reti = true;
@@ -886,198 +975,231 @@ class CFGBuilder implements LegacyInstrVisitor
     }
 
 
+    @Override
     public void visit(LegacyInstr.RJMP i)
     { // relative jump
         jump(i, relative(i.imm1));
     }
 
 
+    @Override
     public void visit(LegacyInstr.ROL i)
     { // rotate left through carry flag
         add(i);
     }
 
 
+    @Override
     public void visit(LegacyInstr.ROR i)
     { // rotate right through carry flag
         add(i);
     }
 
 
+    @Override
     public void visit(LegacyInstr.SBC i)
     { // subtract register from register with carry
         add(i);
     }
 
 
+    @Override
     public void visit(LegacyInstr.SBCI i)
     { // subtract immediate from register with carry
         add(i);
     }
 
 
+    @Override
     public void visit(LegacyInstr.SBI i)
     { // set bit in IO register
         add(i);
     }
 
 
+    @Override
     public void visit(LegacyInstr.SBIC i)
     { // skip if bit in IO register is clear
         skip(i);
     }
 
 
+    @Override
     public void visit(LegacyInstr.SBIS i)
     { // skip if bit in IO register is set
         skip(i);
     }
 
 
+    @Override
     public void visit(LegacyInstr.SBIW i)
     { // subtract immediate from word
         add(i);
     }
 
 
+    @Override
     public void visit(LegacyInstr.SBR i)
     { // set bits in register
         add(i);
     }
 
 
+    @Override
     public void visit(LegacyInstr.SBRC i)
     { // skip if bit in register cleared
         skip(i);
     }
 
 
+    @Override
     public void visit(LegacyInstr.SBRS i)
     { // skip if bit in register set
         skip(i);
     }
 
 
+    @Override
     public void visit(LegacyInstr.SEC i)
     { // set C (carry) flag
         add(i);
     }
 
 
+    @Override
     public void visit(LegacyInstr.SEH i)
     { // set H (half carry) flag
         add(i);
     }
 
 
+    @Override
     public void visit(LegacyInstr.SEI i)
     { // set I (interrupt enable) flag
         add(i);
     }
 
 
+    @Override
     public void visit(LegacyInstr.SEN i)
     { // set N (negative) flag
         add(i);
     }
 
 
+    @Override
     public void visit(LegacyInstr.SER i)
     { // set bits in register
         add(i);
     }
 
 
+    @Override
     public void visit(LegacyInstr.SES i)
     { // set S (signed) flag
         add(i);
     }
 
 
+    @Override
     public void visit(LegacyInstr.SET i)
     { // set T flag
         add(i);
     }
 
 
+    @Override
     public void visit(LegacyInstr.SEV i)
     { // set V (overflow) flag
         add(i);
     }
 
 
+    @Override
     public void visit(LegacyInstr.SEZ i)
     { // set Z (zero) flag
         add(i);
     }
 
 
+    @Override
     public void visit(LegacyInstr.SLEEP i)
     { // invoke sleep mode
         add(i);
     }
 
 
+    @Override
     public void visit(LegacyInstr.SPM i)
     { // store to program memory from r0
         add(i);
     }
 
 
+    @Override
     public void visit(LegacyInstr.ST i)
     { // store from register to SRAM
         add(i);
     }
 
 
+    @Override
     public void visit(LegacyInstr.STD i)
     { // store from register to SRAM with displacement
         add(i);
     }
 
 
+    @Override
     public void visit(LegacyInstr.STPD i)
     { // store from register to SRAM with pre-decrement
         add(i);
     }
 
 
+    @Override
     public void visit(LegacyInstr.STPI i)
     { // store from register to SRAM with post-increment
         add(i);
     }
 
 
+    @Override
     public void visit(LegacyInstr.STS i)
     { // store direct to SRAM
         add(i);
     }
 
 
+    @Override
     public void visit(LegacyInstr.SUB i)
     { // subtract register from register
         add(i);
     }
 
 
+    @Override
     public void visit(LegacyInstr.SUBI i)
     { // subtract immediate from register
         add(i);
     }
 
 
+    @Override
     public void visit(LegacyInstr.SWAP i)
     { // swap nibbles in register
         add(i);
     }
 
 
+    @Override
     public void visit(LegacyInstr.TST i)
     { // test for zero or minus
         add(i);
     }
 
 
+    @Override
     public void visit(LegacyInstr.WDR i)
     { // watchdog timer reset
         add(i);

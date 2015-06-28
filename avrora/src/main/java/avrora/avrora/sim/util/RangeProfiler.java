@@ -107,6 +107,7 @@ public class RangeProfiler extends Simulator.Probe.Empty
      * @param address
      *            the address at which this instruction resides
      */
+    @Override
     public void fireBefore(State state, int address)
     {
         if (address < low_addr)

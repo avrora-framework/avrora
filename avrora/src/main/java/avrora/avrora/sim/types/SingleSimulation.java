@@ -83,6 +83,7 @@ public class SingleSimulation extends Simulation
      *             if there was a problem loading the file or creating the
      *             simulation
      */
+    @Override
     public void process(Options o, String[] args) throws Exception
     {
         options.process(o);

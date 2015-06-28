@@ -64,6 +64,7 @@ public class SimplifierTestHarness implements TestEngine.Harness
         }
 
 
+        @Override
         public void run() throws Exception
         {
             String input = properties.getProperty("input");
@@ -76,6 +77,7 @@ public class SimplifierTestHarness implements TestEngine.Harness
     }
 
 
+    @Override
     public TestCase newTestCase(String fname, Properties props) throws Exception
     {
         return new SimplifierTest(fname, props);

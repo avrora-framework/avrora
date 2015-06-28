@@ -99,6 +99,7 @@ public class ISEAnalyzer implements ISEInterpreter.SummaryCache
     }
 
 
+    @Override
     public ISEState getProcedureSummary(int start)
     {
         ControlFlowGraph.Block block = cfg.getBlockStartingAt(start);
@@ -112,6 +113,7 @@ public class ISEAnalyzer implements ISEInterpreter.SummaryCache
     }
 
 
+    @Override
     public void recordReturnSummary(int retaddr, ISEState rs)
     {
         ISEState ors = getReturnSummary(retaddr);

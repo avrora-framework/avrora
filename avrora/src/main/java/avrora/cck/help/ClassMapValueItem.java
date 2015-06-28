@@ -90,6 +90,7 @@ public class ClassMapValueItem implements HelpItem
      *
      * @return a string representing the help for this item
      */
+    @Override
     public String getHelp()
     {
         if (help != null)
@@ -105,6 +106,7 @@ public class ClassMapValueItem implements HelpItem
      * associated with this option, it will format it as part of the help for
      * this item.
      */
+    @Override
     public void printHelp()
     {
         String h = getHelp();

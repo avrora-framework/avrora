@@ -56,6 +56,7 @@ public class TypeEnvBuilder extends VerifierPass
     }
 
 
+    @Override
     public void verify()
     {
         uniqueCheck("UserType", "User type", arch.userTypes);

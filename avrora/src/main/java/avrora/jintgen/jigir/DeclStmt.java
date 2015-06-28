@@ -136,6 +136,7 @@ public class DeclStmt extends Stmt implements Decl
      * @param v
      *            the visitor to accept
      */
+    @Override
     public void accept(StmtVisitor v)
     {
         v.visit(this);
@@ -148,6 +149,7 @@ public class DeclStmt extends Stmt implements Decl
      *
      * @return a string representation of this statement
      */
+    @Override
     public String toString()
     {
         return "local " + name.image + " : " + typeRef + " = " + init.toString()
@@ -166,18 +168,21 @@ public class DeclStmt extends Stmt implements Decl
      * @return the result of calling the appropriate <code>visit()</code> of the
      *         rebuilder passed
      */
+    @Override
     public <Res, Env> Res accept(StmtAccumulator<Res, Env> r, Env env)
     {
         return r.visit(this, env);
     }
 
 
+    @Override
     public String getName()
     {
         return name.image;
     }
 
 
+    @Override
     public Type getType()
     {
         return typeRef.getType();

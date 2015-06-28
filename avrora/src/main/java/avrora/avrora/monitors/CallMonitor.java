@@ -102,6 +102,7 @@ public class CallMonitor extends MonitorFactory
         }
 
 
+        @Override
         public void report()
         {
             // do nothing
@@ -189,6 +190,7 @@ public class CallMonitor extends MonitorFactory
         }
 
 
+        @Override
         public void fireBeforeCall(long time, int pc, int target)
         {
             push(pc, Terminal.COLOR_BROWN, "CALL", -1, target);
@@ -196,6 +198,7 @@ public class CallMonitor extends MonitorFactory
         }
 
 
+        @Override
         public void fireBeforeInterrupt(long time, int pc, int inum)
         {
             // TODO: factor out code to compute interrupt handler start
@@ -207,6 +210,7 @@ public class CallMonitor extends MonitorFactory
         }
 
 
+        @Override
         public void fireAfterReturn(long time, int pc, int retaddr)
         {
             pop(pc, "RET ", Terminal.COLOR_BROWN);
@@ -214,6 +218,7 @@ public class CallMonitor extends MonitorFactory
         }
 
 
+        @Override
         public void fireAfterInterruptReturn(long time, int pc, int retaddr)
         {
             pop(pc, "RETI", Terminal.COLOR_RED);
@@ -259,6 +264,7 @@ public class CallMonitor extends MonitorFactory
      * @return a new monitor that tracks the call and return behavior of the
      *         simulator as it executes
      */
+    @Override
     public Monitor newMonitor(Simulator s)
     {
         return new Mon(s);

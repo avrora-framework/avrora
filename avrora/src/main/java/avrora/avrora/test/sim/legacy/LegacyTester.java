@@ -48,18 +48,21 @@ import avrora.avrora.test.sim.Tester;
 public class LegacyTester extends Tester
 {
 
+    @Override
     public Simulator newSimulator(Program p)
     {
         return Defaults.newSimulator(0, p);
     }
 
 
+    @Override
     public AbstractArchitecture getArchitecture()
     {
         return LegacyArchitecture.INSTANCE;
     }
 
 
+    @Override
     public StateAccessor getAccessor(Simulator sim)
     {
         return new LegacyStateAccessor(sim.getProgram(), sim);

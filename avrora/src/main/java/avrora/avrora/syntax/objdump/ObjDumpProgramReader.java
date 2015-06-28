@@ -75,6 +75,7 @@ public class ObjDumpProgramReader extends ProgramReader
      * @throws IOException
      *             if there is a problem reading from the files
      */
+    @Override
     public Program read(String[] args) throws Exception
     {
         if (args.length == 0)

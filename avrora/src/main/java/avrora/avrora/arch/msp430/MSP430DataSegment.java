@@ -82,6 +82,7 @@ public class MSP430DataSegment extends Segment
      *            the address in the segment to read
      * @return the value of the of segment at the specified address
      */
+    @Override
     protected byte direct_read(int address)
     {
         if (address < ioreg_end)
@@ -108,6 +109,7 @@ public class MSP430DataSegment extends Segment
      * @param val
      *            the value to write into the segment
      */
+    @Override
     protected void direct_write(int address, byte val)
     {
         if (address < ioreg_end)

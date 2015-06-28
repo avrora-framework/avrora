@@ -86,6 +86,7 @@ public class MemPrint extends Simulator.Watch.Empty
     }
 
 
+    @Override
     public void fireBeforeWrite(State state, int data_addr, byte value)
     {
         if (data_addr != base)

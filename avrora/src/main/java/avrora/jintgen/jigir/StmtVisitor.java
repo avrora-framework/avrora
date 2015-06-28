@@ -85,30 +85,35 @@ public interface StmtVisitor
      */
     public class DepthFirst implements StmtVisitor
     {
+        @Override
         public void visit(CallStmt s)
         {
             // terminal node
         }
 
 
+        @Override
         public void visit(WriteStmt s)
         {
             // terminal node
         }
 
 
+        @Override
         public void visit(CommentStmt s)
         {
             // terminal node
         }
 
 
+        @Override
         public void visit(DeclStmt s)
         {
             // terminal node
         }
 
 
+        @Override
         public void visit(IfStmt s)
         {
             visitStmtList(s.trueBranch);
@@ -123,36 +128,42 @@ public interface StmtVisitor
         }
 
 
+        @Override
         public void visit(AssignStmt s)
         {
             // terminal node
         }
 
 
+        @Override
         public void visit(AssignStmt.Var s)
         {
             // terminal node
         }
 
 
+        @Override
         public void visit(AssignStmt.Map s)
         {
             // terminal node
         }
 
 
+        @Override
         public void visit(AssignStmt.Bit s)
         {
             // terminal node
         }
 
 
+        @Override
         public void visit(AssignStmt.FixedRange s)
         {
             // terminal node
         }
 
 
+        @Override
         public void visit(ReturnStmt s)
         {
             // terminal node

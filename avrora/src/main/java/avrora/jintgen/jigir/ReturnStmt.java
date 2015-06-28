@@ -69,6 +69,7 @@ public class ReturnStmt extends Stmt
      * @param v
      *            the visitor to accept
      */
+    @Override
     public void accept(StmtVisitor v)
     {
         v.visit(this);
@@ -81,6 +82,7 @@ public class ReturnStmt extends Stmt
      *
      * @return a string representation of this statement
      */
+    @Override
     public String toString()
     {
         return "return " + expr + ';';
@@ -98,6 +100,7 @@ public class ReturnStmt extends Stmt
      * @return the result of calling the appropriate <code>visit()</code> of the
      *         rebuilder passed
      */
+    @Override
     public <Res, Env> Res accept(StmtAccumulator<Res, Env> r, Env env)
     {
         return r.visit(this, env);

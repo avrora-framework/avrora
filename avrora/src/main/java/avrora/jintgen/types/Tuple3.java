@@ -55,6 +55,7 @@ public class Tuple3<A, B, C>
     }
 
 
+    @Override
     public boolean equals(Object o)
     {
         if (this == o)
@@ -67,6 +68,7 @@ public class Tuple3<A, B, C>
     }
 
 
+    @Override
     public int hashCode()
     {
         return a.hashCode() + b.hashCode() * 61 + c.hashCode() * 123;

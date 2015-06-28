@@ -136,6 +136,7 @@ public class InterruptMonitor extends MonitorFactory
          * @param inum
          *            the number of the interrupt being entered
          */
+        @Override
         public void fireBeforeInvoke(State s, int inum)
         {
             if (show)
@@ -168,6 +169,7 @@ public class InterruptMonitor extends MonitorFactory
          * @param inum
          *            the number of the interrupt being entered
          */
+        @Override
         public void fireAfterInvoke(State s, int inum)
         {
             long time = s.getCycles();
@@ -188,6 +190,7 @@ public class InterruptMonitor extends MonitorFactory
          * @param inum
          *            the number of the interrupt being masked out
          */
+        @Override
         public void fireWhenDisabled(State s, int inum)
         {
             if (show && !invokeOnly)
@@ -210,6 +213,7 @@ public class InterruptMonitor extends MonitorFactory
          * @param inum
          *            the number of the interrupt being unmasked
          */
+        @Override
         public void fireWhenEnabled(State s, int inum)
         {
             if (show && !invokeOnly)
@@ -233,6 +237,7 @@ public class InterruptMonitor extends MonitorFactory
          * @param inum
          *            the number of the interrupt being posted
          */
+        @Override
         public void fireWhenPosted(State s, int inum)
         {
             if (show && !invokeOnly)
@@ -255,6 +260,7 @@ public class InterruptMonitor extends MonitorFactory
          * @param inum
          *            the number of the interrupt being unposted
          */
+        @Override
         public void fireWhenUnposted(State s, int inum)
         {
             if (show && !invokeOnly)
@@ -264,6 +270,7 @@ public class InterruptMonitor extends MonitorFactory
         }
 
 
+        @Override
         public void report()
         {
             TermUtil.printSeparator(
@@ -338,6 +345,7 @@ public class InterruptMonitor extends MonitorFactory
      *            the simulator to create the monitor for
      * @return a new monitor instance for the specified simulator
      */
+    @Override
     public Monitor newMonitor(Simulator s)
     {
         return new Mon(s);

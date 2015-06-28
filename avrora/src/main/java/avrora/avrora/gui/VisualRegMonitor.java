@@ -68,12 +68,14 @@ public class VisualRegMonitor extends MonitorFactory
         public GraphNumbers theGraph;
 
 
+        @Override
         public GraphEvents getGraph()
         {
             throw new IllegalStateException("unimplemented stub");
         }
 
 
+        @Override
         public void updateDataAndPaint()
         {
             // So if there are new numbers that we added,
@@ -96,6 +98,7 @@ public class VisualRegMonitor extends MonitorFactory
         // allows vAction to link the GUI and our monitor via the passed
         // panels..
         // it is also where we init our graph and start the paint thread
+        @Override
         public void setVisualPanel(JPanel thePanel, JPanel theOptionsPanel)
         {
             visualPanel = thePanel;
@@ -116,12 +119,14 @@ public class VisualRegMonitor extends MonitorFactory
         }
 
 
+        @Override
         public void fireBefore(State s, int address)
         {
             // do nothing
         }
 
 
+        @Override
         public void fireAfter(State s, int address)
         {
             int regvalue = ((LegacyState) s)
@@ -146,6 +151,7 @@ public class VisualRegMonitor extends MonitorFactory
          * simulation is complete. The report does nothing in this case, because
          * this is a visual monitor
          */
+        @Override
         public void report()
         {
             theGraph.repaint();
@@ -175,6 +181,7 @@ public class VisualRegMonitor extends MonitorFactory
      * @return an instance of the <code>Monitor</code> interface for the
      *         specified simulator
      */
+    @Override
     public Monitor newMonitor(Simulator s)
     {
         return new VisualMonitor(s);

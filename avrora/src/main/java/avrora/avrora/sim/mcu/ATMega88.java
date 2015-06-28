@@ -99,6 +99,7 @@ public class ATMega88 extends ATMegaX8
          *            <code>Microcontroller</code> instance that represents the
          *            specific hardware device with the program loaded onto it
          */
+        @Override
         public Microcontroller newMicrocontroller(int id, Simulation sim,
                 ClockDomain cd, Program p)
         {

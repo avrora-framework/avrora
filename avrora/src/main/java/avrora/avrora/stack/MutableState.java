@@ -114,6 +114,7 @@ public class MutableState extends AbstractState implements IORegisterConstants
      *
      * @throws Util.InternalError
      */
+    @Override
     public int hashCode()
     {
         throw Util.failure("cannot compute hash code of MutableState");
@@ -128,6 +129,7 @@ public class MutableState extends AbstractState implements IORegisterConstants
      *            the object to test equality against.
      * @throws Util.InternalError
      */
+    @Override
     public boolean equals(Object o)
     {
         throw Util.failure("cannot perform .equals() on MutableState");

@@ -64,6 +64,7 @@ public class EncodingVerifier extends VerifierPass
     }
 
 
+    @Override
     public void verify()
     {
         uniqueCheck("Format", "Encoding format", arch.formats);
@@ -198,6 +199,7 @@ public class EncodingVerifier extends VerifierPass
         }
 
 
+        @Override
         public void visit(FixedRangeExpr e)
         {
             int diff = (e.high_bit - e.low_bit);
@@ -207,6 +209,7 @@ public class EncodingVerifier extends VerifierPass
         }
 
 
+        @Override
         public void visit(IndexExpr e)
         {
             // TODO: this is not necessarily true for a map index expr
@@ -214,6 +217,7 @@ public class EncodingVerifier extends VerifierPass
         }
 
 
+        @Override
         public void visit(Literal.IntExpr e)
         {
             if (isBinary(e))
@@ -239,12 +243,14 @@ public class EncodingVerifier extends VerifierPass
         }
 
 
+        @Override
         public void visit(Literal.BoolExpr e)
         {
             width = 1;
         }
 
 
+        @Override
         public void visit(VarExpr e)
         {
             Expr se = substMap.get(e.variable.image);
@@ -263,6 +269,7 @@ public class EncodingVerifier extends VerifierPass
         }
 
 
+        @Override
         public void visit(DotExpr e)
         {
             String str = e.expr + "." + e.field;
@@ -275,6 +282,7 @@ public class EncodingVerifier extends VerifierPass
         }
 
 
+        @Override
         public void error(Expr e)
         {
             ERROR.CannotComputeSizeOfExpression(e);

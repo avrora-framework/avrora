@@ -60,6 +60,7 @@ public class AccelSensor extends Sensor
 
     class ADCInput implements ADC.ADCInput
     {
+        @Override
         public float getVoltage()
         {
             if (data == null)

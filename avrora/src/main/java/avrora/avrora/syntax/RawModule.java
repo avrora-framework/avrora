@@ -157,6 +157,7 @@ public class RawModule extends Module
         }
 
 
+        @Override
         public void simplify()
         {
             segment.addLabel(name.image, vma_addr, lma_addr, 1);
@@ -169,6 +170,7 @@ public class RawModule extends Module
         }
 
 
+        @Override
         public String toString()
         {
             return "label: " + name + " in " + segment.getName() + " @ "
@@ -177,6 +179,7 @@ public class RawModule extends Module
     }
 
 
+    @Override
     protected void simplify(Item i)
     {
         try

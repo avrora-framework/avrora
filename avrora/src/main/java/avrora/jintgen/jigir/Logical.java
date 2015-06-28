@@ -59,6 +59,7 @@ public class Logical
         }
 
 
+        @Override
         public Type typeCheck(TypeEnv env, Typeable left, Typeable right)
         {
             JIGIRTypeEnv jenv = (JIGIRTypeEnv) env;
@@ -70,6 +71,7 @@ public class Logical
         }
 
 
+        @Override
         public Literal evaluate(Literal left, Literal right)
         {
             throw Util.unimplemented();
@@ -84,6 +86,7 @@ public class Logical
         }
 
 
+        @Override
         public Type typeCheck(TypeEnv env, Typeable left, Typeable right)
         {
             JIGIRTypeEnv jenv = (JIGIRTypeEnv) env;
@@ -95,6 +98,7 @@ public class Logical
         }
 
 
+        @Override
         public Literal evaluate(Literal left, Literal right)
         {
             throw Util.unimplemented();
@@ -109,6 +113,7 @@ public class Logical
         }
 
 
+        @Override
         public Type typeCheck(TypeEnv env, Typeable left, Typeable right)
         {
             JIGIRTypeEnv jenv = (JIGIRTypeEnv) env;
@@ -120,6 +125,7 @@ public class Logical
         }
 
 
+        @Override
         public Literal evaluate(Literal left, Literal right)
         {
             throw Util.unimplemented();
@@ -134,6 +140,7 @@ public class Logical
         }
 
 
+        @Override
         public Type typeCheck(TypeEnv env, Typeable left, Typeable right)
         {
             JIGIRTypeEnv jenv = (JIGIRTypeEnv) env;
@@ -145,6 +152,7 @@ public class Logical
         }
 
 
+        @Override
         public Literal evaluate(Literal left, Literal right)
         {
             throw Util.unimplemented();
@@ -159,6 +167,7 @@ public class Logical
         }
 
 
+        @Override
         public Type typeCheck(TypeEnv env, Typeable left, Typeable right)
         {
             JIGIRTypeEnv jenv = (JIGIRTypeEnv) env;
@@ -169,6 +178,7 @@ public class Logical
         }
 
 
+        @Override
         public Literal evaluate(Literal left, Literal right)
         {
             throw Util.unimplemented();
@@ -183,12 +193,14 @@ public class Logical
         }
 
 
+        @Override
         public Type typeCheck(TypeEnv env, Typeable left, Typeable right)
         {
             return ((JIGIRTypeEnv) env).BOOLEAN;
         }
 
 
+        @Override
         public Literal evaluate(Literal left, Literal right)
         {
             throw Util.unimplemented();
@@ -203,12 +215,14 @@ public class Logical
         }
 
 
+        @Override
         public Type typeCheck(TypeEnv env, Typeable left, Typeable right)
         {
             return ((JIGIRTypeEnv) env).BOOLEAN;
         }
 
 
+        @Override
         public Literal evaluate(Literal left, Literal right)
         {
             throw Util.unimplemented();
@@ -223,12 +237,14 @@ public class Logical
         }
 
 
+        @Override
         public Type typeCheck(TypeEnv env, Typeable left, Typeable right)
         {
             return ((JIGIRTypeEnv) env).BOOLEAN;
         }
 
 
+        @Override
         public Literal evaluate(Literal left, Literal right)
         {
             throw Util.unimplemented();
@@ -243,12 +259,14 @@ public class Logical
         }
 
 
+        @Override
         public Type typeCheck(TypeEnv env, Typeable left, Typeable right)
         {
             return ((JIGIRTypeEnv) env).BOOLEAN;
         }
 
 
+        @Override
         public Literal evaluate(Literal left, Literal right)
         {
             throw Util.unimplemented();
@@ -264,6 +282,7 @@ public class Logical
         }
 
 
+        @Override
         public Type typeCheck(TypeEnv env, Typeable inner)
         {
             JIGIRTypeEnv jenv = (JIGIRTypeEnv) env;
@@ -273,6 +292,7 @@ public class Logical
         }
 
 
+        @Override
         public Literal evaluate(Literal inner)
         {
             throw Util.unimplemented();

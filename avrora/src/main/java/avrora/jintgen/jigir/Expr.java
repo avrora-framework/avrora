@@ -72,6 +72,7 @@ public abstract class Expr implements Typeable
      * @return a reference to a <code>Type</code> object that represents the
      *         type of this expression.
      */
+    @Override
     public Type getType()
     {
         return type;
@@ -245,5 +246,6 @@ public abstract class Expr implements Typeable
      * @return a <code>SourcePoint</code> instance that represents this
      *         expression in the source program
      */
+    @Override
     public abstract SourcePoint getSourcePoint();
 }

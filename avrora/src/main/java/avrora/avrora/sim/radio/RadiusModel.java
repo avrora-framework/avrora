@@ -38,6 +38,7 @@ public class RadiusModel implements Medium.Arbitrator
     }
 
 
+    @Override
     public int getNoise(int index)
     {
         return (-90);
@@ -45,6 +46,7 @@ public class RadiusModel implements Medium.Arbitrator
     }
 
 
+    @Override
     public double computeReceivedPower(Medium.Transmission t,
             Medium.Receiver receiver, int Milliseconds)
     {
@@ -53,6 +55,7 @@ public class RadiusModel implements Medium.Arbitrator
     }
 
 
+    @Override
     public boolean lockTransmission(Medium.Receiver receiver,
             Medium.Transmission trans, int Milliseconds)
     {
@@ -60,6 +63,7 @@ public class RadiusModel implements Medium.Arbitrator
     }
 
 
+    @Override
     public char mergeTransmissions(Medium.Receiver receiver,
             List<Medium.Transmission> it, long bit, int Milliseconds)
     {

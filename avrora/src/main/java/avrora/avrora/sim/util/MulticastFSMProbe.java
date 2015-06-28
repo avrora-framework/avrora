@@ -46,6 +46,7 @@ public class MulticastFSMProbe extends TransactionalList
         implements FiniteStateMachine.Probe
 {
 
+    @Override
     public void fireBeforeTransition(int beforeState, int afterState)
     {
         for (Link pos = head; pos != null; pos = pos.next)
@@ -54,6 +55,7 @@ public class MulticastFSMProbe extends TransactionalList
     }
 
 
+    @Override
     public void fireAfterTransition(int beforeState, int afterState)
     {
         for (Link pos = head; pos != null; pos = pos.next)

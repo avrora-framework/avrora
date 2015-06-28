@@ -88,6 +88,7 @@ public abstract class Item
         }
 
 
+        @Override
         public void simplify()
         {
             int result = value.evaluate(byteAddress, module);
@@ -95,6 +96,7 @@ public abstract class Item
         }
 
 
+        @Override
         public String toString()
         {
             return ".equ " + name;
@@ -121,12 +123,14 @@ public abstract class Item
         }
 
 
+        @Override
         public void simplify()
         {
             module.addRegisterName(name.image, register);
         }
 
 
+        @Override
         public String toString()
         {
             return ".def " + name + " = " + register;
@@ -158,6 +162,7 @@ public abstract class Item
         }
 
 
+        @Override
         public void simplify()
         {
 
@@ -173,12 +178,14 @@ public abstract class Item
         }
 
 
+        @Override
         public int itemSize()
         {
             return proto.getSize();
         }
 
 
+        @Override
         public String toString()
         {
             return "instr: " + variant + " @ " + byteAddress;
@@ -203,6 +210,7 @@ public abstract class Item
         }
 
 
+        @Override
         public void simplify()
         {
             segment.addLabel(name.image, byteAddress, byteAddress, 1);
@@ -215,6 +223,7 @@ public abstract class Item
         }
 
 
+        @Override
         public String toString()
         {
             return "label: " + name + " in " + segment.getName() + " @ "
@@ -244,6 +253,7 @@ public abstract class Item
         }
 
 
+        @Override
         public void simplify()
         {
             int cursor = byteAddress;
@@ -316,12 +326,14 @@ public abstract class Item
         }
 
 
+        @Override
         public int itemSize()
         {
             return size;
         }
 
 
+        @Override
         public String toString()
         {
             return "initialized data @ " + byteAddress;
@@ -346,18 +358,21 @@ public abstract class Item
         }
 
 
+        @Override
         public void simplify()
         {
             // nothing to build with a reserve item
         }
 
 
+        @Override
         public String toString()
         {
             return "reserve " + length + " in " + segment.getName();
         }
 
 
+        @Override
         public int itemSize()
         {
             return length;

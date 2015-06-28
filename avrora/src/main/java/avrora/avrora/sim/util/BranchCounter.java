@@ -76,6 +76,7 @@ public class BranchCounter extends Simulator.Probe.Empty
      * @param pc
      *            the address at which this instruction resides
      */
+    @Override
     public void fireAfter(State state, int pc)
     {
         int nextaddr = pc + state.getInstr(pc).getSize();

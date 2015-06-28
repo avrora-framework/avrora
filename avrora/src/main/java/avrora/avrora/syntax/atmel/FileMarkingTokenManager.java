@@ -56,6 +56,7 @@ public class FileMarkingTokenManager extends AtmelParserTokenManager
     }
 
 
+    @Override
     protected Token jjFillToken()
     {
         Token t = super.jjFillToken();

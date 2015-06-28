@@ -117,6 +117,7 @@ public class BarrierSynchronizer extends Synchronizer
          * time. The implementation of this method waits for all threads to
          * join.
          */
+        @Override
         public void fire()
         {
             try
@@ -195,6 +196,7 @@ public class BarrierSynchronizer extends Synchronizer
      * synchronizer will add whatever synchronization to their execution that is
      * necessary to preserve the global timing properties of simulation.
      */
+    @Override
     public synchronized void start()
     {
         for (SimulatorThread thread : threadMap.keySet())
@@ -210,6 +212,7 @@ public class BarrierSynchronizer extends Synchronizer
      * <code>stop()</code> being called, or terminating normally such as through
      * a timeout.
      */
+    @Override
     public void join() throws InterruptedException
     {
         for (SimulatorThread thread : threadMap.keySet())
@@ -224,6 +227,7 @@ public class BarrierSynchronizer extends Synchronizer
      * It is not guaranteed to stop all the simulation threads at the same
      * global time.
      */
+    @Override
     public synchronized void stop()
     {
         for (SimulatorThread thread : threadMap.keySet())
@@ -240,6 +244,7 @@ public class BarrierSynchronizer extends Synchronizer
      * no longer make progress until the <code>start()</code> method is called
      * again.
      */
+    @Override
     public synchronized void pause()
     {
         throw Util.unimplemented();
@@ -255,6 +260,7 @@ public class BarrierSynchronizer extends Synchronizer
      * @param globalTime
      *            the global time in clock cycles to run all threads ahead to
      */
+    @Override
     public synchronized void synch(long globalTime)
     {
         throw Util.unimplemented();
@@ -269,6 +275,7 @@ public class BarrierSynchronizer extends Synchronizer
      * @param t
      *            the simulator representing the node to add to this group
      */
+    @Override
     public synchronized void addNode(Simulation.Node t)
     {
         // if we already have this thread, do nothing
@@ -294,6 +301,7 @@ public class BarrierSynchronizer extends Synchronizer
      * @param t
      *            the simulator thread to remove from this synchronization group
      */
+    @Override
     public synchronized void removeNode(Simulation.Node t)
     {
         // don't try to remove a thread that's not here!
@@ -331,6 +339,7 @@ public class BarrierSynchronizer extends Synchronizer
      * catch up to it in execution time. The node will be blocked until the
      * other nodes in other threads catch up in global time.
      */
+    @Override
     public void waitForNeighbors(long time)
     {
 

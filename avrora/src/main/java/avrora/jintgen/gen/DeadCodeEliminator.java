@@ -143,6 +143,7 @@ public class DeadCodeEliminator
     }
 
 
+    @Override
     public List<Stmt> visitStmtList(List<Stmt> l, DefUseEnvironment denv)
     {
         Collections.reverse(l);
@@ -172,6 +173,7 @@ public class DeadCodeEliminator
     }
 
 
+    @Override
     public Stmt visit(IfStmt s, DefUseEnvironment denv)
     {
         DefUseEnvironment tenv = new DefUseEnvironment(denv);
@@ -190,6 +192,7 @@ public class DeadCodeEliminator
     }
 
 
+    @Override
     public Stmt visit(DeclStmt s, DefUseEnvironment denv)
     {
         if (denv.isDead(s.name.toString()))
@@ -202,12 +205,14 @@ public class DeadCodeEliminator
     }
 
 
+    @Override
     public Stmt visit(AssignStmt s, DefUseEnvironment denv)
     {
         throw Util.unimplemented();
     }
 
 
+    @Override
     public Expr visit(VarExpr e, DefUseEnvironment denv)
     {
         denv.use(e.variable.toString());

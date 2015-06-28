@@ -43,6 +43,7 @@ public abstract class MSP430Instr implements AbstractInstr
      * 
      * @return a string representation of this instruction
      */
+    @Override
     public String toString()
     {
         // the default implementation of toString() simply returns the name
@@ -65,6 +66,7 @@ public abstract class MSP430Instr implements AbstractInstr
      * The <code>getSize()</code> method returns the size of this instruction in
      * bytes.
      */
+    @Override
     public int getSize()
     {
         return size;
@@ -74,6 +76,7 @@ public abstract class MSP430Instr implements AbstractInstr
     /**
      * The <code>getName()</code> method returns the name of this instruction.
      */
+    @Override
     public String getName()
     {
         return name;
@@ -84,6 +87,7 @@ public abstract class MSP430Instr implements AbstractInstr
      * The <code>getArchitecture()</code> method returns the architecture of
      * this instruction.
      */
+    @Override
     public AbstractArchitecture getArchitecture()
     {
         return null;
@@ -117,12 +121,14 @@ public abstract class MSP430Instr implements AbstractInstr
         }
 
 
+        @Override
         public void accept(MSP430AddrModeVisitor v)
         {
             v.visit_JMP(this, target);
         }
 
 
+        @Override
         public String toString()
         {
             return name + ' ' + target;
@@ -144,12 +150,14 @@ public abstract class MSP430Instr implements AbstractInstr
         }
 
 
+        @Override
         public void accept(MSP430AddrModeVisitor v)
         {
             am.accept(this, v);
         }
 
 
+        @Override
         public String toString()
         {
             return name + am.toString();
@@ -173,12 +181,14 @@ public abstract class MSP430Instr implements AbstractInstr
         }
 
 
+        @Override
         public void accept(MSP430AddrModeVisitor v)
         {
             am.accept(this, v);
         }
 
 
+        @Override
         public String toString()
         {
             return name + am.toString();
@@ -200,12 +210,14 @@ public abstract class MSP430Instr implements AbstractInstr
         }
 
 
+        @Override
         public void accept(MSP430AddrModeVisitor v)
         {
             am.accept(this, v);
         }
 
 
+        @Override
         public String toString()
         {
             return name + am.toString();
@@ -229,12 +241,14 @@ public abstract class MSP430Instr implements AbstractInstr
         }
 
 
+        @Override
         public void accept(MSP430AddrModeVisitor v)
         {
             am.accept(this, v);
         }
 
 
+        @Override
         public String toString()
         {
             return name + am.toString();
@@ -249,6 +263,7 @@ public abstract class MSP430Instr implements AbstractInstr
         }
 
 
+        @Override
         public void accept(MSP430InstrVisitor v)
         {
             v.visit(this);
@@ -263,6 +278,7 @@ public abstract class MSP430Instr implements AbstractInstr
         }
 
 
+        @Override
         public void accept(MSP430InstrVisitor v)
         {
             v.visit(this);
@@ -277,6 +293,7 @@ public abstract class MSP430Instr implements AbstractInstr
         }
 
 
+        @Override
         public void accept(MSP430InstrVisitor v)
         {
             v.visit(this);
@@ -291,6 +308,7 @@ public abstract class MSP430Instr implements AbstractInstr
         }
 
 
+        @Override
         public void accept(MSP430InstrVisitor v)
         {
             v.visit(this);
@@ -305,6 +323,7 @@ public abstract class MSP430Instr implements AbstractInstr
         }
 
 
+        @Override
         public void accept(MSP430InstrVisitor v)
         {
             v.visit(this);
@@ -319,6 +338,7 @@ public abstract class MSP430Instr implements AbstractInstr
         }
 
 
+        @Override
         public void accept(MSP430InstrVisitor v)
         {
             v.visit(this);
@@ -333,6 +353,7 @@ public abstract class MSP430Instr implements AbstractInstr
         }
 
 
+        @Override
         public void accept(MSP430InstrVisitor v)
         {
             v.visit(this);
@@ -347,6 +368,7 @@ public abstract class MSP430Instr implements AbstractInstr
         }
 
 
+        @Override
         public void accept(MSP430InstrVisitor v)
         {
             v.visit(this);
@@ -361,6 +383,7 @@ public abstract class MSP430Instr implements AbstractInstr
         }
 
 
+        @Override
         public void accept(MSP430InstrVisitor v)
         {
             v.visit(this);
@@ -375,6 +398,7 @@ public abstract class MSP430Instr implements AbstractInstr
         }
 
 
+        @Override
         public void accept(MSP430InstrVisitor v)
         {
             v.visit(this);
@@ -389,6 +413,7 @@ public abstract class MSP430Instr implements AbstractInstr
         }
 
 
+        @Override
         public void accept(MSP430InstrVisitor v)
         {
             v.visit(this);
@@ -403,6 +428,7 @@ public abstract class MSP430Instr implements AbstractInstr
         }
 
 
+        @Override
         public void accept(MSP430InstrVisitor v)
         {
             v.visit(this);
@@ -417,6 +443,7 @@ public abstract class MSP430Instr implements AbstractInstr
         }
 
 
+        @Override
         public void accept(MSP430InstrVisitor v)
         {
             v.visit(this);
@@ -431,6 +458,7 @@ public abstract class MSP430Instr implements AbstractInstr
         }
 
 
+        @Override
         public void accept(MSP430InstrVisitor v)
         {
             v.visit(this);
@@ -445,6 +473,7 @@ public abstract class MSP430Instr implements AbstractInstr
         }
 
 
+        @Override
         public void accept(MSP430InstrVisitor v)
         {
             v.visit(this);
@@ -459,6 +488,7 @@ public abstract class MSP430Instr implements AbstractInstr
         }
 
 
+        @Override
         public void accept(MSP430InstrVisitor v)
         {
             v.visit(this);
@@ -473,6 +503,7 @@ public abstract class MSP430Instr implements AbstractInstr
         }
 
 
+        @Override
         public void accept(MSP430InstrVisitor v)
         {
             v.visit(this);
@@ -487,6 +518,7 @@ public abstract class MSP430Instr implements AbstractInstr
         }
 
 
+        @Override
         public void accept(MSP430InstrVisitor v)
         {
             v.visit(this);
@@ -501,6 +533,7 @@ public abstract class MSP430Instr implements AbstractInstr
         }
 
 
+        @Override
         public void accept(MSP430InstrVisitor v)
         {
             v.visit(this);
@@ -515,6 +548,7 @@ public abstract class MSP430Instr implements AbstractInstr
         }
 
 
+        @Override
         public void accept(MSP430InstrVisitor v)
         {
             v.visit(this);
@@ -529,6 +563,7 @@ public abstract class MSP430Instr implements AbstractInstr
         }
 
 
+        @Override
         public void accept(MSP430InstrVisitor v)
         {
             v.visit(this);
@@ -543,6 +578,7 @@ public abstract class MSP430Instr implements AbstractInstr
         }
 
 
+        @Override
         public void accept(MSP430InstrVisitor v)
         {
             v.visit(this);
@@ -557,6 +593,7 @@ public abstract class MSP430Instr implements AbstractInstr
         }
 
 
+        @Override
         public void accept(MSP430InstrVisitor v)
         {
             v.visit(this);
@@ -571,6 +608,7 @@ public abstract class MSP430Instr implements AbstractInstr
         }
 
 
+        @Override
         public void accept(MSP430InstrVisitor v)
         {
             v.visit(this);
@@ -585,6 +623,7 @@ public abstract class MSP430Instr implements AbstractInstr
         }
 
 
+        @Override
         public void accept(MSP430InstrVisitor v)
         {
             v.visit(this);
@@ -599,6 +638,7 @@ public abstract class MSP430Instr implements AbstractInstr
         }
 
 
+        @Override
         public void accept(MSP430InstrVisitor v)
         {
             v.visit(this);
@@ -613,6 +653,7 @@ public abstract class MSP430Instr implements AbstractInstr
         }
 
 
+        @Override
         public void accept(MSP430InstrVisitor v)
         {
             v.visit(this);
@@ -627,6 +668,7 @@ public abstract class MSP430Instr implements AbstractInstr
         }
 
 
+        @Override
         public void accept(MSP430InstrVisitor v)
         {
             v.visit(this);
@@ -641,6 +683,7 @@ public abstract class MSP430Instr implements AbstractInstr
         }
 
 
+        @Override
         public void accept(MSP430InstrVisitor v)
         {
             v.visit(this);
@@ -655,6 +698,7 @@ public abstract class MSP430Instr implements AbstractInstr
         }
 
 
+        @Override
         public void accept(MSP430InstrVisitor v)
         {
             v.visit(this);
@@ -669,6 +713,7 @@ public abstract class MSP430Instr implements AbstractInstr
         }
 
 
+        @Override
         public void accept(MSP430InstrVisitor v)
         {
             v.visit(this);
@@ -683,6 +728,7 @@ public abstract class MSP430Instr implements AbstractInstr
         }
 
 
+        @Override
         public void accept(MSP430InstrVisitor v)
         {
             v.visit(this);
@@ -697,6 +743,7 @@ public abstract class MSP430Instr implements AbstractInstr
         }
 
 
+        @Override
         public void accept(MSP430InstrVisitor v)
         {
             v.visit(this);
@@ -711,12 +758,14 @@ public abstract class MSP430Instr implements AbstractInstr
         }
 
 
+        @Override
         public void accept(MSP430InstrVisitor v)
         {
             v.visit(this);
         }
 
 
+        @Override
         public String toString()
         {
             return name;
@@ -731,6 +780,7 @@ public abstract class MSP430Instr implements AbstractInstr
         }
 
 
+        @Override
         public void accept(MSP430InstrVisitor v)
         {
             v.visit(this);
@@ -745,6 +795,7 @@ public abstract class MSP430Instr implements AbstractInstr
         }
 
 
+        @Override
         public void accept(MSP430InstrVisitor v)
         {
             v.visit(this);
@@ -759,6 +810,7 @@ public abstract class MSP430Instr implements AbstractInstr
         }
 
 
+        @Override
         public void accept(MSP430InstrVisitor v)
         {
             v.visit(this);
@@ -773,6 +825,7 @@ public abstract class MSP430Instr implements AbstractInstr
         }
 
 
+        @Override
         public void accept(MSP430InstrVisitor v)
         {
             v.visit(this);
@@ -787,6 +840,7 @@ public abstract class MSP430Instr implements AbstractInstr
         }
 
 
+        @Override
         public void accept(MSP430InstrVisitor v)
         {
             v.visit(this);
@@ -801,6 +855,7 @@ public abstract class MSP430Instr implements AbstractInstr
         }
 
 
+        @Override
         public void accept(MSP430InstrVisitor v)
         {
             v.visit(this);
@@ -815,6 +870,7 @@ public abstract class MSP430Instr implements AbstractInstr
         }
 
 
+        @Override
         public void accept(MSP430InstrVisitor v)
         {
             v.visit(this);
@@ -829,6 +885,7 @@ public abstract class MSP430Instr implements AbstractInstr
         }
 
 
+        @Override
         public void accept(MSP430InstrVisitor v)
         {
             v.visit(this);
@@ -843,6 +900,7 @@ public abstract class MSP430Instr implements AbstractInstr
         }
 
 
+        @Override
         public void accept(MSP430InstrVisitor v)
         {
             v.visit(this);
@@ -857,6 +915,7 @@ public abstract class MSP430Instr implements AbstractInstr
         }
 
 
+        @Override
         public void accept(MSP430InstrVisitor v)
         {
             v.visit(this);
@@ -871,6 +930,7 @@ public abstract class MSP430Instr implements AbstractInstr
         }
 
 
+        @Override
         public void accept(MSP430InstrVisitor v)
         {
             v.visit(this);
@@ -885,6 +945,7 @@ public abstract class MSP430Instr implements AbstractInstr
         }
 
 
+        @Override
         public void accept(MSP430InstrVisitor v)
         {
             v.visit(this);
@@ -899,6 +960,7 @@ public abstract class MSP430Instr implements AbstractInstr
         }
 
 
+        @Override
         public void accept(MSP430InstrVisitor v)
         {
             v.visit(this);
@@ -913,6 +975,7 @@ public abstract class MSP430Instr implements AbstractInstr
         }
 
 
+        @Override
         public void accept(MSP430InstrVisitor v)
         {
             v.visit(this);

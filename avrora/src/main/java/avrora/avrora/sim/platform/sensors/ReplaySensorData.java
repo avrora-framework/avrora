@@ -86,6 +86,7 @@ public class ReplaySensorData implements SensorData
 
     class ChangeReading implements Simulator.Event
     {
+        @Override
         public void fire()
         {
             try
@@ -113,6 +114,7 @@ public class ReplaySensorData implements SensorData
     }
 
 
+    @Override
     public int reading()
     {
         return currentReading;

@@ -103,6 +103,7 @@ public class CallTimeMonitor extends MonitorFactory
         }
 
 
+        @Override
         public void fireAfterReturn(long time, int pc, int retaddr)
         {
             if (getTarget(depth - 1) == start.lma_addr)
@@ -115,6 +116,7 @@ public class CallTimeMonitor extends MonitorFactory
         }
 
 
+        @Override
         public void fireAfterInterruptReturn(long time, int pc, int retaddr)
         {
             if (ignore_interrupts && findCallAddress(start.lma_addr))
@@ -125,6 +127,7 @@ public class CallTimeMonitor extends MonitorFactory
         }
 
 
+        @Override
         public void fireBeforeCall(long time, int pc, int target)
         {
             if (target == start.lma_addr)
@@ -133,6 +136,7 @@ public class CallTimeMonitor extends MonitorFactory
         }
 
 
+        @Override
         public void fireBeforeInterrupt(long time, int pc, int inum)
         {
             if (ignore_interrupts && findCallAddress(start.lma_addr))
@@ -176,6 +180,7 @@ public class CallTimeMonitor extends MonitorFactory
         }
 
 
+        @Override
         public void report()
         {
             TermUtil.printSeparator(
@@ -199,6 +204,7 @@ public class CallTimeMonitor extends MonitorFactory
     }
 
 
+    @Override
     public Monitor newMonitor(Simulator s)
     {
         return new CallTimeMon(s);

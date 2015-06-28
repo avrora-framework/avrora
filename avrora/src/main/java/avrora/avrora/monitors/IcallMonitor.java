@@ -80,6 +80,7 @@ public class IcallMonitor extends MonitorFactory
         public class IcallProbe extends Simulator.Probe.Empty
         {
 
+            @Override
             public void fireBefore(State state, int pc)
             {
                 reportIndirectCall(state, pc);
@@ -112,6 +113,7 @@ public class IcallMonitor extends MonitorFactory
         }
 
 
+        @Override
         public void report()
         {
             // do nothing
@@ -128,6 +130,7 @@ public class IcallMonitor extends MonitorFactory
     }
 
 
+    @Override
     public Monitor newMonitor(Simulator s)
     {
         return new Mon(s);

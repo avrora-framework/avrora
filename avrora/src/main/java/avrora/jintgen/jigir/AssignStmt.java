@@ -79,6 +79,7 @@ public class AssignStmt extends Stmt
      * @param v
      *            the visitor to accept
      */
+    @Override
     public void accept(StmtVisitor v)
     {
         v.visit(this);
@@ -96,6 +97,7 @@ public class AssignStmt extends Stmt
      * @return the result of calling the appropriate <code>visit()</code> of the
      *         rebuilder passed
      */
+    @Override
     public <Res, Env> Res accept(StmtAccumulator<Res, Env> v, Env env)
     {
         return v.visit(this, env);
@@ -122,6 +124,7 @@ public class AssignStmt extends Stmt
          * @param v
          *            the visitor to accept
          */
+        @Override
         public void accept(StmtVisitor v)
         {
             v.visit(this);
@@ -140,6 +143,7 @@ public class AssignStmt extends Stmt
          * @return the result of calling the appropriate <code>visit()</code> of
          *         the rebuilder passed
          */
+        @Override
         public <Res, Env> Res accept(StmtAccumulator<Res, Env> v, Env env)
         {
             return v.visit(this, env);
@@ -169,6 +173,7 @@ public class AssignStmt extends Stmt
          * @param v
          *            the visitor to accept
          */
+        @Override
         public void accept(StmtVisitor v)
         {
             v.visit(this);
@@ -187,6 +192,7 @@ public class AssignStmt extends Stmt
          * @return the result of calling the appropriate <code>visit()</code> of
          *         the rebuilder passed
          */
+        @Override
         public <Res, Env> Res accept(StmtAccumulator<Res, Env> v, Env env)
         {
             return v.visit(this, env);
@@ -216,6 +222,7 @@ public class AssignStmt extends Stmt
          * @param v
          *            the visitor to accept
          */
+        @Override
         public void accept(StmtVisitor v)
         {
             v.visit(this);
@@ -234,6 +241,7 @@ public class AssignStmt extends Stmt
          * @return the result of calling the appropriate <code>visit()</code> of
          *         the rebuilder passed
          */
+        @Override
         public <Res, Env> Res accept(StmtAccumulator<Res, Env> v, Env env)
         {
             return v.visit(this, env);
@@ -265,6 +273,7 @@ public class AssignStmt extends Stmt
          * @param v
          *            the visitor to accept
          */
+        @Override
         public void accept(StmtVisitor v)
         {
             v.visit(this);
@@ -283,6 +292,7 @@ public class AssignStmt extends Stmt
          * @return the result of calling the appropriate <code>visit()</code> of
          *         the rebuilder passed
          */
+        @Override
         public <Res, Env> Res accept(StmtAccumulator<Res, Env> v, Env env)
         {
             return v.visit(this, env);

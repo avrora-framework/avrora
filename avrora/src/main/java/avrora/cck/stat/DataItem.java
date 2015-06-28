@@ -44,6 +44,7 @@ import avrora.cck.text.Printer;
 public interface DataItem extends Printable
 {
 
+    @Override
     public void print(Printer printer);
 
 

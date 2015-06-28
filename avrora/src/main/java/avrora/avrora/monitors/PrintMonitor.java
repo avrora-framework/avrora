@@ -120,6 +120,7 @@ public class PrintMonitor extends MonitorFactory
         }
 
 
+        @Override
         public void report()
         {
             // do nothing.
@@ -135,6 +136,7 @@ public class PrintMonitor extends MonitorFactory
     }
 
 
+    @Override
     public avrora.avrora.monitors.Monitor newMonitor(Simulator s)
     {
         return new Monitor(s);

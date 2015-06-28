@@ -100,6 +100,7 @@ public class ReprogrammableCodeSegment extends CodeSegment
         }
 
 
+        @Override
         public CodeSegment newCodeSegment(String name, AtmelInterpreter bi,
                 Program p)
         {
@@ -128,6 +129,7 @@ public class ReprogrammableCodeSegment extends CodeSegment
         ResetEvent reset = new ResetEvent();
 
 
+        @Override
         public void write(byte val)
         {
 
@@ -154,6 +156,7 @@ public class ReprogrammableCodeSegment extends CodeSegment
 
         class ResetEvent implements Simulator.Event
         {
+            @Override
             public void fire()
             {
                 if (flashPrinter != null)
@@ -286,6 +289,7 @@ public class ReprogrammableCodeSegment extends CodeSegment
      * program executes an instruction that updates the program memory. For
      * example, the SPM instruction.
      */
+    @Override
     public void update()
     {
         // TODO: check that PC is in the bootloader section
@@ -390,6 +394,7 @@ public class ReprogrammableCodeSegment extends CodeSegment
         }
 
 
+        @Override
         public void fire()
         {
             // erase the page
@@ -429,6 +434,7 @@ public class ReprogrammableCodeSegment extends CodeSegment
         }
 
 
+        @Override
         public void fire()
         {
             // write the page
@@ -490,6 +496,7 @@ public class ReprogrammableCodeSegment extends CodeSegment
         }
 
 
+        @Override
         public void accept(LegacyInstrVisitor v)
         {
             LegacyInstr i = disassembler.disassembleLegacy(segment_data, 0,
@@ -502,6 +509,7 @@ public class ReprogrammableCodeSegment extends CodeSegment
         }
 
 
+        @Override
         public LegacyInstr build(int address, LegacyOperand[] ops)
         {
             throw Util.failure(
@@ -509,12 +517,14 @@ public class ReprogrammableCodeSegment extends CodeSegment
         }
 
 
+        @Override
         public String getOperands()
         {
             throw Util.failure("DisassembleLegacyInstr has no operands");
         }
 
 
+        @Override
         public LegacyInstr asInstr()
         {
             LegacyInstr i = disassembler.disassembleLegacy(segment_data, 0,

@@ -122,6 +122,7 @@ public class Inliner extends StmtRebuilder<Object>
     }
 
 
+    @Override
     public Stmt visit(CallStmt s, Object env)
     {
         SubroutineDecl d = archDecl.getSubroutine(s.method.image);
@@ -136,12 +137,14 @@ public class Inliner extends StmtRebuilder<Object>
     }
 
 
+    @Override
     public Stmt visit(AssignStmt s, Object env)
     {
         throw Util.unimplemented();
     }
 
 
+    @Override
     public Stmt visit(DeclStmt s, Object env)
     {
         String nv = newTemp(s.name.image);
@@ -150,6 +153,7 @@ public class Inliner extends StmtRebuilder<Object>
     }
 
 
+    @Override
     public Stmt visit(ReturnStmt s, Object env)
     {
         if (context.curSubroutine == null)
@@ -199,6 +203,7 @@ public class Inliner extends StmtRebuilder<Object>
     }
 
 
+    @Override
     public Expr visit(CallExpr v, Object env)
     {
         SubroutineDecl d = archDecl.getSubroutine(v.method.image);
@@ -219,6 +224,7 @@ public class Inliner extends StmtRebuilder<Object>
     }
 
 
+    @Override
     public Expr visit(VarExpr v, Object env)
     {
         // alpha rename all variables

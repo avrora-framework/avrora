@@ -87,18 +87,21 @@ public class CallStack implements CallTrace.Monitor
     }
 
 
+    @Override
     public void fireBeforeCall(long time, int pc, int target)
     {
         push((byte) -1, pc, target);
     }
 
 
+    @Override
     public void fireAfterReturn(long time, int pc, int retaddr)
     {
         pop();
     }
 
 
+    @Override
     public void fireBeforeInterrupt(long time, int pc, int inum)
     {
         // TODO: get correct address for interrupt handler
@@ -106,6 +109,7 @@ public class CallStack implements CallTrace.Monitor
     }
 
 
+    @Override
     public void fireAfterInterruptReturn(long time, int pc, int retaddr)
     {
         pop();

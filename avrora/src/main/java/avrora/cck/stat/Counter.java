@@ -60,6 +60,7 @@ public class Counter implements DataItem
     }
 
 
+    @Override
     public String getName()
     {
         return name;
@@ -90,17 +91,20 @@ public class Counter implements DataItem
     }
 
 
+    @Override
     public void print(Printer printer)
     {
         printer.print("\n " + name + ": " + count);
     }
 
 
+    @Override
     public void process()
     {
     }
 
 
+    @Override
     public boolean empty()
     {
         return false;

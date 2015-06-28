@@ -65,6 +65,7 @@ public class SourceMapping
      * locations in the program from lowest address to highest address.
      */
     public static Comparator<Location> LOCATION_COMPARATOR = new Comparator<Location>() {
+        @Override
         public int compare(Location l1, Location l2)
         {
             if (l1.lma_addr == l2.lma_addr)
@@ -154,6 +155,7 @@ public class SourceMapping
          * 
          * @return an integer value that represents the hash code
          */
+        @Override
         public int hashCode()
         {
             if (name == null)
@@ -174,6 +176,7 @@ public class SourceMapping
          * @return true if the other object is equal to this label; false
          *         otherwise
          */
+        @Override
         public boolean equals(Object o)
         {
             if (o == this)
@@ -185,6 +188,7 @@ public class SourceMapping
         }
 
 
+        @Override
         public String toString()
         {
             return name;

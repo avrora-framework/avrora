@@ -110,6 +110,7 @@ public class ProbeTest
         }
 
 
+        @Override
         public void fireBefore(State s, int addr)
         {
             recordEvent(name + ".before");
@@ -117,6 +118,7 @@ public class ProbeTest
         }
 
 
+        @Override
         public void fireAfter(State s, int addr)
         {
             recordEvent(name + ".after");
@@ -124,12 +126,14 @@ public class ProbeTest
         }
 
 
+        @Override
         void insert(int value)
         {
             simulator.insertProbe(this, value);
         }
 
 
+        @Override
         void remove(int value)
         {
             simulator.removeProbe(this, value);
@@ -155,6 +159,7 @@ public class ProbeTest
         }
 
 
+        @Override
         public void fireBeforeRead(State state, int data_addr)
         {
             recordEvent(name + ".beforeRead");
@@ -162,6 +167,7 @@ public class ProbeTest
         }
 
 
+        @Override
         public void fireBeforeWrite(State state, int data_addr, byte value)
         {
             recordEvent(name + ".beforeWrite");
@@ -169,6 +175,7 @@ public class ProbeTest
         }
 
 
+        @Override
         public void fireAfterRead(State state, int data_addr, byte value)
         {
             recordEvent(name + ".afterRead");
@@ -176,6 +183,7 @@ public class ProbeTest
         }
 
 
+        @Override
         public void fireAfterWrite(State state, int data_addr, byte value)
         {
             recordEvent(name + ".afterWrite");
@@ -183,12 +191,14 @@ public class ProbeTest
         }
 
 
+        @Override
         void insert(int value)
         {
             simulator.insertWatch(this, value);
         }
 
 
+        @Override
         void remove(int value)
         {
             simulator.removeWatch(this, value);
@@ -207,6 +217,7 @@ public class ProbeTest
         }
 
 
+        @Override
         public void fire()
         {
             recordEvent(name);
@@ -214,6 +225,7 @@ public class ProbeTest
         }
 
 
+        @Override
         void insert(int value)
         {
             if (simulator != null)
@@ -223,6 +235,7 @@ public class ProbeTest
         }
 
 
+        @Override
         void remove(int value)
         {
             if (simulator != null)
@@ -250,6 +263,7 @@ public class ProbeTest
         }
 
 
+        @Override
         void execute()
         {
             TestEntity en = (TestEntity) entities.get(name);
@@ -270,6 +284,7 @@ public class ProbeTest
         }
 
 
+        @Override
         void execute()
         {
             TestEntity en = (TestEntity) entities.get(name);
@@ -288,6 +303,7 @@ public class ProbeTest
         }
 
 
+        @Override
         void execute()
         {
             eventqueue.advance(value);
@@ -296,6 +312,7 @@ public class ProbeTest
 
     class RunStmt extends Stmt
     {
+        @Override
         void execute()
         {
             simulator.start();

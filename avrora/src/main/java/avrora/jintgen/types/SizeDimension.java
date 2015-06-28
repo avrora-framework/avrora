@@ -55,6 +55,7 @@ public class SizeDimension extends TypeCon.Dimension
     }
 
 
+    @Override
     public Object build(TypeEnv te, List<Object> params)
     {
         int size;

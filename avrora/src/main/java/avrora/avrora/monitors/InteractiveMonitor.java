@@ -79,6 +79,7 @@ public class InteractiveMonitor extends MonitorFactory
         }
 
 
+        @Override
         public void report()
         {
             // do nothing.
@@ -111,6 +112,7 @@ public class InteractiveMonitor extends MonitorFactory
      * @return a new monitor that tracks the call and return behavior of the
      *         simulator as it executes
      */
+    @Override
     public Monitor newMonitor(Simulator s)
     {
         return new Mon(s);
@@ -118,6 +120,7 @@ public class InteractiveMonitor extends MonitorFactory
 
     public static class BreakPointProbe extends Simulator.Probe.Empty
     {
+        @Override
         public void fireBefore(State s, int pc)
         {
             throw new SimAction.BreakPointException(pc, s);

@@ -112,6 +112,7 @@ public class DisassemblerGenerator extends Generator
     Decoder implementation;
 
 
+    @Override
     public void generate() throws Exception
     {
         List<String> imports = new LinkedList<String>();
@@ -380,6 +381,7 @@ public class DisassemblerGenerator extends Generator
         }
 
 
+        @Override
         void add(int value, String nname)
         {
             if (value == -1)
@@ -391,6 +393,7 @@ public class DisassemblerGenerator extends Generator
         }
 
 
+        @Override
         void generate()
         {
             beginList("DTNode $1 = new DTArrayNode($2, $3, $4, new DTNode[] {",
@@ -419,6 +422,7 @@ public class DisassemblerGenerator extends Generator
         }
 
 
+        @Override
         void add(int value, String nname)
         {
             if (value == -1)
@@ -431,6 +435,7 @@ public class DisassemblerGenerator extends Generator
         }
 
 
+        @Override
         void generate()
         {
             beginList("DTNode $1 = new DTSortedNode($2, $3, $4, new int[] {",

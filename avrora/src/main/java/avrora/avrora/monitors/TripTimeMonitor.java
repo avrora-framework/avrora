@@ -261,6 +261,7 @@ public class TripTimeMonitor extends MonitorFactory
 
         protected class PTPProbe extends Simulator.Probe.Empty
         {
+            @Override
             public void fireBefore(State state, int pc)
             {
                 long time = state.getCycles();
@@ -277,6 +278,7 @@ public class TripTimeMonitor extends MonitorFactory
         }
 
 
+        @Override
         public void report()
         {
             TermUtil.printSeparator(
@@ -296,6 +298,7 @@ public class TripTimeMonitor extends MonitorFactory
     }
 
 
+    @Override
     public Monitor newMonitor(Simulator s)
     {
         return new PointToPointMon(s);

@@ -88,6 +88,7 @@ public class ELFParser extends ProgramReader
     }
 
 
+    @Override
     public Program read(String[] args) throws Exception
     {
         if (args.length == 0)
@@ -148,6 +149,7 @@ public class ELFParser extends ProgramReader
     }
 
 
+    @Override
     public AbstractArchitecture getArchitecture()
     {
         String specarch = ARCH.get();

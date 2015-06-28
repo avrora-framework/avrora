@@ -593,6 +593,7 @@ public class CC2420Radio implements Radio
         {
             startingOscillator = true;
             sim.insertEvent(new Simulator.Event() {
+                @Override
                 public void fire()
                 {
                     if (startingOscillator)
@@ -915,6 +916,7 @@ public class CC2420Radio implements Radio
     }
 
 
+    @Override
     public Simulator getSimulator()
     {
         return sim;
@@ -936,12 +938,14 @@ public class CC2420Radio implements Radio
 
     public class ClearChannelAssessor implements BooleanView
     {
+        @Override
         public void setValue(boolean val)
         {
             // ignore writes.
         }
 
 
+        @Override
         public boolean getValue()
         {
             if (!receiver.getRssiValid())
@@ -953,6 +957,7 @@ public class CC2420Radio implements Radio
         }
 
 
+        @Override
         public void setValueSetListener(ValueSetListener listener)
         {
             if (printer != null)
@@ -967,6 +972,7 @@ public class CC2420Radio implements Radio
     public class SPIInterface implements SPIDevice
     {
 
+        @Override
         public SPI.Frame exchange(SPI.Frame frame)
         {
             if (printer != null)
@@ -986,6 +992,7 @@ public class CC2420Radio implements Radio
         }
 
 
+        @Override
         public void connect(SPIDevice d)
         {
             // do nothing.
@@ -995,6 +1002,7 @@ public class CC2420Radio implements Radio
     public class ADCInterface implements ADC.ADCInput
     {
 
+        @Override
         public float getVoltage()
         {
             throw Util.unimplemented();
@@ -1098,6 +1106,7 @@ public class CC2420Radio implements Radio
         }
 
 
+        @Override
         public byte nextByte()
         {
             byte val = 0;
@@ -1352,6 +1361,7 @@ public class CC2420Radio implements Radio
         }
 
 
+        @Override
         public void setRSSI(double Prec)
         {
             // compute Rssi as Pr + RssiOffset
@@ -1365,6 +1375,7 @@ public class CC2420Radio implements Radio
         }
 
 
+        @Override
         public void setBER(double BER)
         {
             BERcount++;
@@ -1397,6 +1408,7 @@ public class CC2420Radio implements Radio
         }
 
 
+        @Override
         public byte nextByte(boolean lock, byte b)
         {
             if (state == RECV_END_STATE)
@@ -1761,6 +1773,7 @@ public class CC2420Radio implements Radio
          */
         protected class RssiValid implements Simulator.Event
         {
+            @Override
             public void fire()
             {
                 if (activated)
@@ -1828,6 +1841,7 @@ public class CC2420Radio implements Radio
         }
 
 
+        @Override
         public void write(boolean level)
         {
             if (this.level != level)
@@ -1853,6 +1867,7 @@ public class CC2420Radio implements Radio
         }
 
 
+        @Override
         public boolean read()
         {
             if (printer != null)
@@ -1863,12 +1878,14 @@ public class CC2420Radio implements Radio
         }
 
 
+        @Override
         public void registerListener(InputListener listener)
         {
             listeners.add(listener);
         }
 
 
+        @Override
         public void unregisterListener(InputListener listener)
         {
             listeners.remove(listener);
@@ -1890,6 +1907,7 @@ public class CC2420Radio implements Radio
         }
 
 
+        @Override
         public boolean read()
         {
             boolean val = super.read();
@@ -2068,18 +2086,21 @@ public class CC2420Radio implements Radio
     }
 
 
+    @Override
     public Medium.Transmitter getTransmitter()
     {
         return transmitter;
     }
 
 
+    @Override
     public Medium.Receiver getReceiver()
     {
         return receiver;
     }
 
 
+    @Override
     public void setMedium(Medium m)
     {
         medium = m;
@@ -2088,6 +2109,7 @@ public class CC2420Radio implements Radio
     }
 
 
+    @Override
     public Medium getMedium()
     {
         return medium;

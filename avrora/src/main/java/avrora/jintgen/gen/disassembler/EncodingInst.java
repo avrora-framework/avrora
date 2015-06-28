@@ -109,6 +109,7 @@ public class EncodingInst
     }
 
 
+    @Override
     public String toString()
     {
         return instr.name + " x " + addrMode.name;

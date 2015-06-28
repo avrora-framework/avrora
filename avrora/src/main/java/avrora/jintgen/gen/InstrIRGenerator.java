@@ -70,6 +70,7 @@ public class InstrIRGenerator extends Generator
                     + "instruction classes.");
 
 
+    @Override
     public void generate() throws Exception
     {
 

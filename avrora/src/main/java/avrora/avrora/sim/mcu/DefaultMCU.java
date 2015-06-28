@@ -88,6 +88,7 @@ public abstract class DefaultMCU implements Microcontroller
      *
      * @return a reference to the register set of this microcontroller instance
      */
+    @Override
     public RegisterSet getRegisterSet()
     {
         return registers;
@@ -105,6 +106,7 @@ public abstract class DefaultMCU implements Microcontroller
      * @return a reference to the <code>Pin</code> object corresponding to the
      *         named pin if it exists; null otherwise
      */
+    @Override
     public Microcontroller.Pin getPin(int num)
     {
         if (num < 0 || num > pins.length)
@@ -135,6 +137,7 @@ public abstract class DefaultMCU implements Microcontroller
      * 
      * @return a reference to the simulator instance for this microcontroller
      */
+    @Override
     public Simulator getSimulator()
     {
         return simulator;
@@ -147,6 +150,7 @@ public abstract class DefaultMCU implements Microcontroller
      * 
      * @return the platform instance containing this microcontroller
      */
+    @Override
     public Platform getPlatform()
     {
         return platform;
@@ -160,6 +164,7 @@ public abstract class DefaultMCU implements Microcontroller
      * @param p
      *            the platform instance associated with this microcontroller
      */
+    @Override
     public void setPlatform(Platform p)
     {
         platform = p;
@@ -173,6 +178,7 @@ public abstract class DefaultMCU implements Microcontroller
      * 
      * @return a reference to the clock domain for this microcontroller
      */
+    @Override
     public ClockDomain getClockDomain()
     {
         return clockDomain;
@@ -200,12 +206,14 @@ public abstract class DefaultMCU implements Microcontroller
         }
 
 
+        @Override
         public void connectOutput(Output o)
         {
             output = o;
         }
 
 
+        @Override
         public void connectInput(Input i)
         {
             input = i;

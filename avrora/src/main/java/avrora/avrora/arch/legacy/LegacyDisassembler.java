@@ -99,6 +99,7 @@ public class LegacyDisassembler implements AbstractDisassembler
      *         instruction at that address, if the machine code is a valid
      *         instruction; null if the instruction is invalid
      */
+    @Override
     public AbstractInstr disassemble(int base, int index, byte[] code)
     {
         return disassembleLegacy(code, base, index);

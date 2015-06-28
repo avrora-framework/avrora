@@ -59,6 +59,7 @@ public class GUIAction extends Action
      * GUI. If a file was specified by the command line, it will be passed to
      * the GUI as part of the arguments.
      */
+    @Override
     public void run(String[] args) throws Exception
     {
 

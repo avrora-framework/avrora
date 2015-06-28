@@ -49,6 +49,7 @@ public class RandomSensorData implements SensorData
     }
 
 
+    @Override
     public int reading()
     {
         return random.nextInt() & 0x3ff;

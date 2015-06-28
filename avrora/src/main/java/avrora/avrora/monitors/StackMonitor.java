@@ -117,6 +117,7 @@ public class StackMonitor extends MonitorFactory
          * stack pointer begins at 0 and then is initialized one byte at a
          * time).
          */
+        @Override
         public void report()
         {
             if (SPinit)
@@ -144,6 +145,7 @@ public class StackMonitor extends MonitorFactory
 
 
             // fire when either SPH or SPL is written
+            @Override
             public void fireAfterWrite(State state, int data_addr, byte value)
             {
                 written = true;
@@ -154,6 +156,7 @@ public class StackMonitor extends MonitorFactory
         class IntProbe extends Simulator.InterruptProbe.Empty
         {
             // fire when any interrupt is invoked
+            @Override
             public void fireAfterInvoke(State s, int inum)
             {
                 newSP(s.getSP());
@@ -163,6 +166,7 @@ public class StackMonitor extends MonitorFactory
         class SPProbe extends Simulator.Probe.Empty
         {
             // fire after a call, push, pop, or ret instruction
+            @Override
             public void fireAfter(State state, int pc)
             {
                 newSP(state.getSP());
@@ -220,6 +224,7 @@ public class StackMonitor extends MonitorFactory
      * @return an instance of the <code>Monitor</code> interface for the
      *         specified simulator
      */
+    @Override
     public Monitor newMonitor(Simulator s)
     {
         return new Mon(s);

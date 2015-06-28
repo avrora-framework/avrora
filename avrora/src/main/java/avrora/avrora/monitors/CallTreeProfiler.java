@@ -69,6 +69,7 @@ public class CallTreeProfiler extends MonitorFactory
         }
 
 
+        @Override
         public void fireBeforeCall(long time, int pc, int target)
         {
             CallTreeNode parent = stack[stackDepth];
@@ -92,6 +93,7 @@ public class CallTreeProfiler extends MonitorFactory
         }
 
 
+        @Override
         public void fireAfterReturn(long time, int pc, int retaddr)
         {
             // record the complete invocation time for this node
@@ -114,6 +116,7 @@ public class CallTreeProfiler extends MonitorFactory
         }
 
 
+        @Override
         public void fireBeforeInterrupt(long time, int pc, int inum)
         {
             CallTreeNode thisNode = interrupts[inum];
@@ -122,12 +125,14 @@ public class CallTreeProfiler extends MonitorFactory
         }
 
 
+        @Override
         public void fireAfterInterruptReturn(long time, int pc, int retaddr)
         {
             popStack(time);
         }
 
 
+        @Override
         public void report()
         {
             while (stackDepth > 0)
@@ -231,6 +236,7 @@ public class CallTreeProfiler extends MonitorFactory
         }
 
 
+        @Override
         public int compareTo(Entry e)
         {
             if (count < e.count)
@@ -249,6 +255,7 @@ public class CallTreeProfiler extends MonitorFactory
     }
 
 
+    @Override
     public avrora.avrora.monitors.Monitor newMonitor(Simulator s)
     {
         return new ProfileMonitor(s);

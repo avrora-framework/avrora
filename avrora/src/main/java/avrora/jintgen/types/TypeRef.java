@@ -146,6 +146,7 @@ public class TypeRef implements Typeable
     }
 
 
+    @Override
     public String toString()
     {
         StringBuffer buf = new StringBuffer();
@@ -195,6 +196,7 @@ public class TypeRef implements Typeable
     }
 
 
+    @Override
     public Type getType()
     {
         if (type == null)
@@ -204,6 +206,7 @@ public class TypeRef implements Typeable
     }
 
 
+    @Override
     public SourcePoint getSourcePoint()
     {
         return tcName.getSourcePoint();

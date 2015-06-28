@@ -92,12 +92,14 @@ public class MSP430StateAccessor extends StateAccessor
         MSP430Symbol.GPR reg;
 
 
+        @Override
         protected int get()
         {
             return interpreter.getRegister(reg);
         }
 
 
+        @Override
         protected void set(int val)
         {
             interpreter.setRegister(reg, (char) val);
@@ -106,12 +108,14 @@ public class MSP430StateAccessor extends StateAccessor
 
     class PC extends Accessor
     {
+        @Override
         protected int get()
         {
             return interpreter.getState().getPC();
         }
 
 
+        @Override
         protected void set(int val)
         {
             throw Util.unimplemented();
@@ -120,12 +124,14 @@ public class MSP430StateAccessor extends StateAccessor
 
     class SP extends Accessor
     {
+        @Override
         protected int get()
         {
             return interpreter.getState().getSP();
         }
 
 
+        @Override
         protected void set(int val)
         {
             interpreter.setRegister(MSP430Symbol.GPR.SP, (char) val);
@@ -134,24 +140,28 @@ public class MSP430StateAccessor extends StateAccessor
 
     class DATA extends Accessor
     {
+        @Override
         protected int get()
         {
             return 0;
         }
 
 
+        @Override
         protected void set(int val)
         {
             // do nothing.
         }
 
 
+        @Override
         protected int getIndex(int ind)
         {
             return interpreter.getSRAM(ind);
         }
 
 
+        @Override
         protected void setIndex(int ind, int val)
         {
             interpreter.setData(ind, (char) val);
@@ -160,24 +170,28 @@ public class MSP430StateAccessor extends StateAccessor
 
     class REGS extends Accessor
     {
+        @Override
         protected int get()
         {
             return 0;
         }
 
 
+        @Override
         protected void set(int val)
         {
             // do nothing.
         }
 
 
+        @Override
         protected int getIndex(int ind)
         {
             return interpreter.getRegister(ind);
         }
 
 
+        @Override
         protected void setIndex(int ind, int val)
         {
             throw Util.unimplemented();
@@ -195,12 +209,14 @@ public class MSP430StateAccessor extends StateAccessor
         }
 
 
+        @Override
         protected int get()
         {
             return (interpreter.getSREG() >> bit) & 1;
         }
 
 
+        @Override
         protected void set(int val)
         {
             int reg = interpreter.getSREG();
@@ -211,12 +227,14 @@ public class MSP430StateAccessor extends StateAccessor
 
     class Cycles extends Accessor
     {
+        @Override
         protected int get()
         {
             return (int) interpreter.getState().getCycles();
         }
 
 
+        @Override
         protected void set(int val)
         {
             interpreter.getMainClock().advance(val);

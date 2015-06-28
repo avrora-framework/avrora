@@ -275,6 +275,7 @@ public class AvroraGui implements ActionListener, ChangeListener
      * @param e
      *            Holds information about what event happened
      */
+    @Override
     public void actionPerformed(ActionEvent e)
     {
         if (simTimeBox.checkAndDispatch(e))
@@ -294,6 +295,7 @@ public class AvroraGui implements ActionListener, ChangeListener
      * @param e
      *            Holds information about what event happened
      */
+    @Override
     public void stateChanged(ChangeEvent e)
     {
         if (simTimeBox.sliderAndSpinnerDispatch(e))
@@ -606,6 +608,7 @@ public class AvroraGui implements ActionListener, ChangeListener
      */
     public class PaintThread extends Thread
     {
+        @Override
         public void run()
         {
             try

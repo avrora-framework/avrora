@@ -118,6 +118,7 @@ public abstract class Expr extends ASTNode
          *            the context in which to evaluate this expression
          * @return the value of the expression as a 32-bit integer
          */
+        @Override
         public int evaluate(int currentByteAddress, Context c)
         {
             int lval = left.evaluate(currentByteAddress, c);
@@ -164,18 +165,21 @@ public abstract class Expr extends ASTNode
         }
 
 
+        @Override
         public AbstractToken getLeftMostToken()
         {
             return left.getLeftMostToken();
         }
 
 
+        @Override
         public AbstractToken getRightMostToken()
         {
             return right.getRightMostToken();
         }
 
 
+        @Override
         public String toString()
         {
             return StringUtil.embed(op.image, left, right);
@@ -214,6 +218,7 @@ public abstract class Expr extends ASTNode
          *            the context in which to evaluate this expression
          * @return the value of the expression as a 32-bit integer
          */
+        @Override
         public int evaluate(int currentByteAddress, Context c)
         {
             int oval = operand.evaluate(currentByteAddress, c);
@@ -230,18 +235,21 @@ public abstract class Expr extends ASTNode
         }
 
 
+        @Override
         public AbstractToken getLeftMostToken()
         {
             return op;
         }
 
 
+        @Override
         public AbstractToken getRightMostToken()
         {
             return operand.getRightMostToken();
         }
 
 
+        @Override
         public String toString()
         {
             return StringUtil.embed(op.image, operand);
@@ -281,6 +289,7 @@ public abstract class Expr extends ASTNode
          *            the context in which to evaluate this expression
          * @return the value of the expression as a 32-bit integer
          */
+        @Override
         public int evaluate(int currentByteAddress, Context c)
         {
             int aval = argument.evaluate(currentByteAddress, c);
@@ -348,18 +357,21 @@ public abstract class Expr extends ASTNode
         }
 
 
+        @Override
         public AbstractToken getLeftMostToken()
         {
             return func;
         }
 
 
+        @Override
         public AbstractToken getRightMostToken()
         {
             return last;
         }
 
 
+        @Override
         public String toString()
         {
             return StringUtil.embed(func.image, argument);
@@ -383,18 +395,21 @@ public abstract class Expr extends ASTNode
         }
 
 
+        @Override
         public AbstractToken getLeftMostToken()
         {
             return token;
         }
 
 
+        @Override
         public AbstractToken getRightMostToken()
         {
             return token;
         }
 
 
+        @Override
         public String toString()
         {
             return token.image;
@@ -426,6 +441,7 @@ public abstract class Expr extends ASTNode
          *            the context in which to evaluate this expression
          * @return the value of the expression as a 32-bit integer
          */
+        @Override
         public int evaluate(int currentByteAddress, Context c)
         {
             return c.getVariable(token);
@@ -461,6 +477,7 @@ public abstract class Expr extends ASTNode
          *            the context in which to evaluate this expression
          * @return the value of the expression as a 32-bit integer
          */
+        @Override
         public int evaluate(int currentByteAddress, Context c)
         {
             return value;
@@ -524,6 +541,7 @@ public abstract class Expr extends ASTNode
          * @throws Util.InternalError
          *             because a string cannot be evaluated to a 32-bit integer
          */
+        @Override
         public int evaluate(int currentByteAddress, Context c)
         {
             throw Util.failure("cannot evaluate a string to an integer");
@@ -552,18 +570,21 @@ public abstract class Expr extends ASTNode
         }
 
 
+        @Override
         public AbstractToken getLeftMostToken()
         {
             return dot;
         }
 
 
+        @Override
         public AbstractToken getRightMostToken()
         {
             return num;
         }
 
 
+        @Override
         public String toString()
         {
             return '.' + op.image + num.image;
@@ -582,6 +603,7 @@ public abstract class Expr extends ASTNode
          *            the context in which to evaluate this expression
          * @return the value of the expression as a 32-bit integer
          */
+        @Override
         public int evaluate(int currentByteAddress, Context c)
         {
             int offset = StringUtil.evaluateIntegerLiteral(num.image);

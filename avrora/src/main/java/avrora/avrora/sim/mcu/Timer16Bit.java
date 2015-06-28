@@ -78,12 +78,14 @@ public abstract class Timer16Bit extends AtmelInternalDevice
         private ValueSetListener listener;
 
 
+        @Override
         public boolean getValue()
         {
             return level;
         }
 
 
+        @Override
         public void setValue(boolean v)
         {
             if (v != level)
@@ -101,6 +103,7 @@ public abstract class Timer16Bit extends AtmelInternalDevice
         }
 
 
+        @Override
         public void setValueSetListener(ValueSetListener listener)
         {
             this.listener = listener;
@@ -147,6 +150,7 @@ public abstract class Timer16Bit extends AtmelInternalDevice
 
         class FOC_Field extends RegisterSet.Field
         {
+            @Override
             public void update()
             {
                 if (value == 1)
@@ -283,12 +287,14 @@ public abstract class Timer16Bit extends AtmelInternalDevice
         initValues();
 
         WGMn = rset.installField("WGM" + n, new RegisterSet.Field() {
+            @Override
             public void update()
             {
                 resetTicker(tickers[value]);
             }
         });
         CSn = rset.installField("CS" + n, new RegisterSet.Field() {
+            @Override
             public void update()
             {
                 resetPeriod(periods[value]);
@@ -427,6 +433,7 @@ public abstract class Timer16Bit extends AtmelInternalDevice
         }
 
 
+        @Override
         public void write(byte val)
         {
             low.write(val);
@@ -434,6 +441,7 @@ public abstract class Timer16Bit extends AtmelInternalDevice
         }
 
 
+        @Override
         public byte read()
         {
             highTempReg.write(high.read());
@@ -455,6 +463,7 @@ public abstract class Timer16Bit extends AtmelInternalDevice
         }
 
 
+        @Override
         public byte read()
         {
             return low.read();
@@ -475,12 +484,14 @@ public abstract class Timer16Bit extends AtmelInternalDevice
         }
 
 
+        @Override
         public void write(byte val)
         {
             highTempReg.write(val);
         }
 
 
+        @Override
         public byte read()
         {
             return register.read();
@@ -497,6 +508,7 @@ public abstract class Timer16Bit extends AtmelInternalDevice
          * expr of the blockCompareMatch corresponding to this register in the
          * array of boolean flags.
          */
+        @Override
         public void write(byte val)
         {
             value = val;
@@ -557,6 +569,7 @@ public abstract class Timer16Bit extends AtmelInternalDevice
         }
 
 
+        @Override
         public void write(byte val)
         {
             super.write(val);
@@ -575,6 +588,7 @@ public abstract class Timer16Bit extends AtmelInternalDevice
         }
 
 
+        @Override
         public byte read()
         {
             return register.read();
@@ -589,6 +603,7 @@ public abstract class Timer16Bit extends AtmelInternalDevice
 
     protected class Mode_Reserved implements Simulator.Event
     {
+        @Override
         public void fire()
         {
             // do nothing in the reserved mode.
@@ -597,6 +612,7 @@ public abstract class Timer16Bit extends AtmelInternalDevice
 
     protected class Mode_Normal implements Simulator.Event
     {
+        @Override
         public void fire()
         {
             int ncount = read16(TCNTnH_reg, TCNTnL_reg);
@@ -626,6 +642,7 @@ public abstract class Timer16Bit extends AtmelInternalDevice
         }
 
 
+        @Override
         public void fire()
         {
             // TODO: set OCFnA/ICFn flag when OCRnA/ICRn define TOP and TOP is
@@ -665,6 +682,7 @@ public abstract class Timer16Bit extends AtmelInternalDevice
         }
 
 
+        @Override
         public void fire()
         {
             // TODO: set OCFnA/ICFn flag when OCRnA/ICRn define TOP and TOP is
@@ -708,6 +726,7 @@ public abstract class Timer16Bit extends AtmelInternalDevice
         }
 
 
+        @Override
         public void fire()
         {
             // TODO: set OCFnA/ICFn flag when OCRnA/ICRn define TOP and TOP is
@@ -756,6 +775,7 @@ public abstract class Timer16Bit extends AtmelInternalDevice
         }
 
 
+        @Override
         public void fire()
         {
             int ncount = read16(TCNTnH_reg, TCNTnL_reg);

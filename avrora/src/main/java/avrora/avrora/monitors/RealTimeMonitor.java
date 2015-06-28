@@ -61,6 +61,7 @@ public class RealTimeMonitor extends MonitorFactory
         }
 
 
+        @Override
         public void fire()
         {
             if (!initialized)
@@ -88,6 +89,7 @@ public class RealTimeMonitor extends MonitorFactory
     }
 
 
+    @Override
     public Monitor newMonitor(Simulator s)
     {
         s.insertEvent(new ThrottleEvent(s), 1);

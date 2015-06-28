@@ -56,6 +56,7 @@ public class MulticastWatch extends TransactionalList implements Simulator.Watch
      * @param state
      *            the state of the simulation
      */
+    @Override
     public void fireBeforeRead(State state, int data_addr)
     {
         beginTransaction();
@@ -75,6 +76,7 @@ public class MulticastWatch extends TransactionalList implements Simulator.Watch
      * @param val
      *            the value of the memory location being read
      */
+    @Override
     public void fireAfterRead(State state, int data_addr, byte val)
     {
         for (Link pos = head; pos != null; pos = pos.next)
@@ -95,6 +97,7 @@ public class MulticastWatch extends TransactionalList implements Simulator.Watch
      * @param val
      *            the value being written to the memory location
      */
+    @Override
     public void fireBeforeWrite(State state, int data_addr, byte val)
     {
         beginTransaction();
@@ -116,6 +119,7 @@ public class MulticastWatch extends TransactionalList implements Simulator.Watch
      * @param val
      *            the value being written to the memory location
      */
+    @Override
     public void fireAfterWrite(State state, int data_addr, byte val)
     {
         for (Link pos = head; pos != null; pos = pos.next)

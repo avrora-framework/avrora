@@ -120,6 +120,7 @@ public class SerialForwarder implements USART.USARTDevice
         }
 
         new Thread(new Runnable() {
+            @Override
             public void run()
             {
                 try
@@ -275,6 +276,7 @@ public class SerialForwarder implements USART.USARTDevice
     }
 
 
+    @Override
     public USART.Frame transmitFrame()
     {
         if (in != null)
@@ -294,6 +296,7 @@ public class SerialForwarder implements USART.USARTDevice
     }
 
 
+    @Override
     public void receiveFrame(USART.Frame frame)
     {
         try
@@ -349,6 +352,7 @@ public class SerialForwarder implements USART.USARTDevice
         }
 
 
+        @Override
         public void fire()
         {
             checkReconnection();

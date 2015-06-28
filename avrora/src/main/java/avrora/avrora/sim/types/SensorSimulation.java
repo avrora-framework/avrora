@@ -190,6 +190,7 @@ public class SensorSimulation extends Simulation
          * connecting the node's sensor input to replay or random data as
          * specified on the command line.
          */
+        @Override
         protected void instantiate()
         {
             createNode();
@@ -348,6 +349,7 @@ public class SensorSimulation extends Simulation
          * simulation. This method extends the default simulation remove method
          * by removing the node from the radio air implementation.
          */
+        @Override
         protected void remove()
         {
             synchronizer.removeNode(this);
@@ -397,6 +399,7 @@ public class SensorSimulation extends Simulation
      *            the program to load onto the node
      * @return a new instance of the <code>SensorNode</code> class for the node
      */
+    @Override
     public Node newNode(int id, PlatformFactory pf, LoadableProgram p)
     {
         return new SensorNode(id, pf, p);
@@ -417,6 +420,7 @@ public class SensorSimulation extends Simulation
      *             if there is a problem loading any of the files or
      *             instantiating the simulation
      */
+    @Override
     public void process(Options o, String[] args) throws Exception
     {
         options.process(o);

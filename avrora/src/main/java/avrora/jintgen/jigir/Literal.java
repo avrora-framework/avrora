@@ -56,6 +56,7 @@ public abstract class Literal extends Expr
     public final Token token;
 
 
+    @Override
     public boolean isLiteral()
     {
         return true;
@@ -71,6 +72,7 @@ public abstract class Literal extends Expr
      * @return true if this expression can be evaluated to a constant; false
      *         otherwise
      */
+    @Override
     public boolean isConstantExpr()
     {
         return true;
@@ -83,6 +85,7 @@ public abstract class Literal extends Expr
     }
 
 
+    @Override
     public SourcePoint getSourcePoint()
     {
         return token.getSourcePoint();
@@ -144,24 +147,28 @@ public abstract class Literal extends Expr
          * @param v
          *            the visitor to accept
          */
+        @Override
         public void accept(CodeVisitor v)
         {
             v.visit(this);
         }
 
 
+        @Override
         public <Res, Env> Res accept(CodeAccumulator<Res, Env> r, Env env)
         {
             return r.visit(this, env);
         }
 
 
+        @Override
         public String toString()
         {
             return Integer.toString(value);
         }
 
 
+        @Override
         public int getPrecedence()
         {
             return PREC_TERM;
@@ -222,24 +229,28 @@ public abstract class Literal extends Expr
          * @param v
          *            the visitor to accept
          */
+        @Override
         public void accept(CodeVisitor v)
         {
             v.visit(this);
         }
 
 
+        @Override
         public <Res, Env> Res accept(CodeAccumulator<Res, Env> r, Env env)
         {
             return r.visit(this, env);
         }
 
 
+        @Override
         public String toString()
         {
             return value ? "true" : "false";
         }
 
 
+        @Override
         public int getPrecedence()
         {
             return PREC_TERM;
@@ -271,24 +282,28 @@ public abstract class Literal extends Expr
          * @param v
          *            the visitor to accept
          */
+        @Override
         public void accept(CodeVisitor v)
         {
             v.visit(this);
         }
 
 
+        @Override
         public <Res, Env> Res accept(CodeAccumulator<Res, Env> r, Env env)
         {
             return r.visit(this, env);
         }
 
 
+        @Override
         public String toString()
         {
             return enumDecl.name.image + '.' + token;
         }
 
 
+        @Override
         public int getPrecedence()
         {
             return PREC_TERM;

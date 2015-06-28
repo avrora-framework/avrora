@@ -240,6 +240,7 @@ public class ConstantPropagator
     }
 
 
+    @Override
     public Stmt visit(DeclStmt s, Environ cenv)
     {
         Expr ne = update(s.name.toString(), s.init, cenv);
@@ -250,6 +251,7 @@ public class ConstantPropagator
     }
 
 
+    @Override
     public Stmt visit(AssignStmt s, Environ cenv)
     {
         throw Util.unimplemented();
@@ -285,6 +287,7 @@ public class ConstantPropagator
     }
 
 
+    @Override
     public Expr visit(VarExpr e, Environ cenv)
     {
         Expr ce = cenv.lookup(e.variable.toString());
@@ -295,6 +298,7 @@ public class ConstantPropagator
     }
 
 
+    @Override
     public Expr visit(IndexExpr e, Environ cenv)
     {
         Expr nexpr = e.expr.accept(this, cenv);
@@ -314,6 +318,7 @@ public class ConstantPropagator
     }
 
 
+    @Override
     public Expr visit(FixedRangeExpr e, Environ cenv)
     {
         Expr nexpr = e.expr.accept(this, cenv);
@@ -334,6 +339,7 @@ public class ConstantPropagator
 
     // --- binary operations ---
 
+    @Override
     public Expr visit(BinOpExpr e, Environ cenv)
     {
         Expr l = e.left.accept(this, cenv);
@@ -348,6 +354,7 @@ public class ConstantPropagator
     }
 
 
+    @Override
     public Expr visit(Literal.BoolExpr e, Environ cenv)
     {
         if (e.value)
@@ -357,6 +364,7 @@ public class ConstantPropagator
     }
 
 
+    @Override
     public Expr visit(Literal.IntExpr e, Environ cenv)
     {
         if (e.value == 0)
@@ -368,6 +376,7 @@ public class ConstantPropagator
     }
 
 
+    @Override
     public Expr visit(UnOpExpr e, Environ cenv)
     {
         Expr ne = e.expr.accept(this, cenv);

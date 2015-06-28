@@ -133,6 +133,7 @@ public class EEPROM extends AtmelInternalDevice
     protected class EEARHReg extends RWRegister
     {
 
+        @Override
         public void write(byte val)
         {
             // EEAR access not allowed during write
@@ -147,6 +148,7 @@ public class EEPROM extends AtmelInternalDevice
     protected class EEARLReg extends RWRegister
     {
 
+        @Override
         public void write(byte val)
         {
             // EEAR access not allowed during write
@@ -196,6 +198,7 @@ public class EEPROM extends AtmelInternalDevice
         }
 
 
+        @Override
         public void write(byte val)
         {
             value = (byte) (0xf & val);
@@ -238,6 +241,7 @@ public class EEPROM extends AtmelInternalDevice
     protected class EEPROMTicker implements Simulator.Event
     {
 
+        @Override
         public void fire()
         {
 
@@ -305,6 +309,7 @@ public class EEPROM extends AtmelInternalDevice
     protected class EEPROMWriteFinishedEvent implements Simulator.Event
     {
 
+        @Override
         public void fire()
         {
             if (devicePrinter != null)

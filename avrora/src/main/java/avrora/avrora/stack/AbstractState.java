@@ -78,9 +78,11 @@ public abstract class AbstractState implements IORegisterConstants
     }
 
 
+    @Override
     public abstract int hashCode();
 
 
+    @Override
     public abstract boolean equals(Object o);
 
 
@@ -261,6 +263,7 @@ public abstract class AbstractState implements IORegisterConstants
     }
 
 
+    @Override
     public String toString()
     {
         StringBuffer buf = new StringBuffer(100);

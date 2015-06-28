@@ -200,6 +200,7 @@ public class LegacyRegister
      *
      * @return an integer that represents the hash code of this register
      */
+    @Override
     public int hashCode()
     {
         return name.hashCode();
@@ -212,6 +213,7 @@ public class LegacyRegister
      *
      * @return a string representation of this register
      */
+    @Override
     public String toString()
     {
         return name;
@@ -351,6 +353,7 @@ public class LegacyRegister
          *
          * @return a string representation of this register set
          */
+        @Override
         public String toString()
         {
             return contents;

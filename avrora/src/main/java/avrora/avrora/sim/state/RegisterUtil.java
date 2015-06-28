@@ -86,12 +86,14 @@ public class RegisterUtil
         }
 
 
+        @Override
         public boolean getValue()
         {
             return (reg.getValue() >> low & 1) == 1;
         }
 
 
+        @Override
         public void setValue(boolean v)
         {
             if (v)
@@ -101,6 +103,7 @@ public class RegisterUtil
         }
 
 
+        @Override
         public void onValueSet(RegisterView view, int oldValue, int newValue)
         {
             if (listener != null && ((oldValue ^ newValue) & (1 << low)) != 0)
@@ -110,6 +113,7 @@ public class RegisterUtil
         }
 
 
+        @Override
         public void setValueSetListener(ValueSetListener listener)
         {
             this.listener = listener;
@@ -136,18 +140,21 @@ public class RegisterUtil
         }
 
 
+        @Override
         public int getWidth()
         {
             return 8;
         }
 
 
+        @Override
         public int getValue()
         {
             return values[index];
         }
 
 
+        @Override
         public void setValue(int val)
         {
             int oldVal = getValue();
@@ -176,18 +183,21 @@ public class RegisterUtil
         }
 
 
+        @Override
         public int getWidth()
         {
             return 16;
         }
 
 
+        @Override
         public int getValue()
         {
             return values[index];
         }
 
 
+        @Override
         public void setValue(int val)
         {
             int oldVal = getValue();
@@ -215,24 +225,28 @@ public class RegisterUtil
         }
 
 
+        @Override
         public int getWidth()
         {
             return width;
         }
 
 
+        @Override
         public int getValue()
         {
             return (reg.getValue() & mask) >> low;
         }
 
 
+        @Override
         public void setValue(int val)
         {
             reg.setValue(reg.getValue() & ~mask | ((val << low) & mask));
         }
 
 
+        @Override
         public void onValueSet(RegisterView view, int oldValue, int newValue)
         {
             oldValue &= mask;
@@ -257,12 +271,14 @@ public class RegisterUtil
         }
 
 
+        @Override
         public int getWidth()
         {
             return bits.length;
         }
 
 
+        @Override
         public int getValue()
         {
             int val = reg.getValue();
@@ -276,6 +292,7 @@ public class RegisterUtil
         }
 
 
+        @Override
         public void setValue(int val)
         {
             int res = reg.getValue();
@@ -288,6 +305,7 @@ public class RegisterUtil
         }
 
 
+        @Override
         public void registerValueSetListener(RegisterValueSetListener listener)
         {
             throw new UnsupportedOperationException();
@@ -310,12 +328,14 @@ public class RegisterUtil
         }
 
 
+        @Override
         public int getWidth()
         {
             return width;
         }
 
 
+        @Override
         public int getValue()
         {
             int val = 0;
@@ -329,6 +349,7 @@ public class RegisterUtil
         }
 
 
+        @Override
         public void setValue(int val)
         {
             for (int i = 0, p = 0; i < regs.length; i++)
@@ -342,6 +363,7 @@ public class RegisterUtil
         }
 
 
+        @Override
         public void registerValueSetListener(RegisterValueSetListener listener)
         {
             throw new UnsupportedOperationException();
@@ -374,6 +396,7 @@ public class RegisterUtil
         }
 
 
+        @Override
         public void fireAfterWrite(Register r, int oldv, int newv)
         {
             value = newv;
@@ -381,6 +404,7 @@ public class RegisterUtil
         }
 
 
+        @Override
         public void fireAfterRead(Register r, int oldv, int newv)
         {
             // do nothing.
@@ -393,6 +417,7 @@ public class RegisterUtil
         }
 
 
+        @Override
         public void fire()
         {
             r2.write(value);
@@ -449,6 +474,7 @@ public class RegisterUtil
         }
 
 
+        @Override
         public void fireAfterWrite(Register r, int oldv, int newv)
         {
             printer.println(name + "    <=   "
@@ -456,6 +482,7 @@ public class RegisterUtil
         }
 
 
+        @Override
         public void fireAfterRead(Register r, int oldv, int newv)
         {
             printer.println(name + "    ->   "
@@ -482,12 +509,14 @@ public class RegisterUtil
         }
 
 
+        @Override
         public int read(int cur)
         {
             return value;
         }
 
 
+        @Override
         public int write(int cur, int nv)
         {
             return value;
@@ -496,6 +525,7 @@ public class RegisterUtil
 
     public static class ReadonlyBehavior extends VolatileBehavior
     {
+        @Override
         public int write(int cur, int nv)
         {
             return cur;

@@ -53,6 +53,7 @@ public class DebugStream extends OutputStream
 
 
     // actually writes a byte to our stream
+    @Override
     public void write(int b)
     {
         theGui.debugAppend(Character.toString((char) b));

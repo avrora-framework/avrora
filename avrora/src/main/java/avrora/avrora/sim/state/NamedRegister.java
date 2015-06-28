@@ -73,6 +73,7 @@ public class NamedRegister extends Register
         }
 
 
+        @Override
         void print(StringBuffer buf)
         {
             buf.append(name);
@@ -94,6 +95,7 @@ public class NamedRegister extends Register
         }
 
 
+        @Override
         void print(StringBuffer buf)
         {
             buf.append(name);
@@ -184,6 +186,7 @@ public class NamedRegister extends Register
     }
 
 
+    @Override
     public String toString()
     {
         StringBuffer buf = new StringBuffer(name);

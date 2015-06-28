@@ -71,6 +71,7 @@ public class DotExpr extends Expr
      * @param v
      *            the visitor to accept
      */
+    @Override
     public void accept(CodeVisitor v)
     {
         v.visit(this);
@@ -88,6 +89,7 @@ public class DotExpr extends Expr
      * @return the result of calling the appropriate <code>visit()</code> method
      *         of the rebuilder
      */
+    @Override
     public <Res, Env> Res accept(CodeAccumulator<Res, Env> r, Env env)
     {
         return r.visit(this, env);
@@ -102,12 +104,14 @@ public class DotExpr extends Expr
      * 
      * @return an precedence number for this operation
      */
+    @Override
     public int getPrecedence()
     {
         return PREC_TERM;
     }
 
 
+    @Override
     public SourcePoint getSourcePoint()
     {
         return new SourcePoint(expr.getSourcePoint(), field.getSourcePoint());

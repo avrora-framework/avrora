@@ -85,6 +85,7 @@ public abstract class SingleNodeMonitor implements Simulation.GuiMonitor
      * @param nodes
      *            A list of the nodes that should be attached to the monitor
      */
+    @Override
     public void attach(Simulation sim, List<Simulation.Node> nodes)
     {
         for (Simulation.Node node : nodes)
@@ -109,6 +110,7 @@ public abstract class SingleNodeMonitor implements Simulation.GuiMonitor
      * @param s
      *            The simulator that the monitor can be inserted into
      */
+    @Override
     public void construct(Simulation sim, Simulation.Node n, Simulator s)
     {
         panelMap.get(n).construct(s);
@@ -124,6 +126,7 @@ public abstract class SingleNodeMonitor implements Simulation.GuiMonitor
      * @param s
      *            The simulator that the monitor can be inserted into
      */
+    @Override
     public void destruct(Simulation sim, Simulation.Node n, Simulator s)
     {
         panelMap.get(n).destruct();
@@ -138,6 +141,7 @@ public abstract class SingleNodeMonitor implements Simulation.GuiMonitor
      *            element of the list is not already attached to the node, it
      *            will just skip that element.
      */
+    @Override
     public void remove(Simulation sim, List<Simulation.Node> nodes)
     {
         for (Simulation.Node n : nodes)

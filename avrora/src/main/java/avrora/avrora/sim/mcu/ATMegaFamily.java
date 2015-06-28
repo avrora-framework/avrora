@@ -89,6 +89,7 @@ public abstract class ATMegaFamily extends AtmelMicrocontroller
         }
 
 
+        @Override
         public void force(int inum)
         {
             val = true;
@@ -96,6 +97,7 @@ public abstract class ATMegaFamily extends AtmelMicrocontroller
         }
 
 
+        @Override
         public void invoke(int inum)
         {
             if (autoclear)
@@ -121,12 +123,14 @@ public abstract class ATMegaFamily extends AtmelMicrocontroller
             }
 
 
+            @Override
             public void force(int inum)
             {
                 value = Arithmetic.setBit(value, bit, true);
             }
 
 
+            @Override
             public void invoke(int inum)
             {
                 value = Arithmetic.setBit(value, bit, false);
@@ -157,6 +161,7 @@ public abstract class ATMegaFamily extends AtmelMicrocontroller
         }
 
 
+        @Override
         public void write(byte val)
         {
             value = (byte) (value & ~val);
@@ -211,6 +216,7 @@ public abstract class ATMegaFamily extends AtmelMicrocontroller
         }
 
 
+        @Override
         public void write(byte val)
         {
             value = val;
@@ -246,6 +252,7 @@ public abstract class ATMegaFamily extends AtmelMicrocontroller
         }
 
 
+        @Override
         public void write(byte val)
         {
             for (int cntr = 0; cntr < 8; cntr++)
@@ -271,6 +278,7 @@ public abstract class ATMegaFamily extends AtmelMicrocontroller
         }
 
 
+        @Override
         public void write(byte val)
         {
             for (int cntr = 0; cntr < 8; cntr++)
@@ -296,6 +304,7 @@ public abstract class ATMegaFamily extends AtmelMicrocontroller
         }
 
 
+        @Override
         public byte read()
         {
             int value = 0;
@@ -311,6 +320,7 @@ public abstract class ATMegaFamily extends AtmelMicrocontroller
         }
 
 
+        @Override
         public void write(byte val)
         {
             // ignore writes.
@@ -348,6 +358,7 @@ public abstract class ATMegaFamily extends AtmelMicrocontroller
             static final int TCR0UB = 0;
 
 
+            @Override
             public void write(byte val)
             {
                 super.write((byte) (0xf & val));
@@ -391,6 +402,7 @@ public abstract class ATMegaFamily extends AtmelMicrocontroller
     protected class Timer1 extends Timer16Bit
     {
 
+        @Override
         protected void initValues()
         {
             // bit numbers
@@ -431,6 +443,7 @@ public abstract class ATMegaFamily extends AtmelMicrocontroller
     protected class Timer3 extends Timer16Bit
     {
 
+        @Override
         protected void initValues()
         {
             // bit numbers
@@ -577,6 +590,7 @@ public abstract class ATMegaFamily extends AtmelMicrocontroller
         }
 
 
+        @Override
         public void force(int inum)
         {
             view.setValue(true);
@@ -590,6 +604,7 @@ public abstract class ATMegaFamily extends AtmelMicrocontroller
         }
 
 
+        @Override
         public void invoke(int inum)
         {
             if (autoclear)

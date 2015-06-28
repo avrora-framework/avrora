@@ -114,6 +114,7 @@ public class FiniteStateMachine
         protected int newState;
 
 
+        @Override
         public void fire()
         {
             // set the current state to the new state

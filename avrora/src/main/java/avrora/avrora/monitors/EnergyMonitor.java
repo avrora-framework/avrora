@@ -133,6 +133,7 @@ public class EnergyMonitor extends MonitorFactory
          *
          * @see avrora.monitors.Monitor#report()
          */
+        @Override
         public void report()
         {
             // simulation will end
@@ -177,6 +178,7 @@ public class EnergyMonitor extends MonitorFactory
             }
 
 
+            @Override
             public void fire()
             {
                 double totalEnergy = 0.0d;
@@ -326,6 +328,7 @@ public class EnergyMonitor extends MonitorFactory
              *
              * @see EnergyObserver#stateChange(Energy)
              */
+            @Override
             public void stateChange(Energy energy)
             {
                 logOldState(energy);
@@ -402,6 +405,7 @@ public class EnergyMonitor extends MonitorFactory
      *
      * @see MonitorFactory#newMonitor(Simulator)
      */
+    @Override
     public avrora.avrora.monitors.Monitor newMonitor(Simulator s)
     {
         return new Monitor(s);

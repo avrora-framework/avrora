@@ -98,6 +98,7 @@ public class VirgilMonitor extends MonitorFactory
         public class BreakProbe extends Simulator.Probe.Empty
         {
 
+            @Override
             public void fireBefore(State state, int pc)
             {
                 StringBuffer buf = printer.getBuffer();
@@ -145,6 +146,7 @@ public class VirgilMonitor extends MonitorFactory
         }
 
 
+        @Override
         public void report()
         {
             // do nothing
@@ -160,6 +162,7 @@ public class VirgilMonitor extends MonitorFactory
     }
 
 
+    @Override
     public Monitor newMonitor(Simulator s)
     {
         return new Mon(s);

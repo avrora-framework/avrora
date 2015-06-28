@@ -71,6 +71,7 @@ public class OperandTypeRef extends TypeRef
     }
 
 
+    @Override
     public Type resolve(TypeEnv te)
     {
         Type t = super.resolve(te);

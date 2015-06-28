@@ -78,6 +78,7 @@ public class StepSynchronizer extends Synchronizer
      * @param n
      *            the simulator representing the node to add to this group
      */
+    @Override
     public void addNode(Simulation.Node n)
     {
         int nn = numThreads++;
@@ -98,6 +99,7 @@ public class StepSynchronizer extends Synchronizer
      * @param n
      *            the simulator thread to remove from this synchronization group
      */
+    @Override
     public void removeNode(Simulation.Node n)
     {
         removeSimulator(n.getSimulator());
@@ -110,6 +112,7 @@ public class StepSynchronizer extends Synchronizer
      * catch up to it in execution time. The node will be blocked until the
      * other nodes in other threads catch up in global time.
      */
+    @Override
     public void waitForNeighbors(long time)
     {
         throw Util.unimplemented();
@@ -121,6 +124,7 @@ public class StepSynchronizer extends Synchronizer
      * synchronizer will add whatever synchronization to their execution that is
      * necessary to preserve the global timing properties of simulation.
      */
+    @Override
     public void start()
     {
         thread = new RunThread();
@@ -134,6 +138,7 @@ public class StepSynchronizer extends Synchronizer
      * <code>stop()</code> being called, or terminating normally such as through
      * a timeout.
      */
+    @Override
     public void join() throws InterruptedException
     {
         if (thread != null)
@@ -148,6 +153,7 @@ public class StepSynchronizer extends Synchronizer
      * no longer make progress until the <code>start()</code> method is called
      * again.
      */
+    @Override
     public void pause()
     {
         if (thread != null)
@@ -160,6 +166,7 @@ public class StepSynchronizer extends Synchronizer
      * It is not guaranteed to stop all the simulation threads at the same
      * global time.
      */
+    @Override
     public void stop()
     {
         if (thread == null)
@@ -184,6 +191,7 @@ public class StepSynchronizer extends Synchronizer
      */
     protected class RunThread extends Thread
     {
+        @Override
         public void run()
         {
             shouldRun = true;
@@ -263,6 +271,7 @@ public class StepSynchronizer extends Synchronizer
      * @param globalTime
      *            the global time in clock cycles to run all threads ahead to
      */
+    @Override
     public void synch(long globalTime)
     {
         throw Util.unimplemented();

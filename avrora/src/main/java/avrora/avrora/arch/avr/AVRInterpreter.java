@@ -81,6 +81,7 @@ public class AVRInterpreter extends AVRInstrInterpreter
          *
          * @return the value of the register as a byte
          */
+        @Override
         public byte read()
         {
             int value = 0;
@@ -112,6 +113,7 @@ public class AVRInterpreter extends AVRInstrInterpreter
          * @param val
          *            the value to write
          */
+        @Override
         public void write(byte val)
         {
             if ((val & SREG_I_MASK) != 0)
@@ -212,6 +214,7 @@ public class AVRInterpreter extends AVRInstrInterpreter
     }
 
 
+    @Override
     public int getSP()
     {
         byte low = SPL_reg.value;
@@ -220,6 +223,7 @@ public class AVRInterpreter extends AVRInstrInterpreter
     }
 
 
+    @Override
     public AbstractInstr getInstr(int address)
     {
         throw Util.unimplemented();
@@ -233,6 +237,7 @@ public class AVRInterpreter extends AVRInstrInterpreter
     }
 
 
+    @Override
     protected int popByte()
     {
         int address = getSP() + 1;
@@ -241,6 +246,7 @@ public class AVRInterpreter extends AVRInstrInterpreter
     }
 
 
+    @Override
     protected void pushByte(int val)
     {
         int address = getSP();
@@ -249,6 +255,7 @@ public class AVRInterpreter extends AVRInstrInterpreter
     }
 
 
+    @Override
     protected int extended(int addr)
     {
         if (RAMPZ > 0)
@@ -258,6 +265,7 @@ public class AVRInterpreter extends AVRInstrInterpreter
     }
 
 
+    @Override
     protected void enableInterrupts()
     {
         I = true;
@@ -265,6 +273,7 @@ public class AVRInterpreter extends AVRInstrInterpreter
     }
 
 
+    @Override
     protected void disableInterrupts()
     {
         I = true;
@@ -272,6 +281,7 @@ public class AVRInterpreter extends AVRInstrInterpreter
     }
 
 
+    @Override
     protected void enterSleepMode()
     {
         sleeping = true;
@@ -280,12 +290,14 @@ public class AVRInterpreter extends AVRInstrInterpreter
     }
 
 
+    @Override
     protected void storeProgramMemory()
     {
         flash.update();
     }
 
 
+    @Override
     protected void stop()
     {
         shouldRun = false;
@@ -293,6 +305,7 @@ public class AVRInterpreter extends AVRInstrInterpreter
     }
 
 
+    @Override
     protected void skip()
     {
         AVRInstr i = null;
@@ -306,12 +319,14 @@ public class AVRInterpreter extends AVRInstrInterpreter
     }
 
 
+    @Override
     protected boolean getIORbit(int ior, int bit)
     {
         return Arithmetic.getBit(ioregs[ior].read(), bit);
     }
 
 
+    @Override
     protected void setIORbit(int ior, int bit, boolean v)
     {
         byte val = ioregs[ior].read();

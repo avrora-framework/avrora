@@ -65,6 +65,7 @@ public class Superbot extends Platform
 
     public static class Factory implements PlatformFactory
     {
+        @Override
         public Platform newPlatform(int id, Simulation sim, Program p)
         {
             ClockDomain cd = new ClockDomain(7372800);

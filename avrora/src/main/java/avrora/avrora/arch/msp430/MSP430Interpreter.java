@@ -71,6 +71,7 @@ public class MSP430Interpreter extends MSP430InstrInterpreter
          * @return a new instance of the <code>BaseInterpreter</code> class for
          *         the program
          */
+        @Override
         public Interpreter newInterpreter(Simulator s, Program p,
                 MCUProperties pr)
         {
@@ -193,18 +194,21 @@ public class MSP430Interpreter extends MSP430InstrInterpreter
     }
 
 
+    @Override
     protected void bumpPC()
     {
         regs[PC_REG] += 2;
     }
 
 
+    @Override
     protected int bit(boolean b)
     {
         return b ? 1 : 0;
     }
 
 
+    @Override
     protected int popByte()
     {
         int sp = getSP();
@@ -214,6 +218,7 @@ public class MSP430Interpreter extends MSP430InstrInterpreter
     }
 
 
+    @Override
     protected void pushByte(int b)
     {
         int sp = getSP();
@@ -223,18 +228,21 @@ public class MSP430Interpreter extends MSP430InstrInterpreter
     }
 
 
+    @Override
     protected void disableInterrupts()
     {
 
     }
 
 
+    @Override
     protected void enableInterrupts()
     {
 
     }
 
 
+    @Override
     protected int popWord()
     {
         byte b1 = (byte) popByte();
@@ -243,6 +251,7 @@ public class MSP430Interpreter extends MSP430InstrInterpreter
     }
 
 
+    @Override
     protected void pushWord(int b)
     {
         int sp = getSP();
@@ -253,12 +262,14 @@ public class MSP430Interpreter extends MSP430InstrInterpreter
     }
 
 
+    @Override
     public State getState()
     {
         return this;
     }
 
 
+    @Override
     public void start()
     {
         shouldRun = true;
@@ -266,12 +277,14 @@ public class MSP430Interpreter extends MSP430InstrInterpreter
     }
 
 
+    @Override
     public int step()
     {
         throw Util.unimplemented();
     }
 
 
+    @Override
     public void stop()
     {
         shouldRun = false;
@@ -288,6 +301,7 @@ public class MSP430Interpreter extends MSP430InstrInterpreter
      * @param addr
      *            the address of the instruction on which to insert the probe
      */
+    @Override
     protected void insertProbe(Simulator.Probe p, int addr)
     {
         throw Util.unimplemented();
@@ -302,6 +316,7 @@ public class MSP430Interpreter extends MSP430InstrInterpreter
      * @param watch
      *            The <code>ExceptionWatch</code> instance to add.
      */
+    @Override
     protected void insertErrorWatch(Simulator.Watch watch)
     {
         throw Util.unimplemented();
@@ -316,6 +331,7 @@ public class MSP430Interpreter extends MSP430InstrInterpreter
      * @param p
      *            the probe to insert
      */
+    @Override
     protected void insertProbe(Simulator.Probe p)
     {
         globalProbe.add(p);
@@ -332,6 +348,7 @@ public class MSP430Interpreter extends MSP430InstrInterpreter
      * @param addr
      *            the address of the instruction from which to remove the probe
      */
+    @Override
     protected void removeProbe(Simulator.Probe p, int addr)
     {
         throw Util.unimplemented();
@@ -346,6 +363,7 @@ public class MSP430Interpreter extends MSP430InstrInterpreter
      * @param b
      *            the probe to remove
      */
+    @Override
     public void removeProbe(Simulator.Probe b)
     {
         globalProbe.remove(b);
@@ -362,6 +380,7 @@ public class MSP430Interpreter extends MSP430InstrInterpreter
      *            the address of the memory location on which to insert the
      *            watch
      */
+    @Override
     protected void insertWatch(Simulator.Watch p, int data_addr)
     {
         throw Util.unimplemented();
@@ -378,6 +397,7 @@ public class MSP430Interpreter extends MSP430InstrInterpreter
      *            the address of the memory location from which to remove the
      *            watch
      */
+    @Override
     protected void removeWatch(Simulator.Watch p, int data_addr)
     {
         throw Util.unimplemented();
@@ -393,6 +413,7 @@ public class MSP430Interpreter extends MSP430InstrInterpreter
      * @param cycles
      *            the number of cycles to delay the execution
      */
+    @Override
     protected void delay(long cycles)
     {
         throw Util.unimplemented();
@@ -446,6 +467,7 @@ public class MSP430Interpreter extends MSP430InstrInterpreter
          * @param v
          *            the instruction visitor to accept
          */
+        @Override
         public void accept(MSP430InstrVisitor v)
         {
             stop();
@@ -460,6 +482,7 @@ public class MSP430Interpreter extends MSP430InstrInterpreter
          * @param v
          *            the addressing mode visitor to accept
          */
+        @Override
         public void accept(MSP430AddrModeVisitor v)
         {
             // the default implementation of accept() is empty

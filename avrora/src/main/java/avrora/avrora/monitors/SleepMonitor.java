@@ -73,6 +73,7 @@ public class SleepMonitor extends MonitorFactory
         }
 
 
+        @Override
         public void report()
         {
             recordCycles(fsm.getCurrentState());
@@ -99,12 +100,14 @@ public class SleepMonitor extends MonitorFactory
         }
 
 
+        @Override
         public void fireBeforeTransition(int bs, int as)
         {
             // do nothing.
         }
 
 
+        @Override
         public void fireAfterTransition(int bs, int as)
         {
             recordCycles(bs);
@@ -129,6 +132,7 @@ public class SleepMonitor extends MonitorFactory
     }
 
 
+    @Override
     public Monitor newMonitor(Simulator s)
     {
         return new Mon(s);

@@ -14,6 +14,7 @@ public class MockRegisterValueSetListener
     public int newValue;
 
 
+    @Override
     public void onValueSet(RegisterView view, int oldValue, int newValue)
     {
         called++;

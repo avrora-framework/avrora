@@ -167,6 +167,7 @@ public class MemoryMonitor extends MonitorFactory
         }
 
 
+        @Override
         public void report()
         {
             TermUtil.printSeparator(
@@ -249,6 +250,7 @@ public class MemoryMonitor extends MonitorFactory
     }
 
 
+    @Override
     public avrora.avrora.monitors.Monitor newMonitor(Simulator s)
     {
         return new Monitor(s);

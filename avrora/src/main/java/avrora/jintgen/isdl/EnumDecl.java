@@ -73,6 +73,7 @@ public class EnumDecl extends Item implements Decl
     }
 
 
+    @Override
     public Type getType()
     {
         return kind;

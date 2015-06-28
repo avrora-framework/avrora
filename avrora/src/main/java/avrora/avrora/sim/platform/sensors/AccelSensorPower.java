@@ -62,6 +62,7 @@ public class AccelSensorPower
 
     class OnPin implements Microcontroller.Pin.Output
     {
+        @Override
         public void write(boolean val)
         {
             on = val;

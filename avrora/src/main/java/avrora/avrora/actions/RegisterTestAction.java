@@ -74,6 +74,7 @@ public class RegisterTestAction extends Action
      *            the command line arguments; files containing tests to be run
      * @throws Exception
      */
+    @Override
     public void run(String[] args) throws Exception
     {
         detail = DETAIL.get();

@@ -92,6 +92,7 @@ public class SourcePoint
     }
 
 
+    @Override
     public String toString()
     {
         return file + ' ' + beginLine + ':' + beginColumn;

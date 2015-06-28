@@ -125,6 +125,7 @@ public class SPIForwarder implements SPIDevice
     }
 
 
+    @Override
     public SPI.Frame exchange(SPI.Frame frame)
     {
         try
@@ -145,6 +146,7 @@ public class SPIForwarder implements SPIDevice
     }
 
 
+    @Override
     public void connect(SPIDevice d)
     {
         // do nothing.
@@ -164,6 +166,7 @@ public class SPIForwarder implements SPIDevice
         }
 
 
+        @Override
         public void fire()
         {
             try

@@ -75,6 +75,7 @@ public class ProbeTestHarness implements TestEngine.Harness
         }
 
 
+        @Override
         public void run() throws Exception
         {
             Program p = Main.loadProgram(new String[] { progName });
@@ -83,6 +84,7 @@ public class ProbeTestHarness implements TestEngine.Harness
         }
 
 
+        @Override
         public TestResult match(Throwable t)
         {
             if (t instanceof ProbeTest.Failure)
@@ -97,6 +99,7 @@ public class ProbeTestHarness implements TestEngine.Harness
     }
 
 
+    @Override
     public TestCase newTestCase(String fname, Properties props) throws Exception
     {
         return new ProbeTestCase(fname, props);

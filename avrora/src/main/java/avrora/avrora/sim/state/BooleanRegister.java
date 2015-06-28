@@ -18,12 +18,14 @@ public class BooleanRegister implements BooleanView
     protected boolean value;
 
 
+    @Override
     public boolean getValue()
     {
         return value;
     }
 
 
+    @Override
     public void setValue(boolean v)
     {
         value = v;
@@ -34,6 +36,7 @@ public class BooleanRegister implements BooleanView
     }
 
 
+    @Override
     public void setValueSetListener(ValueSetListener listener)
     {
         this.listener = listener;

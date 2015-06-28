@@ -100,6 +100,7 @@ public class SimAction extends Action
      *             if there is a problem loading the program, or an exception
      *             occurs during simulation
      */
+    @Override
     public void run(String[] args) throws Exception
     {
         setupSecondsAntPrecision();
@@ -383,6 +384,7 @@ public class SimAction extends Action
 
     public class ShutdownThread extends Thread
     {
+        @Override
         public void run()
         {
             exitSimulation(new AsynchronousExit());

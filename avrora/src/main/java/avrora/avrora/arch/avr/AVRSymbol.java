@@ -128,6 +128,7 @@ public class AVRSymbol
         public final int encoding;
 
 
+        @Override
         public int getEncodingValue()
         {
             return encoding;
@@ -180,6 +181,7 @@ public class AVRSymbol
         public final int encoding;
 
 
+        @Override
         public int getEncodingValue()
         {
             return encoding;
@@ -232,6 +234,7 @@ public class AVRSymbol
         public final int encoding;
 
 
+        @Override
         public int getEncodingValue()
         {
             return encoding;
@@ -276,6 +279,7 @@ public class AVRSymbol
         public final int encoding;
 
 
+        @Override
         public int getEncodingValue()
         {
             return encoding;
@@ -314,6 +318,7 @@ public class AVRSymbol
         public final int encoding;
 
 
+        @Override
         public int getEncodingValue()
         {
             return encoding;
@@ -354,6 +359,7 @@ public class AVRSymbol
         public final int encoding;
 
 
+        @Override
         public int getEncodingValue()
         {
             return encoding;
@@ -391,6 +397,7 @@ public class AVRSymbol
         public final int encoding;
 
 
+        @Override
         public int getEncodingValue()
         {
             return encoding;

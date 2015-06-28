@@ -80,6 +80,7 @@ public class MinMaxMean implements DataItem
     }
 
 
+    @Override
     public String getName()
     {
         return name;
@@ -125,6 +126,7 @@ public class MinMaxMean implements DataItem
     /**
      * process the data so far and update internal statistics.
      */
+    @Override
     public void process()
     {
         mean = ((float) accumulation) / ((float) total);
@@ -136,6 +138,7 @@ public class MinMaxMean implements DataItem
      * 
      * @param printer
      */
+    @Override
     public void print(Printer printer)
     {
         printer.print("\n " + name);
@@ -202,12 +205,14 @@ public class MinMaxMean implements DataItem
     }
 
 
+    @Override
     public boolean empty()
     {
         return !someData;
     }
 
 
+    @Override
     public String toString()
     {
         return name;

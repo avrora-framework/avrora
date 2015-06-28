@@ -106,6 +106,7 @@ public class SerialMonitor extends MonitorFactory
         int port;
 
 
+        @Override
         void connect(USART usart)
         {
             sf = new SerialForwarder(usart, port, simulator,
@@ -119,6 +120,7 @@ public class SerialMonitor extends MonitorFactory
         String outfile;
 
 
+        @Override
         void connect(USART usart)
         {
             new SerialForwarder(usart, infile, outfile);
@@ -129,6 +131,7 @@ public class SerialMonitor extends MonitorFactory
     {
         String[] command = {};
 
+        @Override
         void connect(USART usart)
         {
             new SerialForwarder(usart, command);
@@ -137,6 +140,7 @@ public class SerialMonitor extends MonitorFactory
 
     class TerminalConnection extends Connection
     {
+        @Override
         void connect(USART usart)
         {
             new SerialLogger(usart, simulator);
@@ -176,6 +180,7 @@ public class SerialMonitor extends MonitorFactory
         }
 
 
+        @Override
         public void report()
         {
             // no report, but stop the SocketConnections...
@@ -206,6 +211,7 @@ public class SerialMonitor extends MonitorFactory
     }
 
 
+    @Override
     public void processOptions(Options o)
     {
         super.processOptions(o);
@@ -292,6 +298,7 @@ public class SerialMonitor extends MonitorFactory
      * @return an instance of the <code>Monitor</code> interface for the
      *         specified simulator
      */
+    @Override
     public avrora.avrora.monitors.Monitor newMonitor(Simulator s)
     {
         return new Monitor(s);

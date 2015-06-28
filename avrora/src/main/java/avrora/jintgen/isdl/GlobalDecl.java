@@ -54,6 +54,7 @@ public class GlobalDecl extends Item implements Decl
     }
 
 
+    @Override
     public Type getType()
     {
         return typeRef.getType();

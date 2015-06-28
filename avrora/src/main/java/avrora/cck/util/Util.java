@@ -121,6 +121,7 @@ public class Util
         }
 
 
+        @Override
         public void report()
         {
             Terminal.print(Terminal.ERROR_COLOR, category);
@@ -150,6 +151,7 @@ public class Util
         }
 
 
+        @Override
         public void report()
         {
             Terminal.print(Terminal.ERROR_COLOR, "Unexpected exception");

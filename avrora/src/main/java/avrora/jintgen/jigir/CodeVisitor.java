@@ -87,6 +87,7 @@ public interface CodeVisitor
     public class DepthFirst implements CodeVisitor
     {
 
+        @Override
         public void visit(BinOpExpr e)
         {
             e.left.accept(this);
@@ -94,6 +95,7 @@ public interface CodeVisitor
         }
 
 
+        @Override
         public void visit(IndexExpr e)
         {
             e.expr.accept(this);
@@ -101,12 +103,14 @@ public interface CodeVisitor
         }
 
 
+        @Override
         public void visit(FixedRangeExpr e)
         {
             e.expr.accept(this);
         }
 
 
+        @Override
         public void visit(CallExpr e)
         {
             for (Expr a : e.args)
@@ -116,48 +120,56 @@ public interface CodeVisitor
         }
 
 
+        @Override
         public void visit(ReadExpr e)
         {
             // terminal node
         }
 
 
+        @Override
         public void visit(ConversionExpr e)
         {
             e.expr.accept(this);
         }
 
 
+        @Override
         public void visit(Literal.BoolExpr e)
         {
             // terminal node in the tree
         }
 
 
+        @Override
         public void visit(Literal.IntExpr e)
         {
             // terminal node in the tree
         }
 
 
+        @Override
         public void visit(Literal.EnumVal e)
         {
             // terminal node in the tree
         }
 
 
+        @Override
         public void visit(UnOpExpr e)
         {
             e.expr.accept(this);
         }
 
 
+        @Override
         public void visit(VarExpr e)
         {
             // terminal node in the tree
         }
 
 
+        @Override
         public void visit(DotExpr e)
         {
             e.expr.accept(this);
@@ -177,72 +189,84 @@ public interface CodeVisitor
         public abstract void error(Expr e);
 
 
+        @Override
         public void visit(BinOpExpr e)
         {
             error(e);
         }
 
 
+        @Override
         public void visit(IndexExpr e)
         {
             error(e);
         }
 
 
+        @Override
         public void visit(FixedRangeExpr e)
         {
             error(e);
         }
 
 
+        @Override
         public void visit(CallExpr e)
         {
             error(e);
         }
 
 
+        @Override
         public void visit(ReadExpr e)
         {
             error(e);
         }
 
 
+        @Override
         public void visit(ConversionExpr e)
         {
             error(e);
         }
 
 
+        @Override
         public void visit(Literal.BoolExpr e)
         {
             error(e);
         }
 
 
+        @Override
         public void visit(Literal.IntExpr e)
         {
             error(e);
         }
 
 
+        @Override
         public void visit(Literal.EnumVal e)
         {
             error(e);
         }
 
 
+        @Override
         public void visit(UnOpExpr e)
         {
             error(e);
         }
 
 
+        @Override
         public void visit(VarExpr e)
         {
             error(e);
         }
 
 
+        @Override
         public void visit(DotExpr e)
         {
             error(e);

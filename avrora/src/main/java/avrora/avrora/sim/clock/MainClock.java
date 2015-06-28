@@ -74,6 +74,7 @@ public class MainClock extends Clock
      *
      * @return the number of elapsed time ticks in clock cycles
      */
+    @Override
     public long getCount()
     {
         return eventQueue.getCount();
@@ -90,6 +91,7 @@ public class MainClock extends Clock
      * @param cycles
      *            the number of cycles in the future at which to fire
      */
+    @Override
     public void insertEvent(Simulator.Event e, long cycles)
     {
         eventQueue.insertEvent(e, cycles);
@@ -104,6 +106,7 @@ public class MainClock extends Clock
      * @param e
      *            the event to remove
      */
+    @Override
     public void removeEvent(Simulator.Event e)
     {
         eventQueue.removeEvent(e);

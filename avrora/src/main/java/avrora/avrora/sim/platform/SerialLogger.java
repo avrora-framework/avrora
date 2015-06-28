@@ -71,6 +71,7 @@ public class SerialLogger implements USART.USARTDevice
     }
 
 
+    @Override
     public USART.Frame transmitFrame()
     {
         throw Util
@@ -78,6 +79,7 @@ public class SerialLogger implements USART.USARTDevice
     }
 
 
+    @Override
     public void receiveFrame(USART.Frame frame)
     {
         String buf = null;

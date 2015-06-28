@@ -50,6 +50,7 @@ public class StmtRebuilder<Env> extends CodeRebuilder<Env>
     boolean changed;
 
 
+    @Override
     public Stmt visit(CallStmt s, Env env)
     {
         List<Expr> na = visitExprList(s.args, env);
@@ -68,6 +69,7 @@ public class StmtRebuilder<Env> extends CodeRebuilder<Env>
     }
 
 
+    @Override
     public Stmt visit(WriteStmt s, Env env)
     {
         Expr ne = visitExpr(s.expr, env);
@@ -85,12 +87,14 @@ public class StmtRebuilder<Env> extends CodeRebuilder<Env>
     }
 
 
+    @Override
     public Stmt visit(CommentStmt s, Env env)
     {
         return s;
     }
 
 
+    @Override
     public Stmt visit(DeclStmt s, Env env)
     {
         Expr ni = visitExpr(s.init, env);
@@ -101,6 +105,7 @@ public class StmtRebuilder<Env> extends CodeRebuilder<Env>
     }
 
 
+    @Override
     public Stmt visit(IfStmt s, Env env)
     {
         Expr nc = visitExpr(s.cond, env);
@@ -114,6 +119,7 @@ public class StmtRebuilder<Env> extends CodeRebuilder<Env>
     }
 
 
+    @Override
     public List<Stmt> visitStmtList(List<Stmt> l, Env env)
     {
         List<Stmt> oldList = this.newList;
@@ -151,6 +157,7 @@ public class StmtRebuilder<Env> extends CodeRebuilder<Env>
     }
 
 
+    @Override
     public Stmt visit(AssignStmt s, Env env)
     {
         Expr ni = visitExpr(s.dest, env);
@@ -162,6 +169,7 @@ public class StmtRebuilder<Env> extends CodeRebuilder<Env>
     }
 
 
+    @Override
     public Stmt visit(AssignStmt.Var s, Env env)
     {
         VarExpr ni = (VarExpr) visitExpr(s.dest, env);
@@ -173,6 +181,7 @@ public class StmtRebuilder<Env> extends CodeRebuilder<Env>
     }
 
 
+    @Override
     public Stmt visit(AssignStmt.Map s, Env env)
     {
         VarExpr nm = (VarExpr) visitExpr(s.map, env);
@@ -185,6 +194,7 @@ public class StmtRebuilder<Env> extends CodeRebuilder<Env>
     }
 
 
+    @Override
     public Stmt visit(AssignStmt.Bit s, Env env)
     {
         VarExpr ni = (VarExpr) visitExpr(s.dest, env);
@@ -197,6 +207,7 @@ public class StmtRebuilder<Env> extends CodeRebuilder<Env>
     }
 
 
+    @Override
     public Stmt visit(AssignStmt.FixedRange s, Env env)
     {
         VarExpr ni = (VarExpr) visitExpr(s.dest, env);
@@ -208,6 +219,7 @@ public class StmtRebuilder<Env> extends CodeRebuilder<Env>
     }
 
 
+    @Override
     public Stmt visit(ReturnStmt s, Env env)
     {
         Expr ne = visitExpr(s.expr, env);
