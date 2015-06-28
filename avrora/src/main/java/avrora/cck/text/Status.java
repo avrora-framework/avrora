@@ -112,7 +112,7 @@ public class Status
     private static void print(int color, String s)
     {
         long time = -1;
-        Item i = (Item) stack.pop();
+        Item i = stack.pop();
         if (i != null)
         {
             time = System.currentTimeMillis() - i.starttime;
