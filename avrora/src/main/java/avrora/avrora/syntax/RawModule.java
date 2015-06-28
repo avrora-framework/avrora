@@ -86,7 +86,7 @@ public class RawModule extends Module
 
     public void enterSection(AbstractToken sect)
     {
-        section = (Section) sectionMap.get(sect.image);
+        section = sectionMap.get(sect.image);
         if (section.name.image.equals(".text")
                 || section.name.image.equals(".data"))
             enterProgramSegment();
