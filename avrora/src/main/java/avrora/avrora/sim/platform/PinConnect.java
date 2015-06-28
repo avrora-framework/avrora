@@ -172,7 +172,7 @@ public class PinConnect
         while (i.hasNext())
         {
             // get next node on the list
-            PinNode currNode = (PinNode) i.next();
+            PinNode currNode = i.next();
             // two-way communication links between neighboring modules
 
             // two-way communication links between neighboring modules
