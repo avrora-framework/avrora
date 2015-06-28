@@ -167,8 +167,10 @@ public class Main
         banner();
 
         Action a = Defaults.getAction(ACTION.get());
-        if (a == null)
+        if (a == null) {
             Util.userError("Unknown Action", StringUtil.quote(ACTION.get()));
+            throw new IllegalStateException("unknown action");
+        }
 
         a.options.process(mainOptions);
         a.run(mainOptions.getArguments());
