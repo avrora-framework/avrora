@@ -223,6 +223,10 @@ public class ClassMap
         {
             Util.userError("Illegal access to class", clname);
         }
+        catch (NullPointerException npe)
+        {
+            throw new IllegalStateException("clals not found");
+        }
 
         // UNREACHABLE
         throw Util.unreachable();
