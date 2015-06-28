@@ -402,7 +402,8 @@ public class Module implements Context
             instr = (Item.Instruction) i;
         } else
         {
-            throw new IllegalStateException("i is no instanceof Item.Instruction");
+            throw new IllegalStateException(
+                    "i is no instanceof Item.Instruction");
         }
 
         try
@@ -456,7 +457,7 @@ public class Module implements Context
         String name = labelName(tok);
         LegacyRegister reg = LegacyRegister.getRegisterByName(name);
         if (reg == null)
-            reg = (LegacyRegister) definitions.get(name);
+            reg = definitions.get(name);
 
         if (reg == null)
             ERROR.UnknownRegister(tok);
