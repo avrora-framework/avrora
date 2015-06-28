@@ -203,6 +203,8 @@ public class TestEngine
         this.numTests = fnames.length;
         currentTest = 0;
 
+        // results = (LinkedList<TestCase>[]) new
+        // LinkedList<?>[TestResult.MAX_CODE];
         results = new LinkedList[TestResult.MAX_CODE];
         for (int cntr = 0; cntr < TestResult.MAX_CODE; cntr++)
             results[cntr] = new LinkedList<TestCase>();
