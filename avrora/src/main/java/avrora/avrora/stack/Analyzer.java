@@ -36,8 +36,6 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 
-import org.omg.CosNaming.IstringHelper;
-
 import avrora.avrora.arch.legacy.LegacyInstr;
 import avrora.avrora.arch.legacy.LegacyRegister;
 import avrora.avrora.core.Program;
@@ -198,7 +196,7 @@ public class Analyzer
                 "Number of sets", "Aggregate size", "Distribution of Set Size");
         while (i.hasNext())
         {
-            StateCache.State state = (StateCache.State) i.next();
+            StateCache.State state = i.next();
             StateCache.Set stateSet = state.info.stateSet;
             int size = stateSet == null ? 0 : stateSet.size();
             sizeDist.record(size);
@@ -216,7 +214,7 @@ public class Analyzer
                 "Number of unique instructions", null, "Distribution");
         while (i.hasNext())
         {
-            StateCache.State s = (StateCache.State) i.next();
+            StateCache.State s = i.next();
             pcDist.record(s.getPC());
 
         }
