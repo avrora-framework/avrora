@@ -74,7 +74,7 @@ public class MSP430Symbol
 
     public static GPR get_GPR(String name)
     {
-        return (GPR) GPR.set.get(name);
+        return GPR.set.get(name);
     }
 
 }
