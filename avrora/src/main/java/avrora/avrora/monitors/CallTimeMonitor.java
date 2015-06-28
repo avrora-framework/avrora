@@ -172,8 +172,10 @@ public class CallTimeMonitor extends MonitorFactory
         {
             SourceMapping lm = program.getSourceMapping();
             SourceMapping.Location loc = lm.getLocation(src);
-            if (loc == null)
+            if (loc == null) {
                 Util.userError("Invalid program address: ", src);
+                throw new IllegalStateException("invalid program address");
+            }
             if (program.readInstr(loc.lma_addr) == null)
                 Util.userError("Invalid program address: ", src);
             return loc;
