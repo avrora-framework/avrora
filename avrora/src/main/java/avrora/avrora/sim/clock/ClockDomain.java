@@ -92,7 +92,7 @@ public class ClockDomain
      */
     public Clock getClock(String name)
     {
-        Clock clock = (Clock) clockMap.get(name);
+        Clock clock = clockMap.get(name);
         if (clock == null)
             throw new NoSuchElementException(
                     StringUtil.quote(name) + " clock not found");
