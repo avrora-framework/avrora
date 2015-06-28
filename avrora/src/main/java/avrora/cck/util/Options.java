@@ -110,21 +110,21 @@ public class Options
 
     public String getOptionValue(String name)
     {
-        Option option = (Option) knownValues.get(name);
+        Option option = knownValues.get(name);
         return option == null ? null : option.stringValue();
     }
 
 
     public String getOptionValue(String name, String def)
     {
-        Option option = (Option) knownValues.get(name);
+        Option option = knownValues.get(name);
         return option == null ? def : option.stringValue();
     }
 
 
     public Option getOption(String name)
     {
-        return (Option) knownValues.get(name);
+        return knownValues.get(name);
     }
 
 
@@ -180,7 +180,7 @@ public class Options
 
     public void setOption(String optname, String value)
     {
-        Option option = (Option) knownValues.get(optname);
+        Option option = knownValues.get(optname);
 
         if (option == null)
         {
