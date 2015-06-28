@@ -312,7 +312,7 @@ public class CFGAction extends Action
 
     private String colorize(ControlFlowGraph.Block b)
     {
-        String color = (String) BLOCK_COLORS.get(b);
+        String color = BLOCK_COLORS.get(b);
         if (color != null)
             return color;
         color = palette[colorCounter];
@@ -324,7 +324,7 @@ public class CFGAction extends Action
 
     private String getColor(ControlFlowGraph.Block block)
     {
-        String color = (String) BLOCK_COLORS.get(block);
+        String color = BLOCK_COLORS.get(block);
         if (color == null)
             return "";
         return color;
