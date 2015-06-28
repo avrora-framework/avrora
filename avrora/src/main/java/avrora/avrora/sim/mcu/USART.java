@@ -437,8 +437,7 @@ public class USART extends AtmelInternalDevice
                                                     // data empty
                     return (byte) 0;
                 }
-                USARTFrameWrapper current = (USARTFrameWrapper) readyQueue
-                        .removeLast();
+                USARTFrameWrapper current = readyQueue.removeLast();
                 if (readyQueue.isEmpty())
                 {
                     UCSRnA_reg.RXC_flag.flag(false);
@@ -458,8 +457,7 @@ public class USART extends AtmelInternalDevice
                     UCSRnA_reg._dor.setValue(true);
                 } else
                 {
-                    USARTFrameWrapper current = (USARTFrameWrapper) (waitQueue
-                            .removeLast());
+                    USARTFrameWrapper current = waitQueue.removeLast();
                     current.frame = frame;
                     readyQueue.addFirst(current);
                 }
