@@ -64,7 +64,7 @@ public class Verbose
 
     public static boolean isVerbose(String category)
     {
-        Printer printer = (Printer) printerMap.get(category);
+        Printer printer = printerMap.get(category);
         return printer != null && printer.enabled;
     }
 
@@ -93,7 +93,7 @@ public class Verbose
 
     private static Printer getPrinter(String category)
     {
-        Printer p = (Printer) printerMap.get(category);
+        Printer p = printerMap.get(category);
         if (p == null)
         {
             p = new Printer();
