@@ -136,6 +136,7 @@ public class CC1000Radio implements Radio
     public final CC1000Radio.SerialConfigurationInterface config;
 
 
+    @SuppressWarnings("unused")
     public CC1000Radio(Microcontroller mcu, long xfreq)
     {
         xoscFrequency = xfreq;
