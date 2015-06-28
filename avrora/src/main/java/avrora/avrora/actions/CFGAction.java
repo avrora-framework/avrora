@@ -222,7 +222,6 @@ public class CFGAction extends Action
                 for (ControlFlowGraph.Block block : pmap
                         .getProcedureBlocks(entry))
                 {
-                    ;
                     printBlock(block, p);
                 }
                 p.endblock();
