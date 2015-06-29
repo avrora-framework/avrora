@@ -5,29 +5,30 @@ import static org.junit.Assert.assertTrue;
 
 import org.junit.Test;
 
-import avrora.avrora.test.InterruptTestHarness;
+import avrora.avrora.test.DisassemblerTestHarness;
 import avrora.cck.test.TestEngine;
 import avrora.cck.text.Terminal;
 import avrora.cck.util.ClassMap;
 
-public class InterruptHarnessTest
+public class DisassemblerTestHarnessTest
 {
+
     @Test
-    public void testInterruptHarness_usingAllTstFiles_expectAllPass()
+    public void testDisassemblerHarness_usingAllTstFiles_expectAllPass()
             throws Exception
     {
         Terminal.useColors = false;
         ClassMap harnessMap = new ClassMap("Test Harness",
                 TestEngine.Harness.class);
-        harnessMap.addClass("interrupt", InterruptTestHarness.class);
+        harnessMap.addClass("disassembler", DisassemblerTestHarness.class);
         String[] filePaths = TestResources
-                .testFileNamesEndingWith("/avrora/test/interrupts/", ".tst",
-                        this)
+                .testFileNamesEndingWith("/avrora/test/disassembler/", "tst", this)
                 .toArray(new String[0]);
         TestEngine testSuite = new TestEngine(harnessMap);
 
+        assertEquals(120, filePaths.length);
         assertTrue(testSuite.runTests(filePaths));
-        assertEquals(1, testSuite.successes.size());
-        assertEquals(1, filePaths.length);
+        assertEquals(filePaths.length, testSuite.successes.size());
     }
+
 }
