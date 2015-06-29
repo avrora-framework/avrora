@@ -25,24 +25,12 @@ public class ProbesHarnessTest
                 TestEngine.Harness.class);
         harnessMap.addClass("probes", ProbeTestHarness.class);
         String[] filePaths = TestResources
-                .testFileNames("/avrora/test/probes/", this)
+                .testFileNamesEndingWith("/avrora/test/probes/", "tst", this)
                 .toArray(new String[0]);
         TestEngine testSuite = new TestEngine(harnessMap);
 
-        assertEquals(14, filePaths.length);
-
-        ArrayList<String> validTestFiles = new ArrayList<>();
-        for (String tstFile : filePaths)
-        {
-            if (tstFile.endsWith(".tst"))
-            {
-                validTestFiles.add(tstFile);
-            }
-        }
-        assertEquals(12, validTestFiles.size());
-
-        assertTrue(testSuite.runTests(validTestFiles.toArray(new String[] {})));
+        assertEquals(12, filePaths.length);
+        assertTrue(testSuite.runTests(filePaths));
         assertEquals(12, testSuite.successes.size());
-        assertTrue(false);
     }
 }

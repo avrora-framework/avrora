@@ -21,22 +21,13 @@ public class InterruptHarnessTest
                 TestEngine.Harness.class);
         harnessMap.addClass("interrupt", InterruptTestHarness.class);
         String[] filePaths = TestResources
-                .testFileNames("/avrora/test/interrupts/", this)
+                .testFileNamesEndingWith("/avrora/test/interrupts/", ".tst",
+                        this)
                 .toArray(new String[0]);
         TestEngine testSuite = new TestEngine(harnessMap);
 
-        assertEquals(4, filePaths.length);
-
-        int testFilesCount = 0;
-        for (String tstFile : filePaths)
-        {
-            if (tstFile.endsWith(".tst"))
-            {
-                testFilesCount++;
-                assertTrue(testSuite.runTests(new String[] { tstFile }));
-                assertEquals(1, testSuite.successes.size());
-            }
-        }
-        assertEquals(1, testFilesCount);
+        assertTrue(testSuite.runTests(filePaths));
+        assertEquals(1, testSuite.successes.size());
+        assertEquals(1, filePaths.length);
     }
 }

@@ -22,7 +22,7 @@ public class DisassemblerHarnessTest
                 TestEngine.Harness.class);
         harnessMap.addClass("disassembler", DisassemblerTestHarness.class);
         String[] filePaths = TestResources
-                .testFileNames("/avrora/test/disassembler/", this)
+                .testFileNamesEndingWith("/avrora/test/disassembler/", "tst", this)
                 .toArray(new String[0]);
         TestEngine testSuite = new TestEngine(harnessMap);
 

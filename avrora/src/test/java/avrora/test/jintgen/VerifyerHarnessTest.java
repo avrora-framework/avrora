@@ -22,11 +22,11 @@ public class VerifyerHarnessTest
                 TestEngine.Harness.class);
         harnessMap.addClass("verifier", VerifierTestHarness.class);
         String[] filePaths = TestResources
-                .testFileNames("/avrora/test/jintgen/", this)
+                .testFileNamesEndingWith("/avrora/test/jintgen/", "tst", this)
                 .toArray(new String[0]);
         TestEngine testSuite = new TestEngine(harnessMap);
 
-        assertEquals(120, filePaths.length);
+        assertEquals(119, filePaths.length);
         assertTrue(testSuite.runTests(filePaths));
         assertEquals(filePaths.length, testSuite.successes.size());
     }
