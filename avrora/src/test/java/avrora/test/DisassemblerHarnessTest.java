@@ -1,26 +1,26 @@
-package avrora.test.jintgen;
+package avrora.test;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
 import org.junit.Test;
 
+import avrora.avrora.test.DisassemblerTestHarness;
 import avrora.cck.test.TestEngine;
 import avrora.cck.util.ClassMap;
-import avrora.jintgen.isdl.verifier.VerifierTestHarness;
-import avrora.test.TestResources;
 
-public class VerifyerHarnessTest
+public class DisassemblerHarnessTest
 {
+
     @Test
-    public void testVerifyHarness_usingAllTstFiles_expectAllPass()
+    public void testDisassemblerHarness_usingAllTstFiles_expectAllPass()
             throws Exception
     {
         ClassMap harnessMap = new ClassMap("Test Harness",
                 TestEngine.Harness.class);
-        harnessMap.addClass("verifier", VerifierTestHarness.class);
+        harnessMap.addClass("disassembler", DisassemblerTestHarness.class);
         String[] filePaths = TestResources
-                .testFileNames("/avrora/test/jintgen/", this)
+                .testFileNames("/avrora/test/disassembler/", this)
                 .toArray(new String[0]);
         TestEngine testSuite = new TestEngine(harnessMap);
 

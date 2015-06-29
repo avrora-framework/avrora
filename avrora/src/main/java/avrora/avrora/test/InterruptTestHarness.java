@@ -74,8 +74,11 @@ public class InterruptTestHarness implements TestEngine.Harness
 
             ProbeParser p = new ProbeParser(new FileInputStream(fname));
             probeTest = p.ProbeTest();
-            progName = props.getProperty("Program");
-            interruptSched = props.getProperty("Interrupt-schedule");
+            progName = getClass().getResource(props.getProperty("Program"))
+                    .getFile().toString();
+            interruptSched = getClass()
+                    .getResource(props.getProperty("Interrupt-schedule"))
+                    .getFile().toString();
         }
 
 

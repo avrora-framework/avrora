@@ -1,7 +1,7 @@
 # @Harness: interrupt
 # @Result: 
-# @Program: handlers.od
-# @Interrupt-schedule: interrupt-sched.txt
+# @Program: /avrora/test/interrupts/handlers.od
+# @Interrupt-schedule: /avrora/test/interrupts/interrupt-sched.txt
 # @Purpose: Test interrupt scheduler (timing) using watches
 
 ###########################################################
