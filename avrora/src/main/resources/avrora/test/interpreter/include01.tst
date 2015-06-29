@@ -2,4 +2,4 @@
 ; @Purpose: "Test generation of .include directive"
 ; @Result: "PASS"
 
-.include "include01.inc"
+.include "/avrora/test/interpreter/include01.inc"

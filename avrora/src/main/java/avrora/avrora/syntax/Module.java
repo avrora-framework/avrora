@@ -305,7 +305,10 @@ public class Module implements Context
         try
         {
             modulePrinter.println("includeFile(" + fname.image + ')');
-            String fn = StringUtil.trimquotes(fname.image);
+
+            String fn = getClass()
+                    .getResource(StringUtil.trimquotes(fname.image)).getFile()
+                    .toString();
             AtmelParser parser = new AtmelParser(new FileInputStream(fn), this,
                     fn);
             // TODO: handle infinite include recursion possibility
