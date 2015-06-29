@@ -400,10 +400,6 @@ public class Module implements Context
         if (i instanceof Item.Instruction)
         {
             instr = (Item.Instruction) i;
-        } else
-        {
-            throw new IllegalStateException(
-                    "i is no instanceof Item.Instruction");
         }
 
         try
@@ -416,13 +412,27 @@ public class Module implements Context
         }
         catch (LegacyInstr.InvalidImmediate e)
         {
-            ERROR.ConstantOutOfRange(instr.operands[e.number - 1], e.value,
-                    StringUtil.interval(e.low, e.high));
+            if (null == instr)
+            {
+                throw new IllegalStateException(
+                        "item is not an instance of Instruction");
+            } else
+            {
+                ERROR.ConstantOutOfRange(instr.operands[e.number - 1], e.value,
+                        StringUtil.interval(e.low, e.high));
+            }
         }
         catch (LegacyInstr.InvalidRegister e)
         {
-            ERROR.IncorrectRegister(instr.operands[e.number - 1], e.register,
-                    e.set.toString());
+            if (null == instr)
+            {
+                throw new IllegalStateException(
+                        "item is not an instance of Instruction");
+            } else
+            {
+                ERROR.IncorrectRegister(instr.operands[e.number - 1],
+                        e.register, e.set.toString());
+            }
         }
         catch (LegacyInstr.RegisterRequired e)
         {
@@ -430,7 +440,14 @@ public class Module implements Context
         }
         catch (LegacyInstr.WrongNumberOfOperands e)
         {
-            ERROR.WrongNumberOfOperands(instr.name, e.found, e.expected);
+            if (null == instr)
+            {
+                throw new IllegalStateException(
+                        "item is not an instance of Instruction");
+            } else
+            {
+                ERROR.WrongNumberOfOperands(instr.name, e.found, e.expected);
+            }
         }
     }
 
