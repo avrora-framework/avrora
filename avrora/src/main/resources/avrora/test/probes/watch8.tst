@@ -1,6 +1,6 @@
 # @Harness: probes
 # @Result: 
-# @Program: array.asm
+# @Program: /avrora/test/probes/array.asm
 # @Purpose: Tests watches on reading of memory locations that are enabled by events
 
 watch A { | | | }

@@ -7,6 +7,7 @@ import org.junit.Test;
 
 import avrora.avrora.test.DisassemblerTestHarness;
 import avrora.cck.test.TestEngine;
+import avrora.cck.text.Terminal;
 import avrora.cck.util.ClassMap;
 
 public class DisassemblerHarnessTest
@@ -16,6 +17,7 @@ public class DisassemblerHarnessTest
     public void testDisassemblerHarness_usingAllTstFiles_expectAllPass()
             throws Exception
     {
+        Terminal.useColors = false;
         ClassMap harnessMap = new ClassMap("Test Harness",
                 TestEngine.Harness.class);
         harnessMap.addClass("disassembler", DisassemblerTestHarness.class);

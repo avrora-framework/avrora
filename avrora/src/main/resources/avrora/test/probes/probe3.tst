@@ -1,6 +1,6 @@
 # @Harness: probes
 # @Result: 
-# @Program: simple.asm
+# @Program: /avrora/test/probes/simple.asm
 # @Purpose: this tests the operation of the low-level probing infrastructure
 
 probe A { | }

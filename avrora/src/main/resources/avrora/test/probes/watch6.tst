@@ -1,6 +1,6 @@
 # @Harness: probes
 # @Result: 
-# @Program: array.asm
+# @Program: /avrora/test/probes/array.asm
 # @Purpose: Tests whether probes inserted from watch (not on same instruction) work correctly
 
 watch A { insert B 0x0A; | | | }

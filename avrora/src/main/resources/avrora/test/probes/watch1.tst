@@ -1,6 +1,6 @@
 # @Harness: probes
 # @Result: 
-# @Program: array.asm
+# @Program: /avrora/test/probes/array.asm
 # @Purpose: tests read watches
 
 watch A { | | | }

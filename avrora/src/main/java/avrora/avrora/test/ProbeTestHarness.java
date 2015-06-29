@@ -71,7 +71,7 @@ public class ProbeTestHarness implements TestEngine.Harness
 
             ProbeParser p = new ProbeParser(new FileInputStream(fname));
             probeTest = p.ProbeTest();
-            progName = props.getProperty("Program");
+            progName = getClass().getResource(props.getProperty("Program")).getFile().toString();
         }
 
 

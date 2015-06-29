@@ -7,14 +7,16 @@ import org.junit.Test;
 
 import avrora.avrora.test.InterruptTestHarness;
 import avrora.cck.test.TestEngine;
+import avrora.cck.text.Terminal;
 import avrora.cck.util.ClassMap;
 
 public class InterruptHarnessTest
 {
     @Test
-    public void testDisassemblerHarness_usingAllTstFiles_expectAllPass()
+    public void testInterruptHarness_usingAllTstFiles_expectAllPass()
             throws Exception
     {
+        Terminal.useColors = false;
         ClassMap harnessMap = new ClassMap("Test Harness",
                 TestEngine.Harness.class);
         harnessMap.addClass("interrupt", InterruptTestHarness.class);
@@ -23,16 +25,18 @@ public class InterruptHarnessTest
                 .toArray(new String[0]);
         TestEngine testSuite = new TestEngine(harnessMap);
 
-        assertTrue(1 <= filePaths.length);
+        assertEquals(4, filePaths.length);
 
+        int testFilesCount = 0;
         for (String tstFile : filePaths)
         {
             if (tstFile.endsWith(".tst"))
             {
+                testFilesCount++;
                 assertTrue(testSuite.runTests(new String[] { tstFile }));
                 assertEquals(1, testSuite.successes.size());
             }
         }
-        assertTrue(false);
+        assertEquals(1, testFilesCount);
     }
 }

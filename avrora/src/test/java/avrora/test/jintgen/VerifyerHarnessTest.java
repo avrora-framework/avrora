@@ -6,6 +6,7 @@ import static org.junit.Assert.assertTrue;
 import org.junit.Test;
 
 import avrora.cck.test.TestEngine;
+import avrora.cck.text.Terminal;
 import avrora.cck.util.ClassMap;
 import avrora.jintgen.isdl.verifier.VerifierTestHarness;
 import avrora.test.TestResources;
@@ -16,6 +17,7 @@ public class VerifyerHarnessTest
     public void testVerifyHarness_usingAllTstFiles_expectAllPass()
             throws Exception
     {
+        Terminal.useColors = false;
         ClassMap harnessMap = new ClassMap("Test Harness",
                 TestEngine.Harness.class);
         harnessMap.addClass("verifier", VerifierTestHarness.class);
