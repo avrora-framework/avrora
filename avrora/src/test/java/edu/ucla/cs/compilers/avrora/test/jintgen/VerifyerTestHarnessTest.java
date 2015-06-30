@@ -16,7 +16,7 @@ import edu.ucla.cs.compilers.avrora.cck.util.ClassMap;
 import edu.ucla.cs.compilers.avrora.jintgen.isdl.verifier.VerifierTestHarness;
 import edu.ucla.cs.compilers.avrora.test.TestResources;
 
-public class VerifyerHarnessTest
+public class VerifyerTestHarnessTest
 {
     @Before
     public void disableColors()
@@ -56,7 +56,7 @@ public class VerifyerHarnessTest
     }
 
 
-    @Ignore
+    @Test
     public void testVerifyHarness_usingEnumTstFiles_expectAllPass()
             throws Exception
     {
@@ -75,7 +75,7 @@ public class VerifyerHarnessTest
     }
 
 
-    @Ignore
+    @Test
     public void testVerifyHarness_usingUnrOtTstFiles_expectAllPass()
             throws Exception
     {
