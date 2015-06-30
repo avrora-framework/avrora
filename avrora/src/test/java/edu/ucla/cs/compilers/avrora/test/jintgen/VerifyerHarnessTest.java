@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 
 import edu.ucla.cs.compilers.avrora.cck.test.TestEngine;
@@ -55,7 +56,7 @@ public class VerifyerHarnessTest
     }
 
 
-    @Test
+    @Ignore
     public void testVerifyHarness_usingEnumTstFiles_expectAllPass()
             throws Exception
     {
@@ -74,7 +75,7 @@ public class VerifyerHarnessTest
     }
 
 
-    @Test
+    @Ignore
     public void testVerifyHarness_usingUnrOtTstFiles_expectAllPass()
             throws Exception
     {
