@@ -6,6 +6,7 @@ import static org.junit.Assert.assertTrue;
 
 import java.util.ArrayList;
 
+import org.junit.Before;
 import org.junit.Test;
 
 import avrora.avrora.test.SimplifierTestHarness;
@@ -16,11 +17,17 @@ import avrora.cck.util.ClassMap;
 
 public class SimulatorTestHarnessTest
 {
+    @Before
+    public void disableColors()
+    {
+        Terminal.useColors = false;
+    }
+
+
     @Test
     public void testSimulatorHarness_usingAllTstFiles_expectAllPass()
             throws Exception
     {
-        Terminal.useColors = false;
         ClassMap harnessMap = new ClassMap("Test Harness",
                 TestEngine.Harness.class);
         harnessMap.addClass("simulator", SimTestHarness.class);
@@ -38,7 +45,6 @@ public class SimulatorTestHarnessTest
     public void testSimulatorHarness_usingAllTstFiles_expectAllFail()
             throws Exception
     {
-        Terminal.useColors = false;
         ClassMap harnessMap = new ClassMap("Test Harness",
                 TestEngine.Harness.class);
         harnessMap.addClass("simulator", SimTestHarness.class);

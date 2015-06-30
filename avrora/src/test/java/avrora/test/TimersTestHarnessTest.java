@@ -3,6 +3,7 @@ package avrora.test;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
+import org.junit.Before;
 import org.junit.Test;
 
 import avrora.avrora.test.sim.SimTestHarness;
@@ -13,11 +14,16 @@ import avrora.cck.util.ClassMap;
 
 public class TimersTestHarnessTest
 {
+    @Before
+    public void disableColors()
+    {
+        Terminal.useColors = false;
+    }
+
+
     @Test
     public void testTimers_usingAllTstFiles_expectAllPass() throws Exception
     {
-        Terminal.useColors = false;
-        Status.ENABLED = true;
         ClassMap harnessMap = new ClassMap("Test Harness",
                 TestEngine.Harness.class);
         harnessMap.addClass("simulator", SimTestHarness.class);
