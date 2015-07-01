@@ -295,13 +295,12 @@ public class PinConnect
                     || neighbor.neighborNodes[neighborSide] != null)
                 return;
 
-            // set the nodes as neighbors
+            // connect the nodes on the appropriate sides
             neighborNodes[localSide] = neighbor;
             neighborSides[localSide] = neighborSide;
+            // set the nodes as neighbors
             neighbor.neighborNodes[neighborSide] = this;
             neighbor.neighborSides[neighborSide] = localSide;
-
-            // connect the nodes on the appropriate sides
 
             // output pin for tne local module
             PinLink localToNeighbor = new PinLink(TxPins[localSide]);
