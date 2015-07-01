@@ -274,7 +274,6 @@ public class CC2420Radio implements Radio
      * @param xfreq
      *            the external clock frequency supplied to the CC2420 radio chip
      */
-    @SuppressWarnings("unused")
     public CC2420Radio(Microcontroller mcu, int xfreq)
     {
         // set up references to MCU and simulator

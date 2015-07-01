@@ -173,7 +173,6 @@ public class ExternalFlash
     }
 
 
-    @SuppressWarnings("unused")
     public ExternalFlash(Microcontroller mcunit, int numPages, int pageBytes)
     {
         memory = new Memory(numPages, pageBytes);

@@ -374,7 +374,6 @@ public class ATMega128New extends ATMegaClassic
     }
 
 
-    @SuppressWarnings("unused")
     public ATMega128New(int id, Simulation sim, ClockDomain cd, Program p)
     {
         super(cd, props, new FiniteStateMachine(cd.getMainClock(), MODE_ACTIVE,

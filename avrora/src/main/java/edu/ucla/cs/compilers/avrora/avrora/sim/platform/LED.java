@@ -117,7 +117,6 @@ public class LED implements Microcontroller.Pin.Output
     }
 
 
-    @SuppressWarnings("unused")
     protected LED(Simulator s, int n, String c)
     {
         sim = s;

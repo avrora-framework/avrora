@@ -56,7 +56,6 @@ public class SensorBoard
     private static final int startMode = 0;
 
 
-    @SuppressWarnings("unused")
     public SensorBoard(Simulator s)
     {
         sim = s;
