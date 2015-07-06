@@ -86,7 +86,6 @@ import edu.ucla.cs.compilers.avrora.avrora.sim.mcu.ATMega32;
 import edu.ucla.cs.compilers.avrora.avrora.sim.mcu.MicrocontrollerFactory;
 import edu.ucla.cs.compilers.avrora.avrora.sim.platform.Mica2;
 import edu.ucla.cs.compilers.avrora.avrora.sim.platform.MicaZ;
-import edu.ucla.cs.compilers.avrora.avrora.sim.platform.Platform;
 import edu.ucla.cs.compilers.avrora.avrora.sim.platform.PlatformFactory;
 import edu.ucla.cs.compilers.avrora.avrora.sim.platform.Seres;
 import edu.ucla.cs.compilers.avrora.avrora.sim.platform.Superbot;
@@ -97,6 +96,7 @@ import edu.ucla.cs.compilers.avrora.avrora.sim.radio.TopologyStatic;
 import edu.ucla.cs.compilers.avrora.avrora.sim.types.SensorSimulation;
 import edu.ucla.cs.compilers.avrora.avrora.sim.types.SingleSimulation;
 import edu.ucla.cs.compilers.avrora.avrora.sim.types.WiredSimulation;
+import edu.ucla.cs.compilers.avrora.avrora.sim.util.TransactionalList.Link;
 import edu.ucla.cs.compilers.avrora.avrora.syntax.atmel.AtmelProgramReader;
 import edu.ucla.cs.compilers.avrora.avrora.syntax.elf.ELFParser;
 import edu.ucla.cs.compilers.avrora.avrora.syntax.objdump.ODPPAction;
@@ -196,39 +196,68 @@ public class Defaults
             Topology.class);
 
 
+    /**
+     * Adds a new alias to {@link MonitorFactory} mapping.
+     * 
+     * @param alias
+     * @param monitorFactory
+     */
     public static synchronized void addMonitor(String alias,
-            Class<MonitorFactory> monitorFactory)
+            Class<? extends MonitorFactory> monitorFactory)
     {
         monitorMap.addClass(alias, monitorFactory);
     }
 
 
+    /**
+     * Adds a new alias to {@link Action} mapping.
+     * 
+     * @param alias
+     * @param action
+     */
     public static synchronized void addAction(String alias,
-            Class<Action> action)
+            Class<? extends Action> action)
     {
         actions.addClass(alias, action);
     }
 
 
-    // public static synchronized void addSimulation(String alias,
-    // Class<? extends Simulation> simulation)
-    // {
+    /**
+     * Adds a new alias to {@link Simulation} mapping.
+     *
+     * @param alias
+     * @param simulation
+     */
     public static synchronized void addSimulation(String alias,
-            Class<Simulation> simulation)
+            Class<? extends Simulation> simulation)
     {
         simMap.addClass(alias, simulation);
     }
 
 
+    /**
+     * Adds a new alias to {@link PlatformFactory} mapping.
+     * 
+     * @param alias
+     * @param platform
+     */
     public static synchronized void addPlatform(String alias,
-            Class<Platform> platform)
+            Class<? extends PlatformFactory> platform)
     {
         platforms.addClass(alias, platform);
     }
 
 
+    /**
+     * Adds a new alias to {@link MicrocontrollerFactory} mapping.
+     * 
+     * @param alias
+     * @param uCFActory
+     * @throws IllegalArgumentException
+     *             if factory's default constructor cannot be invoked
+     */
     public static synchronized void addMicrocontroller(String alias,
-            Class<MicrocontrollerFactory> uCFActory)
+            Class<? extends MicrocontrollerFactory> uCFActory)
                     throws IllegalArgumentException
     {
         try
@@ -247,8 +276,14 @@ public class Defaults
     }
 
 
+    /**
+     * Adds a new alias to {@link Topology} mapping.
+     * 
+     * @param alias
+     * @param topology
+     */
     public static synchronized void addTopology(String alias,
-            Class<Topology> topology)
+            Class<? extends Topology> topology)
     {
         topologies.addClass(alias, topology);
 
