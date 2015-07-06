@@ -32,6 +32,7 @@
 
 package edu.ucla.cs.compilers.avrora.avrora;
 
+import java.lang.reflect.InvocationTargetException;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.LinkedList;
@@ -85,6 +86,7 @@ import edu.ucla.cs.compilers.avrora.avrora.sim.mcu.ATMega32;
 import edu.ucla.cs.compilers.avrora.avrora.sim.mcu.MicrocontrollerFactory;
 import edu.ucla.cs.compilers.avrora.avrora.sim.platform.Mica2;
 import edu.ucla.cs.compilers.avrora.avrora.sim.platform.MicaZ;
+import edu.ucla.cs.compilers.avrora.avrora.sim.platform.Platform;
 import edu.ucla.cs.compilers.avrora.avrora.sim.platform.PlatformFactory;
 import edu.ucla.cs.compilers.avrora.avrora.sim.platform.Seres;
 import edu.ucla.cs.compilers.avrora.avrora.sim.platform.Superbot;
@@ -121,233 +123,135 @@ import edu.ucla.cs.compilers.avrora.cck.util.Util;
  */
 public class Defaults
 {
+    public static class AutoProgramReader extends ProgramReader
+    {
+        public AutoProgramReader()
+        {
+            super("The \"auto\" input format reads a program from a single file at a time. "
+                    + "It uses the extension of the filename as a clue to decide what input "
+                    + "reader to use for that file. For example, an extension of \".asm\" is "
+                    + "considered to be a program in Atmel assembly syntax.");
+        }
+
+
+        @Override
+        public Program read(String[] args) throws Exception
+        {
+            if (args.length == 0)
+                Util.userError("no input files");
+            if (args.length != 1)
+                Util.userError(
+                        "input type \"auto\" accepts only one file at a time.");
+
+            String n = args[0];
+            int offset = n.lastIndexOf('.');
+            if (offset < 0)
+                Util.userError("file " + StringUtil.quote(n)
+                        + " does not have an extension");
+
+            String extension = n.substring(offset).toLowerCase();
+
+            ProgramReader reader = null;
+            if (".asm".equals(extension))
+                reader = new AtmelProgramReader();
+            else if (".od".equals(extension))
+                reader = new ObjDumpProgramReader();
+            else if (".odpp".equals(extension))
+                reader = new ObjDump2ProgramReader();
+            else if (".elf".equals(extension))
+                reader = new ELFParser();
+
+            if (reader == null)
+            {
+                Util.userError("file extension " + StringUtil.quote(extension)
+                        + " unknown");
+                return null;
+            }
+
+            // TODO: this is a hack; all inherited options should be available
+            reader.INDIRECT_EDGES.set(INDIRECT_EDGES.stringValue());
+            reader.ARCH.set(ARCH.stringValue());
+            reader.options.process(options);
+            return reader.read(args);
+        }
+
+    }
+
     private static final HashMap<String, HelpCategory> mainCategories = new HashMap<String, HelpCategory>();
 
-    private static ClassMap microcontrollers;
-    private static ClassMap platforms;
-    private static ClassMap actions;
-    private static ClassMap inputs;
-    private static ClassMap harnessMap;
-    private static ClassMap monitorMap;
-    private static ClassMap simMap;
-    private static ClassMap topologies;
+    private static ClassMap microcontrollers = new ClassMap("Microcontroller",
+            MicrocontrollerFactory.class);
+    private static ClassMap platforms = new ClassMap("Platform",
+            PlatformFactory.class);
+    private static ClassMap actions = new ClassMap("Action", Action.class);
+    private static ClassMap inputs = new ClassMap("Input Format",
+            ProgramReader.class);
+    private static ClassMap harnessMap = new ClassMap("Test Harness",
+            TestEngine.Harness.class);
+    private static ClassMap monitorMap = new ClassMap("Monitor",
+            MonitorFactory.class);
+    private static ClassMap simMap = new ClassMap("Simulation",
+            Simulation.class);
+    private static ClassMap topologies = new ClassMap("Topology",
+            Topology.class);
 
 
-    private static synchronized void addAll()
+    public static synchronized void addMonitor(String alias,
+            Class<MonitorFactory> monitorFactory)
     {
-        addMicrocontrollers();
-        addPlatforms();
-        addActions();
-        addInputFormats();
-        addTestHarnesses();
-        addMonitors();
-        addSimulations();
-        addTopologies();
-        ArchitectureRegistry.addArchitectures();
+        monitorMap.addClass(alias, monitorFactory);
     }
 
 
-    private static synchronized void addMonitors()
+    public static synchronized void addAction(String alias,
+            Class<Action> action)
     {
-        if (monitorMap == null)
-        {
-            monitorMap = new ClassMap("Monitor", MonitorFactory.class);
-            // -- DEFAULT MONITORS AVAILABLE
-            monitorMap.addClass("calls", CallMonitor.class);
-            monitorMap.addClass("break", BreakMonitor.class);
-            monitorMap.addClass("c-print", PrintMonitor.class);
-            monitorMap.addClass("c-timer", TimerMonitor.class);
-            monitorMap.addClass("profile", ProfileMonitor.class);
-            monitorMap.addClass("memory", MemoryMonitor.class);
-            monitorMap.addClass("sleep", SleepMonitor.class);
-            monitorMap.addClass("leds", LEDMonitor.class);
-            monitorMap.addClass("stack", StackMonitor.class);
-            monitorMap.addClass("energy", EnergyMonitor.class);
-            monitorMap.addClass("interrupts", InterruptMonitor.class);
-            monitorMap.addClass("interactive", InteractiveMonitor.class);
-            monitorMap.addClass("trace", TraceMonitor.class);
-            monitorMap.addClass("energy-profile", EnergyProfiler.class);
-            monitorMap.addClass("packet", PacketMonitor.class);
-            monitorMap.addClass("gdb", GDBServer.class);
-            monitorMap.addClass("simperf", SimPerfMonitor.class);
-            monitorMap.addClass("serial", SerialMonitor.class);
-            monitorMap.addClass("spi", SPIMonitor.class);
-            monitorMap.addClass("call-time", CallTimeMonitor.class);
-            monitorMap.addClass("call-profile", CallTreeProfiler.class);
-            monitorMap.addClass("trip-time", TripTimeMonitor.class);
-            monitorMap.addClass("ioregs", IORegMonitor.class);
-            monitorMap.addClass("virgil", VirgilMonitor.class);
-            monitorMap.addClass("real-time", RealTimeMonitor.class);
-            monitorMap.addClass("sniffer", SnifferMonitor.class);
-            monitorMap.addClass("retaddr", RetAddrWatch.class);
+        actions.addClass(alias, action);
+    }
 
-            HelpCategory hc = new HelpCategory("monitors",
-                    "Help for the supported simulation monitors.");
-            hc.addOptionValueSection("SIMULATION MONITORS",
-                    "Avrora's simulator offers the ability to install execution "
-                            + "monitors that instrument the program in order to study and analyze its behavior. The "
-                            + "\"simulate\" action supports this option that allows a monitor class "
-                            + "to be loaded which will instrument the program before it is run and then generate a report "
-                            + "after the program has completed execution.",
-                    "-monitors", monitorMap);
-            addMainCategory(hc);
-            addSubCategories(monitorMap);
+
+    // public static synchronized void addSimulation(String alias,
+    // Class<? extends Simulation> simulation)
+    // {
+    public static synchronized void addSimulation(String alias,
+            Class<Simulation> simulation)
+    {
+        simMap.addClass(alias, simulation);
+    }
+
+
+    public static synchronized void addPlatform(String alias,
+            Class<Platform> platform)
+    {
+        platforms.addClass(alias, platform);
+    }
+
+
+    public static synchronized void addMicrocontroller(String alias,
+            Class<MicrocontrollerFactory> uCFActory)
+                    throws IllegalArgumentException
+    {
+        try
+        {
+            microcontrollers.addInstance(alias,
+                    uCFActory.getConstructor().newInstance());
+        }
+        catch (InstantiationException | IllegalAccessException
+                | IllegalArgumentException | InvocationTargetException
+                | NoSuchMethodException | SecurityException e)
+        {
+            throw new IllegalArgumentException(
+                    "failed to invoke default constructor of class ["
+                            + uCFActory.getName() + "]");
         }
     }
 
 
-    private static synchronized void addTestHarnesses()
+    public static synchronized void addTopology(String alias,
+            Class<Topology> topology)
     {
-        if (harnessMap == null)
-        {
-            harnessMap = new ClassMap("Test Harness", TestEngine.Harness.class);
-            // -- DEFAULT TEST HARNESSES
-            harnessMap.addClass("simulator", SimTestHarness.class);
-            harnessMap.addClass("simplifier", SimplifierTestHarness.class);
-            harnessMap.addClass("probes", ProbeTestHarness.class);
-            harnessMap.addClass("disassembler", DisassemblerTestHarness.class);
-            harnessMap.addClass("interrupt", InterruptTestHarness.class);
-        }
-    }
+        topologies.addClass(alias, topology);
 
-
-    private static synchronized void addInputFormats()
-    {
-        if (inputs == null)
-        {
-            inputs = new ClassMap("Input Format", ProgramReader.class);
-            // -- DEFAULT INPUT FORMATS
-            inputs.addClass("auto", AutoProgramReader.class);
-            inputs.addClass("raw", RAWReader.class);
-            inputs.addClass("atmel", AtmelProgramReader.class);
-            inputs.addClass("objdump", ObjDumpProgramReader.class);
-            inputs.addClass("odpp", ObjDump2ProgramReader.class);
-            inputs.addClass("elf", ELFParser.class);
-
-            HelpCategory hc = new HelpCategory("inputs",
-                    "Help for the supported program input formats.");
-            hc.addOptionValueSection("INPUT FORMATS",
-                    "The input format of the program is specified with the \"-input\" "
-                            + "option supplied at the command line. This input format is used by "
-                            + "actions that operate on programs to determine how to interpret the "
-                            + "input and build a program from the files specified. For example, the input format might "
-                            + "be Atmel syntax, GAS syntax, or the output of a disassembler such as avr-objdump. Currently "
-                            + "no binary formats are supported.",
-                    "-input", inputs);
-            addMainCategory(hc);
-            addSubCategories(inputs);
-        }
-    }
-
-
-    private static synchronized void addActions()
-    {
-        if (actions == null)
-        {
-            actions = new ClassMap("Action", Action.class);
-            // -- DEFAULT ACTIONS
-            actions.addClass("disassemble", DisassembleAction.class);
-            actions.addClass("simulate", SimAction.class);
-            actions.addClass("analyze-stack", AnalyzeStackAction.class);
-            actions.addClass("test", TestAction.class);
-            actions.addClass("cfg", CFGAction.class);
-            actions.addClass("isea", ISEAAction.class);
-            actions.addClass("odpp", ODPPAction.class);
-            actions.addClass("elf-dump", ELFDumpAction.class);
-
-            // plug in a new help category for actions accesible with "-help
-            // actions"
-            HelpCategory hc = new HelpCategory("actions",
-                    "Help for Avrora actions.");
-            hc.addOptionValueSection("ACTIONS",
-                    "Avrora accepts the \"-action\" command line option "
-                            + "that you can use to select from the available functionality that Avrora "
-                            + "provides. This action might be to assemble the file, "
-                            + "print a listing, perform a simulation, or run an analysis tool. This "
-                            + "flexibility allows this single frontend to select from multiple useful "
-                            + "tools. The currently supported actions are given below.",
-                    "-action", actions);
-            addMainCategory(hc);
-            addSubCategories(actions);
-        }
-    }
-
-
-    private static synchronized void addSimulations()
-    {
-        if (simMap == null)
-        {
-            simMap = new ClassMap("Simulation", Simulation.class);
-            // -- DEFAULT ACTIONS
-            simMap.addClass("single", SingleSimulation.class);
-            simMap.addClass("sensor-network", SensorSimulation.class);
-            simMap.addClass("wired", WiredSimulation.class);
-
-            // plug in a new help category for simulations accesible with "-help
-            // simulations"
-            HelpCategory hc = new HelpCategory("simulations",
-                    "Help for supported simulation types.");
-            hc.addOptionValueSection("SIMULATION TYPES",
-                    "When running a simulation, Avrora accepts the \"-simulation\" command line option "
-                            + "that selects the simulation type from multiple different types provided, or a "
-                            + "user-supplied Java class of your own. For example, a simulation might be for a "
-                            + "sensor network application, a single node simulation, or a robotics simulation. ",
-                    "-simulation", simMap);
-            addMainCategory(hc);
-            addSubCategories(simMap);
-        }
-    }
-
-
-    private static synchronized void addPlatforms()
-    {
-        if (platforms == null)
-        {
-            platforms = new ClassMap("Platform", PlatformFactory.class);
-            // -- DEFAULT PLATFORMS
-            platforms.addClass("mica2", Mica2.Factory.class);
-            platforms.addClass("micaz", MicaZ.Factory.class);
-            platforms.addClass("seres", Seres.Factory.class);
-            platforms.addClass("superbot", Superbot.Factory.class);
-            platforms.addClass("telos", Telos.Factory.class);
-        }
-    }
-
-
-    private static synchronized void addMicrocontrollers()
-    {
-        if (microcontrollers == null)
-        {
-            microcontrollers = new ClassMap("Microcontroller",
-                    MicrocontrollerFactory.class);
-            // -- DEFAULT MICROCONTROLLERS
-            microcontrollers.addInstance("atmega128", new ATMega128.Factory());
-            microcontrollers.addInstance("atmega32", new ATMega32.Factory());
-            microcontrollers.addInstance("atmega16", new ATMega16.Factory());
-        }
-    }
-
-
-    private static synchronized void addTopologies()
-    {
-        if (topologies == null)
-        {
-            topologies = new ClassMap("Topology", Topology.class);
-            // -- DEFAULT TOPOLOGIES
-            topologies.addClass("static", TopologyStatic.class);
-            topologies.addClass("rwp", TopologyRWP.class);
-            // plug in a new help category for simulations accesible with "-help
-            // topologies"
-            HelpCategory hc = new HelpCategory("topologies",
-                    "Help for supported topology types.");
-            hc.addOptionValueSection("TOPOLOGY TYPES",
-                    "Avrora supports different types of topolgies using the \"-topology\" command "
-                            + "line option. This option works only for sensor-network simulation. Note that a "
-                            + "topology must be set to use a specific radio model.",
-                    "-topology", topologies);
-            addMainCategory(hc);
-            addSubCategories(topologies);
-        }
     }
 
 
@@ -564,57 +468,188 @@ public class Defaults
                 .getSimulator();
     }
 
-    public static class AutoProgramReader extends ProgramReader
+
+    private static synchronized void addAll()
     {
-        public AutoProgramReader()
-        {
-            super("The \"auto\" input format reads a program from a single file at a time. "
-                    + "It uses the extension of the filename as a clue to decide what input "
-                    + "reader to use for that file. For example, an extension of \".asm\" is "
-                    + "considered to be a program in Atmel assembly syntax.");
-        }
+        addMicrocontrollers();
+        addPlatforms();
+        addActions();
+        addInputFormats();
+        addTestHarnesses();
+        addMonitors();
+        addSimulations();
+        addTopologies();
+        ArchitectureRegistry.addArchitectures();
+    }
 
 
-        @Override
-        public Program read(String[] args) throws Exception
-        {
-            if (args.length == 0)
-                Util.userError("no input files");
-            if (args.length != 1)
-                Util.userError(
-                        "input type \"auto\" accepts only one file at a time.");
+    private static synchronized void addMonitors()
+    {
+        // -- DEFAULT MONITORS AVAILABLE
+        monitorMap.addClass("calls", CallMonitor.class);
+        monitorMap.addClass("break", BreakMonitor.class);
+        monitorMap.addClass("c-print", PrintMonitor.class);
+        monitorMap.addClass("c-timer", TimerMonitor.class);
+        monitorMap.addClass("profile", ProfileMonitor.class);
+        monitorMap.addClass("memory", MemoryMonitor.class);
+        monitorMap.addClass("sleep", SleepMonitor.class);
+        monitorMap.addClass("leds", LEDMonitor.class);
+        monitorMap.addClass("stack", StackMonitor.class);
+        monitorMap.addClass("energy", EnergyMonitor.class);
+        monitorMap.addClass("interrupts", InterruptMonitor.class);
+        monitorMap.addClass("interactive", InteractiveMonitor.class);
+        monitorMap.addClass("trace", TraceMonitor.class);
+        monitorMap.addClass("energy-profile", EnergyProfiler.class);
+        monitorMap.addClass("packet", PacketMonitor.class);
+        monitorMap.addClass("gdb", GDBServer.class);
+        monitorMap.addClass("simperf", SimPerfMonitor.class);
+        monitorMap.addClass("serial", SerialMonitor.class);
+        monitorMap.addClass("spi", SPIMonitor.class);
+        monitorMap.addClass("call-time", CallTimeMonitor.class);
+        monitorMap.addClass("call-profile", CallTreeProfiler.class);
+        monitorMap.addClass("trip-time", TripTimeMonitor.class);
+        monitorMap.addClass("ioregs", IORegMonitor.class);
+        monitorMap.addClass("virgil", VirgilMonitor.class);
+        monitorMap.addClass("real-time", RealTimeMonitor.class);
+        monitorMap.addClass("sniffer", SnifferMonitor.class);
+        monitorMap.addClass("retaddr", RetAddrWatch.class);
 
-            String n = args[0];
-            int offset = n.lastIndexOf('.');
-            if (offset < 0)
-                Util.userError("file " + StringUtil.quote(n)
-                        + " does not have an extension");
+        HelpCategory hc = new HelpCategory("monitors",
+                "Help for the supported simulation monitors.");
+        hc.addOptionValueSection("SIMULATION MONITORS",
+                "Avrora's simulator offers the ability to install execution "
+                        + "monitors that instrument the program in order to study and analyze its behavior. The "
+                        + "\"simulate\" action supports this option that allows a monitor class "
+                        + "to be loaded which will instrument the program before it is run and then generate a report "
+                        + "after the program has completed execution.",
+                "-monitors", monitorMap);
+        addMainCategory(hc);
+        addSubCategories(monitorMap);
+    }
 
-            String extension = n.substring(offset).toLowerCase();
 
-            ProgramReader reader = null;
-            if (".asm".equals(extension))
-                reader = new AtmelProgramReader();
-            else if (".od".equals(extension))
-                reader = new ObjDumpProgramReader();
-            else if (".odpp".equals(extension))
-                reader = new ObjDump2ProgramReader();
-            else if (".elf".equals(extension))
-                reader = new ELFParser();
+    private static synchronized void addTestHarnesses()
+    {
+        // -- DEFAULT TEST HARNESSES
+        harnessMap.addClass("simulator", SimTestHarness.class);
+        harnessMap.addClass("simplifier", SimplifierTestHarness.class);
+        harnessMap.addClass("probes", ProbeTestHarness.class);
+        harnessMap.addClass("disassembler", DisassemblerTestHarness.class);
+        harnessMap.addClass("interrupt", InterruptTestHarness.class);
+    }
 
-            if (reader == null)
-            {
-                Util.userError("file extension " + StringUtil.quote(extension)
-                        + " unknown");
-                return null;
-            }
 
-            // TODO: this is a hack; all inherited options should be available
-            reader.INDIRECT_EDGES.set(INDIRECT_EDGES.stringValue());
-            reader.ARCH.set(ARCH.stringValue());
-            reader.options.process(options);
-            return reader.read(args);
-        }
+    private static synchronized void addInputFormats()
+    {
+        // -- DEFAULT INPUT FORMATS
+        inputs.addClass("auto", AutoProgramReader.class);
+        inputs.addClass("raw", RAWReader.class);
+        inputs.addClass("atmel", AtmelProgramReader.class);
+        inputs.addClass("objdump", ObjDumpProgramReader.class);
+        inputs.addClass("odpp", ObjDump2ProgramReader.class);
+        inputs.addClass("elf", ELFParser.class);
 
+        HelpCategory hc = new HelpCategory("inputs",
+                "Help for the supported program input formats.");
+        hc.addOptionValueSection("INPUT FORMATS",
+                "The input format of the program is specified with the \"-input\" "
+                        + "option supplied at the command line. This input format is used by "
+                        + "actions that operate on programs to determine how to interpret the "
+                        + "input and build a program from the files specified. For example, the input format might "
+                        + "be Atmel syntax, GAS syntax, or the output of a disassembler such as avr-objdump. Currently "
+                        + "no binary formats are supported.",
+                "-input", inputs);
+        addMainCategory(hc);
+        addSubCategories(inputs);
+    }
+
+
+    private static synchronized void addActions()
+    {
+        // -- DEFAULT ACTIONS
+        actions.addClass("disassemble", DisassembleAction.class);
+        actions.addClass("simulate", SimAction.class);
+        actions.addClass("analyze-stack", AnalyzeStackAction.class);
+        actions.addClass("test", TestAction.class);
+        actions.addClass("cfg", CFGAction.class);
+        actions.addClass("isea", ISEAAction.class);
+        actions.addClass("odpp", ODPPAction.class);
+        actions.addClass("elf-dump", ELFDumpAction.class);
+
+        // plug in a new help category for actions accesible with "-help
+        // actions"
+        HelpCategory hc = new HelpCategory("actions",
+                "Help for Avrora actions.");
+        hc.addOptionValueSection("ACTIONS",
+                "Avrora accepts the \"-action\" command line option "
+                        + "that you can use to select from the available functionality that Avrora "
+                        + "provides. This action might be to assemble the file, "
+                        + "print a listing, perform a simulation, or run an analysis tool. This "
+                        + "flexibility allows this single frontend to select from multiple useful "
+                        + "tools. The currently supported actions are given below.",
+                "-action", actions);
+        addMainCategory(hc);
+        addSubCategories(actions);
+    }
+
+
+    private static synchronized void addSimulations()
+    {
+        // -- DEFAULT ACTIONS
+        simMap.addClass("single", SingleSimulation.class);
+        simMap.addClass("sensor-network", SensorSimulation.class);
+        simMap.addClass("wired", WiredSimulation.class);
+
+        // plug in a new help category for simulations accesible with "-help
+        // simulations"
+        HelpCategory hc = new HelpCategory("simulations",
+                "Help for supported simulation types.");
+        hc.addOptionValueSection("SIMULATION TYPES",
+                "When running a simulation, Avrora accepts the \"-simulation\" command line option "
+                        + "that selects the simulation type from multiple different types provided, or a "
+                        + "user-supplied Java class of your own. For example, a simulation might be for a "
+                        + "sensor network application, a single node simulation, or a robotics simulation. ",
+                "-simulation", simMap);
+        addMainCategory(hc);
+        addSubCategories(simMap);
+    }
+
+
+    private static synchronized void addPlatforms()
+    {
+        // -- DEFAULT PLATFORMS
+        platforms.addClass("mica2", Mica2.Factory.class);
+        platforms.addClass("micaz", MicaZ.Factory.class);
+        platforms.addClass("seres", Seres.Factory.class);
+        platforms.addClass("superbot", Superbot.Factory.class);
+        platforms.addClass("telos", Telos.Factory.class);
+    }
+
+
+    private static synchronized void addMicrocontrollers()
+    {
+        // -- DEFAULT MICROCONTROLLERS
+        microcontrollers.addInstance("atmega128", new ATMega128.Factory());
+        microcontrollers.addInstance("atmega32", new ATMega32.Factory());
+        microcontrollers.addInstance("atmega16", new ATMega16.Factory());
+    }
+
+
+    private static synchronized void addTopologies()
+    {
+        // -- DEFAULT TOPOLOGIES
+        topologies.addClass("static", TopologyStatic.class);
+        topologies.addClass("rwp", TopologyRWP.class);
+        // plug in a new help category for simulations accesible with "-help
+        // topologies"
+        HelpCategory hc = new HelpCategory("topologies",
+                "Help for supported topology types.");
+        hc.addOptionValueSection("TOPOLOGY TYPES",
+                "Avrora supports different types of topolgies using the \"-topology\" command "
+                        + "line option. This option works only for sensor-network simulation. Note that a "
+                        + "topology must be set to use a specific radio model.",
+                "-topology", topologies);
+        addMainCategory(hc);
+        addSubCategories(topologies);
     }
 }
