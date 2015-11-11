@@ -44,7 +44,7 @@ import edu.ucla.cs.compilers.avrora.avrora.sim.Simulator;
 public interface EventProcessor
 {
     /**
-     * The <code>process()<code> method processes an instance of an event. For
+     * The <code>process()</code> method processes an instance of an event. For
      * example, the processor may output to the terminal, etc.
      *
      * @param s

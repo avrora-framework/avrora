@@ -385,7 +385,7 @@ public abstract class Simulation extends HelpCategory
 
 
         /**
-         * The <code>remove()<code> method is called on a node when it is being
+         * The <code>remove()</code> method is called on a node when it is being
          * removed from the simulation.
          */
         protected void remove()

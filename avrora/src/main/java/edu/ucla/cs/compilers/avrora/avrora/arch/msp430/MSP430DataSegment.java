@@ -125,7 +125,7 @@ public class MSP430DataSegment extends Segment
      * The <code>loadProgram()</code> method loads a program into this data
      * segment. This method loads the initialized portion of the program
      * corresponding to the flash section (i.e. <code>flash_start</code>
-     * - </code>DATA_SIZE</code>.
+     * - <code>DATA_SIZE</code>.
      * 
      * @param p
      *            the program to load into this data segment

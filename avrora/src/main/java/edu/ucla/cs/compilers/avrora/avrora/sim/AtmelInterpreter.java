@@ -527,7 +527,7 @@ public abstract class AtmelInterpreter extends Interpreter
 
 
     /**
-     * The <code>setPosted()<code> method is used by external devices to post
+     * The <code>setPosted()</code> method is used by external devices to post
      * and unpost interrupts.
      * 
      * @param inum
@@ -583,7 +583,7 @@ public abstract class AtmelInterpreter extends Interpreter
 
 
     /**
-     * The <code>insertExceptionWatch()</code> method registers an </code>
+     * The <code>insertExceptionWatch()</code> method registers an <code>
      * ExceptionWatch</code> to listen for exceptional conditions in the
      * machine.
      *
@@ -1287,7 +1287,7 @@ public abstract class AtmelInterpreter extends Interpreter
      * @param ioreg
      *            the IO register number
      * @param reg
-     *            the <code>IOReg<code> object to install
+     *            the <code>IOReg</code> object to install
      */
     public void installIOReg(int ioreg, ActiveRegister reg)
     {

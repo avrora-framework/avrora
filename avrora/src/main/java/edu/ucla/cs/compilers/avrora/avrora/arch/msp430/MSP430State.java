@@ -47,8 +47,7 @@ import edu.ucla.cs.compilers.avrora.cck.util.Util;
  * state of a <code>MSP430Interpreter</code> instance. This class allows access
  * to the state of the interpreter without exposing the details of the
  * implementation or jeopardizing the soundness of the simulation.
- * <p/>
- * </p>
+ * <p> </p>
  * A <code>MSP430State</code> instance contains the state of registers, memory,
  * the code segment, and the IO registers, as well as the interrupt table and
  * <code>MainClock</code> instance. It provides a public interface through the

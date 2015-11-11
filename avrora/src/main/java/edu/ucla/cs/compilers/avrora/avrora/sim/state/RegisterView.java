@@ -56,7 +56,7 @@ public interface RegisterView
 {
 
     /**
-     * The <code>getWidth() method gets the width of this register view.
+     * The <code>getWidth()</code> method gets the width of this register view.
      * 
      * @return the width of this register view in bits
      */

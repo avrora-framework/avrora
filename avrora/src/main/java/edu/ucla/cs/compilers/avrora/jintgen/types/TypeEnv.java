@@ -68,7 +68,7 @@ public abstract class TypeEnv
      * The <code>Relation</code> class represents a relation between type
      * constructors. A relation may represent assignability, castability, or
      * implicit promotion rules. The relation can be thought of as a map from
-     * <code>(TypeCon x TypeCon) -> Bool</code> or as a directed graph connected
+     * <code>(TypeCon x TypeCon) -&gt; Bool</code> or as a directed graph connected
      * <code>TypeCon</code> instances together.
      */
     public static class Relation
@@ -132,7 +132,7 @@ public abstract class TypeEnv
      * type constructors that is transitive (i.e. A X B and B X C implies A X
      * C). A relation may represent assignability, castability, or implicit
      * promotion rules. The relation can be thought of as a map from
-     * <code>(TypeCon x TypeCon) -> Bool</code> or as a directed graph connected
+     * <code>(TypeCon x TypeCon) -&gt; Bool</code> or as a directed graph connected
      * <code>TypeCon</code> instances together.
      */
     public static class TransitiveRelation extends Relation

@@ -84,11 +84,11 @@ public class TopologyRWP extends TopologyStatic
             .getRandom();
 
 
-    /**
-     * @param o
-     *            the options representing the known and unknown options from
-     *            the command line
-     */
+//    /**
+//     * @param o
+//     *            the options representing the known and unknown options from
+//     *            the command line
+//     */
     public TopologyRWP()
     {
         super("Random waypoint mobility model. Starting topology can be given as for static topology. "

@@ -85,9 +85,9 @@ public abstract class Topology extends HelpCategory
      *
      * @param h
      *            the help item for the topology as string
-     * @param o
-     *            the options representing the known and unknown options from
-     *            the command line
+//     * @param o
+//     *            the options representing the known and unknown options from
+//     *            the command line
      */
     protected Topology(String h)
     {

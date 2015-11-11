@@ -537,7 +537,7 @@ public class FiniteStateMachine
      * that represents a finite state machine arranged in a ring; each state can
      * transition to one other state, wrapping around. For example, a finite
      * state machine of consisting of states S1, S2, and S3 could have a cycle
-     * S1 -> S2 -> S3 -> S1.
+     * S1 -&gt; S2 -&gt; S3 -&gt; S1.
      * 
      * @param ttm
      *            the original transition time matrix

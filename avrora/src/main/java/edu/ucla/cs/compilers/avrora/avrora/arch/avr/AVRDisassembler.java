@@ -9,16 +9,15 @@ import edu.ucla.cs.compilers.avrora.avrora.arch.AbstractInstr;
  * The <code>AVRDisassembler</code> class decodes bit patterns into
  * instructions. It has been generated automatically by jIntGen from a file
  * containing a description of the instruction set and their encodings.
- * <p/>
+ * <p> </p>
  * The following options have been specified to tune this implementation:
- * <p/>
- * </p>
+ * <p> </p>
  * -word-size=16
- * </p>
+ * <p> </p>
  * -parallel-trees=false
- * </p>
+ * <p> </p>
  * -multiple-trees=true
- * </p>
+ * <p> </p>
  * -chained-trees=true
  */
 public class AVRDisassembler implements AbstractDisassembler

@@ -336,7 +336,7 @@ public class SimAction extends Action
      * timeout reaches zero. Timeouts can be used to ensure termination of the
      * simulator during testing, and implementing timestepping in surrounding
      * tools such as interactive debuggers or visualizers.
-     * <p/>
+     * <p> </p>
      * When the exception is thrown, the simulator is left in a state that is
      * safe to be resumed by a <code>start()</code> call.
      *

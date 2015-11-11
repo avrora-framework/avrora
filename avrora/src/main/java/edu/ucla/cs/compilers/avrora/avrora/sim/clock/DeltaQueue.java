@@ -40,17 +40,17 @@ import edu.ucla.cs.compilers.avrora.avrora.sim.Simulator;
  * that will fire at a given number of cycles in the future. An internal delta
  * list is maintained where each link in the list represents a set of events to
  * be fired some number of clock cycles after the previous link.
- * <p/>
+ * <p> </p>
  * Each delta between links is maintained to be non-zero. Thus, to insert an
  * event X cycles in the future, at most X nodes will be skipped over.
  * Therefore, when the list is advanced over X time steps, this cost is
  * amortized to be constant.
- * <p/>
+ * <p> </p>
  * For each clock cycle, only the first node in the list must be checked,
  * leading to constant time work per clock cycle.
- * <p/>
+ * <p> </p>
  * This class allows the clock to be advanced multiple ticks at a time.
- * <p/>
+ * <p> </p>
  * Also, since this class is used heavily in the simulator, its performance is
  * important and maintains an internal cache of objects. Thus, it does not
  * create garbage over its execution and never uses more space than is required

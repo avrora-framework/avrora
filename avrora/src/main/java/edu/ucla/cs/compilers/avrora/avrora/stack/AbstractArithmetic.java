@@ -37,7 +37,7 @@ package edu.ucla.cs.compilers.avrora.avrora.stack;
  * that are useful for working on abstract integers which are represented as
  * characters. <br>
  * <br>
- * <p/>
+ * <p> </p>
  * The abstract values (e.g. register values) are represented as characters.
  * Thus, an 8 bit register is modelled using a 16-bit character. The upper 8
  * bits represent the "mask", those bits which are known. The lower 8 bits
@@ -46,7 +46,7 @@ package edu.ucla.cs.compilers.avrora.avrora.stack;
  * i+8) is clear, then the value of bit(regs[R], i) is unknown in this abstract
  * value. <br>
  * <br>
- * <p/>
+ * <p> </p>
  * Since there are 3 possible values (on, off, unknown) for each bit in the
  * abstract state and there are two bits reserved for representing each of these
  * states, there are 4 bit states to represent 3 values. We canonicalize the

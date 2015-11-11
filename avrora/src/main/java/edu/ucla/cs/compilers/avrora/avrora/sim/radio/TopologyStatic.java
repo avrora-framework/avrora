@@ -72,9 +72,9 @@ public class TopologyStatic extends Topology
      *
      * @param h
      *            the help item for the topology as string
-     * @param o
-     *            the options representing the known and unknown options from
-     *            the command line
+//     * @param o
+//     *            the options representing the known and unknown options from
+//     *            the command line
      */
     public TopologyStatic(String h)
     {

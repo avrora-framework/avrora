@@ -38,7 +38,7 @@ package edu.ucla.cs.compilers.avrora.avrora.arch.legacy;
  * Whether the register is a source or destination register depends on the
  * particular instruction. Likewise, whether the integer represents an
  * immediate, an offset, or an address depends on the instruction.
- * <p/>
+ * <p></p>
  * Operands are used as the arguments to the constructors of instructions.
  *
  * @author Ben L. Titzer

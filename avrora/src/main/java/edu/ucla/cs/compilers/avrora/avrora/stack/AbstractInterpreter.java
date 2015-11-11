@@ -47,7 +47,7 @@ import edu.ucla.cs.compilers.avrora.cck.util.Util;
  * as calls, returns, and pushes, it consults a <code>Policy</code> instance
  * that implements the context sensitivity/insensitivity and stack modelling
  * behavior of the particular analysis.
- * <p/>
+ * <p> </p>
  * The <code>AbstractInterpreter</code> works on abstract values and uses
  * abstract arithmetic. It operates on instances of the
  * <code>AbstractState</code> class that represent the state of the processor.

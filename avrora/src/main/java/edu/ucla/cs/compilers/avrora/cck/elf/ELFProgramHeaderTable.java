@@ -47,7 +47,7 @@ import edu.ucla.cs.compilers.avrora.cck.util.Util;
  * information contained in the ELF header, this class requires an instance of
  * the <code>ELFHeader</code> class to be passed to the constructor.
  *
- * </p>
+ * <p> </p>
  * The ELF format states that a program header table is required for
  * executables; this table contains information for the operating system (or
  * bootloader or programmer in the case of embedded systems) to create a process

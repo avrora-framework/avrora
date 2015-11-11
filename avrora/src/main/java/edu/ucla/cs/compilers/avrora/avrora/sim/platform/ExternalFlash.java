@@ -52,9 +52,9 @@ import edu.ucla.cs.compilers.avrora.cck.text.Terminal;
  * The <code>ExternalFlash</code> class implements the necessary functionality
  * of the Atmega Dataflash interface to use the Mica2 DataFlash This device
  * requires use of the following pins:
- * <p/>
+ * <p> </p>
  * PA3 - Flash Cable Seclect
- * <p/>
+ * <p> </p>
  * PD2 - USART1_RXD PD3 - USART1_TXD PD5 - USART1_CLK
  *
  * @author Thomas Gaertner

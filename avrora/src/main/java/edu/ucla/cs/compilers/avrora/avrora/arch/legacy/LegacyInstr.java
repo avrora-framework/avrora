@@ -522,7 +522,7 @@ public abstract class LegacyInstr implements LegacyInstrProto, AbstractInstr
     /**
      * -------------------------------------------------------- A B S T R A C T
      * C L A S S E S --------------------------------------------------------
-     * <p/>
+     * <p> </p>
      * These abstract implementations of the instruction simplify the
      * specification of each individual instruction considerably.
      */
@@ -1123,10 +1123,10 @@ public abstract class LegacyInstr implements LegacyInstrProto, AbstractInstr
      * ---------------------------------------------------------------- I N S T
      * R U C T I O N D E S C R I P T I O N S
      * ----------------------------------------------------------------
-     * <p/>
+     * <p> </p>
      * These are the actual instruction descriptions that contain the
      * constraints on operands and sizes, etc.
-     * <p/>
+     * <p> </p>
      * DO NOT MODIFY THIS CODE!!!!
      */
     // --BEGIN INSTR GENERATOR--

@@ -202,7 +202,7 @@ public class SourceMapping
      * of the label mapping, this method will return the label name for this
      * address if there is one. If there is no label for the specified address,
      * this method will render the address as a hexadecimal string via the
-     * <code>StringUtil.addrToString()<.code> method.
+     * <code>StringUtil.addrToString()&lt;.code&gt;</code> method.
      * 
      * @param address
      *            the address of an instruction in the program

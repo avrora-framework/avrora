@@ -50,7 +50,7 @@ import edu.ucla.cs.compilers.avrora.cck.util.Util;
  * in-program test facility. It is capable of reading in test cases from files,
  * extracting properties specified in those test cases, and then creating a test
  * case of the right form for the right system.
- * <p/>
+ * <p> </p>
  * This is done through the use of another class, the <code>TestHarness</code>,
  * which is capable of creating instances of the <code>TestCase</code> class
  * that are collected by this framework.

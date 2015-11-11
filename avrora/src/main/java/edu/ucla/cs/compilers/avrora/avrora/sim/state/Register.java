@@ -44,7 +44,7 @@ import edu.ucla.cs.compilers.avrora.avrora.sim.util.TransactionalList;
  * debugging purposes, and also by device implementations that may sub ranges of
  * registers.
  *
- * </p>
+ * <p> </p>
  * This implementation models registers that can be as wide as 32 bits.
  *
  * @author Ben L. Titzer

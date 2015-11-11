@@ -95,7 +95,7 @@ public interface Microcontroller
 
 
             /**
-             * Registers a {@link PinChangeListener}.
+             * Registers a {@link edu.ucla.cs.compilers.avrora.avrora.sim.mcu.Microcontroller.Pin.InputListener}.
              * 
              * @param listener
              *            listener to register
@@ -104,7 +104,7 @@ public interface Microcontroller
 
 
             /**
-             * Unregisters a {@link PinChangeListener} if found, or does nothing
+             * Unregisters a {@link edu.ucla.cs.compilers.avrora.avrora.sim.mcu.Microcontroller.Pin.InputListener} if found, or does nothing
              * otherwise.
              * 
              * @param listener

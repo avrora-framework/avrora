@@ -186,7 +186,7 @@ public class StepSynchronizer extends Synchronizer
     /**
      * The <code>RunThread</code> class implements a thread that runs the
      * simulation, to preserve the model that the thread interacting with the
-     * synchronizer through calls to <code>start()</code>, stop()</code>, etc.
+     * synchronizer through calls to <code>start()</code>, <code>stop()</code>, etc.
      * is different than any of the threads running actual simulator code.
      */
     protected class RunThread extends Thread

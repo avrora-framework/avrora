@@ -45,7 +45,7 @@ import edu.ucla.cs.compilers.avrora.cck.text.Terminal;
 /**
  * The <code>Icall</code> monitor was motivated by a bug that we found in
  * avr-gcc that causes icalls to go off into neverneverland:
- * <p/>
+ * <p> </p>
  * http://gcc.gnu.org/bugzilla/show_bug.cgi?id=27192
  *
  * @author John Regehr

@@ -255,7 +255,7 @@ public class EnergyProfiler extends MonitorFactory
 
         /**
          * @author Olaf Landsiedel
-         *         <p/>
+         *         <p> </p>
          *         Class for a GlobalProbe which is called when a new basic
          *         block is entered
          */
@@ -292,7 +292,7 @@ public class EnergyProfiler extends MonitorFactory
 
         /**
          * @author Olaf Landsiedel
-         *         <p/>
+         *         <p> </p>
          *         Class for a probe when a sleep mode is enered
          */
         public class SleepProbe extends Simulator.Probe.Empty
@@ -358,7 +358,7 @@ public class EnergyProfiler extends MonitorFactory
 
     /**
      * @author Olaf Landsiedel
-     *         <p/>
+     *         <p> </p>
      *         Simple class for a energy profile. It contains the location, e.g.
      *         address of the procedure and the number of cycles spent in it.
      */

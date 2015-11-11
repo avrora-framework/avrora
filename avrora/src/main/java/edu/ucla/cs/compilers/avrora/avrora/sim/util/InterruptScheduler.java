@@ -87,7 +87,7 @@ public class InterruptScheduler
      * presented in the interrupt file, which will then consecutively cause all
      * interrupts to be scheduled one after another.
      * 
-     * @returns {@code true} if at least one interrupt was found in the
+     * @return true if at least one interrupt was found in the
      *          interrupt file
      */
     public boolean start()

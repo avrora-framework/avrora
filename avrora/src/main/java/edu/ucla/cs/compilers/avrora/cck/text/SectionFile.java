@@ -45,7 +45,7 @@ import java.io.IOException;
  * needs to be generated, and the rest of the file is not altered. This is
  * accomplished with tags in the file that specify the beginning and end of the
  * section to be filled in.
- * <p/>
+ * <p> </p>
  * The <code>SectionFile</code> then behaves just like a FileOutputStream,
  * except on the first write it will skip to the beginning of the section where
  * the output should be inserted. Then on close, the output stream will write

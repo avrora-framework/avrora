@@ -308,14 +308,13 @@ public class AVRInterpreter extends AVRInstrInterpreter
     @Override
     protected void skip()
     {
-        AVRInstr i = null;
-        int size = i.getSize(); // yeah .. this will most definitely fail.
-                                // probably dead code?
-        if (size == 2)
-            cycles += 1;
-        else
-            cycles += 2;
-        nextpc += size;
+        throw new NullPointerException(
+                "yeah .. this will most definitely fail; probably dead code?");
+        /*
+         * AVRInstr i = null; int size = i.getSize(); // yeah .. this will most
+         * definitely fail. // probably dead code? if (size == 2) cycles += 1;
+         * else cycles += 2; nextpc += size;
+         */
     }
 
 

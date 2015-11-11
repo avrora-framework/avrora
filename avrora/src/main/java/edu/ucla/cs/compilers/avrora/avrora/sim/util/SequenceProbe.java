@@ -43,7 +43,7 @@ import edu.ucla.cs.compilers.avrora.avrora.sim.State;
  * the probe will fire for every instruction executed between the call and
  * return, including both the call and the instruction following the call. <br>
  * <br>
- * <p/>
+ * <p> </p>
  * This probe supports nested entries (e.g. recursive calls). It is best used on
  * pieces of the program that are single-entry/single-exit such as calls,
  * interrupts, basic blocks, and SSE regions of control flow graphs. It does not

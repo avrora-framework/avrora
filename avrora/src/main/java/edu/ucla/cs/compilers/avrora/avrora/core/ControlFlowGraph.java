@@ -134,23 +134,23 @@ public class ControlFlowGraph
      * with a control instruction (e.g. a skip, a jump, a branch, or a call) or
      * an implicit fall-through to the next basic block. It contains at most two
      * references to successor basic blocks.
-     * <p/>
+     * <p> </p>
      * For <b>fallthroughs</b> (no ending control instruction), the
      * <code>next</code> field refers to the block immediately following this
      * block, and the <code>other</code> field is null.
-     * <p/>
+     * <p> </p>
      * For <b>jumps</b>, the <code>other</code> field refers to the block that
      * is the target of the jump, and the <code>next</code> field is null.
-     * <p/>
+     * <p> </p>
      * For <b>skips</b>, <b>branches</b>, and <b>calls</b>, the
      * <code>next</code> field refers to the block immediately following this
      * block (i.e. not-taken for branches, the return address for calls). The
      * <code>other</code> field refers to the target address of the branch if it
      * is taken or the address to be called.
-     * <p/>
+     * <p> </p>
      * For <b>indirect jumps</b> both the <code>next</code> and
      * <code>other</code> fields are null.
-     * <p/>
+     * <p> </p>
      * For <b>indirect calls</b> the <code>next</code> field refers to the block
      * immediately following this block (i.e. the return address). The
      * <code>other</code> field is null because the target of the call cannot be

@@ -49,7 +49,7 @@ import edu.ucla.cs.compilers.avrora.avrora.sim.Simulation.Node;
  * one central chalkboard).
  * <p>
  * This class is for the first type: single node monitors. It is a physical
- * implementation of a monitor factory -> thus once inited, it can create nodes
+ * implementation of a monitor factory -&gt; thus once inited, it can create nodes
  * on command.
  * <p>
  * Since many of the single node monitors are very similar is data collection

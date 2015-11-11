@@ -720,7 +720,7 @@ public class Simulator
      * The <code>start()</code> method begins the simulation. It causes the
      * simulator to invoke a runLoop that executes instructions, firing probes
      * and events as it executes. The <code>start()</code> method returns
-     * normally when the </code>break</code> AVR instruction is executed, when a
+     * normally when the <code>break</code> AVR instruction is executed, when a
      * <code>BreakPointException</code> is thrown, when a
      * <code> TimeoutException</code> is thrown, or when the <code>stop()</code>
      * method on this simulator instance is called.

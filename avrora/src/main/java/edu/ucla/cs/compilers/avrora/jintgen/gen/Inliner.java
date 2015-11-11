@@ -56,7 +56,7 @@ import edu.ucla.cs.compilers.avrora.jintgen.jigir.VarExpr;
  * inlines calls to known subroutines. This produces code that is free of calls
  * to the subroutines declared within the architecture description and therefore
  * is ready for constant and copy propagation optimizations.
- * <p/>
+ * <p> </p>
  * The <code>Inliner</code> will aggressively inline all calls, therefore it
  * cannot detect recursion. It assumes that return statements are at the end of
  * subroutines and do not occur in branches. This is not enforced by any

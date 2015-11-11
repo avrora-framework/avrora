@@ -131,7 +131,7 @@ public class EnergyMonitor extends MonitorFactory
          * ends and reports summaries for the power consumption of all devices
          * to the stdout
          *
-         * @see avrora.monitors.Monitor#report()
+         * @see edu.ucla.cs.compilers.avrora.avrora.monitors.Monitor#report()
          */
         @Override
         public void report()

@@ -41,7 +41,7 @@ import java.util.HashSet;
  * represented as objects that have a name and a number. Those objects are
  * singletons and are public static final fields of this class.<br>
  * <br>
- * <p/>
+ * <p> </p>
  * Additionally, the <code>LegacyRegister</code> class contains sets of
  * registers that are used in verifying the operand constraints of each
  * individual instruction as defined in the AVR instruction set reference. An
@@ -276,7 +276,7 @@ public class LegacyRegister
      * operands to be a general purpose register that has a number greater than
      * 15; a set of those registers can be constructed and then a membership
      * test performed.
-     * <p/>
+     * <p> </p>
      * In practice, the needed register sets are all allocated statically.
      */
     public static class Set

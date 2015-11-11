@@ -45,13 +45,13 @@ import java.util.Map;
  * parameters (e.g. parameters to HashMap), can create a new <code>Type</code>
  * instance.
  *
- * </p>
+ * <p> </p>
  * <code>TypeCon</code> instances correspond to flexible types. For example,
  * "array" is a type constructor which accepts an element type, "function"
  * constructs function types from parameter and return types, and each new class
  * in the program creates a new type constructor corresponding to its name.
  *
- * </p>
+ * <p> </p>
  * <code>TypeCon</code> instances also contain information about what types of
  * operations are supported by values of types constructed by this type
  * constructor. For example, arrays support the <code>[]</code> indexing

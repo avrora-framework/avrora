@@ -199,7 +199,7 @@ public class LossyModel implements Medium.Arbitrator
      * @param t
      *            transmission
      * @param receiver
-     * @param Millisecons
+     * @param Milliseconds
      * @return received power (dBm)
      */
     @Override

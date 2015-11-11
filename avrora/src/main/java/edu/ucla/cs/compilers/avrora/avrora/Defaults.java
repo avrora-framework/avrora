@@ -96,7 +96,6 @@ import edu.ucla.cs.compilers.avrora.avrora.sim.radio.TopologyStatic;
 import edu.ucla.cs.compilers.avrora.avrora.sim.types.SensorSimulation;
 import edu.ucla.cs.compilers.avrora.avrora.sim.types.SingleSimulation;
 import edu.ucla.cs.compilers.avrora.avrora.sim.types.WiredSimulation;
-import edu.ucla.cs.compilers.avrora.avrora.sim.util.TransactionalList.Link;
 import edu.ucla.cs.compilers.avrora.avrora.syntax.atmel.AtmelProgramReader;
 import edu.ucla.cs.compilers.avrora.avrora.syntax.elf.ELFParser;
 import edu.ucla.cs.compilers.avrora.avrora.syntax.objdump.ODPPAction;

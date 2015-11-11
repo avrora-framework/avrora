@@ -191,7 +191,7 @@ public abstract class Interpreter
 
 
     /**
-     * The <code>insertExceptionWatch()</code> method registers an </code>
+     * The <code>insertExceptionWatch()</code> method registers an <code>
      * ExceptionWatch</code> to listen for exceptional conditions in the
      * machine.
      *
