@@ -183,6 +183,31 @@ public class StepSynchronizer extends Synchronizer
         }
     }
 
+    void reportExit(Simulator s, Throwable t)
+    {
+        throw Util.unimplemented();
+    }
+
+    void removeSimulator(Simulator s)
+    {
+        throw Util.unimplemented();
+    }
+
+    /**
+     * The <code>synch()</code> method will pause all of the nodes at the same
+     * global time. This method can only be called when the simulation is
+     * paused. It will run all threads forward until the global time specified
+     * and pause them.
+     *
+     * @param globalTime
+     *            the global time in clock cycles to run all threads ahead to
+     */
+    @Override
+    public void synch(long globalTime)
+    {
+        throw Util.unimplemented();
+    }
+
     /**
      * The <code>RunThread</code> class implements a thread that runs the
      * simulation, to preserve the model that the thread interacting with the
@@ -247,34 +272,6 @@ public class StepSynchronizer extends Synchronizer
         {
             throw Util.unimplemented();
         }
-    }
-
-
-    void reportExit(Simulator s, Throwable t)
-    {
-        throw Util.unimplemented();
-    }
-
-
-    void removeSimulator(Simulator s)
-    {
-        throw Util.unimplemented();
-    }
-
-
-    /**
-     * The <code>synch()</code> method will pause all of the nodes at the same
-     * global time. This method can only be called when the simulation is
-     * paused. It will run all threads forward until the global time specified
-     * and pause them.
-     * 
-     * @param globalTime
-     *            the global time in clock cycles to run all threads ahead to
-     */
-    @Override
-    public void synch(long globalTime)
-    {
-        throw Util.unimplemented();
     }
 
 }

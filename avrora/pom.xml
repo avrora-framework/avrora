@@ -1,271 +1,275 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-	<modelVersion>4.0.0</modelVersion>
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
 
-	<groupId>com.github.avrora-framework</groupId>
-	<artifactId>avrora</artifactId>
-	<version>0.1.44-SNAPSHOT</version>
+    <groupId>com.github.avrora-framework</groupId>
+    <artifactId>avrora</artifactId>
+    <version>0.1.44-SNAPSHOT</version>
 
-	<name>avrora</name>
-	<description>Avrora, a research project of the UCLA Compilers Group, is a set of simulation and analysis tools for programs written for the AVR microcontroller produced by Atmel and the Mica2 sensor nodes. Avrora contains a flexible framework for simulating and analyzing assembly programs, providing a clean Java API and infrastructure for experimentation, profiling, and analysis.
-  </description>
+    <name>avrora</name>
+    <description>Avrora, a research project of the UCLA Compilers Group, is a set of simulation and analysis tools for
+        programs written for the AVR microcontroller produced by Atmel and the Mica2 sensor nodes. Avrora contains a
+        flexible framework for simulating and analyzing assembly programs, providing a clean Java API and infrastructure
+        for experimentation, profiling, and analysis.
+    </description>
 
-	<url>http://compilers.cs.ucla.edu/avrora/</url>
+    <url>http://compilers.cs.ucla.edu/avrora/</url>
+    <!-- https://github.com/avrora-framework/avrora/releases/tag/0.1.44-SNAPSHOT -->
 
-	<licenses>
-		<license>
-			<url>https://github.com/avrora-framework/avrora/blob/master/avrora/license.txt</url>
-			<distribution>repo</distribution>
-			<comments>
-Copyright (c) 2004-2005, Regents of the University of California
-All rights reserved.
+    <licenses>
+        <license>
+            <url>https://github.com/avrora-framework/avrora/blob/master/avrora/license.txt</url>
+            <distribution>repo</distribution>
+            <comments>
+                Copyright (c) 2004-2005, Regents of the University of California
+                All rights reserved.
 
-Redistribution and use in source and binary forms, with or without
-modification, are permitted provided that the following conditions
-are met:
+                Redistribution and use in source and binary forms, with or without
+                modification, are permitted provided that the following conditions
+                are met:
 
-Redistributions of source code must retain the above copyright notice,
-this list of conditions and the following disclaimer.
+                Redistributions of source code must retain the above copyright notice,
+                this list of conditions and the following disclaimer.
 
-Redistributions in binary form must reproduce the above copyright
-notice, this list of conditions and the following disclaimer in the
-documentation and/or other materials provided with the distribution.
+                Redistributions in binary form must reproduce the above copyright
+                notice, this list of conditions and the following disclaimer in the
+                documentation and/or other materials provided with the distribution.
 
-Neither the name of the University of California, Los Angeles nor the
-names of its contributors may be used to endorse or promote products
-derived from this software without specific prior written permission.
+                Neither the name of the University of California, Los Angeles nor the
+                names of its contributors may be used to endorse or promote products
+                derived from this software without specific prior written permission.
 
-THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
-"AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
-LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
-A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
-OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
-SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
-LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
-DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
-THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
-(INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
-OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.		
-		</comments>
-		</license>
-	</licenses>
+                THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
+                "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
+                LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
+                A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
+                OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
+                SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
+                LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
+                DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
+                THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+                (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
+                OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+            </comments>
+        </license>
+    </licenses>
 
-	<scm>
-		<url>https://github.com/avrora-framework/avrora</url>
-		<connection>scm:git:git@github.com:avrora-framework/avrora.git</connection>
-		<developerConnection>scm:git:git@github.com:avrora-framework/avrora.git</developerConnection>
-	</scm>
+    <scm>
+        <url>https://github.com/avrora-framework/avrora</url>
+        <connection>scm:git:git@github.com:avrora-framework/avrora.git</connection>
+        <developerConnection>scm:git:git@github.com:avrora-framework/avrora.git</developerConnection>
+    </scm>
 
-	<developers>
-		<developer>
-			<name>Ben L. Titzer</name>
-			<roles>
-				<role>
-				lead developer
-			</role>
-			</roles>
-		</developer>
-		<developer>
-			<name>Jens Palsberg</name>
-			<organization>University of California, Los Angeles</organization>
-			<roles>
-				<role>faculty advisor</role>
-			</roles>
-		</developer>
-		<developer>
-			<name>Daniel K. Lee</name>
-			<roles>
-				<role>
-				device and radio implementation
-			</role>
-			</roles>
-		</developer>
-		<developer>
-			<name>Olaf Landsiedel</name>
-			<roles>
-				<role>
-				energy model
-	      </role>
-			</roles>
-		</developer>
-		<developer>
-			<name>Evan Barnes</name>
-		</developer>
-		<developer>
-			<name>Jacob Everist</name>
-		</developer>
-		<developer>
-			<name>Thomas Gaertner</name>
-		</developer>
-		<developer>
-			<name>Adam Harmetz</name>
-		</developer>
-		<developer>
-			<name>Simon Han</name>
-		</developer>
-		<developer>
-			<name>Jey Kottalam</name>
-		</developer>
-		<developer>
-			<name>John Regehr</name>
-		</developer>
-		<developer>
-			<name>Bastian Schlich</name>
-		</developer>
-		<developer>
-			<name>John F. Schommer</name>
-		</developer>
-	</developers>
-	<properties>
-		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-	</properties>
+    <developers>
+        <developer>
+            <name>Ben L. Titzer</name>
+            <roles>
+                <role>
+                    lead developer
+                </role>
+            </roles>
+        </developer>
+        <developer>
+            <name>Jens Palsberg</name>
+            <organization>University of California, Los Angeles</organization>
+            <roles>
+                <role>faculty advisor</role>
+            </roles>
+        </developer>
+        <developer>
+            <name>Daniel K. Lee</name>
+            <roles>
+                <role>
+                    device and radio implementation
+                </role>
+            </roles>
+        </developer>
+        <developer>
+            <name>Olaf Landsiedel</name>
+            <roles>
+                <role>
+                    energy model
+                </role>
+            </roles>
+        </developer>
+        <developer>
+            <name>Evan Barnes</name>
+        </developer>
+        <developer>
+            <name>Jacob Everist</name>
+        </developer>
+        <developer>
+            <name>Thomas Gaertner</name>
+        </developer>
+        <developer>
+            <name>Adam Harmetz</name>
+        </developer>
+        <developer>
+            <name>Simon Han</name>
+        </developer>
+        <developer>
+            <name>Jey Kottalam</name>
+        </developer>
+        <developer>
+            <name>John Regehr</name>
+        </developer>
+        <developer>
+            <name>Bastian Schlich</name>
+        </developer>
+        <developer>
+            <name>John F. Schommer</name>
+        </developer>
+    </developers>
+    <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    </properties>
 
-	<distributionManagement>
-		<snapshotRepository>
-			<id>ossrh</id>
-			<url>https://oss.sonatype.org/content/repositories/snapshots</url>
-		</snapshotRepository>
-		<repository>
-			<id>ossrh</id>
-			<url>https://oss.sonatype.org/service/local/staging/deploy/maven2/</url>
-		</repository>
-	</distributionManagement>
+    <distributionManagement>
+        <snapshotRepository>
+            <id>ossrh</id>
+            <url>https://oss.sonatype.org/content/repositories/snapshots</url>
+        </snapshotRepository>
+        <repository>
+            <id>ossrh</id>
+            <url>https://oss.sonatype.org/service/local/staging/deploy/maven2/</url>
+        </repository>
+    </distributionManagement>
 
-	<build>
-		<plugins>
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-compiler-plugin</artifactId>
-				<version>3.3</version>
-				<configuration>
-					<source>1.7</source>
-					<target>1.7</target>
-				</configuration>
-			</plugin>
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>3.3</version>
+                <configuration>
+                    <source>1.7</source>
+                    <target>1.7</target>
+                </configuration>
+            </plugin>
 
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-jar-plugin</artifactId>
-				<version>2.6</version>
-				<configuration>
-					<archive>
-						<manifest>
-							<mainClass>avrora.jintgen.Main</mainClass>
-						</manifest>
-					</archive>
-				</configuration>
-			</plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-jar-plugin</artifactId>
+                <version>2.6</version>
+                <configuration>
+                    <archive>
+                        <manifest>
+                            <mainClass>avrora.jintgen.Main</mainClass>
+                        </manifest>
+                    </archive>
+                </configuration>
+            </plugin>
 
-			<plugin>
-				<groupId>org.sonatype.plugins</groupId>
-				<artifactId>nexus-staging-maven-plugin</artifactId>
-				<version>1.6.3</version>
-				<extensions>true</extensions>
-				<configuration>
-					<serverId>ossrh</serverId>
-					<nexusUrl>https://oss.sonatype.org/</nexusUrl>
-					<autoReleaseAfterClose>false</autoReleaseAfterClose>
-				</configuration>
-			</plugin>
+            <plugin>
+                <groupId>org.sonatype.plugins</groupId>
+                <artifactId>nexus-staging-maven-plugin</artifactId>
+                <version>1.6.3</version>
+                <extensions>true</extensions>
+                <configuration>
+                    <serverId>ossrh</serverId>
+                    <nexusUrl>https://oss.sonatype.org/</nexusUrl>
+                    <autoReleaseAfterClose>false</autoReleaseAfterClose>
+                </configuration>
+            </plugin>
 
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-source-plugin</artifactId>
-				<version>2.2.1</version>
-				<executions>
-					<execution>
-						<id>attach-sources</id>
-						<goals>
-							<goal>jar-no-fork</goal>
-						</goals>
-					</execution>
-				</executions>
-			</plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-source-plugin</artifactId>
+                <version>2.2.1</version>
+                <executions>
+                    <execution>
+                        <id>attach-sources</id>
+                        <goals>
+                            <goal>jar-no-fork</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
 
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-javadoc-plugin</artifactId>
-				<version>2.10.3</version>
-				<executions>
-					<execution>
-						<id>attach-javadocs</id>
-						<goals>
-							<goal>jar</goal>
-						</goals>
-					</execution>
-				</executions>
-			</plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-javadoc-plugin</artifactId>
+                <version>2.10.3</version>
+                <executions>
+                    <execution>
+                        <id>attach-javadocs</id>
+                        <goals>
+                            <goal>jar</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
 
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-release-plugin</artifactId>
-				<version>2.5</version>
-				<configuration>
-					<autoVersionSubmodules>true</autoVersionSubmodules>
-					<useReleaseProfile>false</useReleaseProfile>
-					<releaseProfiles>release</releaseProfiles>
-					<goals>deploy</goals>
-				</configuration>
-			</plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-release-plugin</artifactId>
+                <version>2.5</version>
+                <configuration>
+                    <autoVersionSubmodules>true</autoVersionSubmodules>
+                    <useReleaseProfile>false</useReleaseProfile>
+                    <releaseProfiles>release</releaseProfiles>
+                    <goals>deploy</goals>
+                </configuration>
+            </plugin>
 
-		</plugins>
+        </plugins>
 
-		<resources>
-			<resource>
-				<directory>src/main/resources/</directory>
-			</resource>
-		</resources>
-		<testResources>
-			<testResource>
-				<directory>src/main/resources/</directory>
-			</testResource>
-		</testResources>
+        <resources>
+            <resource>
+                <directory>src/main/resources/</directory>
+            </resource>
+        </resources>
+        <testResources>
+            <testResource>
+                <directory>src/main/resources/</directory>
+            </testResource>
+        </testResources>
 
-	</build>
+    </build>
 
-	<profiles>
-		<profile>
-			<id>release</id>
-			<build>
-				<plugins>
-					<plugin>
-						<groupId>org.apache.maven.plugins</groupId>
-						<artifactId>maven-source-plugin</artifactId>
-						<version>2.2.1</version>
-						<executions>
-							<execution>
-								<id>attach-sources</id>
-								<goals>
-									<goal>jar-no-fork</goal>
-								</goals>
-							</execution>
-						</executions>
-					</plugin>
-					<plugin>
-						<groupId>org.apache.maven.plugins</groupId>
-						<artifactId>maven-javadoc-plugin</artifactId>
-						<version>2.9.1</version>
-						<executions>
-							<execution>
-								<id>attach-javadocs</id>
-								<goals>
-									<goal>jar</goal>
-								</goals>
-							</execution>
-						</executions>
-					</plugin>
-				</plugins>
-			</build>
-		</profile>
-	</profiles>
+    <profiles>
+        <profile>
+            <id>release</id>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-source-plugin</artifactId>
+                        <version>2.2.1</version>
+                        <executions>
+                            <execution>
+                                <id>attach-sources</id>
+                                <goals>
+                                    <goal>jar-no-fork</goal>
+                                </goals>
+                            </execution>
+                        </executions>
+                    </plugin>
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-javadoc-plugin</artifactId>
+                        <version>2.9.1</version>
+                        <executions>
+                            <execution>
+                                <id>attach-javadocs</id>
+                                <goals>
+                                    <goal>jar</goal>
+                                </goals>
+                            </execution>
+                        </executions>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+    </profiles>
 
-	<dependencies>
-		<dependency>
-			<groupId>junit</groupId>
-			<artifactId>junit</artifactId>
-			<version>4.11</version>
-			<scope>test</scope>
-		</dependency>
-	</dependencies>
+    <dependencies>
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <version>4.11</version>
+            <scope>test</scope>
+        </dependency>
+    </dependencies>
 
 </project>

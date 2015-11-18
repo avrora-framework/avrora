@@ -1,22 +1,22 @@
 /**
  * Copyright (c) 2004-2005, Regents of the University of California
  * All rights reserved.
- *
+ * <p>
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions
  * are met:
- *
+ * <p>
  * Redistributions of source code must retain the above copyright notice,
  * this list of conditions and the following disclaimer.
- *
+ * <p>
  * Redistributions in binary form must reproduce the above copyright
  * notice, this list of conditions and the following disclaimer in the
  * documentation and/or other materials provided with the distribution.
- *
+ * <p>
  * Neither the name of the University of California, Los Angeles nor the
  * names of its contributors may be used to endorse or promote products
  * derived from this software without specific prior written permission.
- *
+ * <p>
  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
  * "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
  * LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
@@ -46,37 +46,31 @@ import edu.ucla.cs.compilers.avrora.cck.util.Util;
  *
  * @author Ben L. Titzer
  */
-public class ISEAAction extends Action
-{
+public class ISEAAction extends Action {
 
     protected final Option.Str START = newOption("procedure", "0x0000",
             "When this option is specified, the ISE analyzer will analyze only the specified procedure, rather "
                     + "than the entire program.");
 
 
-    public ISEAAction()
-    {
+    public ISEAAction() {
         super("This action invokes the inter-procedural side-effect analysis tool.");
     }
 
 
     @Override
-    public void run(String[] args) throws Exception
-    {
+    public void run(String[] args) throws Exception {
         Program p = Main.loadProgram(args);
         ISEAnalyzer a = new ISEAnalyzer(p);
-        if (!START.isBlank())
-        {
+        if (!START.isBlank()) {
             SourceMapping.Location location = p.getSourceMapping()
                     .getLocation(START.get());
-            if (location == null)
-            {
+            if (location == null) {
                 Util.userError("Cannot find program location " + START.get());
-                throw new IllegalStateException("cannot find program locatoin");
+                throw new IllegalStateException("cannot find program location");
             }
             a.analyze(location.lma_addr);
-        } else
-        {
+        } else {
             a.analyze();
         }
     }
