@@ -89,7 +89,7 @@ public class Main
             "verbose", "",
             "This option allows users to enable verbose printing of individual "
                     + "subsystems within Avrora. A list can be given with individual items separated "
-                    + "by commas. For example: -verbose=loader,atmel.flash");
+                    + "by commas. For example: -verbose=loader,atmel.flash or -verbose=all");
     public static final Option.Bool HELP = mainOptions.newOption("help", false,
             "Displays this help message.");
     public static final Option.Bool LICENSE = mainOptions.newOption("license",
