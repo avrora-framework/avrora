@@ -67,20 +67,26 @@ public class CallMonitor extends MonitorFactory
                     + "type of each call or return. For example, if an interrupt occurs, then "
                     + "the interrupt number and name will be reported.");
 
-    class Mon implements Monitor, CallTrace.Monitor
+   static class Mon implements Monitor, CallTrace.Monitor
     {
 
         private final CallStack stack;
         private final Simulator simulator;
         private final MCUProperties props;
         private final SourceMapping sourceMap;
+        private final Option.Bool optionSite;
+        private final Option.Bool optionShow;
+        private final Option.Bool optionEdge;
 
         private String[] shortNames;
 
 
-        Mon(Simulator s)
+        Mon(Simulator s, Option.Bool site, Option.Bool show, Option.Bool edge)
         {
             simulator = s;
+            this.optionSite = site;
+            this.optionShow = show;
+            this.optionEdge = edge;
             sourceMap = s.getProgram().getSourceMapping();
             CallTrace trace = new CallTrace(s);
             props = simulator.getMicrocontroller().getProperties();
@@ -115,7 +121,7 @@ public class CallMonitor extends MonitorFactory
             synchronized (Terminal.class)
             {
                 printStack(stack.getDepth(), callsite);
-                if (EDGE.get())
+                if (optionEdge.get())
                 {
                     Terminal.print(" --(");
                     Terminal.print(color, edge);
@@ -137,7 +143,7 @@ public class CallMonitor extends MonitorFactory
             // print each stack entry
             for (int cntr = 0; cntr < depth; cntr++)
             {
-                if (SHOW.get())
+                if (optionShow.get())
                 {
                     printStackEntry(cntr);
                     if (cntr != depth)
@@ -148,7 +154,7 @@ public class CallMonitor extends MonitorFactory
                 }
             }
             // print the call site
-            if (SITE.get())
+            if (optionSite.get())
             {
                 Terminal.print(" @ ");
                 Terminal.printBrightCyan(StringUtil.addrToString(callsite));
@@ -175,7 +181,7 @@ public class CallMonitor extends MonitorFactory
             synchronized (Terminal.class)
             {
                 printStack(stack.getDepth() - 1, callsite);
-                if (EDGE.get())
+                if (optionSite.get())
                 {
                     Terminal.print(" <-(");
                     Terminal.print(color, edge);
@@ -267,6 +273,6 @@ public class CallMonitor extends MonitorFactory
     @Override
     public Monitor newMonitor(Simulator s)
     {
-        return new Mon(s);
+        return new Mon(s, SITE, SHOW, EDGE);
     }
 }

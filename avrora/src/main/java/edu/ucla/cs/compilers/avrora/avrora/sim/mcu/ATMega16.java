@@ -1,62 +1,49 @@
 /**
- * Copyright (c) 2004-2005, Regents of the University of California
- * All rights reserved.
- *
- * Redistribution and use in source and binary forms, with or without
- * modification, are permitted provided that the following conditions
- * are met:
- *
- * Redistributions of source code must retain the above copyright notice,
- * this list of conditions and the following disclaimer.
- *
- * Redistributions in binary form must reproduce the above copyright
- * notice, this list of conditions and the following disclaimer in the
- * documentation and/or other materials provided with the distribution.
- *
- * Neither the name of the University of California, Los Angeles nor the
- * names of its contributors may be used to endorse or promote products
- * derived from this software without specific prior written permission.
- *
- * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
- * "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
- * LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
- * A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
- * OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
- * SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
- * LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
- * DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
- * THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
- * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
+ * Copyright (c) 2004-2005, Regents of the University of California All rights reserved.
+ * <p>
+ * Redistribution and use in source and binary forms, with or without modification, are permitted provided that the
+ * following conditions are met:
+ * <p>
+ * Redistributions of source code must retain the above copyright notice, this list of conditions and the following
+ * disclaimer.
+ * <p>
+ * Redistributions in binary form must reproduce the above copyright notice, this list of conditions and the following
+ * disclaimer in the documentation and/or other materials provided with the distribution.
+ * <p>
+ * Neither the name of the University of California, Los Angeles nor the names of its contributors may be used to
+ * endorse or promote products derived from this software without specific prior written permission.
+ * <p>
+ * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES,
+ * INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
+ * DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
+ * SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR
+ * SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY,
+ * WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
 package edu.ucla.cs.compilers.avrora.avrora.sim.mcu;
 
-import java.util.HashMap;
-
 import edu.ucla.cs.compilers.avrora.avrora.arch.avr.AVRProperties;
 import edu.ucla.cs.compilers.avrora.avrora.arch.legacy.LegacyInterpreter;
 import edu.ucla.cs.compilers.avrora.avrora.core.Program;
-import edu.ucla.cs.compilers.avrora.avrora.sim.ActiveRegister;
-import edu.ucla.cs.compilers.avrora.avrora.sim.AtmelInterpreter;
-import edu.ucla.cs.compilers.avrora.avrora.sim.FiniteStateMachine;
-import edu.ucla.cs.compilers.avrora.avrora.sim.RWRegister;
-import edu.ucla.cs.compilers.avrora.avrora.sim.Simulation;
+import edu.ucla.cs.compilers.avrora.avrora.sim.*;
 import edu.ucla.cs.compilers.avrora.avrora.sim.clock.ClockDomain;
+import edu.ucla.cs.compilers.avrora.avrora.sim.state.RegisterUtil;
+import edu.ucla.cs.compilers.avrora.avrora.sim.state.RegisterView;
 import edu.ucla.cs.compilers.avrora.cck.util.Arithmetic;
 
+import java.util.HashMap;
+
 /**
- * The <code>ATMega16</code> class represents the ATMega16 microcontroller from
- * Atmel. This microcontroller has 16Kb code, 1KB SRAM, 512 Byte EEPROM, and a
- * host of internal devices such as ADC, SPI, and timers.
+ * The <code>ATMega16</code> class represents the ATMega16 microcontroller from Atmel. This microcontroller has 16Kb
+ * code, 1KB SRAM, 512 Byte EEPROM, and a host of internal devices such as ADC, SPI, and timers.
  *
  * @author Ben L. Titzer
  * @author Bastian Schlich
  * @author John F. Schommer
- *
  */
-public class ATMega16 extends ATMegaFamily
-{
+public class ATMega16 extends ATMegaFamily {
 
     public static final int _1kb = 1024;
     public static final int _512b = 512;
@@ -76,42 +63,28 @@ public class ATMega16 extends ATMegaFamily
     public static final int MODE_STANDBY = 6;
     public static final int MODE_POWERSAVE = 7;
     public static final int MODE_EXTSTANDBY = 8;
-
-    protected static final String[] idleModeNames = { "Active", "Idle",
-            "RESERVED 1", "ADC Noise Reduction", "RESERVED 2", "Power Down",
-            "Standby", "Power Save", "Extended Standby" };
-
-    protected static final int[] wakeupTimes = { 0, 0, 0, 0, 0, 1000, 6, 1000,
-            6 };
-
-    protected final ActiveRegister MCUCR_reg;
-
-    private static final int[][] transitionTimeMatrix = FiniteStateMachine
-            .buildBimodalTTM(idleModeNames.length, 0, wakeupTimes,
-                    new int[wakeupTimes.length]);
-
     // CS values 6 and 7 select external clock source and are not supported.
     // Results in an ArrayOutOfBound exception
-    public static final int[] ATmega16Periods0 = { 0, 1, 8, 64, 256, 1024 };
-    public static final int[] ATmega16Periods2 = { 0, 1, 8, 32, 64, 128, 256,
-            1024 };
-
+    public static final int[] ATmega16Periods0 = {0, 1, 8, 64, 256, 1024};
+    public static final int[] ATmega16Periods2 = {0, 1, 8, 32, 64, 128, 256, 1024};
     /**
-     * The <code>props</code> field stores a static reference to a properties
-     * object shared by all of the instances of this microcontroller. This
-     * object stores the IO register size, SRAM size, pin assignments, etc.
+     * The <code>props</code> field stores a static reference to a properties object shared by all of the instances of
+     * this microcontroller. This object stores the IO register size, SRAM size, pin assignments, etc.
      */
     public static final AVRProperties props;
+    protected static final String[] idleModeNames = {"Active", "Idle", "RESERVED 1", "ADC Noise Reduction",
+            "RESERVED" + " 2", "Power Down", "Standby", "Power Save", "Extended Standby"};
+    protected static final int[] wakeupTimes = {0, 0, 0, 0, 0, 1000, 6, 1000, 6};
+    private static final int[][] transitionTimeMatrix = FiniteStateMachine.buildBimodalTTM(idleModeNames.length, 0,
+            wakeupTimes, new int[wakeupTimes.length]);
+    // permutation of sleep mode bits in the register (high order bits first)
+    private static final int[] MCUCR_sm_perm = {2, 4, 3};
 
-
-    static
-    {
+    static {
         // statically initialize the pin assignments for this microcontroller
-        HashMap<String, Integer> pinAssignments = new HashMap<String, Integer>(
-                150);
+        HashMap<String, Integer> pinAssignments = new HashMap<String, Integer>(150);
         RegisterLayout rl = new RegisterLayout(ATMEGA16_IOREG_SIZE, 8);
-        HashMap<String, Integer> interruptAssignments = new HashMap<String, Integer>(
-                30);
+        HashMap<String, Integer> interruptAssignments = new HashMap<String, Integer>(30);
 
         addPin(pinAssignments, 1, "XCK", "T0", "PB0");
         addPin(pinAssignments, 2, "T1", "PB1");
@@ -174,8 +147,7 @@ public class ATMega16 extends ATMegaFamily
         rl.addIOReg("TCNT0", 0x32);
         rl.addIOReg("OSCCAL", 0x31);
         rl.addIOReg("SFIOR", 0x30);
-        rl.addIOReg("TCCR1A", 0x2F,
-                "COM1A[1:0],COM1B[1:0],FOC1A,FOC1B,WGM1[1:0]");
+        rl.addIOReg("TCCR1A", 0x2F, "COM1A[1:0],COM1B[1:0],FOC1A,FOC1B,WGM1[1:0]");
         rl.addIOReg("TCCR1B", 0x2E, ".,ICES1,.,WGM1[3:2],CS1[2:0]");
         rl.addIOReg("TCNT1H", 0x2D);
         rl.addIOReg("TCNT1L", 0x2C);
@@ -254,43 +226,16 @@ public class ATMega16 extends ATMegaFamily
                 ATMEGA16_EEPROM_SIZE, // size of eeprom in bytes
                 ATMEGA16_NUM_PINS, // number of pins
                 ATMEGA16_NUM_INTS, // number of interrupts
-                new ReprogrammableCodeSegment.Factory(ATMEGA16_FLASH_SIZE, 6),
-                pinAssignments, // the assignment of names to physical pins
+                new ReprogrammableCodeSegment.Factory(ATMEGA16_FLASH_SIZE, 6), pinAssignments, // the assignment of
+                // names to physical pins
                 rl, // the assignment of names to IO registers
                 interruptAssignments);
-
     }
 
-    public static class Factory implements MicrocontrollerFactory
-    {
+    protected final ActiveRegister MCUCR_reg;
 
-        /**
-         * The <code>newMicrocontroller()</code> method is used to instantiate a
-         * microcontroller instance for the particular program. It will
-         * construct an instance of the <code>Simulator</code> class that has
-         * all the properties of this hardware device and has been initialized
-         * with the specified program.
-         *
-         * @param sim
-         * @param p
-         *            the program to load onto the microcontroller @return a
-         *            <code>Microcontroller</code> instance that represents the
-         *            specific hardware device with the program loaded onto it
-         */
-        @Override
-        public Microcontroller newMicrocontroller(int id, Simulation sim,
-                ClockDomain cd, Program p)
-        {
-            return new ATMega16(id, sim, cd, p);
-        }
-
-    }
-
-
-    public ATMega16(int id, Simulation sim, ClockDomain cd, Program p)
-    {
-        super(cd, props, new FiniteStateMachine(cd.getMainClock(), MODE_ACTIVE,
-                idleModeNames, transitionTimeMatrix));
+    public ATMega16(int id, Simulation sim, ClockDomain cd, Program p) {
+        super(cd, props, new FiniteStateMachine(cd.getMainClock(), MODE_ACTIVE, idleModeNames, transitionTimeMatrix));
         simulator = sim.createSimulator(id, LegacyInterpreter.FACTORY, this, p);
         interpreter = (AtmelInterpreter) simulator.getInterpreter();
         MCUCR_reg = getIOReg("MCUCR");
@@ -298,27 +243,35 @@ public class ATMega16 extends ATMegaFamily
         installDevices();
     }
 
-
-    protected void installPins()
-    {
+    protected void installPins() {
         for (int cntr = 0; cntr < properties.num_pins; cntr++)
             pins[cntr] = new Pin(cntr);
     }
 
-
-    protected void installDevices()
-    {
+    protected void installDevices() {
         // set up the external interrupt mask and flag registers and interrupt
         // range
-        int[] mapping = new int[] { -1, -1, -1, -1, -1, 4, 2, 3 };
+        /**
+         * mapping number corresponds to the (INTx_vect_num - 1) according to the iom16.h definition
+         */
+//        EIFR_reg = buildInterruptRange(true, "GICR", "GIFR", 2, 3);
+        int[] mapping = new int[]{-1, -1, -1, -1, -1, 4, 2, 3};
         FlagRegister fr = new FlagRegister(interpreter, mapping);
         MaskRegister mr = new MaskRegister(interpreter, mapping);
         installIOReg("GICR", mr);
         installIOReg("GIFR", fr);
         EIFR_reg = fr;
 
+        RegisterView MCUCR = (RegisterView) MCUCR_reg;
+        RegisterView MCUCSR = (RegisterView) getIOReg("MCUCSR");
+
+        // add pins PD[3:2] and PB2 supporting external interrupts
+        pins[16] = new INTPin(16, EIFR_reg, 6, RegisterUtil.bitRangeView(MCUCR, 0, 1)); // INT0
+        pins[17] = new INTPin(17, EIFR_reg, 7, RegisterUtil.bitRangeView(MCUCR, 2, 3)); // INT1
+        pins[3] = new INTPin(3, EIFR_reg, 5, RegisterUtil.bitRangeView(MCUCSR, 6, 6)); // INT2
+
         // set up the timer mask and flag registers
-        int[] mappingTIMSK = new int[] { 10, 20, 9, 8, 7, 6, 5, 4 };
+        int[] mappingTIMSK = new int[]{10, 20, 9, 8, 7, 6, 5, 4};
         TIFR_reg = new FlagRegister(interpreter, mappingTIMSK);
         TIMSK_reg = new MaskRegister(interpreter, mappingTIMSK);
         installIOReg("TIFR", TIFR_reg);
@@ -340,29 +293,37 @@ public class ATMega16 extends ATMegaFamily
         addDevice(new ADC(this, 8));
     }
 
-    // permutation of sleep mode bits in the register (high order bits first)
-    private static final int[] MCUCR_sm_perm = { 2, 4, 3 };
-
-
     @Override
-    protected int getSleepMode()
-    {
+    protected int getSleepMode() {
         byte value = MCUCR_reg.read();
         boolean sleepEnable = Arithmetic.getBit(value, 5);
 
-        if (sleepEnable)
-            return Arithmetic.getBitField(value, MCUCR_sm_perm) + 1;
-        else
-            return MODE_IDLE;
+        if (sleepEnable) return Arithmetic.getBitField(value, MCUCR_sm_perm) + 1;
+        else return MODE_IDLE;
+    }
+
+    public static class Factory implements MicrocontrollerFactory {
+
+        /**
+         * The <code>newMicrocontroller()</code> method is used to instantiate a microcontroller instance for the
+         * particular program. It will construct an instance of the <code>Simulator</code> class that has all the
+         * properties of this hardware device and has been initialized with the specified program.
+         *
+         * @param sim
+         * @param p   the program to load onto the microcontroller @return a <code>Microcontroller</code> instance that
+         *            represents the specific hardware device with the program loaded onto it
+         */
+        @Override
+        public Microcontroller newMicrocontroller(int id, Simulation sim, ClockDomain cd, Program p) {
+            return new ATMega16(id, sim, cd, p);
+        }
     }
 
     /**
      * <code>Timer0</code> is different from ATMega128
      */
-    protected class Timer0 extends Timer8Bit
-    {
-        protected Timer0()
-        {
+    protected class Timer0 extends Timer8Bit {
+        protected Timer0() {
             super(ATMega16.this, 0, 1, 0, 1, 0, ATmega16Periods0);
         }
     }
@@ -370,38 +331,29 @@ public class ATMega16 extends ATMegaFamily
     /**
      * <code>Timer2</code> is different from ATMega128
      */
-    protected class Timer2 extends Timer8Bit
-    {
-        protected Timer2()
-        {
+    protected class Timer2 extends Timer8Bit {
+        protected Timer2() {
             super(ATMega16.this, 2, 7, 6, 7, 6, ATmega16Periods2);
             installIOReg("ASSR", new ASSRRegister());
         }
 
         // See pg. 133 of the ATmega16A doc
-        protected class ASSRRegister extends RWRegister
-        {
+        protected class ASSRRegister extends RWRegister {
             static final int AS2 = 3;
             static final int TCN2UB = 2;
             static final int OCR2UB = 1;
             static final int TCR2UB = 0;
 
-
             @Override
-            public void write(byte val)
-            {
+            public void write(byte val) {
                 super.write((byte) (0xf & val));
                 decode(val);
             }
 
-
-            protected void decode(byte val)
-            {
+            protected void decode(byte val) {
                 // TODO: if there is a change, remove ticker and requeue?
-                timerClock = Arithmetic.getBit(val, AS2) ? externalClock
-                        : mainClock;
+                timerClock = Arithmetic.getBit(val, AS2) ? externalClock : mainClock;
             }
         }
     }
-
 }
