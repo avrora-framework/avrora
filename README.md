@@ -34,7 +34,7 @@ Add *orssh* **server** tag to **servers** to your **settings.xml**:
 Deployment
 ==========
 
-* [snapshot](http://central.sonatype.org/pages/apache-maven.html#performing-a-snapshot-deployment)
+* perform a [snapshot deloyment](http://central.sonatype.org/pages/apache-maven.html#performing-a-snapshot-deployment)
 
   1. increment verion number in *pom.xml*
   1. commit *pom.xml*
@@ -47,7 +47,7 @@ Deployment
 
   1. watch [snapshots](https://oss.sonatype.org/#nexus-search;quick~avrora-framework) at oss.sonatype.org 
 
-* [release](http://central.sonatype.org/pages/apache-maven.html#performing-a-release-deployment-with-the-maven-release-plugin)
+* perform a [release deplyoment](http://central.sonatype.org/pages/apache-maven.html#performing-a-release-deployment-with-the-maven-release-plugin)
 
   1. increment verion number in *pom.xml*
   1. commit *pom.xml*
