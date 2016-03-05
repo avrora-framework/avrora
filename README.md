@@ -34,11 +34,29 @@ Add *orssh* **server** tag to **servers** to your **settings.xml**:
 Deployment
 ==========
 
-* [snapshot](http://central.sonatype.org/pages/apache-maven.html#performing-a-snapshot-deployment)
+* perform a [snapshot deloyment](http://central.sonatype.org/pages/apache-maven.html#performing-a-snapshot-deployment)
 
-        mvn clean deploy
+  1. increment verion number in *pom.xml*
+  1. build and commit snapshot
+ 
+                 mvn clean deploy -DskipTests
 
-* [release](http://central.sonatype.org/pages/apache-maven.html#performing-a-release-deployment-with-the-maven-release-plugin)
+  1. watch [snapshots](https://oss.sonatype.org/#nexus-search;quick~avrora-framework) at oss.sonatype.org 
 
-        mvn release:clean release:prepare
-        mvn release:perform
+* perform a [release deplyoment](http://central.sonatype.org/pages/apache-maven.html#performing-a-release-deployment-with-the-maven-release-plugin)
+
+  1. increment verion number in *pom.xml*
+  1. commit *pom.xml*
+
+                git add pom.xml && git commit -m "pre release deployment commit" && git push
+        
+  1. build and commit snapshot and release:
+
+                mvn release:clean release:prepare -Darguments="-DskipTests"
+                mvn release:perform -Darguments="-DskipTests"
+
+  1. commit newly changed *pom.xml*
+
+                git add pom.xml && git commit -m "post release deployment commit" && git push
+
+  1. watch [staging profiles](https://oss.sonatype.org/#stagingProfiles) and [snapshots](https://oss.sonatype.org/#nexus-search;quick~avrora-framework) at oss.sonatype.org 
