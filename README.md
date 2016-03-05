@@ -40,5 +40,15 @@ Deployment
 
 * [release](http://central.sonatype.org/pages/apache-maven.html#performing-a-release-deployment-with-the-maven-release-plugin)
 
-        mvn release:clean release:prepare
-        mvn release:perform
+1. increment verion number in *pom.xml*
+1. commit *pom.xml*
+
+        git add pom.xml && git commit -m "incremented version number" && git push
+        
+1. build and commit release:
+
+        mvn release:clean release:prepare -Darguments="-DskipTests"
+        mvn release:perform -Darguments="-DskipTests"
+
+1. optionally commit newly incremented version number in *pom.xml*
+1. watch [staging profiles](https://oss.sonatype.org/#stagingProfiles) and [snapshots](https://oss.sonatype.org/#nexus-search;quick~avrora-framework) at oss.sonatype.org 
