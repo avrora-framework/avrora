@@ -8,6 +8,11 @@
 *.war
 *.ear
 
+# intellij 
+.idea 
+*.iml
+
+# eclipse
 .settings
 .classpath
 .project 
