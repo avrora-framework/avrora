@@ -43,7 +43,9 @@ Deployment
  
   1. build and commit snapshot
  
-                 mvn clean deploy
+                 mvn clean deploy -DskipTests
+
+  1. watch [snapshots](https://oss.sonatype.org/#nexus-search;quick~avrora-framework) at oss.sonatype.org 
 
 * [release](http://central.sonatype.org/pages/apache-maven.html#performing-a-release-deployment-with-the-maven-release-plugin)
 
