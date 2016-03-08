@@ -188,6 +188,13 @@ public class StepSynchronizer extends Synchronizer
         throw Util.unimplemented();
     }
 
+    /**
+     * report an exception to command line
+     */
+    private void reportException(Throwable t) {
+        t.printStackTrace();
+    }
+
     void removeSimulator(Simulator s)
     {
         throw Util.unimplemented();
@@ -256,8 +263,9 @@ public class StepSynchronizer extends Synchronizer
                     }
                     catch (Throwable t)
                     {
-                        reportExit(sim, t);
+                        reportException(t);
                         removeSimulator(threads[cntr]);
+                        reportExit(sim, t);
                     }
                 }
             }
