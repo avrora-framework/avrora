@@ -64,34 +64,52 @@ public abstract class Expr implements Typeable
 
     protected Type type;
 
+    /**
+     * The <code>tokenToInt()</code> static method is a utility to evaluate a token as an integer.
+     *
+     * @param i the value of the integer as a token
+     * @return the integer value of the token if it exists
+     */
+    public static int tokenToInt(Token i) {
+        if (i == null) return -1;
+        return StringUtil.evaluateIntegerLiteral(i.image);
+    }
+
+    /**
+     * The <code>tokenToBool()</code> static method is a utility to evaluate a
+     * token as a boolean literal.
+     *
+     * @param i
+     *            the value of the boolean as a token
+     * @return the boolean value of the token if it exists
+     */
+    public static boolean tokenToBool(Token i) {
+        return Boolean.valueOf(i.image);
+    }
 
     /**
      * The <code>getType()</code> method returns the type of this expression as
      * computed by the TypeChecker.
-     * 
+     *
      * @return a reference to a <code>Type</code> object that represents the
      *         type of this expression.
      */
     @Override
-    public Type getType()
-    {
+    public Type getType() {
         return type;
     }
-
 
     /**
      * The <code>setType()</code> method sets the type of this expression. This
      * is meant to be called by the TypeChecker as it visits the program and
      * computes the type of each expression.
-     * 
+     *
      * @param t
      *            the new type of this expression
      */
-    public void setType(Type t)
-    {
+    public void setType(Type t) {
         type = t;
     }
-
 
     /**
      * The <code>isVariable()</code> method tests whether this expression is a
@@ -100,11 +118,9 @@ public abstract class Expr implements Typeable
      * @return true if this expression is a direct use of a variable; false
      *         otherwise
      */
-    public boolean isVariable()
-    {
+    public boolean isVariable() {
         return false;
     }
-
 
     /**
      * The <code>isLiteral()</code> method tests whether this expression is a
@@ -112,11 +128,9 @@ public abstract class Expr implements Typeable
      *
      * @return true if this expression is a literal; false otherwise
      */
-    public boolean isLiteral()
-    {
+    public boolean isLiteral() {
         return false;
     }
-
 
     /**
      * The <code>isConstantExpr()</code> method tests whether this expression is
@@ -126,11 +140,9 @@ public abstract class Expr implements Typeable
      * @return true if this expression can be evaluated to a constant; false
      *         otherwise
      */
-    public boolean isConstantExpr()
-    {
+    public boolean isConstantExpr() {
         return false;
     }
-
 
     /**
      * The <code>isBitRangeExpr()</code> method tests whether the expression is
@@ -140,11 +152,9 @@ public abstract class Expr implements Typeable
      * @return true if this expression is a bit range expression; false
      *         otherwise
      */
-    public boolean isBitRangeExpr()
-    {
+    public boolean isBitRangeExpr() {
         return false;
     }
-
 
     /**
      * The <code>getPrecedence()</code> method gets the binding precedence for
@@ -156,37 +166,6 @@ public abstract class Expr implements Typeable
      *         numbers are higher precedence
      */
     public abstract int getPrecedence();
-
-
-    /**
-     * The <code>tokenToInt()</code> static method is a utility to evaluate a
-     * token as an integer.
-     *
-     * @param i
-     *            the value of the integer as a token
-     * @return the integer value of the token if it exists
-     */
-    public static int tokenToInt(Token i)
-    {
-        if (i == null)
-            return -1;
-        return StringUtil.evaluateIntegerLiteral(i.image);
-    }
-
-
-    /**
-     * The <code>tokenToBool()</code> static method is a utility to evaluate a
-     * token as a boolean literal.
-     *
-     * @param i
-     *            the value of the boolean as a token
-     * @return the boolean value of the token if it exists
-     */
-    public static boolean tokenToBool(Token i)
-    {
-        return Boolean.valueOf(i.image);
-    }
-
 
     /**
      * The <code>accept()</code> method implements one half of the visitor
@@ -207,6 +186,9 @@ public abstract class Expr implements Typeable
      *
      * @param r
      *            the accumulator to accept
+     * @param env the host
+     * @param <Res> statement
+     * @param <Env> environment
      * @return the result of calling the appropriate <code>visit()</code> method
      *         of the rebuilder
      */

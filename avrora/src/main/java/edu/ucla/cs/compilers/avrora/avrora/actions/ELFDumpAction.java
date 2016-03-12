@@ -33,20 +33,15 @@
  */
 package edu.ucla.cs.compilers.avrora.avrora.actions;
 
-import java.io.RandomAccessFile;
-import java.util.List;
-
 import edu.ucla.cs.compilers.avrora.avrora.Main;
-import edu.ucla.cs.compilers.avrora.cck.elf.ELFHeader;
-import edu.ucla.cs.compilers.avrora.cck.elf.ELFLoader;
-import edu.ucla.cs.compilers.avrora.cck.elf.ELFProgramHeaderTable;
-import edu.ucla.cs.compilers.avrora.cck.elf.ELFSectionHeaderTable;
-import edu.ucla.cs.compilers.avrora.cck.elf.ELFStringTable;
-import edu.ucla.cs.compilers.avrora.cck.elf.ELFSymbolTable;
+import edu.ucla.cs.compilers.avrora.cck.elf.*;
 import edu.ucla.cs.compilers.avrora.cck.text.StringUtil;
 import edu.ucla.cs.compilers.avrora.cck.text.TermUtil;
 import edu.ucla.cs.compilers.avrora.cck.text.Terminal;
 import edu.ucla.cs.compilers.avrora.cck.util.Util;
+
+import java.io.RandomAccessFile;
+import java.util.List;
 
 /**
  * The <code>CFGAction</code> is an Avrora action that loads ELF files and dumps
@@ -71,57 +66,6 @@ public class ELFDumpAction extends Action
         super(HELP);
     }
 
-
-    /**
-     * The <code>run()</code> method starts the control flow graph utility. The
-     * arguments passed are the name of the file(s) that contain the program.
-     * The program is loaded, its control flow graph is built, and it is output
-     * to the console in one of two textual formats; the output supported by the
-     * dot tool, and a simple colored textual format.
-     *
-     * @param args
-     *            the command line arguments to the control flow graph utility
-     * @throws Exception
-     */
-    @Override
-    public void run(String[] args) throws Exception
-    {
-
-        String fname = args[0];
-        Main.checkFileExists(fname);
-
-        RandomAccessFile fis = new RandomAccessFile(fname, "r");
-
-        try
-        {
-            // read the ELF header
-            ELFHeader header = ELFLoader.readELFHeader(fis);
-            printHeader(header);
-
-            // read the program header table (if it exists)
-            ELFProgramHeaderTable pht = ELFLoader.readPHT(fis, header);
-            printPHT(pht);
-
-            // read the section header table
-            ELFSectionHeaderTable sht = ELFLoader.readSHT(fis, header);
-            printSHT(sht);
-
-            // read the symbol tables
-            List<ELFSymbolTable> symbolTables = ELFLoader.readSymbolTables(fis,
-                    header, sht);
-            for (ELFSymbolTable stab : symbolTables)
-            {
-                printSymbolTable(stab, sht);
-            }
-
-        }
-        catch (ELFHeader.FormatError e)
-        {
-            Util.userError(fname, "invalid ELF header");
-        }
-    }
-
-
     public static void printHeader(ELFHeader header)
     {
         Terminal.nextln();
@@ -132,18 +76,14 @@ public class ELFDumpAction extends Action
         Terminal.print(StringUtil.rightJustify(header.e_version, 3));
         Terminal.print(StringUtil.rightJustify(header.e_machine, 8));
         Terminal.print(StringUtil.rightJustify(header.getArchitecture(), 9));
-        Terminal.print(StringUtil
-                .rightJustify(header.is64Bit() ? "64 bits" : "32 bits", 9));
+        Terminal.print(StringUtil.rightJustify(header.is64Bit() ? "64 bits" : "32 bits", 9));
         Terminal.print(header.isLittleEndian() ? "  little" : "  big");
         Terminal.nextln();
     }
 
-
-    public static void printSHT(ELFSectionHeaderTable sht)
-    {
+    public static void printSHT(ELFSectionHeaderTable sht) {
         TermUtil.printSeparator(Terminal.MAXLINE, "Section Header Table");
-        Terminal.printGreen(
-                "Ent  Name                        Type   Address  Offset    Size  Flags");
+        Terminal.printGreen("Ent  Name                        Type   Address  Offset    Size  Flags");
         Terminal.nextln();
         TermUtil.printThinSeparator();
         for (int cntr = 0; cntr < sht.entries.length; cntr++)
@@ -160,28 +100,22 @@ public class ELFDumpAction extends Action
         }
     }
 
-
     public static String getName(ELFStringTable st, int ind)
     {
-        if (st == null)
-            return "";
+        if (st == null) return "";
         return st.getString(ind);
     }
-
 
     public static void printPHT(ELFProgramHeaderTable pht)
     {
         TermUtil.printSeparator(Terminal.MAXLINE, "Program Header Table");
-        Terminal.printGreen(
-                "Ent     Type  Virtual   Physical  Offset  Filesize  Memsize  Flags");
+        Terminal.printGreen("Ent     Type  Virtual   Physical  Offset  Filesize  Memsize  Flags");
         Terminal.nextln();
         TermUtil.printThinSeparator();
-        for (int cntr = 0; cntr < pht.entries.length; cntr++)
-        {
+        for (int cntr = 0; cntr < pht.entries.length; cntr++) {
             ELFProgramHeaderTable.Entry32 e = pht.entries[cntr];
             Terminal.print(StringUtil.rightJustify(cntr, 3));
-            Terminal.print(StringUtil
-                    .rightJustify(ELFProgramHeaderTable.getType(e), 9));
+            Terminal.print(StringUtil.rightJustify(ELFProgramHeaderTable.getType(e), 9));
             Terminal.print("  " + StringUtil.toHex(e.p_vaddr, 8));
             Terminal.print("  " + StringUtil.toHex(e.p_paddr, 8));
             Terminal.print(StringUtil.rightJustify(e.p_offset, 8));
@@ -192,13 +126,10 @@ public class ELFDumpAction extends Action
         }
     }
 
-
-    public static void printSymbolTable(ELFSymbolTable stab,
-            ELFSectionHeaderTable sht)
+    public static void printSymbolTable(ELFSymbolTable stab, ELFSectionHeaderTable sht)
     {
         TermUtil.printSeparator(Terminal.MAXLINE, "Symbol Table");
-        Terminal.printGreen(
-                "Ent  Type     Section     Bind    Name                     Address      Size");
+        Terminal.printGreen("Ent  Type     Section     Bind    Name                     Address      Size");
         Terminal.nextln();
         TermUtil.printThinSeparator();
         ELFStringTable str = stab.getStringTable();
@@ -207,13 +138,53 @@ public class ELFDumpAction extends Action
             ELFSymbolTable.Entry e = stab.entries[cntr];
             Terminal.print(StringUtil.rightJustify(cntr, 3));
             Terminal.print("  " + StringUtil.leftJustify(e.getType(), 7));
-            Terminal.print("  " + StringUtil
-                    .leftJustify(sht.getSectionName(e.st_shndx), 12));
+            Terminal.print("  " + StringUtil.leftJustify(sht.getSectionName(e.st_shndx), 12));
             Terminal.print(StringUtil.leftJustify(e.getBinding(), 8));
             Terminal.print(StringUtil.leftJustify(getName(str, e.st_name), 22));
             Terminal.print("  " + StringUtil.toHex(e.st_value, 8));
             Terminal.print("  " + StringUtil.rightJustify(e.st_size, 8));
             Terminal.nextln();
+        }
+    }
+
+    /**
+     * The <code>run()</code> method starts the control flow graph utility. The arguments passed are the name
+     * of the file(s) that contain the program. The program is loaded, its control flow graph is built, and it
+     * is output to the console in one of two textual formats; the output supported by the dot tool, and a
+     * simple colored textual format.
+     *
+     * @param args the command line arguments to the control flow graph utility
+     * @throws Exception on elf load error
+     */
+    @Override
+    public void run(String[] args) throws Exception
+    {
+
+        String fname = args[0];
+        Main.checkFileExists(fname);
+
+        RandomAccessFile fis = new RandomAccessFile(fname, "r");
+
+        try {
+            // read the ELF header
+            ELFHeader header = ELFLoader.readELFHeader(fis);
+            printHeader(header);
+
+            // read the program header table (if it exists)
+            ELFProgramHeaderTable pht = ELFLoader.readPHT(fis, header);
+            printPHT(pht);
+
+            // read the section header table
+            ELFSectionHeaderTable sht = ELFLoader.readSHT(fis, header);
+            printSHT(sht);
+
+            // read the symbol tables
+            List<ELFSymbolTable> symbolTables = ELFLoader.readSymbolTables(fis, header, sht);
+            for (ELFSymbolTable stab : symbolTables) {
+                printSymbolTable(stab, sht);
+            }
+        } catch (ELFHeader.FormatError e) {
+            Util.userError(fname, "invalid ELF header");
         }
     }
 }

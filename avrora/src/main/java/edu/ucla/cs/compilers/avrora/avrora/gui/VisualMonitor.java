@@ -32,9 +32,9 @@
 
 package edu.ucla.cs.compilers.avrora.avrora.gui;
 
-import javax.swing.JPanel;
-
 import edu.ucla.cs.compilers.avrora.avrora.monitors.Monitor;
+
+import javax.swing.*;
 
 /**
  * The <code>VisualMonitor</code> class represents a monitor attached to a
@@ -55,14 +55,16 @@ public interface VisualMonitor extends Monitor
      * the monitors chalkaboard. It is assumed that this function will also
      * handle any internal data maniuplations that are necessary
      */
-    public void updateDataAndPaint();
+    void updateDataAndPaint();
 
 
     /**
      * This is a temporary hack...once Global Monitors is rewritten to be more
      * robust, this will be deleted
+     *
+     * @return the graph reference
      */
-    public GraphEvents getGraph();
+    GraphEvents getGraph();
 
 
     /**
@@ -78,7 +80,7 @@ public interface VisualMonitor extends Monitor
      * @param theOptionsPanel
      *            The panel that the monitor can display options to
      */
-    public void setVisualPanel(JPanel thePanel, JPanel theOptionsPanel);
+    void setVisualPanel(JPanel thePanel, JPanel theOptionsPanel);
 
 
     /**
@@ -90,5 +92,5 @@ public interface VisualMonitor extends Monitor
      * got all it's data from temporary storage onto the display.
      */
     @Override
-    public void report();
+    void report();
 }

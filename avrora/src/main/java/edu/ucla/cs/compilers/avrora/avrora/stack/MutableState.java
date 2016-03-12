@@ -112,7 +112,7 @@ public class MutableState extends AbstractState implements IORegisterConstants
      * state. A good hash code is needed to make hashtables in
      * <code>StateSpace</code> efficient.
      *
-     * @throws Util.InternalError
+     * @throws Util.InternalError no hash code of mutable possible
      */
     @Override
     public int hashCode()
@@ -127,7 +127,7 @@ public class MutableState extends AbstractState implements IORegisterConstants
      *
      * @param o
      *            the object to test equality against.
-     * @throws Util.InternalError
+     * @throws Util.InternalError no hash of mutable possible, hence no equals
      */
     @Override
     public boolean equals(Object o)
@@ -168,6 +168,8 @@ public class MutableState extends AbstractState implements IORegisterConstants
      *
      * @param val
      *            the new abstract value of the bit
+     *
+     * @param bit the but number
      */
     public void setSREG_bit(int bit, char val)
     {

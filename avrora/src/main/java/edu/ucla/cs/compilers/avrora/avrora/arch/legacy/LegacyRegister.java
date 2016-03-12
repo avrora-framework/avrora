@@ -39,9 +39,8 @@ import java.util.HashSet;
  * The <code>LegacyRegister</code> class represents a register available on the
  * AVR instruction set. All registers in the instruction set architecture are
  * represented as objects that have a name and a number. Those objects are
- * singletons and are public static final fields of this class.<br>
- * <br>
- * <p> </p>
+ * singletons and are public static final fields of this class.
+ * <p>
  * Additionally, the <code>LegacyRegister</code> class contains sets of
  * registers that are used in verifying the operand constraints of each
  * individual instruction as defined in the AVR instruction set reference. An
@@ -49,7 +48,7 @@ import java.util.HashSet;
  * operands one of the general purpose registers {r17...r31} and an immediate.
  * Other instructions take certain subsets of the instructions. Those register
  * sets are allocated once here and are exposed as static fields in this class.
- *
+ * </p>
  * @author Ben L. Titzer
  * @see LegacyOperand
  * @see LegacyInstr
@@ -99,26 +98,33 @@ public class LegacyRegister
     private static final LegacyRegister[] REGS_0_31 = { R0, R1, R2, R3, R4, R5,
             R6, R7, R8, R9, R10, R11, R12, R13, R14, R15, R16, R17, R18, R19,
             R20, R21, R22, R23, R24, R25, R26, R27, R28, R29, R30, R31 };
+    public static final Set GPR_set = new Set(REGS_0_31);
     private static final LegacyRegister[] EREGS = { R0, R2, R4, R6, R8, R10,
             R12, R14, R16, R18, R20, R22, R24, R26, R28, R30, };
+    public static final Set EGPR_set = new Set(EREGS);
     private static final LegacyRegister[] REGS_16_31 = { R16, R17, R18, R19,
             R20, R21, R22, R23, R24, R25, R26, R27, R28, R29, R30, R31 };
+    public static final Set HGPR_set = new Set(REGS_16_31);
     private static final LegacyRegister[] REGS_16_23 = { R16, R17, R18, R19,
             R20, R21, R22, R23, };
-    private static final LegacyRegister[] REGS_XYZ = { X, Y, Z };
-    private static final LegacyRegister[] REGS_YZ = { Y, Z };
-    private static final LegacyRegister[] REGS_Z = { Z };
-    private static final LegacyRegister[] REGS_RDL = { R24, R26, R28, R30 };
-
-    public static final Set GPR_set = new Set(REGS_0_31);
-    public static final Set HGPR_set = new Set(REGS_16_31);
     public static final Set MGPR_set = new Set(REGS_16_23);
-    public static final Set EGPR_set = new Set(EREGS);
+    private static final LegacyRegister[] REGS_XYZ = {X, Y, Z};
     public static final Set ADR_set = new Set(REGS_XYZ);
-    public static final Set RDL_set = new Set(REGS_RDL);
+    private static final LegacyRegister[] REGS_YZ = {Y, Z};
     public static final Set YZ_set = new Set(REGS_YZ);
+    private static final LegacyRegister[] REGS_Z = {Z};
     public static final Set Z_set = new Set(REGS_Z);
+    private static final LegacyRegister[] REGS_RDL = {R24, R26, R28, R30};
+    public static final Set RDL_set = new Set(REGS_RDL);
+    private final String name;
+    private final int number;
+    private final int width;
 
+    private LegacyRegister(String nm, int num, int w) {
+        name = nm;
+        number = num;
+        width = w;
+    }
 
     private static HashMap<String, LegacyRegister> initializeRegisterMap()
     {
@@ -146,7 +152,6 @@ public class LegacyRegister
         return map;
     }
 
-
     /**
      * The <code>getRegisterByName()</code> method retrieves a reference to the
      * <code>LegacyRegister</code> instance with the given string name. This
@@ -163,7 +168,6 @@ public class LegacyRegister
         return registers.get(name);
     }
 
-
     /**
      * The <code>getRegisterByNumber()</code> method retrieves a reference to
      * the <code>LegacyRegister</code> instance with the given offset in the
@@ -178,19 +182,6 @@ public class LegacyRegister
     {
         return getRegisterByName("r" + num);
     }
-
-    private final String name;
-    private final int number;
-    private final int width;
-
-
-    private LegacyRegister(String nm, int num, int w)
-    {
-        name = nm;
-        number = num;
-        width = w;
-    }
-
 
     /**
      * The <code>hashCode()</code> computes the hash code of this register so
@@ -276,8 +267,9 @@ public class LegacyRegister
      * operands to be a general purpose register that has a number greater than
      * 15; a set of those registers can be constructed and then a membership
      * test performed.
-     * <p> </p>
+     * <p>
      * In practice, the needed register sets are all allocated statically.
+     * </p>
      */
     public static class Set
     {

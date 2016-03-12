@@ -33,60 +33,52 @@
 package edu.ucla.cs.compilers.avrora.avrora.stack;
 
 /**
- * The <code>AbstractArithmetic</code> arithmetic class implements operations
+ * The arithmetic class implements operations
  * that are useful for working on abstract integers which are represented as
- * characters. <br>
- * <br>
- * <p> </p>
+ * characters.
+ * <p>
  * The abstract values (e.g. register values) are represented as characters.
  * Thus, an 8 bit register is modelled using a 16-bit character. The upper 8
  * bits represent the "mask", those bits which are known. The lower 8 bits
  * represent the known bits of the value. Thus, if bit(regs[R], i+8) is set,
  * then bit(R, i) is known and its value is bit(regs[R], i). If bit(regs[R],
  * i+8) is clear, then the value of bit(regs[R], i) is unknown in this abstract
- * value. <br>
- * <br>
- * <p> </p>
+ * value.
+ * </p><p>
  * Since there are 3 possible values (on, off, unknown) for each bit in the
  * abstract state and there are two bits reserved for representing each of these
  * states, there are 4 bit states to represent 3 values. We canonicalize the
  * values when the bit value is unknown, i.e. when the known mask bit is clear,
  * then the value bit is clear as well. This makes comparison of canonical
  * abstract values the same as character equality. All abstract values stored
- * within <code>AbstractState</code> are canonical for efficiency and clarity.
+ * within {@link AbstractState} are canonical for efficiency and clarity.
+ *  </p>
  *
  * @author Ben L. Titzer
  */
 public class AbstractArithmetic
 {
-    private static final char KNOWN_MASK = 0xFF00;
-    private static final char BIT_MASK = 0x00FF;
-    private static final int SHIFT = 8;
-
     /**
-     * The <code>ZERO</code> field represents the abstract value where all bits
-     * are known to be zero.
-     */
-    public static final char ZERO = KNOWN_MASK;
-
-    /**
-     * The <code>TRUE</code> field represents the abstract bit that is known to
-     * be true.
+     * The <code>TRUE</code> field represents the abstract bit that is known to be true.
      */
     public static final char TRUE = 0x101;
-
     /**
-     * The <code>FALSE</code> field represents the abstract bit that is known to
-     * be false.
+     * The <code>FALSE</code> field represents the abstract bit that is known to be false.
      */
     public static final char FALSE = 0x100;
-
     /**
      * The <code>UNKNOWN</code> field represents the abstract value where none
      * of the bits are known.
      */
     public static final char UNKNOWN = 0;
-
+    private static final char KNOWN_MASK = 0xFF00;
+    /**
+     * The <code>ZERO</code> field represents the abstract value where all bits
+     * are known to be zero.
+     */
+    public static final char ZERO = KNOWN_MASK;
+    private static final char BIT_MASK = 0x00FF;
+    private static final int SHIFT = 8;
 
     /**
      * The <code>merge()</code> method merges abstract values. The merge of two

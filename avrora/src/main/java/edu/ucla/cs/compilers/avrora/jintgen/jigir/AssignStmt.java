@@ -94,6 +94,9 @@ public class AssignStmt extends Stmt
      *
      * @param v
      *            the visitor to accept
+     * @param env the host
+     * @param <Res> statement
+     * @param <Env> environment
      * @return the result of calling the appropriate <code>visit()</code> of the
      *         rebuilder passed
      */

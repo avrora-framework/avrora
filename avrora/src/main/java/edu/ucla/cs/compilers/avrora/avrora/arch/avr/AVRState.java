@@ -34,12 +34,7 @@
 
 package edu.ucla.cs.compilers.avrora.avrora.arch.avr;
 
-import edu.ucla.cs.compilers.avrora.avrora.sim.ActiveRegister;
-import edu.ucla.cs.compilers.avrora.avrora.sim.CodeSegment;
-import edu.ucla.cs.compilers.avrora.avrora.sim.InterruptTable;
-import edu.ucla.cs.compilers.avrora.avrora.sim.Segment;
-import edu.ucla.cs.compilers.avrora.avrora.sim.Simulator;
-import edu.ucla.cs.compilers.avrora.avrora.sim.State;
+import edu.ucla.cs.compilers.avrora.avrora.sim.*;
 import edu.ucla.cs.compilers.avrora.avrora.sim.clock.DeltaQueue;
 
 /**
@@ -47,15 +42,14 @@ import edu.ucla.cs.compilers.avrora.avrora.sim.clock.DeltaQueue;
  * of an <code>AVRInstrInterpreter</code> instance. This class allows access to
  * the state of the interpreter without exposing the details of the
  * implementation or jeopardizing the soundness of the simulation.
- * <p> </p>
- * <p> </p>
+ * <p>
  * An <code>AVRState</code> instance contains the state of registers, memory,
  * the code segment, and the IO registers, as well as the interrupt table and
  * <code>MainClock</code> instance. It provides a public interface through the
  * <code>get_XXX()</code> methods and a protected interface used in
  * <code>AVRInstrInterpreter</code> that allows direct access to the fields
  * representing the actual state.
- *
+ *</p>
  * @author Ben L. Titzer
  */
 public abstract class AVRState implements State
@@ -80,6 +74,33 @@ public abstract class AVRState implements State
     protected int cycles;
     protected boolean justReturnedFromInterrupt;
 
+    protected static int map_get(byte[] a, int indx) {
+        return a[indx];
+    }
+
+    protected static void map_set(byte[] a, int indx, int val)
+    {
+        a[indx] = (byte) val;
+    }
+
+    protected static int map_get(Segment s, int addr) {
+        return s.read(addr);
+    }
+
+    protected static void map_set(Segment s, int addr, int val)
+    {
+        s.write(addr, (byte) val);
+    }
+
+    protected static int map_get(ActiveRegister[] s, int addr)
+    {
+        return s[addr].read();
+    }
+
+    protected static void map_set(ActiveRegister[] s, int addr, int val)
+    {
+        s[addr].write((byte) val);
+    }
 
     /**
      * The <code>getPC()</code> retrieves the current program counter.
@@ -92,7 +113,6 @@ public abstract class AVRState implements State
         return pc;
     }
 
-
     /**
      * The <code>getSP()</code> method reads the current value of the stack
      * pointer. Since the stack pointer is stored in two IO registers, this
@@ -103,7 +123,6 @@ public abstract class AVRState implements State
      */
     @Override
     public abstract int getSP();
-
 
     /**
      * The <code>getSRAM()</code> method reads a byte value from the data memory
@@ -124,7 +143,6 @@ public abstract class AVRState implements State
     {
         return sram.get(address);
     }
-
 
     /**
      * The <code>getFlash()</code> method reads a byte value from the program
@@ -148,7 +166,6 @@ public abstract class AVRState implements State
         return flash.get(address);
     }
 
-
     /**
      * The <code>getIOReg()</code> method reads the value of an IO register as a
      * byte. Invocation of this method causes an invocation of the
@@ -166,7 +183,6 @@ public abstract class AVRState implements State
         return ioregs[ior].read();
     }
 
-
     /**
      * The <code>getRegister()</code> method reads a general purpose register's
      * current value as a byte.
@@ -180,7 +196,6 @@ public abstract class AVRState implements State
         return regs[reg.value];
     }
 
-
     /**
      * The <code>getCycles()</code> method returns the clock cycle count
      * recorded so far in the simulation.
@@ -193,11 +208,9 @@ public abstract class AVRState implements State
         return queue.getCount();
     }
 
-
     /**
-     * The <code>getSREG()</code> method reads the value of the status register.
-     * The status register contains the I, T, H, S, V, N, Z, and C flags, in
-     * order from highest-order to lowest-order.
+     * The <code>getSREG()</code> method reads the value of the status register. The status register contains
+     * the I, T, H, S, V, N, Z, and C flags, in order from highest-order to lowest-order.
      *
      * @return the value of the status register as a byte.
      */
@@ -205,7 +218,6 @@ public abstract class AVRState implements State
     {
         return SREG_reg.read();
     }
-
 
     /**
      * The <code>isEnabled()</code> method checks whether the specified
@@ -216,11 +228,9 @@ public abstract class AVRState implements State
      * @return true if the specified interrupt is currently enabled; false
      *         otherwise
      */
-    public boolean isEnabled(int inum)
-    {
+    public boolean isEnabled(int inum) {
         return interrupts.isEnabled(inum);
     }
-
 
     /**
      * The <code>isPosted()</code> method checks whether the specified interrupt
@@ -231,11 +241,9 @@ public abstract class AVRState implements State
      * @return true if the specified interrupt is currently posted; false
      *         otherwise
      */
-    public boolean isPosted(int inum)
-    {
+    public boolean isPosted(int inum) {
         return interrupts.isPosted(inum);
     }
-
 
     /**
      * The <code>isPending()</code> method checks whether the specified
@@ -246,11 +254,9 @@ public abstract class AVRState implements State
      * @return true if the specified interrupt is currently pending; false
      *         otherwise
      */
-    public boolean isPending(int inum)
-    {
+    public boolean isPending(int inum) {
         return interrupts.isPending(inum);
     }
-
 
     /**
      * The <code>getSimulator()</code> method returns the simulator associated
@@ -259,44 +265,7 @@ public abstract class AVRState implements State
      * @return a reference to the simulator associated with this state instance.
      */
     @Override
-    public Simulator getSimulator()
-    {
+    public Simulator getSimulator() {
         return simulator;
-    }
-
-
-    protected static int map_get(byte[] a, int indx)
-    {
-        return a[indx];
-    }
-
-
-    protected static void map_set(byte[] a, int indx, int val)
-    {
-        a[indx] = (byte) val;
-    }
-
-
-    protected static int map_get(Segment s, int addr)
-    {
-        return s.read(addr);
-    }
-
-
-    protected static void map_set(Segment s, int addr, int val)
-    {
-        s.write(addr, (byte) val);
-    }
-
-
-    protected static int map_get(ActiveRegister[] s, int addr)
-    {
-        return s[addr].read();
-    }
-
-
-    protected static void map_set(ActiveRegister[] s, int addr, int val)
-    {
-        s[addr].write((byte) val);
     }
 }

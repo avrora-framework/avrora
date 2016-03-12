@@ -32,6 +32,12 @@
 
 package edu.ucla.cs.compilers.avrora.cck.test;
 
+import edu.ucla.cs.compilers.avrora.cck.text.Status;
+import edu.ucla.cs.compilers.avrora.cck.text.Terminal;
+import edu.ucla.cs.compilers.avrora.cck.util.ClassMap;
+import edu.ucla.cs.compilers.avrora.cck.util.TimeUtil;
+import edu.ucla.cs.compilers.avrora.cck.util.Util;
+
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
@@ -39,21 +45,16 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Properties;
 
-import edu.ucla.cs.compilers.avrora.cck.text.Status;
-import edu.ucla.cs.compilers.avrora.cck.text.Terminal;
-import edu.ucla.cs.compilers.avrora.cck.util.ClassMap;
-import edu.ucla.cs.compilers.avrora.cck.util.TimeUtil;
-import edu.ucla.cs.compilers.avrora.cck.util.Util;
-
 /**
  * The <code>AutomatedTester</code> is a class that is designed to be an
  * in-program test facility. It is capable of reading in test cases from files,
  * extracting properties specified in those test cases, and then creating a test
  * case of the right form for the right system.
- * <p> </p>
+ * <p>
  * This is done through the use of another class, the <code>TestHarness</code>,
  * which is capable of creating instances of the <code>TestCase</code> class
  * that are collected by this framework.
+ *</p>
  *
  * @author Ben L. Titzer
  * @see TestCase
@@ -69,35 +70,7 @@ public class TestEngine
     public static boolean STATISTICS;
     public static int THREADS = 1;
     public static int VERBOSE = 1;
-
-    /**
-     * The <code>TestHarness</code> interface encapsulates the notion of a
-     * testing harness that is capable of creating the correct type of test
-     * cases given the file and a list of properties extracted from the file by
-     * the automated testing framework.
-     *
-     * @author Ben L. Titzer
-     */
-    public interface Harness
-    {
-
-        /**
-         * The <code>newTestCase()</code> method creates a new test case of the
-         * right type given the file name and the properties already extracted
-         * from the file by the testing framework.
-         *
-         * @param fname
-         *            the name of the file
-         * @param props
-         *            a list of properties extracted from the file
-         * @return an instance of the <code>TestCase</code> class
-         * @throws Exception
-         *             if there is a problem creating the testcase or reading it
-         */
-        public TestCase newTestCase(String fname, Properties props)
-                throws Exception;
-    }
-
+    private final ClassMap harnessMap;
     public List<TestCase>[] results;
     public List<TestCase> successes;
 
@@ -106,15 +79,12 @@ public class TestEngine
     private int currentTest;
     private int finishedTests;
 
-    private final ClassMap harnessMap;
-
-
     /**
      * The constructor for the <code>TestEngine</code> class creates a new test
      * engine with the specified class map. The class map is used to map short
      * names in the properties of test files to the class that implements the
      * harness.
-     * 
+     *
      * @param hm
      *            the class map that maps string names to harnesses
      */
@@ -123,6 +93,31 @@ public class TestEngine
         harnessMap = hm;
     }
 
+    private static void report(String c, List<TestCase>[] lists, int w, int total) {
+        List<TestCase> list = lists[w];
+        if (list.isEmpty()) return;
+
+        Terminal.print(TestResult.getColor(w), c);
+        Terminal.println(": " + list.size() + " of " + total);
+        for (TestCase tc : list) {
+            report(tc.getFileName(), tc.result);
+        }
+    }
+
+    /**
+     * The <code>report()</code> method generates a textual report of the results of running the test case.
+     *
+     * @param fname  the name of the file
+     * @param result the result of the test
+     */
+    private static void report(String fname, TestResult result) {
+        Terminal.print("  ");
+        Terminal.printRed(fname);
+        Terminal.print(": ");
+        if (LONG_REPORT) result.longReport();
+        else result.shortReport();
+        Terminal.print("\n");
+    }
 
     /**
      * The <code>runTests()</code> method runs the testing framework on each of
@@ -138,8 +133,7 @@ public class TestEngine
      *             if there is a problem loading the test cases
      * @return true if all the tests pass
      */
-    public boolean runTests(String[] fnames) throws IOException
-    {
+    public boolean runTests(String[] fnames) {
         // record start time
         long time = System.currentTimeMillis();
 
@@ -165,7 +159,6 @@ public class TestEngine
         return successes.size() == numTests;
     }
 
-
     private void reportFailures()
     {
         if (VERBOSE > 0)
@@ -181,7 +174,6 @@ public class TestEngine
         }
     }
 
-
     private void reportSuccesses(long time)
     {
         if (VERBOSE > 0)
@@ -193,7 +185,6 @@ public class TestEngine
             Terminal.nextln();
         }
     }
-
 
     @SuppressWarnings("unchecked")
     private void initTests(String[] fnames)
@@ -211,7 +202,6 @@ public class TestEngine
 
         successes = results[TestResult.SUCCESS];
     }
-
 
     @SuppressWarnings("deprecation")
     private void runAllTests()
@@ -255,7 +245,6 @@ public class TestEngine
         }
     }
 
-
     private void runTest(int num)
     {
         try
@@ -268,7 +257,6 @@ public class TestEngine
         }
     }
 
-
     protected int nextTest()
     {
         synchronized (this)
@@ -279,7 +267,6 @@ public class TestEngine
                 return -1;
         }
     }
-
 
     private void finishTest(TestCase tc)
     {
@@ -295,7 +282,6 @@ public class TestEngine
         }
     }
 
-
     private void reportStatistics(List<TestCase>[] tests)
     {
         if (STATISTICS)
@@ -310,133 +296,67 @@ public class TestEngine
         }
     }
 
-
-    private static void report(String c, List<TestCase>[] lists, int w,
-            int total)
-    {
-        List<TestCase> list = lists[w];
-        if (list.isEmpty())
-            return;
-
-        Terminal.print(TestResult.getColor(w), c);
-        Terminal.println(": " + list.size() + " of " + total);
-        for (TestCase tc : list)
-        {
-            report(tc.getFileName(), tc.result);
-        }
-    }
-
-
-    /**
-     * The <code>report()</code> method generates a textual report of the
-     * results of running the test case.
-     *
-     * @param fname
-     *            the name of the file
-     * @param result
-     *            the result of the test
-     */
-    private static void report(String fname, TestResult result)
-    {
-        Terminal.print("  ");
-        Terminal.printRed(fname);
-        Terminal.print(": ");
-        if (LONG_REPORT)
-            result.longReport();
-        else
-            result.shortReport();
-        Terminal.print("\n");
-    }
-
-
-    private TestCase runTest(String fname) throws IOException
-    {
+    private TestCase runTest(String fname) throws IOException {
         TestCase tc = readTestCase(fname);
         Throwable exception = null;
 
-        try
-        {
+        try {
             beginVerbose(fname);
             tc.run();
-        }
-        catch (Throwable t)
-        {
+        } catch (Throwable t) {
             exception = t;
         }
 
-        try
-        {
+        try {
             tc.result = tc.match(exception);
-        }
-        catch (Throwable t)
-        {
-            tc.result = new TestResult.UnexpectedException(
-                    "exception in match routine: ", t);
+        } catch (Throwable t) {
+            tc.result = new TestResult.UnexpectedException("exception in match routine: ", t);
         }
         finishTest(tc);
         return tc;
     }
 
-
-    private void beginVerbose(String fname)
-    {
-        if (VERBOSE == 3)
-        {
+    private void beginVerbose(String fname) {
+        if (VERBOSE == 3) {
             Terminal.print("Running " + fname + "...");
             Terminal.flush();
         }
     }
 
-
-    private void reportVerbose(TestCase tc)
-    {
-        if (VERBOSE == 3)
-        {
-            if (tc.result.isSuccess())
-                Terminal.printGreen("passed");
-            else
-                Terminal.printRed("failed");
+    private void reportVerbose(TestCase tc) {
+        if (VERBOSE == 3) {
+            if (tc.result.isSuccess()) Terminal.printGreen("passed");
+            else Terminal.printRed("failed");
             Terminal.nextln();
-        } else if (VERBOSE == 2)
-        {
-            if (tc.result.isSuccess())
-            {
+        } else if (VERBOSE == 2) {
+            if (tc.result.isSuccess()) {
                 Terminal.printGreen("o");
-            } else
-            {
+            } else {
                 Terminal.printRed("X");
             }
-            if (finishedTests % 50 == 0 || finishedTests >= numTests)
-            {
+            if (finishedTests % 50 == 0 || finishedTests >= numTests) {
                 Terminal.print(" " + finishedTests + " of " + numTests);
                 Terminal.nextln();
-            } else if (finishedTests % 10 == 0)
-            {
+            } else if (finishedTests % 10 == 0) {
                 Terminal.print(" ");
             }
             Terminal.flush();
         }
     }
 
-
-    private TestCase readTestCase(String fname) throws IOException
-    {
+    private TestCase readTestCase(String fname) throws IOException {
         BufferedReader r = new BufferedReader(new FileReader(fname));
         Properties vars = new Properties();
 
-        while (true)
-        {
+        while (true) {
             String buffer = r.readLine();
-            if (buffer == null)
-                break;
+            if (buffer == null) break;
 
             int index = buffer.indexOf('@');
-            if (index < 0)
-                break;
+            if (index < 0) break;
 
             int index2 = buffer.indexOf(':');
-            if (index2 < 0)
-                break;
+            if (index2 < 0) break;
 
             String var = buffer.substring(index + 1, index2).trim();
             String val = buffer.substring(index2 + 1).trim();
@@ -449,20 +369,41 @@ public class TestEngine
         String expect = vars.getProperty("Result");
         String hname = vars.getProperty("Harness");
 
-        if (expect == null)
-            return new TestCase.Malformed(fname, "no result specified");
-        if (hname == null)
-            return new TestCase.Malformed(fname, "no test harness specified");
+        if (expect == null) return new TestCase.Malformed(fname, "no result specified");
+        if (hname == null) return new TestCase.Malformed(fname, "no test harness specified");
 
-        try
-        {
+        try {
             Harness harness = (Harness) harnessMap.getObjectOfClass(hname);
             return harness.newTestCase(fname, vars);
-        }
-        catch (Throwable t)
-        {
+        } catch (Throwable t) {
             return new TestCase.InitFailure(fname, t);
         }
+    }
+
+    /**
+     * The <code>TestHarness</code> interface encapsulates the notion of a
+     * testing harness that is capable of creating the correct type of test
+     * cases given the file and a list of properties extracted from the file by
+     * the automated testing framework.
+     *
+     * @author Ben L. Titzer
+     */
+    public interface Harness {
+
+        /**
+         * The <code>newTestCase()</code> method creates a new test case of the
+         * right type given the file name and the properties already extracted
+         * from the file by the testing framework.
+         *
+         * @param fname
+         *            the name of the file
+         * @param props
+         *            a list of properties extracted from the file
+         * @return an instance of the <code>TestCase</code> class
+         * @throws Exception
+         *             if there is a problem creating the testcase or reading it
+         */
+        TestCase newTestCase(String fname, Properties props) throws Exception;
     }
 
     public class NonTermination extends Util.Error

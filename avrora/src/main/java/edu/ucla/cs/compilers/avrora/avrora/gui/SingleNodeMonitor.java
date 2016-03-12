@@ -1,43 +1,36 @@
 /**
- * Copyright (c) 2004-2005, Regents of the University of California
- * All rights reserved.
- *
- * Redistribution and use in source and binary forms, with or without
- * modification, are permitted provided that the following conditions
- * are met:
- *
- * Redistributions of source code must retain the above copyright notice,
- * this list of conditions and the following disclaimer.
- *
- * Redistributions in binary form must reproduce the above copyright
- * notice, this list of conditions and the following disclaimer in the
- * documentation and/or other materials provided with the distribution.
- *
- * Neither the name of the University of California, Los Angeles nor the
- * names of its contributors may be used to endorse or promote products
- * derived from this software without specific prior written permission.
- *
- * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
- * "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
- * LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
- * A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
- * OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
- * SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
- * LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
- * DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
- * THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
- * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
- * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ * Copyright (c) 2004-2005, Regents of the University of California All rights reserved.
+ * <p>
+ * Redistribution and use in source and binary forms, with or without modification, are permitted provided
+ * that the following conditions are met:
+ * <p>
+ * Redistributions of source code must retain the above copyright notice, this list of conditions and the
+ * following disclaimer.
+ * <p>
+ * Redistributions in binary form must reproduce the above copyright notice, this list of conditions and the
+ * following disclaimer in the documentation and/or other materials provided with the distribution.
+ * <p>
+ * Neither the name of the University of California, Los Angeles nor the names of its contributors may be used
+ * to endorse or promote products derived from this software without specific prior written permission.
+ * <p>
+ * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND ANY EXPRESS OR IMPLIED
+ * WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A
+ * PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS BE LIABLE FOR ANY
+ * DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO,
+ * PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION)
+ * HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING
+ * NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
+ * POSSIBILITY OF SUCH DAMAGE.
  */
 
 package edu.ucla.cs.compilers.avrora.avrora.gui;
 
+import edu.ucla.cs.compilers.avrora.avrora.sim.Simulation;
+import edu.ucla.cs.compilers.avrora.avrora.sim.Simulation.Node;
+import edu.ucla.cs.compilers.avrora.avrora.sim.Simulator;
+
 import java.util.HashMap;
 import java.util.List;
-
-import edu.ucla.cs.compilers.avrora.avrora.sim.Simulation;
-import edu.ucla.cs.compilers.avrora.avrora.sim.Simulator;
-import edu.ucla.cs.compilers.avrora.avrora.sim.Simulation.Node;
 
 /**
  * There are two types of visual monitors for the GUI. First, there are single
@@ -58,24 +51,22 @@ import edu.ucla.cs.compilers.avrora.avrora.sim.Simulation.Node;
  *
  * @author Ben L. Titzer
  */
-public abstract class SingleNodeMonitor implements Simulation.GuiMonitor
-{
+public abstract class SingleNodeMonitor implements Simulation.GuiMonitor {
 
     final HashMap<Node, SingleNodePanel> panelMap; // maps VisualSimulation.Node
-                                                   // -> SingleNodePanel
+    // -> SingleNodePanel
     final String monitorName;
-
 
     /**
      * Default constructor, will init the hash maps that store information about
-     * the monitors in this node
+     * the monitors in this node.
+     *
+     * @param n the monitor name
      */
-    public SingleNodeMonitor(String n)
-    {
+    public SingleNodeMonitor(String n) {
         panelMap = new HashMap<Node, SingleNodePanel>();
         monitorName = n;
     }
-
 
     /**
      * This actually informs our data structure that the list of nodes passed to
@@ -86,20 +77,15 @@ public abstract class SingleNodeMonitor implements Simulation.GuiMonitor
      *            A list of the nodes that should be attached to the monitor
      */
     @Override
-    public void attach(Simulation sim, List<Simulation.Node> nodes)
-    {
-        for (Simulation.Node node : nodes)
-        {
-            if (panelMap.containsKey(node))
-                continue;
-            MonitorPanel p = AvroraGui.instance
-                    .createMonitorPanel(monitorName + " - " + node.id);
+    public void attach(Simulation sim, List<Simulation.Node> nodes) {
+        for (Simulation.Node node : nodes) {
+            if (panelMap.containsKey(node)) continue;
+            MonitorPanel p = AvroraGui.instance.createMonitorPanel(monitorName + " - " + node.id);
             SingleNodePanel snp = newPanel(node, p);
             panelMap.put(node, snp);
             node.addGuiMonitor(this);
         }
     }
-
 
     /**
      * This is called at the beginning of the simulation to physically create
@@ -111,11 +97,9 @@ public abstract class SingleNodeMonitor implements Simulation.GuiMonitor
      *            The simulator that the monitor can be inserted into
      */
     @Override
-    public void construct(Simulation sim, Simulation.Node n, Simulator s)
-    {
+    public void construct(Simulation sim, Simulation.Node n, Simulator s) {
         panelMap.get(n).construct(s);
     }
-
 
     /**
      * This is called at the end of the simulation to remove any data structures
@@ -127,11 +111,9 @@ public abstract class SingleNodeMonitor implements Simulation.GuiMonitor
      *            The simulator that the monitor can be inserted into
      */
     @Override
-    public void destruct(Simulation sim, Simulation.Node n, Simulator s)
-    {
+    public void destruct(Simulation sim, Simulation.Node n, Simulator s) {
         panelMap.get(n).destruct();
     }
-
 
     /**
      * You can multiple remove nodes from a monitor using this function
@@ -142,20 +124,15 @@ public abstract class SingleNodeMonitor implements Simulation.GuiMonitor
      *            will just skip that element.
      */
     @Override
-    public void remove(Simulation sim, List<Simulation.Node> nodes)
-    {
-        for (Simulation.Node n : nodes)
-        {
+    public void remove(Simulation sim, List<Simulation.Node> nodes) {
+        for (Simulation.Node n : nodes) {
             removeOne(n);
         }
     }
 
-
-    private void removeOne(Simulation.Node n)
-    {
+    private void removeOne(Simulation.Node n) {
         SingleNodePanel snp = panelMap.get(n);
-        if (snp == null)
-            return;
+        if (snp == null) return;
 
         snp.remove();
         AvroraGui.instance.removeMonitorPanel(snp.panel);
@@ -163,29 +140,21 @@ public abstract class SingleNodeMonitor implements Simulation.GuiMonitor
         n.removeGuiMonitor(this);
     }
 
-    protected abstract class SingleNodePanel
-    {
+    protected abstract SingleNodePanel newPanel(Simulation.Node n, MonitorPanel p);
+
+    protected abstract class SingleNodePanel {
         protected final Simulation.Node node;
         protected final MonitorPanel panel;
 
-
-        SingleNodePanel(Simulation.Node n, MonitorPanel p)
-        {
+        SingleNodePanel(Simulation.Node n, MonitorPanel p) {
             node = n;
             panel = p;
         }
 
-
         protected abstract void construct(Simulator s);
-
 
         protected abstract void destruct();
 
-
         protected abstract void remove();
     }
-
-
-    protected abstract SingleNodePanel newPanel(Simulation.Node n,
-            MonitorPanel p);
 }

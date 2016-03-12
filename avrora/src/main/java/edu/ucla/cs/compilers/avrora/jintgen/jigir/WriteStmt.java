@@ -66,6 +66,9 @@ public class WriteStmt extends Stmt
      *
      * @param m
      *            the name of the subroutine as a string
+     * @param t program type reference
+     * @param o input token stream
+     * @param e IR. expression
      */
     public WriteStmt(Token m, TypeRef t, Token o, Expr e)
     {
@@ -122,15 +125,12 @@ public class WriteStmt extends Stmt
         return r.visit(this, env);
     }
 
+    public OperandTypeDecl.Accessor getAccessor() {
+        return accessor;
+    }
 
     public void setAccessor(OperandTypeDecl.Accessor m)
     {
         accessor = m;
-    }
-
-
-    public OperandTypeDecl.Accessor getAccessor()
-    {
-        return accessor;
     }
 }

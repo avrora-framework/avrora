@@ -32,13 +32,6 @@
 
 package edu.ucla.cs.compilers.avrora.avrora.actions;
 
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.PrintStream;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.List;
-
 import edu.ucla.cs.compilers.avrora.avrora.Main;
 import edu.ucla.cs.compilers.avrora.avrora.arch.legacy.LegacyInstr;
 import edu.ucla.cs.compilers.avrora.avrora.core.ControlFlowGraph;
@@ -49,6 +42,13 @@ import edu.ucla.cs.compilers.avrora.cck.text.Printer;
 import edu.ucla.cs.compilers.avrora.cck.text.StringUtil;
 import edu.ucla.cs.compilers.avrora.cck.text.Terminal;
 import edu.ucla.cs.compilers.avrora.cck.util.Option;
+
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.PrintStream;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.List;
 
 /**
  * The <code>CFGAction</code> is an Avrora action that allows a control flow
@@ -63,7 +63,9 @@ public class CFGAction extends Action
             + "given input program. This is useful for better program understanding "
             + "and for optimizations. The graph can be outputted in a textual format, or the "
             + "format supported by the \"dot\" graph tool.";
-
+    private static final String[] palette = {"aquamarine", "blue2", "brown1", "cadetblue1", "chartreuse1",
+            "cyan4", "darkgoldenrod1", "darkorchid3", "darkslateblue", "deeppink2", "yellow", "seagreen3",
+            "orangered1"};
     public final Option.Bool COLOR_PROCEDURES = newOption("color-procedures",
             true,
             "This option is used when outputting in the "
@@ -89,21 +91,27 @@ public class CFGAction extends Action
             "This option specifies the output file for the result of generating a"
                     + "\"dot\" format control flow graph. When this option is not set, a textual "
                     + "representation of the graph will be printed to the terminal.");
-
-
-    /**
-     * The default constructor of the <code>CFGAction</code> class simply
-     * creates an empty instance with the appropriate name and help string.
-     */
-    public CFGAction()
-    {
-        super(HELP);
-    }
-
+    private final HashMap<ControlFlowGraph.Block, String> BLOCK_COLORS = new HashMap<ControlFlowGraph
+            .Block, String>();
     protected ProcedureMap pmap;
     protected ControlFlowGraph cfg;
     protected Program program;
+    private int colorCounter;
+    private boolean unknownExists;
 
+    /**
+     * The default constructor of the <code>CFGAction</code> class simply creates an empty instance with the
+     * appropriate name and help string.
+     */
+    public CFGAction() {
+        super(HELP);
+    }
+
+    public static String blockName(ControlFlowGraph.Block block) {
+        String start = StringUtil.addrToString(block.getAddress());
+        String end = StringUtil.addrToString(block.getAddress() + block.getSize());
+        return StringUtil.quote(start + " - \\n" + end);
+    }
 
     /**
      * The <code>run()</code> method starts the control flow graph utility. The
@@ -114,7 +122,7 @@ public class CFGAction extends Action
      *
      * @param args
      *            the command line arguments to the control flow graph utility
-     * @throws Exception
+     * @throws Exception on program load error or dot graph file error
      */
     @Override
     public void run(String[] args) throws Exception
@@ -128,7 +136,6 @@ public class CFGAction extends Action
             dumpCFG(cfg);
 
     }
-
 
     private void dumpCFG(ControlFlowGraph cfg)
     {
@@ -156,7 +163,6 @@ public class CFGAction extends Action
         }
     }
 
-
     private void dumpDotCFG(ControlFlowGraph cfg) throws IOException
     {
         Printer p;
@@ -175,7 +181,6 @@ public class CFGAction extends Action
         dumpDotEdges(p);
         p.endblock();
     }
-
 
     private void dumpDotNodes(Printer p)
     {
@@ -240,7 +245,6 @@ public class CFGAction extends Action
         }
     }
 
-
     private void assignProcedureColors()
     {
         // add each block to its respective color set
@@ -258,7 +262,6 @@ public class CFGAction extends Action
         }
     }
 
-
     private void printBlock(ControlFlowGraph.Block block, Printer p)
     {
         String bName = blockName(block);
@@ -270,7 +273,6 @@ public class CFGAction extends Action
         p.println("];");
     }
 
-
     private void dumpDotEdges(Printer p)
     {
         Iterator<ControlFlowGraph.Block> blocks = cfg.getBlockIterator();
@@ -280,7 +282,6 @@ public class CFGAction extends Action
             dumpDotEdges(block.getEdgeIterator(), p);
         }
     }
-
 
     private String getShape(ControlFlowGraph.Block block)
     {
@@ -302,14 +303,6 @@ public class CFGAction extends Action
         return "ellipse";
     }
 
-    private int colorCounter;
-    private final HashMap<ControlFlowGraph.Block, String> BLOCK_COLORS = new HashMap<ControlFlowGraph.Block, String>();
-    private static final String[] palette = { "aquamarine", "blue2", "brown1",
-            "cadetblue1", "chartreuse1", "cyan4", "darkgoldenrod1",
-            "darkorchid3", "darkslateblue", "deeppink2", "yellow", "seagreen3",
-            "orangered1" };
-
-
     private String colorize(ControlFlowGraph.Block b)
     {
         String color = BLOCK_COLORS.get(b);
@@ -321,7 +314,6 @@ public class CFGAction extends Action
         return color;
     }
 
-
     private String getColor(ControlFlowGraph.Block block)
     {
         String color = BLOCK_COLORS.get(block);
@@ -330,12 +322,10 @@ public class CFGAction extends Action
         return color;
     }
 
-
     private boolean isReturnEdge(String type)
     {
         return type != null && ("RET".equals(type) || "RETI".equals(type));
     }
-
 
     private void dumpEdges(Iterator<ControlFlowGraph.Edge> edges)
     {
@@ -362,9 +352,6 @@ public class CFGAction extends Action
                 Terminal.print(", ");
         }
     }
-
-    private boolean unknownExists;
-
 
     private void dumpDotEdges(Iterator<ControlFlowGraph.Edge> edges, Printer p)
     {
@@ -405,7 +392,6 @@ public class CFGAction extends Action
         }
     }
 
-
     private void emitIndirectEdge(ControlFlowGraph.Block source, String sName,
             Printer p, String type)
     {
@@ -434,7 +420,6 @@ public class CFGAction extends Action
         }
     }
 
-
     private void emitEdge(ControlFlowGraph.Block target, Printer p,
             String sName, String t, boolean direct)
     {
@@ -453,20 +438,10 @@ public class CFGAction extends Action
         p.println("];");
     }
 
-
     private ControlFlowGraph.Block getEntryOf(ControlFlowGraph.Block b)
     {
         if (pmap == null)
             return null;
         return pmap.getProcedureContaining(b);
-    }
-
-
-    public static String blockName(ControlFlowGraph.Block block)
-    {
-        String start = StringUtil.addrToString(block.getAddress());
-        String end = StringUtil
-                .addrToString(block.getAddress() + block.getSize());
-        return StringUtil.quote(start + " - \\n" + end);
     }
 }

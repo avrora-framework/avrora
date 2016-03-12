@@ -32,9 +32,9 @@
 
 package edu.ucla.cs.compilers.avrora.cck.stat;
 
-import java.util.LinkedList;
-
 import edu.ucla.cs.compilers.avrora.cck.text.Printer;
+
+import java.util.LinkedList;
 
 /**
  * This class represents the proportion of different items with respect to one
@@ -53,6 +53,8 @@ public class Proportion implements DataItem
 
     /**
      * Public constructor that takes a string name.
+     *
+     * @param newname the name of the report
      */
     public Proportion(String newname)
     {
@@ -70,8 +72,8 @@ public class Proportion implements DataItem
 
     /**
      * Generate a text report of the shares.
-     * 
-     * @param printer
+     *
+     * @param printer the printer to use for reporting
      */
     @Override
     public void print(Printer printer)
@@ -92,6 +94,9 @@ public class Proportion implements DataItem
 
     /**
      * LegacyRegister a counter object with this proportion.
+     *
+     * @param name name for the new counter
+     * @return a new counter
      */
     public Counter newCounter(String name)
     {
@@ -104,6 +109,8 @@ public class Proportion implements DataItem
     /**
      * Register an integer count with this proportion object and return a
      * Counter object.
+     *
+     * @param c the counter to register
      */
     public void addCounter(Counter c)
     {
@@ -114,6 +121,9 @@ public class Proportion implements DataItem
     /**
      * Search for the counter with the specified string name and return it if it
      * is registered.
+     *
+     * @param name the counter to search for
+     * @return the found counter else null
      */
     public Counter getCounter(String name)
     {
@@ -129,7 +139,8 @@ public class Proportion implements DataItem
 
     /**
      * Search for the counter with the specified name and report its proportion.
-     * Return -1 if not found.
+     * @param name the counter name
+     * @return -1 if not found.
      */
     public float getFraction(String name)
     {
@@ -157,6 +168,8 @@ public class Proportion implements DataItem
 
     /**
      * Return true if this proportion has any information available.
+     *
+     * @return true if information available else false
      */
     @Override
     public boolean empty()

@@ -32,34 +32,6 @@
 
 package edu.ucla.cs.compilers.avrora.avrora.gui;
 
-import java.awt.BorderLayout;
-import java.awt.Color;
-import java.awt.Dimension;
-import java.awt.Font;
-import java.awt.GridLayout;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.net.URL;
-import java.util.Enumeration;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Vector;
-
-import javax.swing.BorderFactory;
-import javax.swing.ImageIcon;
-import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
-import javax.swing.JScrollPane;
-import javax.swing.JTabbedPane;
-import javax.swing.JTextArea;
-import javax.swing.OverlayLayout;
-import javax.swing.SwingConstants;
-import javax.swing.UIManager;
-import javax.swing.UnsupportedLookAndFeelException;
-import javax.swing.event.ChangeEvent;
-import javax.swing.event.ChangeListener;
-
 import edu.ucla.cs.compilers.avrora.avrora.Version;
 import edu.ucla.cs.compilers.avrora.avrora.gui.VisualRadioMonitor.VisualMonitor;
 import edu.ucla.cs.compilers.avrora.avrora.sim.Simulation;
@@ -67,6 +39,18 @@ import edu.ucla.cs.compilers.avrora.avrora.sim.types.SensorSimulation;
 import edu.ucla.cs.compilers.avrora.cck.util.Option;
 import edu.ucla.cs.compilers.avrora.cck.util.Options;
 import edu.ucla.cs.compilers.avrora.cck.util.Util;
+
+import javax.swing.*;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
+import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.net.URL;
+import java.util.Enumeration;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Vector;
 
 /**
  * The <code> AvroraGUI </code> is the top level GUI component. It should be
@@ -78,85 +62,61 @@ import edu.ucla.cs.compilers.avrora.cck.util.Util;
 public class AvroraGui implements ActionListener, ChangeListener
 {
 
+    // The swing tutorial had this code, to allow it to set up
+    // the default look and feel
+    // Specify the look and feel to use. Valid values:
+    // null (use the default), "Metal", "System", "Motif", "GTK+"
+    static final String LOOKANDFEEL = null;
+    private static final String AVRORA_VERSION = "Avrora " + Version.TAG;
+    private static final String AVRORA_GUI_VERSION = "Avrora Gui v.0.3.2";
+
+    // High level elements of the GUI
+    private static final int PAINT_THREAD_SLEEP_TIME = 200;
     /**
      * This is the actual instance of AvroraGui that is used. Since it's static,
      * it can be called by anything that adds the current package
      */
     public static AvroraGui instance;
-
-
-    /**
-     * This function should be called by VisualAction to actually init the
-     * static reference to a physical AvroraGUI object
-     *
-     * @param opt
-     *            Options specified from the command line
-     * @param args
-     *            file names specified from the command line
-     */
-    public static void init(Options opt, String[] args)
-    {
-        new AvroraGui(opt, args);
-    }
-
     /**
      * This is a list of arguments passed by the command line that
      * <code> avrora.Main </code> did not process. Most likely it's a list of
      * filenames.
      */
     public String[] args;
-
-    // High level elements of the GUI
-
     /**
      * This is GUI - everything fits inside the master frame
      */
     public JFrame masterFrame;
-
     /**
      * This menu bar now contols most of the options specified by the GUI (this
      * is the file, edit, options menus)
      */
     public SimMenuBar topMenu;
-
+                                       // results, as tabbed windows
     /**
      * This handles the speed up/slow down, pause, stop, and start of a sim
      */
     public ManageSimTime simTimeBox;
-
     /**
      * All information on node topology is displayed and set via this class
      */
     public ManageTopology topologyBox;
-
     /**
-     * This holds all our monitor "chalkboards" for displaying the data they
-     * collect
+     * This holds all our monitor "chalkboards" for displaying the data they collect
      */
     public JTabbedPane monitorResults; // Holds all the different monitor
-                                       // results, as tabbed windows
-
+    // A thread that will repaint the monitor window
+    PaintThread newPaintThread;
     private JLabel versioningInfo; // holds the text that displays at the bottom
                                    // of the GUI
     private JPanel monitorOptions; // holds the options for the current monitor
-
     // This is the debug panel
     private JTextArea debugOutput; // This holds basic debug information
     private JPanel debugPanel; // this is init in createDebugOutput
-
     private HashMap<JPanel, MonitorPanel> monitorTabMap;
-
     // For convuluted reasons it's important to store the
     // current monitor being displayed (see paint thread)
     private MonitorPanel currentMonitorDisplayed;
-
-    private static final String AVRORA_VERSION = "Avrora " + Version.TAG;
-    private static final String AVRORA_GUI_VERSION = "Avrora Gui v.0.3.2";
-    private static final int PAINT_THREAD_SLEEP_TIME = 200;
-
-    // A thread that will repaint the monitor window
-    PaintThread newPaintThread;
-
     private SensorSimulation simulation;
 
 
@@ -233,6 +193,71 @@ public class AvroraGui implements ActionListener, ChangeListener
         masterFrame.getContentPane().add(southPanel, BorderLayout.SOUTH);
     }
 
+    /**
+     * This function should be called by VisualAction to actually init the
+     * static reference to a physical AvroraGUI object
+     *
+     * @param opt
+     *            Options specified from the command line
+     * @param args
+     *            file names specified from the command line
+     */
+    public static void init(Options opt, String[] args) {
+        new AvroraGui(opt, args);
+    }
+
+    // Provided by swing tutorial to set up default look and feel
+    private static void initLookAndFeel() {
+        String lookAndFeel;
+
+        if (LOOKANDFEEL != null) {
+            if ("Metal".equals(LOOKANDFEEL)) {
+                lookAndFeel = UIManager.getCrossPlatformLookAndFeelClassName();
+            } else if ("System".equals(LOOKANDFEEL)) {
+                lookAndFeel = UIManager.getSystemLookAndFeelClassName();
+            } else if ("Motif".equals(LOOKANDFEEL)) {
+                lookAndFeel = "com.sun.java.swing.plaf.motif.MotifLookAndFeel";
+            } else if ("GTK+".equals(LOOKANDFEEL)) { // new in 1.4.2
+                lookAndFeel = "com.sun.java.swing.plaf.gtk.GTKLookAndFeel";
+            } else {
+                System.err.println("Unexpected value of LOOKANDFEEL specified: " + LOOKANDFEEL);
+                lookAndFeel = UIManager.getCrossPlatformLookAndFeelClassName();
+            }
+
+            try {
+                UIManager.setLookAndFeel(lookAndFeel);
+            } catch (ClassNotFoundException e) {
+                System.err.println("Couldn't find class for specified look and feel:" + lookAndFeel);
+                System.err.println("Did you include the L&F library in the class path?");
+                System.err.println("Using the default look and feel.");
+            } catch (UnsupportedLookAndFeelException e) {
+                System.err.println("Can't use the specified look and feel (" + lookAndFeel + ") on this " +
+                        "platform.");
+                System.err.println("Using the default look and feel.");
+            } catch (Exception e) {
+                System.err.println("Couldn't get specified look and feel (" + lookAndFeel + "), for some " +
+                        "reason.");
+                System.err.println("Using the default look and feel.");
+                e.printStackTrace();
+            }
+        }
+    }
+
+    /**
+     * Returns an ImageIcon, or null if the path was invalid.
+     *
+     * @param path path to image resource
+     * @return the resource icon
+     */
+    protected static ImageIcon createImageIcon(String path) {
+        URL imageURL = AvroraGui.class.getResource(path);
+
+        if (imageURL == null) {
+            throw Util.failure("Resource not found: " + path);
+        } else {
+            return new ImageIcon(imageURL);
+        }
+    }
 
     /**
      * A {@link Simulation} object holds data about the current sim running
@@ -244,7 +269,6 @@ public class AvroraGui implements ActionListener, ChangeListener
         return simulation;
     }
 
-
     /**
      * Gets all monitors attached to the simulator. Uses {@link GUIDefaults}
      *
@@ -255,7 +279,6 @@ public class AvroraGui implements ActionListener, ChangeListener
         return GUIDefaults.getMonitorList();
     }
 
-
     /**
      * Gets all options for the GUI and simulator. Uses {@link GUIDefaults}
      *
@@ -265,7 +288,6 @@ public class AvroraGui implements ActionListener, ChangeListener
     {
         return GUIDefaults.getOptionList();
     }
-
 
     /**
      * This allows the GUI to respond to mouse clicks or other events. It calls
@@ -285,7 +307,6 @@ public class AvroraGui implements ActionListener, ChangeListener
         }
     }
 
-
     /**
      * Some modules (like a spinner) detect a state change and not an action.
      * Thus, visual action can handle both. A specific hack here is that this
@@ -298,16 +319,13 @@ public class AvroraGui implements ActionListener, ChangeListener
     @Override
     public void stateChanged(ChangeEvent e)
     {
-        if (simTimeBox.sliderAndSpinnerDispatch(e))
-        {
-        } else if (e.getSource() == monitorResults)
-        {
+        if (simTimeBox.sliderAndSpinnerDispatch(e)) {
+        } else if (e.getSource() == monitorResults) {
             // whenever we change the tab pane we have to change
             // the monitor options panel to correspond with the
             // right monitor
 
-            JPanel monitorPanel = (JPanel) monitorResults
-                    .getComponentAt(monitorResults.getSelectedIndex());
+            JPanel monitorPanel = (JPanel) monitorResults.getComponentAt(monitorResults.getSelectedIndex());
 
             String titleOfPanel;
 
@@ -318,8 +336,7 @@ public class AvroraGui implements ActionListener, ChangeListener
             titleOfPanel = getMonitorName(monitorPanel);
             currentMonitorDisplayed = getMonitorPanel(monitorPanel);
 
-            if (thePanel == null)
-            {
+            if (thePanel == null) {
                 // then it must be the debug panel...let's set
                 // the options panel to just a blank panel
                 thePanel = new JPanel(false);
@@ -330,47 +347,36 @@ public class AvroraGui implements ActionListener, ChangeListener
             monitorOptions.setLayout(new GridLayout(1, 1));
             monitorOptions.add(thePanel);
             // redo the title border, now with the title of the monitor
-            monitorOptions.setBorder(BorderFactory.createCompoundBorder(
-                    BorderFactory.createTitledBorder(titleOfPanel + " Options"),
-                    BorderFactory.createEmptyBorder(5, 5, 5, 5)));
+            monitorOptions.setBorder(BorderFactory.createCompoundBorder(BorderFactory.createTitledBorder
+                    (titleOfPanel + " Options"), BorderFactory.createEmptyBorder(5, 5, 5, 5)));
             monitorOptions.validate();
-
         }
     }
 
-
-    private MonitorPanel getMonitorPanel(JPanel monitorPanel)
-    {
+    private MonitorPanel getMonitorPanel(JPanel monitorPanel) {
         MonitorPanel p = monitorTabMap.get(monitorPanel);
         if (p == null)
             return null;
         return p;
     }
 
-
-    private String getMonitorName(JPanel monitorPanel)
-    {
+    private String getMonitorName(JPanel monitorPanel) {
         MonitorPanel p = monitorTabMap.get(monitorPanel);
         if (p == null)
             return null;
         return p.name;
     }
 
-
-    private JPanel getOptionsFromMonitor(JPanel monitorPanel)
-    {
+    private JPanel getOptionsFromMonitor(JPanel monitorPanel) {
         MonitorPanel p = monitorTabMap.get(monitorPanel);
-        if (p == null)
-            return null;
+        if (p == null) return null;
         return p.optionsPanel;
     }
 
-
     // This creates the "console window" inside the GUI
-    private void createDebugOutput()
-    {
-        debugOutput = new JTextArea("Console initialized. "
-                + "Textual output from Avrora will be displayed here.\n");
+    private void createDebugOutput() {
+        debugOutput = new JTextArea("Console initialized. " + "Textual output from Avrora will be displayed" +
+                " here.\n");
         debugOutput.setFont(new Font("Courier", Font.PLAIN, 14));
         debugOutput.setBackground(Color.BLACK);
         debugOutput.setForeground(Color.WHITE);
@@ -378,8 +384,7 @@ public class AvroraGui implements ActionListener, ChangeListener
         debugOutput.setWrapStyleWord(true);
         debugOutput.setEditable(false);
         JScrollPane debugScrollPane = new JScrollPane(debugOutput);
-        debugScrollPane.setVerticalScrollBarPolicy(
-                JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
+        debugScrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
 
         // Let's not set a preferred size...we'll just accept whatever we can
         // get
@@ -390,12 +395,10 @@ public class AvroraGui implements ActionListener, ChangeListener
         debugPanel.add(debugScrollPane);
     }
 
-
     // This function creates the monitor results tab window, with the
     // debug tab as the default tab displayed
     // Should be called after createDebugOutput()
-    private void createMonitorResults()
-    {
+    private void createMonitorResults() {
         monitorResults = new JTabbedPane(JTabbedPane.BOTTOM);
 
         // By default, only the debug tab is displayed
@@ -403,128 +406,41 @@ public class AvroraGui implements ActionListener, ChangeListener
         debugPanel.setPreferredSize(new Dimension(monitorResults.getSize()));
         monitorResults.addTab("Debug Information", debugPanel);
 
-        monitorResults.setBorder(BorderFactory.createCompoundBorder(
-                BorderFactory.createTitledBorder("View Monitors"),
-                BorderFactory.createEmptyBorder(5, 5, 5, 5)));
+        monitorResults.setBorder(BorderFactory.createCompoundBorder(BorderFactory.createTitledBorder("View " +
+                "Monitors"), BorderFactory.createEmptyBorder(5, 5, 5, 5)));
 
         monitorResults.addChangeListener(this);
     }
 
-
-    private void createVersioningInfo()
-    {
-        versioningInfo = new JLabel(AVRORA_VERSION + "; " + AVRORA_GUI_VERSION,
-                SwingConstants.RIGHT);
+    private void createVersioningInfo() {
+        versioningInfo = new JLabel(AVRORA_VERSION + "; " + AVRORA_GUI_VERSION, SwingConstants.RIGHT);
     }
-
 
     /**
      * Used by DebugStream to allow writing to the debug window. This might be
      * changed soon - Ben didn't like the way this was done (not efficient).
-     * 
+     *
      * @param b
      *            generally just one letter that needs to be output
      */
-    public void debugAppend(String b)
-    {
+    public void debugAppend(String b) {
         debugOutput.append(b);
     }
 
+    // Provided by swing tutorial - just used to load images
 
     /**
      * Once the GUI has been "created" we call this function to physically
      * display it to the screen
      */
-    public void showGui()
-    {
+    public void showGui() {
         // Display the window.
 
         masterFrame.pack(); // set to min size the components allow if its not
-                            // maxed
+        // maxed
         masterFrame.setExtendedState(JFrame.MAXIMIZED_BOTH); // will max window
         masterFrame.setVisible(true);
     }
-
-    // The swing tutorial had this code, to allow it to set up
-    // the default look and feel
-    // Specify the look and feel to use. Valid values:
-    // null (use the default), "Metal", "System", "Motif", "GTK+"
-    static final String LOOKANDFEEL = null;
-
-
-    // Provided by swing tutorial to set up default look and feel
-    private static void initLookAndFeel()
-    {
-        String lookAndFeel;
-
-        if (LOOKANDFEEL != null)
-        {
-            if ("Metal".equals(LOOKANDFEEL))
-            {
-                lookAndFeel = UIManager.getCrossPlatformLookAndFeelClassName();
-            } else if ("System".equals(LOOKANDFEEL))
-            {
-                lookAndFeel = UIManager.getSystemLookAndFeelClassName();
-            } else if ("Motif".equals(LOOKANDFEEL))
-            {
-                lookAndFeel = "com.sun.java.swing.plaf.motif.MotifLookAndFeel";
-            } else if ("GTK+".equals(LOOKANDFEEL))
-            { // new in 1.4.2
-                lookAndFeel = "com.sun.java.swing.plaf.gtk.GTKLookAndFeel";
-            } else
-            {
-                System.err.println("Unexpected value of LOOKANDFEEL specified: "
-                        + LOOKANDFEEL);
-                lookAndFeel = UIManager.getCrossPlatformLookAndFeelClassName();
-            }
-
-            try
-            {
-                UIManager.setLookAndFeel(lookAndFeel);
-            }
-            catch (ClassNotFoundException e)
-            {
-                System.err.println(
-                        "Couldn't find class for specified look and feel:"
-                                + lookAndFeel);
-                System.err.println(
-                        "Did you include the L&F library in the class path?");
-                System.err.println("Using the default look and feel.");
-            }
-            catch (UnsupportedLookAndFeelException e)
-            {
-                System.err.println("Can't use the specified look and feel ("
-                        + lookAndFeel + ") on this platform.");
-                System.err.println("Using the default look and feel.");
-            }
-            catch (Exception e)
-            {
-                System.err.println("Couldn't get specified look and feel ("
-                        + lookAndFeel + "), for some reason.");
-                System.err.println("Using the default look and feel.");
-                e.printStackTrace();
-            }
-        }
-    }
-
-
-    // Provided by swing tutorial - just used to load images
-    /**
-     * Returns an ImageIcon, or null if the path was invalid.
-     */
-    protected static ImageIcon createImageIcon(String path)
-    {
-        URL imageURL = AvroraGui.class.getResource(path);
-
-        if (imageURL == null)
-        {
-            throw Util.failure("Resource not found: " + path);
-        } else
-        {
-            return new ImageIcon(imageURL);
-        }
-    }
-
 
     /**
      * This function will dispatch a new thread that will repaint our dynamic

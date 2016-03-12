@@ -32,8 +32,6 @@
 
 package edu.ucla.cs.compilers.avrora.avrora.sim.mcu;
 
-import java.util.HashMap;
-
 import edu.ucla.cs.compilers.avrora.avrora.arch.avr.AVRProperties;
 import edu.ucla.cs.compilers.avrora.avrora.sim.ActiveRegister;
 import edu.ucla.cs.compilers.avrora.avrora.sim.AtmelInterpreter;
@@ -45,6 +43,8 @@ import edu.ucla.cs.compilers.avrora.avrora.sim.clock.MainClock;
 import edu.ucla.cs.compilers.avrora.avrora.sim.mcu.ATMegaFamily.FlagRegister;
 import edu.ucla.cs.compilers.avrora.avrora.sim.state.RegisterUtil.BitRangeView;
 import edu.ucla.cs.compilers.avrora.cck.text.Printer;
+
+import java.util.HashMap;
 
 /**
  * The <code>AtmelMicrocontroller</code> class represents the common
@@ -58,14 +58,53 @@ import edu.ucla.cs.compilers.avrora.cck.text.Printer;
 public abstract class AtmelMicrocontroller extends DefaultMCU
 {
 
+    public static final int MODE_ACTIVE = 0;
+    public final AVRProperties properties;
     protected final MainClock mainClock;
+    protected final HashMap<String, AtmelInternalDevice> devices;
     protected AtmelInterpreter interpreter;
 
-    public final AVRProperties properties;
+    protected AtmelMicrocontroller(ClockDomain cd, AVRProperties p, FiniteStateMachine fsm) {
+        super(cd, p.num_pins, p.getRegisterLayout().instantiate(), fsm);
+        mainClock = cd.getMainClock();
+        properties = p;
+        devices = new HashMap<String, AtmelInternalDevice>();
+    }
 
-    protected final HashMap<String, AtmelInternalDevice> devices;
-    public static final int MODE_ACTIVE = 0;
+    public static void addPin(HashMap<String, Integer> pinMap, int p, String n)
+    {
+        pinMap.put(n, new Integer(p));
+    }
 
+    public static void addPin(HashMap<String, Integer> pinMap, int p, String n1, String n2)
+    {
+        Integer i = new Integer(p);
+        pinMap.put(n1, i);
+        pinMap.put(n2, i);
+    }
+
+    public static void addPin(HashMap<String, Integer> pinMap, int p, String n1, String n2, String n3)
+    {
+        Integer i = new Integer(p);
+        pinMap.put(n1, i);
+        pinMap.put(n2, i);
+        pinMap.put(n3, i);
+    }
+
+    public static void addPin(HashMap<String, Integer> pinMap, int p, String n1, String n2, String n3,
+                              String n4)
+    {
+        Integer i = new Integer(p);
+        pinMap.put(n1, i);
+        pinMap.put(n2, i);
+        pinMap.put(n3, i);
+        pinMap.put(n4, i);
+    }
+
+    public static void addInterrupt(HashMap<String, Integer> iMap, String n, int i)
+    {
+        iMap.put(n, new Integer(i));
+    }
 
     /**
      * The <code>sleep()</code> method is called by the interpreter when the
@@ -82,9 +121,7 @@ public abstract class AtmelMicrocontroller extends DefaultMCU
         sleepState.transition(getSleepMode());
     }
 
-
     protected abstract int getSleepMode();
-
 
     /**
      * The <code>wakeup()</code> method is called by the interpreter when the
@@ -103,31 +140,17 @@ public abstract class AtmelMicrocontroller extends DefaultMCU
         // event queue)
         sleepState.transition(MODE_ACTIVE);
         // return the number of cycles consumed by waking up
-        return sleepState.getTransitionTime(sleepState.getCurrentState(),
-                MODE_ACTIVE);
+        return sleepState.getTransitionTime(sleepState.getCurrentState(), MODE_ACTIVE);
     }
-
-
-    protected AtmelMicrocontroller(ClockDomain cd, AVRProperties p,
-            FiniteStateMachine fsm)
-    {
-        super(cd, p.num_pins, p.getRegisterLayout().instantiate(), fsm);
-        mainClock = cd.getMainClock();
-        properties = p;
-        devices = new HashMap<String, AtmelInternalDevice>();
-    }
-
 
     /**
-     * The <code>installIOReg()</code> method installs an IO register with the
-     * specified name. The register layout for this microcontroller is used to
-     * get the address of the register (if it exists) and install the
-     * <code>ActiveRegister</code> object into the correct place.
-     * 
-     * @param name
-     *            the name of the IO register as a string
-     * @param reg
-     *            the register to install
+     * The <code>installIOReg()</code> method installs an IO register with the specified name. The register
+     * layout for this microcontroller is used to get the address of the register (if it exists) and install
+     * the <code>ActiveRegister</code> object into the correct place.
+     *
+     * @param name the name of the IO register as a string
+     * @param reg  the register to install
+     * @return reg
      */
     protected ActiveRegister installIOReg(String name, ActiveRegister reg)
     {
@@ -135,35 +158,30 @@ public abstract class AtmelMicrocontroller extends DefaultMCU
         return reg;
     }
 
-
     /**
      * The <code>getIOReg()</code> method gets a reference to the active
      * register currently installed for the specified name. The register layout
      * for this microcontroller is used to get the correct address.
-     * 
+     *
      * @param name
      *            the name of the IO register as a string
      * @return a reference to the active register object if it exists
      */
-    protected ActiveRegister getIOReg(String name)
-    {
+    protected ActiveRegister getIOReg(String name) {
         return interpreter.getIOReg(properties.getIOReg(name));
     }
-
 
     /**
      * The <code>addDevice()</code> method adds a new internal device to this
      * microcontroller so that it can be retrieved later with
      * <code>getDevice()</code>
-     * 
+     *
      * @param d
      *            the device to add to this microcontroller
      */
-    protected void addDevice(AtmelInternalDevice d)
-    {
+    protected void addDevice(AtmelInternalDevice d) {
         devices.put(d.name, d);
     }
-
 
     /**
      * The <code>getDevice()</code> method is used to get a reference to an
@@ -176,54 +194,9 @@ public abstract class AtmelMicrocontroller extends DefaultMCU
      *            the name of the internal device as a string
      * @return a reference to the internal device if it exists; null otherwise
      */
-    public AtmelInternalDevice getDevice(String name)
-    {
+    public AtmelInternalDevice getDevice(String name) {
         return devices.get(name);
     }
-
-
-    public static void addPin(HashMap<String, Integer> pinMap, int p, String n)
-    {
-        pinMap.put(n, new Integer(p));
-    }
-
-
-    public static void addPin(HashMap<String, Integer> pinMap, int p, String n1,
-            String n2)
-    {
-        Integer i = new Integer(p);
-        pinMap.put(n1, i);
-        pinMap.put(n2, i);
-    }
-
-
-    public static void addPin(HashMap<String, Integer> pinMap, int p, String n1,
-            String n2, String n3)
-    {
-        Integer i = new Integer(p);
-        pinMap.put(n1, i);
-        pinMap.put(n2, i);
-        pinMap.put(n3, i);
-    }
-
-
-    public static void addPin(HashMap<String, Integer> pinMap, int p, String n1,
-            String n2, String n3, String n4)
-    {
-        Integer i = new Integer(p);
-        pinMap.put(n1, i);
-        pinMap.put(n2, i);
-        pinMap.put(n3, i);
-        pinMap.put(n4, i);
-    }
-
-
-    public static void addInterrupt(HashMap<String, Integer> iMap, String n,
-            int i)
-    {
-        iMap.put(n, new Integer(i));
-    }
-
 
     /**
      * The <code>getPin()</code> method looks up the named pin and returns a
@@ -303,81 +276,11 @@ public abstract class AtmelMicrocontroller extends DefaultMCU
     protected class INTPin extends Pin implements Pin.InputListener
     {
 
-        /**
-         * Notification for events occurring on an InterruptTable. Used for
-         * handling repetitive LowLevel-interrupts.
-         */
-        class InterruptTableNotification implements InterruptTable.Notification
-        {
-
-            /**
-             * Returns true if this notification is still valid and in use.
-             */
-            public boolean isStillValid()
-            {
-                if (EICRx_bits.getValue() != InterruptType.LowLevel
-                        .getBitValue())
-                {
-                    return false; // InterruptType was changed
-                }
-                if (read() != false)
-                {
-                    return false; // no longer a low level.
-                }
-                return true;
-            }
-
-            private Notification underlyingNotification;
-
-
-            public InterruptTableNotification(
-                    InterruptTable.Notification underlyingNotification)
-            {
-                this.underlyingNotification = underlyingNotification;
-            }
-
-
-            @Override
-            public void force(int inum)
-            {
-                if (underlyingNotification != null)
-                {
-                    underlyingNotification.force(inum);
-                }
-            }
-
-
-            @Override
-            public void invoke(int inum)
-            {
-                if (underlyingNotification != null)
-                {
-                    underlyingNotification.invoke(inum);
-                }
-
-                if (isStillValid())
-                {
-                    // Re-post the interrupt
-                    EIFR_reg.flagBit(intNum);
-                } else
-                {
-
-                    // Remove the notification, and restore the original one.
-                    EIFR_reg.interpreter.getInterruptTable()
-                            .registerInternalNotification(
-                                    underlyingNotification, intNum);
-
-                }
-            }
-        }
-
         private boolean oldValue;
         private FlagRegister EIFR_reg;
         private int intNum;
         private BitRangeView EICRx_bits;
         private InterruptTableNotification notification;
-
-
         protected INTPin(int pinNum, FlagRegister eifr, int flagNum,
                 BitRangeView eicrb)
         {
@@ -390,120 +293,134 @@ public abstract class AtmelMicrocontroller extends DefaultMCU
             oldValue = read();
         }
 
-
         @Override
-        public void connectInput(Input i)
-        {
-            if (input != null)
-            {
+        public void connectInput(Input i) {
+            if (input != null) {
                 input.unregisterListener(this);
             }
             super.connectInput(i);
-            if (i != null)
-            {
-                try
-                {
+            if (i != null) {
+                try {
                     i.registerListener(this);
-                }
-                catch (UnsupportedOperationException ex)
-                {
-                    Printer.STDERR.println("[WARN] Input target " + i
-                            + " does not support Listeners. EIFR #" + intNum
-                            + " won't trigger.");
+                } catch (UnsupportedOperationException ex) {
+                    Printer.STDERR.println("[WARN] Input target " + i + " does not support Listeners. EIFR " +
+                            "#" + intNum + " won't trigger.");
                 }
                 updateSensedLevel(read());
             }
         }
 
-
         @Override
-        protected void write(boolean value)
-        {
+        protected void write(boolean value) {
             super.write(value);
 
-            if (outputDir)
-            {
+            if (outputDir) {
                 // Write to a PORT may also trigger an interrupt
                 updateSensedLevel(read());
             }
         }
 
-
         @Override
-        public void onInputChanged(Input input, boolean newValue)
-        {
+        public void onInputChanged(Input input, boolean newValue) {
             updateSensedLevel(newValue);
         }
 
-
-        private boolean triggersInterrupt(boolean oldValue, boolean newValue)
-        {
+        private boolean triggersInterrupt(boolean oldValue, boolean newValue) {
             int eicrb = EICRx_bits.getValue();
 
-            if (eicrb == InterruptType.LowLevel.getBitValue())
-            { // no level change required
-                if (!newValue)
-                {
+            if (eicrb == InterruptType.LowLevel.getBitValue()) { // no level change required
+                if (!newValue) {
                     return true;
                 }
             }
 
-            if (oldValue == newValue)
-            {
+            if (oldValue == newValue) {
                 return false;
             }
 
-            if (eicrb == InterruptType.AnyLevel.getBitValue())
-            {
+            if (eicrb == InterruptType.AnyLevel.getBitValue()) {
                 // NOTE(mlinder): INT0-INT3 on ATMega128 should not necessarily
                 // support this ("reserved for future use")
                 return true;
-            } else if (eicrb == InterruptType.FallingEdge.getBitValue())
-            {
-                if (oldValue && !newValue)
-                {
+            } else if (eicrb == InterruptType.FallingEdge.getBitValue()) {
+                if (oldValue && !newValue) {
                     return true;
                 }
-            } else if (eicrb == InterruptType.RisingEdge.getBitValue())
-            {
-                if (!oldValue && newValue)
-                {
+            } else if (eicrb == InterruptType.RisingEdge.getBitValue()) {
+                if (!oldValue && newValue) {
                     return true;
                 }
             }
             return false;
         }
 
-
-        private void updateSensedLevel(boolean newValue)
-        {
+        private void updateSensedLevel(boolean newValue) {
             // Check if we can trigger an interrupt
-            if (triggersInterrupt(oldValue, newValue))
-            {
-                if (EICRx_bits.getValue() == InterruptType.LowLevel
-                        .getBitValue())
-                {
+            if (triggersInterrupt(oldValue, newValue)) {
+                if (EICRx_bits.getValue() == InterruptType.LowLevel.getBitValue()) {
                     // Add a notification so that this interrupt is re-triggered
-                    InterruptTable table = EIFR_reg.interpreter
-                            .getInterruptTable();
-                    Notification oldNotification = table
-                            .getInternalNotification(intNum);
-                    if (oldNotification != notification)
-                    {
-                        notification = new InterruptTableNotification(
-                                oldNotification);
-                        table.registerInternalNotification(notification,
-                                intNum); // Replace/Proxy the
-                                         // FlagRegister.Notification
+                    InterruptTable table = EIFR_reg.interpreter.getInterruptTable();
+                    Notification oldNotification = table.getInternalNotification(intNum);
+                    if (oldNotification != notification) {
+                        notification = new InterruptTableNotification(oldNotification);
+                        table.registerInternalNotification(notification, intNum); // Replace/Proxy the
+                        // FlagRegister.Notification
                     }
                 }
 
                 // Modify the interrupt EIFR table
                 EIFR_reg.flagBit(intNum); // use .flagBit as .setValue won't
-                                          // trigger an interrupt
+                // trigger an interrupt
             }
 
             oldValue = newValue;
+        }
+
+        /**
+         * Notification for events occurring on an InterruptTable. Used for
+         * handling repetitive LowLevel-interrupts.
+         */
+        class InterruptTableNotification implements InterruptTable.Notification {
+
+            private Notification underlyingNotification;
+
+            public InterruptTableNotification(InterruptTable.Notification underlyingNotification) {
+                this.underlyingNotification = underlyingNotification;
+            }
+
+            /**
+             * Returns true if this notification is still valid and in use.
+             */
+            public boolean isStillValid() {
+                if (EICRx_bits.getValue() != InterruptType.LowLevel.getBitValue()) {
+                    return false; // InterruptType was changed
+                }
+                return read() == false;
+            }
+
+            @Override
+            public void force(int inum) {
+                if (underlyingNotification != null) {
+                    underlyingNotification.force(inum);
+                }
+            }
+
+            @Override
+            public void invoke(int inum) {
+                if (underlyingNotification != null) {
+                    underlyingNotification.invoke(inum);
+                }
+
+                if (isStillValid()) {
+                    // Re-post the interrupt
+                    EIFR_reg.flagBit(intNum);
+                } else {
+
+                    // Remove the notification, and restore the original one.
+                    EIFR_reg.interpreter.getInterruptTable().registerInternalNotification
+                            (underlyingNotification, intNum);
+                }
+            }
         }
     }
 }

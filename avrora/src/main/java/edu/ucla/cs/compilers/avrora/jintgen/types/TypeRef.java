@@ -34,14 +34,14 @@
 
 package edu.ucla.cs.compilers.avrora.jintgen.types;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
 import edu.ucla.cs.compilers.avrora.cck.parser.AbstractToken;
 import edu.ucla.cs.compilers.avrora.cck.parser.SourcePoint;
 import edu.ucla.cs.compilers.avrora.cck.util.Util;
 import edu.ucla.cs.compilers.avrora.jintgen.isdl.parser.Token;
+
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 /**
  * The <code>TypeRef</code> class represents a reference to a type within a
@@ -104,6 +104,7 @@ public class TypeRef implements Typeable
      * @param n
      *            a token that represents the name of the specified type
      *            constructor
+     * @param dimensions see {@link #dimensions}
      */
     @SuppressWarnings("unchecked")
     public TypeRef(AbstractToken n, HashMap<String, List<Object>> dimensions)

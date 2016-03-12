@@ -53,14 +53,15 @@ public interface MicrocontrollerFactory
      * of this hardware device and has been initialized with the specified
      * program.
      *
-     * @param sim
-     *            the simulation
+     * @param id the simulation id
+     * @param sim the simulation
      * @param p
      *            the program to load onto the microcontroller @return a
      *            <code>Microcontroller</code> instance that represents the
      *            specific hardware device with the program loaded onto it
+     * @param cd the clock domain
+     * @return a new microcontroller instance
      */
-    public Microcontroller newMicrocontroller(int id, Simulation sim,
-            ClockDomain cd, Program p);
+    Microcontroller newMicrocontroller(int id, Simulation sim, ClockDomain cd, Program p);
 
 }

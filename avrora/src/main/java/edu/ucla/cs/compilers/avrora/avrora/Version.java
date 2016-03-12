@@ -38,12 +38,11 @@ import edu.ucla.cs.compilers.avrora.cck.util.VersionTag;
  * The <code>Version</code> class records the version information for this
  * module. It has a single static method called <code>getVersion()</code> to
  * retrieve the version for this module in a <code>VersionTag</code> object.
- *
- * <p> </p>
+ * <p>
  * This file is automatically updated by CVS commit scripts that increment the
  * commit number each time code is committed to CVS. This guarantees that the
  * version number uniquely determines the version of the software.
- *
+ *</p>
  * @author Ben L. Titzer
  */
 public class Version

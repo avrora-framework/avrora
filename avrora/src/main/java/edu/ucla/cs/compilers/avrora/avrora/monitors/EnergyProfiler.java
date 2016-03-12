@@ -35,18 +35,18 @@
 
 package edu.ucla.cs.compilers.avrora.avrora.monitors;
 
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.LinkedList;
-
 import edu.ucla.cs.compilers.avrora.avrora.arch.legacy.LegacyInstr;
+import edu.ucla.cs.compilers.avrora.avrora.core.ControlFlowGraph.Block;
 import edu.ucla.cs.compilers.avrora.avrora.core.Program;
 import edu.ucla.cs.compilers.avrora.avrora.core.SourceMapping;
-import edu.ucla.cs.compilers.avrora.avrora.core.ControlFlowGraph.Block;
 import edu.ucla.cs.compilers.avrora.avrora.sim.Simulator;
 import edu.ucla.cs.compilers.avrora.avrora.sim.State;
 import edu.ucla.cs.compilers.avrora.cck.text.TermUtil;
 import edu.ucla.cs.compilers.avrora.cck.text.Terminal;
+
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.LinkedList;
 
 /**
  * The <code>EnergyProfiler</code> class is a monitor that tracks the power
@@ -59,6 +59,34 @@ public class EnergyProfiler extends MonitorFactory
 {
 
     /**
+     * The constructor for the <code>EnergyProfiler</code> class builds a new
+     * <code>MonitorFactory</code> capable of creating monitors for each
+     * <code>Simulator</code> instance passed to the <code>newMonitor()</code>
+     * method.
+     */
+    public EnergyProfiler()
+    {
+        super("The \"energy profile\" monitor tracks the power consumption of procedures and displays " +
+                "a report at the end of execution.");
+    }
+
+    /**
+     * The <code>newMonitor()</code> method creates a new monitor that is
+     * capable of energy profiling. It provides a breakdown to the individual
+     * procedures of the program.
+     *
+     * @param s
+     *            the simulator to create a monitor for
+     * @return an instance of the <code>Monitor</code> interface for the
+     *         specified simulator
+     */
+    @Override
+    public edu.ucla.cs.compilers.avrora.avrora.monitors.Monitor newMonitor(Simulator s)
+    {
+        return new Monitor(s);
+    }
+
+    /**
      * The <code>EnergyProfiler</code> class is a monitor that tracks the power
      * consumption of the cpu instructions. It provides a breakdown to the
      * procedures and records the exact cycles spend in each procedure.
@@ -69,9 +97,8 @@ public class EnergyProfiler extends MonitorFactory
         private final Program program;
 
         /**
-         * <code>labelLookup</code> provides a HashMap to lookup procedures,
-         * e.g. labels. The HashMap key is the label address, as value
-         * EnergyProfile is used
+         * <code>labelLookup</code> provides a HashMap to lookup procedures, e.g. labels. The HashMap key is
+         * the label address, as value EnergyProfile is used
          */
         private final HashMap<Integer, EnergyProfile> labelLookup;
 
@@ -81,8 +108,8 @@ public class EnergyProfiler extends MonitorFactory
         private final LinkedList<EnergyProfile> profiles;
 
         /**
-         * <code>procedureProbe</code>: probes for entering a new basic block,
-         * always need to check whether we are entering a new procedure
+         * <code>procedureProbe</code>: probes for entering a new basic block, always need to check whether we
+         * are entering a new procedure
          */
         private final ProcedureProbe procedureProbe;
         /**
@@ -95,8 +122,8 @@ public class EnergyProfiler extends MonitorFactory
          */
         private EnergyProfile currentMode;
         /**
-         * <code>lastChange</code>: the cycle count of the moment the program
-         * entered a new basic block lasttime
+         * <code>lastChange</code>: the cycle count of the moment the program entered a new basic block
+         * lasttime
          */
         private long lastChange;
         /**
@@ -104,15 +131,12 @@ public class EnergyProfiler extends MonitorFactory
          */
         private long sleepCycles;
 
-
         /**
          * construct a new monitor
          *
-         * @param s
-         *            Simulator
+         * @param s Simulator
          */
-        Monitor(Simulator s)
-        {
+        Monitor(Simulator s) {
             simulator = s;
             program = s.getProgram();
             labelLookup = new HashMap<Integer, EnergyProfile>();
@@ -135,151 +159,111 @@ public class EnergyProfiler extends MonitorFactory
             Iterator<Block> it = program.getCFG().getSortedBlockIterator();
             int address;
             int size;
-            while (it.hasNext())
-            {
+            while (it.hasNext()) {
                 Block block = it.next();
                 size = block.getSize();
                 address = block.getAddress();
-                if (size > 0 && program.readInstr(address) != null)
-                {
-                    labelLookup.put(new Integer(address),
-                            nearestLabel(address));
+                if (size > 0 && program.readInstr(address) != null) {
+                    labelLookup.put(new Integer(address), nearestLabel(address));
                     s.insertProbe(procedureProbe, address);
                 }
             }
         }
 
-
         /**
          * scan all labels and put them in the list
          */
-        private void setupLabels()
-        {
-            Iterator<SourceMapping.Location> it = program.getSourceMapping()
-                    .getIterator();
-            while (it.hasNext())
-            {
+        private void setupLabels() {
+            Iterator<SourceMapping.Location> it = program.getSourceMapping().getIterator();
+            while (it.hasNext()) {
                 SourceMapping.Location tempLoc = it.next();
-                if (".text".equals(tempLoc.section))
-                    profiles.add(new EnergyProfile(tempLoc));
+                if (".text".equals(tempLoc.section)) profiles.add(new EnergyProfile(tempLoc));
             }
         }
 
-
         /**
-         * find the label nearest to the address. This returns the name of the
-         * procedure the address is in.
+         * find the label nearest to the address. This returns the name of the procedure the address is in.
          *
-         * @param address
-         *            address to lookup
+         * @param address address to lookup
          * @return the nearest Label
          */
-        private EnergyProfile nearestLabel(int address)
-        {
+        private EnergyProfile nearestLabel(int address) {
             EnergyProfile match = null;
-            for (EnergyProfile temp : profiles)
-            {
-                if ((temp.location.lma_addr <= address) && ((match == null)
-                        || (temp.location.lma_addr > match.location.lma_addr)))
-                {
+            for (EnergyProfile temp : profiles) {
+                if ((temp.location.lma_addr <= address) && ((match == null) || (temp.location.lma_addr >
+                        match.location.lma_addr))) {
                     match = temp;
                 }
             }
             return match;
         }
 
-
         /**
          * find all sleep opcodes in the program
          */
-        private void findSleep()
-        {
+        private void findSleep() {
             int i = 0;
-            while (i < program.program_length)
-            {
+            while (i < program.program_length) {
                 LegacyInstr instr = (LegacyInstr) program.readInstr(i);
-                if (instr != null)
-                {
-                    if ("sleep".equals(instr.properties.name))
-                    {
+                if (instr != null) {
+                    if ("sleep".equals(instr.properties.name)) {
                         simulator.insertProbe(sleepProbe, i);
                     }
                     i += instr.getSize();
-                } else
-                    i += 1;
+                } else i += 1;
             }
         }
 
-
         /**
-         * The <code>report()</code> method generates a textual report after the
-         * simulation is complete. The text contains a breakdown each procedure
-         * called in the program and the corresponding number of cycles spent in
-         * it during program execution. Addionally the number of cycles spent in
-         * sleep mode is provided.
+         * The <code>report()</code> method generates a textual report after the simulation is complete. The
+         * text contains a breakdown each procedure called in the program and the corresponding number of
+         * cycles spent in it during program execution. Addionally the number of cycles spent in sleep mode is
+         * provided.
          */
         @Override
-        public void report()
-        {
+        public void report() {
             // log current state
             long cycles = simulator.getState().getCycles() - lastChange;
-            if (cycles > 0)
-            {
-                if (currentMode != null)
-                {
+            if (cycles > 0) {
+                if (currentMode != null) {
                     // system not sleeping
                     currentMode.cycles += cycles;
-                } else
-                {
+                } else {
                     // system sleeping
                     sleepCycles += cycles;
                 }
             }
             // display data
-            TermUtil.printSeparator(
-                    "Energy breakdown for node " + simulator.getID());
+            TermUtil.printSeparator("Energy breakdown for node " + simulator.getID());
             Terminal.printCyan("notation: procedureName@Address: cycles\n");
-            for (EnergyProfile profile : profiles)
-            {
-                if (profile.cycles > 0)
-                {
-                    Terminal.println("   " + profile.location.name + '@'
-                            + profile.location.lma_addr + ": "
+            for (EnergyProfile profile : profiles) {
+                if (profile.cycles > 0) {
+                    Terminal.println("   " + profile.location.name + '@' + profile.location.lma_addr + ": "
                             + profile.cycles);
                 }
             }
-            if (sleepCycles > 0)
-                Terminal.println("   sleeping: " + sleepCycles);
+            if (sleepCycles > 0) Terminal.println("   sleeping: " + sleepCycles);
             Terminal.println("");
         }
 
         /**
-         * @author Olaf Landsiedel
-         *         <p> </p>
-         *         Class for a GlobalProbe which is called when a new basic
-         *         block is entered
+         * @author Olaf Landsiedel Class for a GlobalProbe which is called when a new basic block is entered
          */
-        public class ProcedureProbe extends Simulator.Probe.Empty
-        {
+        public class ProcedureProbe extends Simulator.Probe.Empty {
 
             /**
-             * fired before the basic block is entered, it logs the previos
-             * state
+             * fired before the basic block is entered, it logs the previos state
              *
-             * @see Simulator.Probe#fireBefore(State,int)
+             * @see Simulator.Probe#fireBefore(State, int)
              */
             @Override
-            public void fireBefore(State s, int pc)
-            {
+            public void fireBefore(State s, int pc) {
                 long cycles = simulator.getState().getCycles() - lastChange;
-                if (cycles > 0)
-                {
-                    if (currentMode != null)
-                    {
+                if (cycles > 0) {
+                    if (currentMode != null) {
                         // system not sleeping
                         currentMode.cycles += cycles;
-                    } else
-                    {
+                    } else {
                         // system sleeping
                         sleepCycles += cycles;
                     }
@@ -287,34 +271,26 @@ public class EnergyProfiler extends MonitorFactory
                 lastChange = simulator.getState().getCycles();
                 currentMode = labelLookup.get(new Integer(pc));
             }
-
         }
 
         /**
-         * @author Olaf Landsiedel
-         *         <p> </p>
-         *         Class for a probe when a sleep mode is enered
+         * @author Olaf Landsiedel Class for a probe when a sleep mode is enered
          */
-        public class SleepProbe extends Simulator.Probe.Empty
-        {
+        public class SleepProbe extends Simulator.Probe.Empty {
 
             /**
              * fired before a sleep mode is entered, it logs the previos state
              *
-             * @see Simulator.Probe#fireBefore(State,int)
+             * @see Simulator.Probe#fireBefore(State, int)
              */
             @Override
-            public void fireBefore(State s, int pc)
-            {
+            public void fireBefore(State s, int pc) {
                 long cycles = simulator.getState().getCycles() - lastChange;
-                if (cycles > 0)
-                {
-                    if (currentMode != null)
-                    {
+                if (cycles > 0) {
+                    if (currentMode != null) {
                         // system not sleeping
                         currentMode.cycles += cycles;
-                    } else
-                    {
+                    } else {
                         // system sleeping
                         sleepCycles += cycles;
                     }
@@ -322,43 +298,11 @@ public class EnergyProfiler extends MonitorFactory
                 lastChange = simulator.getState().getCycles();
                 currentMode = null;
             }
-
         }
-    }
-
-
-    /**
-     * The constructor for the <code>EnergyProfiler</code> class builds a new
-     * <code>MonitorFactory</code> capable of creating monitors for each
-     * <code>Simulator</code> instance passed to the <code>newMonitor()</code>
-     * method.
-     */
-    public EnergyProfiler()
-    {
-        super("The \"energy profile\" monitor tracks the power consumption of procedures and displays "
-                + "a report at the end of execution.");
-    }
-
-
-    /**
-     * The <code>newMonitor()</code> method creates a new monitor that is
-     * capable of energy profiling. It provides a breakdown to the individual
-     * procedures of the program.
-     *
-     * @param s
-     *            the simulator to create a monitor for
-     * @return an instance of the <code>Monitor</code> interface for the
-     *         specified simulator
-     */
-    @Override
-    public edu.ucla.cs.compilers.avrora.avrora.monitors.Monitor newMonitor(Simulator s)
-    {
-        return new Monitor(s);
     }
 
     /**
      * @author Olaf Landsiedel
-     *         <p> </p>
      *         Simple class for a energy profile. It contains the location, e.g.
      *         address of the procedure and the number of cycles spent in it.
      */

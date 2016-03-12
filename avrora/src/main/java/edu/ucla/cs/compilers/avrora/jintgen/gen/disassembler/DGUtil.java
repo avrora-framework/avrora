@@ -32,14 +32,6 @@
 
 package edu.ucla.cs.compilers.avrora.jintgen.gen.disassembler;
 
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
-
 import edu.ucla.cs.compilers.avrora.cck.text.Printer;
 import edu.ucla.cs.compilers.avrora.cck.text.StringUtil;
 import edu.ucla.cs.compilers.avrora.cck.text.Terminal;
@@ -53,6 +45,8 @@ import edu.ucla.cs.compilers.avrora.jintgen.isdl.Property;
 import edu.ucla.cs.compilers.avrora.jintgen.isdl.parser.Token;
 import edu.ucla.cs.compilers.avrora.jintgen.jigir.Expr;
 import edu.ucla.cs.compilers.avrora.jintgen.jigir.Literal;
+
+import java.util.*;
 
 /**
  * The <code>DGUtil</code> class contains a set of utility methods that are
@@ -136,6 +130,7 @@ public class DGUtil
      *            the decoding tree to print
      * @param depth
      *            the indenting depth
+     * @param nodes the tree nodes
      */
     public static void printTree(HashSet<DTNode> nodes, Printer p, DTNode dt,
             int depth)

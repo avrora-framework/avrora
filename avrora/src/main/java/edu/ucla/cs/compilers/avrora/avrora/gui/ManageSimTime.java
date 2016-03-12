@@ -35,29 +35,17 @@
 
 package edu.ucla.cs.compilers.avrora.avrora.gui;
 
-import java.awt.BorderLayout;
-import java.awt.Dimension;
+import edu.ucla.cs.compilers.avrora.avrora.sim.Simulation;
+import edu.ucla.cs.compilers.avrora.cck.text.Terminal;
+
+import javax.swing.*;
+import javax.swing.event.ChangeEvent;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.io.PrintStream;
 import java.net.URL;
 import java.util.Hashtable;
 import java.util.Vector;
-
-import javax.swing.BorderFactory;
-import javax.swing.BoxLayout;
-import javax.swing.ImageIcon;
-import javax.swing.JButton;
-import javax.swing.JComboBox;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
-import javax.swing.JSlider;
-import javax.swing.JSpinner;
-import javax.swing.JToolBar;
-import javax.swing.SpinnerNumberModel;
-import javax.swing.event.ChangeEvent;
-
-import edu.ucla.cs.compilers.avrora.avrora.sim.Simulation;
-import edu.ucla.cs.compilers.avrora.cck.text.Terminal;
 
 /**
  * From a high level view, the controls what the simulation is doing. It can
@@ -71,28 +59,33 @@ import edu.ucla.cs.compilers.avrora.cck.text.Terminal;
 public class ManageSimTime
 {
 
-    /**
-     * This is a panel that contains all the visual elements of this class. It
-     * can be displayed by AvroraGui and the user can then interact with it
-     */
-    public JPanel simTimeEverything;
-
-    private JToolBar simTimeToolbar;
-    private JSlider simTimeSlider;
-    private SpinnerNumberModel simTimeDelaySpinner;
-    private SpinnerNumberModel simTimeCycleSpinner;
-    private JComboBox<String> simTimeIorCSelect;
-
-    private static int[] simTimeDelayDefaults;
-    private static int[] simTimeCycleDefaults;
-    private static int numofdefaults;
-
     private static final String REWIND = "rewind";
     private static final String STOP = "stop";
     private static final String PAUSE = "pause";
     private static final String RESUME = "resume";
     private static final String FASTFORWARD = "fastforward";
-
+    private static int[] simTimeDelayDefaults;
+    private static int[] simTimeCycleDefaults;
+    private static int numofdefaults;
+    /**
+     * This is a panel that contains all the visual elements of this class. It
+     * can be displayed by AvroraGui and the user can then interact with it
+     */
+    public JPanel simTimeEverything;
+    private JToolBar simTimeToolbar;
+    private JSlider simTimeSlider;
+    private SpinnerNumberModel simTimeDelaySpinner;
+    private SpinnerNumberModel simTimeCycleSpinner;
+    private JComboBox<String> simTimeIorCSelect;
+    // This function will grab spinner values and
+    // feed them to visualAction
+    // NOTE: this function is called several times (sometimes a couple times too
+    // many)
+    // per change in timing values....so it was written to allow for that
+    private int olddelay;
+    private long oldinbetweenperiod;
+    private boolean oldiorc;
+    private int oldeventtype;
 
     /**
      * This is a "constructor" - it inits all internal fields It is generally
@@ -181,24 +174,19 @@ public class ManageSimTime
         thesetup.simTimeToolbar = new JToolBar("Avrora Simulation Toolbar");
         thesetup.simTimeToolbar.setFloatable(false);
         JButton newbutton;
-        newbutton = makeSimButton("Rewind24", REWIND, "Slow down simulation",
-                "Slower", AvroraGui.instance);
+        newbutton = makeSimButton("Rewind24", REWIND, "Slow down simulation", "Slower", AvroraGui.instance);
         thesetup.simTimeToolbar.add(newbutton);
-        newbutton = makeSimButton("Stop24", STOP, "Stop the simulation", "Stop",
+        newbutton = makeSimButton("Stop24", STOP, "Stop the simulation", "Stop", AvroraGui.instance);
+        thesetup.simTimeToolbar.add(newbutton);
+        newbutton = makeSimButton("Pause24", PAUSE, "Pause the simulation", "Pause", AvroraGui.instance);
+        thesetup.simTimeToolbar.add(newbutton);
+        newbutton = makeSimButton("Play24", RESUME, "Resume a paused/single stepped simulation or start " +
+                "sim", "Play", AvroraGui.instance);
+        thesetup.simTimeToolbar.add(newbutton);
+        newbutton = makeSimButton("FastForward24", FASTFORWARD, "Increase simulation speed", "Faster",
                 AvroraGui.instance);
         thesetup.simTimeToolbar.add(newbutton);
-        newbutton = makeSimButton("Pause24", PAUSE, "Pause the simulation",
-                "Pause", AvroraGui.instance);
-        thesetup.simTimeToolbar.add(newbutton);
-        newbutton = makeSimButton("Play24", RESUME,
-                "Resume a paused/single stepped simulation or start sim",
-                "Play", AvroraGui.instance);
-        thesetup.simTimeToolbar.add(newbutton);
-        newbutton = makeSimButton("FastForward24", FASTFORWARD,
-                "Increase simulation speed", "Faster", AvroraGui.instance);
-        thesetup.simTimeToolbar.add(newbutton);
-        thesetup.simTimeToolbar
-                .setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5));
+        thesetup.simTimeToolbar.setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5));
 
         // Let's create the panel that holds everything we want
         thesetup.simTimeEverything = new JPanel();
@@ -207,8 +195,7 @@ public class ManageSimTime
         // Create a subpanel to hold delay/time options (The slider and
         // spinners)
         JPanel spinnersubpanel = new JPanel();
-        spinnersubpanel
-                .setLayout(new BoxLayout(spinnersubpanel, BoxLayout.X_AXIS));
+        spinnersubpanel.setLayout(new BoxLayout(spinnersubpanel, BoxLayout.X_AXIS));
         JLabel delayfor = new JLabel(" Delay for ");
         delayfor.setHorizontalAlignment(JLabel.RIGHT);
         spinnersubpanel.add(delayfor);
@@ -218,8 +205,7 @@ public class ManageSimTime
         spinnersubpanel.add(msevery);
         spinnersubpanel.add(new JSpinner(thesetup.simTimeCycleSpinner));
         thesetup.simTimeIorCSelect.setPreferredSize(new Dimension(50, 20));
-        thesetup.simTimeIorCSelect
-                .setBorder(BorderFactory.createEmptyBorder(0, 2, 0, 0));
+        thesetup.simTimeIorCSelect.setBorder(BorderFactory.createEmptyBorder(0, 2, 0, 0));
         spinnersubpanel.add(thesetup.simTimeIorCSelect);
         spinnersubpanel.setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5));
 
@@ -229,120 +215,119 @@ public class ManageSimTime
         tempsubpanel.add(thesetup.simTimeSlider, BorderLayout.SOUTH);
         tempsubpanel.setPreferredSize(new Dimension(430, 80));
 
-        thesetup.simTimeEverything.add(thesetup.simTimeToolbar,
-                BorderLayout.WEST);
+        thesetup.simTimeEverything.add(thesetup.simTimeToolbar, BorderLayout.WEST);
         thesetup.simTimeEverything.add(tempsubpanel, BorderLayout.EAST);
 
-        thesetup.simTimeEverything.setBorder(BorderFactory.createCompoundBorder(
-                BorderFactory.createTitledBorder("Manage Simulation Time"),
-                BorderFactory.createEmptyBorder(5, 5, 5, 5)));
+        thesetup.simTimeEverything.setBorder(BorderFactory.createCompoundBorder(BorderFactory
+                .createTitledBorder("Manage Simulation Time"), BorderFactory.createEmptyBorder(5, 5, 5, 5)));
 
         return thesetup;
     }
 
+    // This is taken from the swing tutorial...to steamline adding buttons
+    // to the simtoolbar
+    private static JButton makeSimButton(String imageName, String actionCommand, String toolTipText, String
+            altText, AvroraGui papp) {
+        // Look for the image.
+        String imgLocation = "images/" + imageName + ".gif";
+        URL imageURL = AvroraGui.class.getResource(imgLocation);
+
+        // Create and initialize the button.
+        JButton button = new JButton();
+        button.setActionCommand(actionCommand);
+        button.setToolTipText(toolTipText);
+        button.addActionListener(papp);
+
+        if (imageURL != null) { // image found
+            button.setIcon(new ImageIcon(imageURL, altText));
+        } else { // no image found
+            button.setText(altText);
+            System.err.println("Resource not found: " + imgLocation);
+        }
+
+        return button;
+    }
 
     /**
-     * This function checks to see if an event was caused by this panel. If so,
-     * it reacts to it.
+     * This function checks to see if an event was caused by this panel. If so, it reacts to it.
      *
      * @return true if this panel caused the event, otherwise false
      */
-    public boolean checkAndDispatch(ActionEvent e)
-    {
+    public boolean checkAndDispatch(ActionEvent e) {
         String cmd = e.getActionCommand();
 
         Simulation sim = AvroraGui.instance.getSimulation();
-        if (STOP.equals(cmd))
-        {
+        if (STOP.equals(cmd)) {
             sim.stop();
             AvroraGui.instance.stopPaintThread();
             return true;
-
-        } else if (RESUME.equals(cmd))
-        {
+        } else if (RESUME.equals(cmd)) {
             // If a sim is paused, resume it...if a sim is single stepped
             // paused, go to next instruction
             // otherwise, start the sim
-            if (sim.isPaused())
-            {
+            if (sim.isPaused()) {
                 sim.resume();
-            } else if (simTimeSlider.getValue() == 5 && sim.isRunning())
-            {
+            } else if (simTimeSlider.getValue() == 5 && sim.isRunning()) {
                 // TODO: implement stepping of simulation
                 // sim.step();
-            } else if (!sim.isRunning())
-            {
+            } else if (!sim.isRunning()) {
 
                 // Set the correct terminal (that is, the debug terminal)
-                PrintStream tempstream = new PrintStream(
-                        new DebugStream(AvroraGui.instance));
+                PrintStream tempstream = new PrintStream(new DebugStream(AvroraGui.instance));
                 Terminal.setOutput(tempstream);
 
                 // TODO: reset monitor panels
                 // clearMonitorPanels();
                 sim.start();
                 AvroraGui.instance.startPaintThread();
-            } else
-            {
+            } else {
                 // this would most probably be run if we
                 // hit play and a sim is already running unpaused...in which
                 // case we do nothing (We DONT want to start two simulations
             }
             return true;
-        } else if (PAUSE.equals(cmd))
-        {
+        } else if (PAUSE.equals(cmd)) {
             sim.pause();
             return true;
-        } else if (REWIND.equals(cmd))
-        {
+        } else if (REWIND.equals(cmd)) {
             // move slider to the left
             int slideValue = simTimeSlider.getValue();
-            if (slideValue <= -1)
-            {
+            if (slideValue <= -1) {
                 // do nothing because we are in custom mode
-            } else if (slideValue == numofdefaults)
-            {
+            } else if (slideValue == numofdefaults) {
                 // do nothing because we are already running on the slowest
                 // setting
-            } else
-            {
+            } else {
                 simTimeSlider.setValue(slideValue + 1);
             }
             return true;
-        } else if (FASTFORWARD.equals(cmd))
-        {
+        } else if (FASTFORWARD.equals(cmd)) {
             // move slider to the right
             int slideValue = simTimeSlider.getValue();
-            if (slideValue <= 0)
-            {
+            if (slideValue <= 0) {
                 // do nothing because we are in custom mode or at fastest
-            } else
-            {
+            } else {
                 simTimeSlider.setValue(slideValue - 1);
             }
             return true;
-        } else if (e.getSource() == simTimeIorCSelect)
-        {
+        } else if (e.getSource() == simTimeIorCSelect) {
             // so we are making a change from cycles to instructions or vica
             // versa
             updateSimChangeSpeedValues();
             return true;
-        } else
-        {
+        } else {
             return false; // this module did not cause the action;
         }
     }
 
-
     /**
-     * This function checks to see if an event was caused by this panel. If so,
-     * it reacts to it. Instead of looking for action events, it looks for
-     * ChangeEvents.
+     * This function checks to see if an event was caused by this panel. If so, it reacts to it. Instead of
+     * looking for action events, it looks for ChangeEvents.
      *
+     * @param e the event to process
      * @return true if this panel caused the event, otherwise false
      */
-    public boolean sliderAndSpinnerDispatch(ChangeEvent e)
-    {
+    public boolean sliderAndSpinnerDispatch(ChangeEvent e) {
         if (e.getSource() == simTimeSlider)
         {
             changeSpinnerBasedOnSlider(); // will call
@@ -354,10 +339,8 @@ public class ManageSimTime
             // We need to set slider to custom if the values in spinner's
             // don't match a default
             boolean isadefault = false;
-            int valueOfDelay = ((Integer) simTimeDelaySpinner.getValue())
-                    .intValue();
-            int valueOfCycles = ((Integer) simTimeCycleSpinner.getValue())
-                    .intValue();
+            int valueOfDelay = ((Integer) simTimeDelaySpinner.getValue());
+            int valueOfCycles = ((Integer) simTimeCycleSpinner.getValue());
             if (valueOfDelay == 0 && valueOfCycles == 0)
             {
                 // Both are zero, we shouldn't do anything.
@@ -389,7 +372,6 @@ public class ManageSimTime
         }
     }
 
-
     /**
      * this is called upon a change in the slider...it updates the spinner if
      * necessary
@@ -410,17 +392,6 @@ public class ManageSimTime
             updateSimChangeSpeedValues(); // custom - then we just leave as is
         }
     }
-
-    // This function will grab spinner values and
-    // feed them to visualAction
-    // NOTE: this function is called several times (sometimes a couple times too
-    // many)
-    // per change in timing values....so it was written to allow for that
-    private int olddelay;
-    private long oldinbetweenperiod;
-    private boolean oldiorc;
-    private int oldeventtype;
-
 
     private void updateSimChangeSpeedValues()
     {
@@ -464,33 +435,5 @@ public class ManageSimTime
             oldiorc = newiorc;
             oldeventtype = neweventtype;
         }
-    }
-
-
-    // This is taken from the swing tutorial...to steamline adding buttons
-    // to the simtoolbar
-    private static JButton makeSimButton(String imageName, String actionCommand,
-            String toolTipText, String altText, AvroraGui papp)
-    {
-        // Look for the image.
-        String imgLocation = "images/" + imageName + ".gif";
-        URL imageURL = AvroraGui.class.getResource(imgLocation);
-
-        // Create and initialize the button.
-        JButton button = new JButton();
-        button.setActionCommand(actionCommand);
-        button.setToolTipText(toolTipText);
-        button.addActionListener(papp);
-
-        if (imageURL != null)
-        { // image found
-            button.setIcon(new ImageIcon(imageURL, altText));
-        } else
-        { // no image found
-            button.setText(altText);
-            System.err.println("Resource not found: " + imgLocation);
-        }
-
-        return button;
     }
 }

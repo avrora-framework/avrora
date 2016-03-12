@@ -10,8 +10,12 @@ public abstract class AbstractRegisterView implements RegisterView
 {
     private LinkedList<RegisterValueSetListener> listeners;
 
-
-    /** Notifies all registered listeners of a changed value. */
+    /**
+     * Notifies all registered listeners of a changed value.
+     *
+     * @param oldValue value before change
+     * @param newValue value after change
+     */
     protected void notify(int oldValue, int newValue)
     {
         if (listeners != null)

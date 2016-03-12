@@ -32,12 +32,12 @@
 
 package edu.ucla.cs.compilers.avrora.avrora.stack;
 
-import java.util.Iterator;
-
 import edu.ucla.cs.compilers.avrora.avrora.core.Program;
 import edu.ucla.cs.compilers.avrora.cck.text.Printer;
 import edu.ucla.cs.compilers.avrora.cck.text.StringUtil;
 import edu.ucla.cs.compilers.avrora.cck.util.Util;
+
+import java.util.Iterator;
 
 /**
  * @author Ben L. Titzer
@@ -45,109 +45,20 @@ import edu.ucla.cs.compilers.avrora.cck.util.Util;
 public class StateTransitionGraph
 {
 
-    public static class StateList
-    {
-        public final StateCache.State state;
-        public final StateList next;
-
-
-        StateList(StateCache.State tar, StateList n)
-        {
-            state = tar;
-            next = n;
-        }
-    }
-
-    public static class EdgeList
-    {
-        public final Edge edge;
-        public final EdgeList next;
-
-
-        EdgeList(Edge tar, EdgeList n)
-        {
-            edge = tar;
-            next = n;
-        }
-    }
-
+    private final StateCache.State edenState;
     /**
-     * The <code>Edge</code> inner class represents a bidirectional edge between
-     * two states. It is contained on two linked lists: the forward edge list of
-     * the source node and the backward edge list of the target node.
-     */
-    public static class Edge
-    {
-        public final StateCache.State source;
-        public final StateCache.State target;
-        public final Edge forwardLink;
-        public final Edge backwardLink;
-        public final int type;
-        public final int weight;
-
-
-        Edge(StateCache.State source, StateCache.State target, Edge fl, Edge bl,
-                int type, int weight)
-        {
-            this.source = source;
-            this.target = target;
-            this.forwardLink = fl;
-            this.backwardLink = bl;
-            this.type = type;
-            this.weight = weight;
-        }
-    }
-
-    /**
-     * The <code>StateInfo</code> class is a representation of both the forward
-     * and backward edge list corresponding to a node in the state transition
-     * graph. It also stores a cache of reachable return states (based on
-     * backwards reachability search).
-     */
-    public static class StateInfo
-    {
-        public final StateCache.State state;
-        public StateCache.Set stateSet;
-        public Edge forwardEdges;
-        public Edge backwardEdges;
-
-
-        StateInfo(StateCache.State s)
-        {
-            state = s;
-        }
-
-
-        public Edge addEdge(int type, int weight, StateCache.State target)
-        {
-            Edge nedge = new Edge(state, target, forwardEdges,
-                    target.info.backwardEdges, type, weight);
-
-            this.forwardEdges = nedge;
-            target.info.backwardEdges = nedge;
-            return nedge;
-        }
-    }
-
-    /**
-     * The <code>frontierList</code> field stores a simple linked list of the
-     * current states on the frontier.
+     * The <code>frontierList</code> field stores a simple linked list of the current states on the frontier.
      */
     private StateList frontierList;
-
     /**
      * The <code>cache</code> field stores a cache of all states; it guarantees
      * that object equality for states implies reference equality and vice
      * versa.
      */
     private StateCache cache;
-
     private long edgeCount;
     private long frontierCount;
     private long exploredCount;
-
-    private final StateCache.State edenState;
-
 
     /**
      * The constructor for the <code>StateTransitionGraph</code> class
@@ -158,14 +69,12 @@ public class StateTransitionGraph
      * @param p
      *            the program to create a state transition graph for.
      */
-    public StateTransitionGraph(Program p)
-    {
+    public StateTransitionGraph(Program p) {
         cache = new StateCache(p);
         edenState = cache.getEdenState();
         edenState.info = new StateInfo(edenState);
         addFrontierState(edenState);
     }
-
 
     /**
      * The <code>getCachedState()</code> method looks for the a cached,
@@ -176,14 +85,11 @@ public class StateTransitionGraph
      *            the mutable state to look for
      * @return an instance of the <code>StateCache.LegacyState</code> class
      */
-    public StateCache.State getCachedState(MutableState s)
-    {
+    public StateCache.State getCachedState(MutableState s) {
         StateCache.State ns = cache.getStateFor(s);
-        if (ns.info == null)
-            ns.info = new StateInfo(ns);
+        if (ns.info == null) ns.info = new StateInfo(ns);
         return ns;
     }
-
 
     /**
      * The <code>addEdge()</code> method adds an edge between two states in the
@@ -197,18 +103,15 @@ public class StateTransitionGraph
      *            the weight of the edge as an integer
      * @param t
      *            the target node of the edge
+     *
+     * @return the added edge
      */
-    public Edge addEdge(StateCache.State s, int type, int weight,
-            StateCache.State t)
-    {
-        if (s.info == null)
-            throw Util.failure("No edge info for: " + s.getUniqueName());
-        if (t.info == null)
-            throw Util.failure("No edge info for: " + t.getUniqueName());
+    public Edge addEdge(StateCache.State s, int type, int weight, StateCache.State t) {
+        if (s.info == null) throw Util.failure("No edge info for: " + s.getUniqueName());
+        if (t.info == null) throw Util.failure("No edge info for: " + t.getUniqueName());
         edgeCount++;
         return s.info.addEdge(type, weight, t);
     }
-
 
     /**
      * The <code>getNextFrontierState()</code> chooses a state off of the state
@@ -219,23 +122,19 @@ public class StateTransitionGraph
      * @return one of the states on the current state frontier; null if there
      *         are none.
      */
-    public StateCache.State getNextFrontierState()
-    {
-        if (frontierList == null)
-            return null;
+    public StateCache.State getNextFrontierState() {
+        if (frontierList == null) return null;
         StateList l = frontierList;
         frontierList = frontierList.next;
 
         StateCache.State state = l.state;
         if (state.info == null)
-            throw Util.failure("LegacyState on frontier has no edge info: "
-                    + state.getUniqueName());
+            throw Util.failure("LegacyState on frontier has no edge info: " + state.getUniqueName());
 
         state.onFrontier = false;
         frontierCount--;
         return state;
     }
-
 
     /**
      * The <code>addFrontierState</code> method adds a state to the frontier.
@@ -243,20 +142,15 @@ public class StateTransitionGraph
      * @param s
      *            the state to add
      */
-    public void addFrontierState(StateCache.State s)
-    {
-        if (isExplored(s))
-            throw Util.failure("Attempt to re-add state to frontier: "
-                    + s.getUniqueName());
+    public void addFrontierState(StateCache.State s) {
+        if (isExplored(s)) throw Util.failure("Attempt to re-add state to frontier: " + s.getUniqueName());
 
-        if (!isFrontier(s))
-        {
+        if (!isFrontier(s)) {
             frontierList = new StateList(s, frontierList);
             s.onFrontier = true;
             frontierCount++;
         }
     }
-
 
     /**
      * The <code>isExplored()</code> method tests whether a given state has been
@@ -267,11 +161,9 @@ public class StateTransitionGraph
      * @return true if this state has been explored and had its outgoing edges
      *         computed; false otherwise
      */
-    public boolean isExplored(StateCache.State s)
-    {
+    public boolean isExplored(StateCache.State s) {
         return s.isExplored;
     }
-
 
     /**
      * The <code>setExplored()</code> method marks the given state as having
@@ -282,19 +174,15 @@ public class StateTransitionGraph
      * @param s
      *            the state to mark as explored
      */
-    public void setExplored(StateCache.State s)
-    {
+    public void setExplored(StateCache.State s) {
         if (isFrontier(s))
-            throw Util.failure("state cannot be on frontier and explored: "
-                    + s.getUniqueName());
+            throw Util.failure("state cannot be on frontier and explored: " + s.getUniqueName());
 
-        if (!isExplored(s))
-        {
+        if (!isExplored(s)) {
             s.isExplored = true;
             exploredCount++;
         }
     }
-
 
     /**
      * The <code>isFrontier()</code> method tests whether a given state is
@@ -305,11 +193,9 @@ public class StateTransitionGraph
      * @return true if the state is currently on the frontier of the state
      *         transition graph; false otherwise
      */
-    public boolean isFrontier(StateCache.State s)
-    {
+    public boolean isFrontier(StateCache.State s) {
         return s.onFrontier;
     }
-
 
     /**
      * The <code>getStateCache()</code> method gets the cache of all the states
@@ -318,78 +204,57 @@ public class StateTransitionGraph
      * @return a reference to the cache of all the states in the state
      *         transition graph
      */
-    public StateCache getStateCache()
-    {
+    public StateCache getStateCache() {
         return cache;
     }
 
-
-    public StateCache.State getEdenState()
-    {
+    public StateCache.State getEdenState() {
         return edenState;
     }
 
-
-    public long getFrontierCount()
-    {
+    public long getFrontierCount() {
         return frontierCount;
     }
 
-
-    public long getEdgeCount()
-    {
+    public long getEdgeCount() {
         return edgeCount;
     }
 
-
-    public long getExploredCount()
-    {
+    public long getExploredCount() {
         return exploredCount;
     }
 
-
-    public StateCache.Set newSet()
-    {
+    public StateCache.Set newSet() {
         return cache.newSet();
     }
 
-
-    public void deleteStateSets()
-    {
+    public void deleteStateSets() {
         Iterator<StateCache.State> i = cache.getStateIterator();
-        while (i.hasNext())
-        {
+        while (i.hasNext()) {
             StateCache.State state = i.next();
             state.info.stateSet = null;
         }
     }
 
-
-    public void dump(Printer p)
-    {
+    public void dump(Printer p) {
         Iterator<StateCache.State> i = cache.getStateIterator();
-        while (i.hasNext())
-        {
+        while (i.hasNext()) {
             StateCache.State state = i.next();
             StringBuffer buf = dumpToBuffer(state);
             p.println(buf.toString());
         }
 
         i = cache.getStateIterator();
-        while (i.hasNext())
-        {
+        while (i.hasNext()) {
             StateCache.State state = i.next();
-            for (Edge e = state.info.forwardEdges; e != null; e = e.forwardLink)
-            {
+            for (Edge e = state.info.forwardEdges; e != null; e = e.forwardLink) {
                 StringBuffer buf = dumpToBuffer(e);
                 p.println(buf.toString());
             }
         }
     }
 
-
-    private StringBuffer dumpToBuffer(Edge e)
-    {
+    private StringBuffer dumpToBuffer(Edge e) {
         StringBuffer buf = new StringBuffer(32);
         buf.append('[');
         buf.append(e.source.getUniqueName());
@@ -403,9 +268,7 @@ public class StateTransitionGraph
         return buf;
     }
 
-
-    private StringBuffer dumpToBuffer(StateCache.State state)
-    {
+    private StringBuffer dumpToBuffer(StateCache.State state) {
         StringBuffer buf = new StringBuffer(300);
         buf.append('[');
         buf.append(state.getUniqueName());
@@ -416,17 +279,80 @@ public class StateTransitionGraph
         buf.append(" SREG=");
         buf.append(AbstractArithmetic.toString(state.getSREG()));
         buf.append(" EIMSK=");
-        buf.append(AbstractArithmetic
-                .toString(state.getIORegisterAV(IORegisterConstants.EIMSK)));
+        buf.append(AbstractArithmetic.toString(state.getIORegisterAV(IORegisterConstants.EIMSK)));
         buf.append(" TIMSK=");
-        buf.append(AbstractArithmetic
-                .toString(state.getIORegisterAV(IORegisterConstants.TIMSK)));
-        for (int cntr = 0; cntr < IORegisterConstants.NUM_REGS; cntr++)
-        {
+        buf.append(AbstractArithmetic.toString(state.getIORegisterAV(IORegisterConstants.TIMSK)));
+        for (int cntr = 0; cntr < IORegisterConstants.NUM_REGS; cntr++) {
             buf.append(' ');
-            buf.append(AbstractInterpreter
-                    .toShortString(state.getRegisterAV(cntr)));
+            buf.append(AbstractInterpreter.toShortString(state.getRegisterAV(cntr)));
         }
         return buf;
+    }
+
+    public static class StateList {
+        public final StateCache.State state;
+        public final StateList next;
+
+        StateList(StateCache.State tar, StateList n) {
+            state = tar;
+            next = n;
+        }
+    }
+
+    public static class EdgeList {
+        public final Edge edge;
+        public final EdgeList next;
+
+        EdgeList(Edge tar, EdgeList n) {
+            edge = tar;
+            next = n;
+        }
+    }
+
+    /**
+     * The <code>Edge</code> inner class represents a bidirectional edge between
+     * two states. It is contained on two linked lists: the forward edge list of
+     * the source node and the backward edge list of the target node.
+     */
+    public static class Edge {
+        public final StateCache.State source;
+        public final StateCache.State target;
+        public final Edge forwardLink;
+        public final Edge backwardLink;
+        public final int type;
+        public final int weight;
+
+        Edge(StateCache.State source, StateCache.State target, Edge fl, Edge bl, int type, int weight) {
+            this.source = source;
+            this.target = target;
+            this.forwardLink = fl;
+            this.backwardLink = bl;
+            this.type = type;
+            this.weight = weight;
+        }
+    }
+
+    /**
+     * The <code>StateInfo</code> class is a representation of both the forward and backward edge list
+     * corresponding to a node in the state transition graph. It also stores a cache of reachable return
+     * states (based on backwards reachability search).
+     */
+    public static class StateInfo {
+        public final StateCache.State state;
+        public StateCache.Set stateSet;
+        public Edge forwardEdges;
+        public Edge backwardEdges;
+
+        StateInfo(StateCache.State s) {
+            state = s;
+        }
+
+        public Edge addEdge(int type, int weight, StateCache.State target) {
+            Edge nedge = new Edge(state, target, forwardEdges, target.info.backwardEdges, type, weight);
+
+            this.forwardEdges = nedge;
+            target.info.backwardEdges = nedge;
+            return nedge;
+        }
     }
 }

@@ -66,6 +66,8 @@ public class ReadExpr extends Expr
      *
      * @param m
      *            the name of the subroutine as a string
+     * @param t program type reference
+     * @param o input token stream
      */
     public ReadExpr(Token m, TypeRef t, Token o)
     {
@@ -145,15 +147,12 @@ public class ReadExpr extends Expr
         return method.getSourcePoint();
     }
 
+    public OperandTypeDecl.Accessor getAccessor() {
+        return accessor;
+    }
 
     public void setAccessor(OperandTypeDecl.Accessor m)
     {
         accessor = m;
-    }
-
-
-    public OperandTypeDecl.Accessor getAccessor()
-    {
-        return accessor;
     }
 }

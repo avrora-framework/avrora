@@ -66,15 +66,12 @@ public abstract class AtmelInternalDevice
         devicePrinter = m.getSimulator().getPrinter("atmel." + n);
     }
 
-
-    protected void installIOReg(String name, ActiveRegister reg)
-    {
-        microcontroller.installIOReg(name, reg);
-    }
-
-
     /**
      * Helper function to get a 16 bit value from a pair of registers.
+     *
+     * @param high the high register byte
+     * @param low  the low register byte
+     * @return the bytes combined to 16 bit
      */
     protected static int read16(RWRegister high, RWRegister low)
     {
@@ -83,9 +80,12 @@ public abstract class AtmelInternalDevice
         return result;
     }
 
-
     /**
      * Helper function to write a 16-bit value to a pair of registers.
+     *
+     * @param val a 16bit value
+     * @param high the high register byte
+     * @param low the low register byte
      */
     protected static void write16(int val, RWRegister high, RWRegister low)
     {
@@ -93,6 +93,10 @@ public abstract class AtmelInternalDevice
         low.write((byte) (val & 0x00ff));
     }
 
+    protected void installIOReg(String name, ActiveRegister reg)
+    {
+        microcontroller.installIOReg(name, reg);
+    }
 
     public Clock getClock()
     {

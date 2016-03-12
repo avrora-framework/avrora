@@ -33,11 +33,11 @@
  */
 package edu.ucla.cs.compilers.avrora.cck.elf;
 
-import java.io.IOException;
-import java.io.RandomAccessFile;
-
 import edu.ucla.cs.compilers.avrora.cck.text.StringUtil;
 import edu.ucla.cs.compilers.avrora.cck.util.Util;
+
+import java.io.IOException;
+import java.io.RandomAccessFile;
 
 /**
  * The <code>ELFProgramHeaderTable</code> class represents a program header
@@ -46,13 +46,12 @@ import edu.ucla.cs.compilers.avrora.cck.util.Util;
  * Since the size and number of entries in this table are determined from the
  * information contained in the ELF header, this class requires an instance of
  * the <code>ELFHeader</code> class to be passed to the constructor.
- *
- * <p> </p>
+ * <p>
  * The ELF format states that a program header table is required for
  * executables; this table contains information for the operating system (or
  * bootloader or programmer in the case of embedded systems) to create a process
  * image from the binary. This table is optional for relocatable object files.
- *
+ *</p>
  * @author Ben L. Titzer
  */
 public class ELFProgramHeaderTable
@@ -71,55 +70,15 @@ public class ELFProgramHeaderTable
     public static final int PF_EXEC = 0x1;
     public static final int PF_WRITE = 0x2;
     public static final int PF_READ = 0x4;
-
-    public class Entry32
-    {
-        public int p_type;
-        public int p_offset;
-        public int p_vaddr;
-        public int p_paddr;
-        public int p_filesz;
-        public int p_memsz;
-        public int p_flags;
-        public int p_align;
-
-
-        public String getFlags()
-        {
-            StringBuffer flags = new StringBuffer();
-            if ((p_flags & PF_EXEC) != 0)
-                flags.append("EXEC ");
-            if ((p_flags & PF_WRITE) != 0)
-                flags.append("WRITE ");
-            if ((p_flags & PF_READ) != 0)
-                flags.append("READ ");
-            return flags.toString();
-        }
-
-
-        public boolean isLoadable()
-        {
-            return p_type == PT_LOAD;
-        }
-
-
-        public boolean isExecutable()
-        {
-            return (p_flags & PF_EXEC) != 0;
-        }
-    }
-
     public final ELFHeader header;
     public final Entry32[] entries;
-
-
     /**
      * The constructor for the <code>ELFProgramHeaderTable</code> class creates
      * a new instance for the file containing the specified ELF header. The
      * <code>ELFHeader</code> instance contains information about the ELF file
      * including the machine endianness that is important for the program header
      * table.
-     * 
+     *
      * @param header
      *            the initialized ELF header from the file specified.
      */
@@ -131,6 +90,26 @@ public class ELFProgramHeaderTable
         entries = new Entry32[header.e_phnum];
     }
 
+    public static String getType(Entry32 e) {
+        switch (e.p_type) {
+            case PT_NULL:
+                return "null";
+            case PT_LOAD:
+                return "load";
+            case PT_DYNAMIC:
+                return "dynamic";
+            case PT_INTERP:
+                return "interp";
+            case PT_NOTE:
+                return "note";
+            case PT_SHLIB:
+                return "shlib";
+            case PT_PHDR:
+                return "phdr";
+            default:
+                return StringUtil.toHex(e.p_type, 8);
+        }
+    }
 
     /**
      * The <code>read()</code> method reqds the program header table from the
@@ -174,27 +153,32 @@ public class ELFProgramHeaderTable
         return entries[ind];
     }
 
-
-    public static String getType(Entry32 e)
+    public class Entry32
     {
-        switch (e.p_type)
+        public int p_type;
+        public int p_offset;
+        public int p_vaddr;
+        public int p_paddr;
+        public int p_filesz;
+        public int p_memsz;
+        public int p_flags;
+        public int p_align;
+
+        public String getFlags()
         {
-        case PT_NULL:
-            return "null";
-        case PT_LOAD:
-            return "load";
-        case PT_DYNAMIC:
-            return "dynamic";
-        case PT_INTERP:
-            return "interp";
-        case PT_NOTE:
-            return "note";
-        case PT_SHLIB:
-            return "shlib";
-        case PT_PHDR:
-            return "phdr";
-        default:
-            return StringUtil.toHex(e.p_type, 8);
+            StringBuffer flags = new StringBuffer();
+            if ((p_flags & PF_EXEC) != 0) flags.append("EXEC ");
+            if ((p_flags & PF_WRITE) != 0) flags.append("WRITE ");
+            if ((p_flags & PF_READ) != 0) flags.append("READ ");
+            return flags.toString();
+        }
+
+        public boolean isLoadable() {
+            return p_type == PT_LOAD;
+        }
+
+        public boolean isExecutable() {
+            return (p_flags & PF_EXEC) != 0;
         }
     }
 

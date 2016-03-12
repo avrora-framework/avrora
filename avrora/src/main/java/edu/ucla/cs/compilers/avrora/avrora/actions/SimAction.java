@@ -32,11 +32,6 @@
 
 package edu.ucla.cs.compilers.avrora.avrora.actions;
 
-import java.util.Collections;
-import java.util.HashSet;
-import java.util.Iterator;
-import java.util.List;
-
 import edu.ucla.cs.compilers.avrora.avrora.Defaults;
 import edu.ucla.cs.compilers.avrora.avrora.core.Program;
 import edu.ucla.cs.compilers.avrora.avrora.core.SourceMapping;
@@ -52,6 +47,11 @@ import edu.ucla.cs.compilers.avrora.cck.text.Terminal;
 import edu.ucla.cs.compilers.avrora.cck.util.Option;
 import edu.ucla.cs.compilers.avrora.cck.util.TimeUtil;
 import edu.ucla.cs.compilers.avrora.cck.util.Util;
+
+import java.util.Collections;
+import java.util.HashSet;
+import java.util.Iterator;
+import java.util.List;
 
 /**
  * The <code>SimAction</code> is an abstract class that collects many of the
@@ -89,6 +89,75 @@ public class SimAction extends Action
         super(HELP);
     }
 
+    /**
+     * The <code>getLocationList()</code> method is to used to parse a list of program locations and turn them
+     * into a list of <code>Main.Location</code> instances.
+     * <p>
+     * Note: currently not used.
+     *
+     * @param program the program to look up labels in
+     * @param locs    the list of strings that are program locations
+     * @return a list of program locations
+     */
+    public static List<Location> getLocationList(Program program, List<String> locs) {
+        HashSet<Location> locset = new HashSet<Location>(locs.size() * 2);
+
+        SourceMapping lm = program.getSourceMapping();
+
+        for (String val : locs) {
+            SourceMapping.Location l = lm.getLocation(val);
+            if (l == null) Util.userError("Label unknown", val);
+            locset.add(l);
+        }
+
+        List<Location> loclist = Collections.list(Collections.enumeration(locset));
+        Collections.sort(loclist, SourceMapping.LOCATION_COMPARATOR);
+
+        return loclist;
+    }
+
+    /**
+     * The <code>printSimHeader()</code> method simply prints the first line of output that names the columns
+     * for the events outputted by the rest of the simulation.
+     */
+    protected static void printSimHeader() {
+        TermUtil.printSeparator(Terminal.MAXLINE, "Simulation events");
+        Terminal.printGreen("Node          Time   Event");
+        Terminal.nextln();
+        TermUtil.printThinSeparator(Terminal.MAXLINE);
+    }
+
+    protected static void reportMonitors(Simulation sim) {
+        Iterator<Simulation.Node> i = sim.getNodeIterator();
+        while (i.hasNext()) {
+            for (Monitor mon : i.next().getMonitors()) {
+                mon.report();
+            }
+        }
+    }
+
+    protected static void reportTime(Simulation sim, long diff, boolean throughput) {
+        // calculate total throughput over all threads
+        Iterator<Simulation.Node> i = sim.getNodeIterator();
+        long aggCycles = 0;
+        long maxCycles = 0;
+        while (i.hasNext()) {
+            Simulation.Node n = i.next();
+            Simulator simulator = n.getSimulator();
+            if (simulator == null) continue;
+            long count = simulator.getClock().getCount();
+            aggCycles += count;
+            if (count > maxCycles) maxCycles = count;
+        }
+        TermUtil.reportQuantity("Simulated time", maxCycles, "cycles");
+        if (throughput) {
+            TermUtil.reportQuantity("Time for simulation", TimeUtil.milliToSecs(diff), "seconds");
+            int nn = sim.getNumberOfNodes();
+            double thru = ((double) aggCycles) / (diff * 1000);
+            TermUtil.reportQuantity("Total throughput", (float) thru, "mhz");
+            if (nn > 1) TermUtil.reportQuantity("Throughput per node", (float) (thru / nn), "mhz");
+        }
+    }
 
     /**
      * The <code>run()</code> method is called by the main class.
@@ -111,185 +180,58 @@ public class SimAction extends Action
         ShutdownThread shutdownThread = new ShutdownThread();
         Runtime.getRuntime().addShutdownHook(shutdownThread);
         printSimHeader();
-        try
-        {
+        try {
             startms = System.currentTimeMillis();
             simulation.start();
             simulation.join();
-        }
-        catch (Throwable t)
-        {
+        } catch (Throwable t) {
             exitSimulation(t);
             Runtime.getRuntime().removeShutdownHook(shutdownThread);
-        }
-        finally
-        {
+        } finally {
             exitSimulation(null);
             Runtime.getRuntime().removeShutdownHook(shutdownThread);
         }
     }
 
-
-    private void setupSecondsAntPrecision()
-    {
+    private void setupSecondsAntPrecision() {
         SimUtil.REPORT_SECONDS = REPORT_SECONDS.get();
         SimUtil.SECONDS_PRECISION = (int) SECONDS_PRECISION.get();
     }
 
-
-    private void exitSimulation(Throwable thrown)
-    {
-        synchronized (this)
-        {
-            if (!reported)
-            {
+    private void exitSimulation(Throwable thrown) {
+        synchronized (this) {
+            if (!reported) {
                 reported = true;
                 report(thrown);
             }
         }
     }
 
-
-    private void report(Throwable thrown)
-    {
+    private void report(Throwable thrown) {
         long delta = System.currentTimeMillis() - startms;
-        try
-        {
-            if (thrown != null)
-                throw thrown;
-        }
-        catch (BreakPointException e)
-        {
+        try {
+            if (thrown != null) throw thrown;
+        } catch (BreakPointException e) {
             Terminal.printYellow("Simulation terminated");
-            Terminal.println(": breakpoint at "
-                    + StringUtil.addrToString(e.address) + " reached.");
-        }
-        catch (TimeoutException e)
-        {
+            Terminal.println(": breakpoint at " + StringUtil.addrToString(e.address) + " reached.");
+        } catch (TimeoutException e) {
             Terminal.printYellow("Simulation terminated");
-            Terminal.println(": timeout reached at pc = "
-                    + StringUtil.addrToString(e.address) + ", time = "
-                    + e.state.getCycles());
-        }
-        catch (AsynchronousExit e)
-        {
+            Terminal.println(": timeout reached at pc = " + StringUtil.addrToString(e.address) + ", time = " + e.state.getCycles());
+        } catch (AsynchronousExit e) {
             Terminal.printYellow("Simulation terminated asynchronously");
             Terminal.nextln();
-        }
-        catch (Util.Error e)
-        {
+        } catch (Util.Error e) {
             Terminal.printRed("Simulation terminated");
             Terminal.print(": ");
             e.report();
-        }
-        catch (Throwable t)
-        {
-            Terminal.printRed(
-                    "Simulation terminated with unexpected exception");
+        } catch (Throwable t) {
+            Terminal.printRed("Simulation terminated with unexpected exception");
             Terminal.print(": ");
             t.printStackTrace();
-        }
-        finally
-        {
+        } finally {
             TermUtil.printSeparator();
             reportTime(simulation, delta, THROUGHPUT.get());
             reportMonitors(simulation);
-        }
-    }
-
-
-    /**
-     * The <code>getLocationList()</code> method is to used to parse a list of
-     * program locations and turn them into a list of <code>Main.Location</code>
-     * instances.
-     *
-     * Note: currently not used.
-     * 
-     * @param program
-     *            the program to look up labels in
-     * @param locs
-     *            the list of strings that are program locations
-     * @return a list of program locations
-     */
-    public static List<Location> getLocationList(Program program,
-            List<String> locs)
-    {
-        HashSet<Location> locset = new HashSet<Location>(locs.size() * 2);
-
-        SourceMapping lm = program.getSourceMapping();
-
-        for (String val : locs)
-        {
-            SourceMapping.Location l = lm.getLocation(val);
-            if (l == null)
-                Util.userError("Label unknown", val);
-            locset.add(l);
-        }
-
-        List<Location> loclist = Collections
-                .list(Collections.enumeration(locset));
-        Collections.sort(loclist, SourceMapping.LOCATION_COMPARATOR);
-
-        return loclist;
-    }
-
-
-    /**
-     * The <code>printSimHeader()</code> method simply prints the first line of
-     * output that names the columns for the events outputted by the rest of the
-     * simulation.
-     */
-    protected static void printSimHeader()
-    {
-        TermUtil.printSeparator(Terminal.MAXLINE, "Simulation events");
-        Terminal.printGreen("Node          Time   Event");
-        Terminal.nextln();
-        TermUtil.printThinSeparator(Terminal.MAXLINE);
-    }
-
-
-    protected static void reportMonitors(Simulation sim)
-    {
-        Iterator<Simulation.Node> i = sim.getNodeIterator();
-        while (i.hasNext())
-        {
-            for (Monitor mon : i.next().getMonitors())
-            {
-                mon.report();
-            }
-        }
-    }
-
-
-    protected static void reportTime(Simulation sim, long diff,
-            boolean throughput)
-    {
-        // calculate total throughput over all threads
-        Iterator<Simulation.Node> i = sim.getNodeIterator();
-        long aggCycles = 0;
-        long maxCycles = 0;
-        while (i.hasNext())
-        {
-            Simulation.Node n = i.next();
-            Simulator simulator = n.getSimulator();
-            if (simulator == null)
-                continue;
-            long count = simulator.getClock().getCount();
-            aggCycles += count;
-            if (count > maxCycles)
-                maxCycles = count;
-        }
-        TermUtil.reportQuantity("Simulated time", maxCycles, "cycles");
-        if (throughput)
-        {
-            TermUtil.reportQuantity("Time for simulation",
-                    TimeUtil.milliToSecs(diff), "seconds");
-            int nn = sim.getNumberOfNodes();
-            double thru = ((double) aggCycles) / (diff * 1000);
-            TermUtil.reportQuantity("Total throughput", (float) thru, "mhz");
-            if (nn > 1)
-                TermUtil.reportQuantity("Throughput per node",
-                        (float) (thru / nn), "mhz");
         }
     }
 
@@ -336,10 +278,10 @@ public class SimAction extends Action
      * timeout reaches zero. Timeouts can be used to ensure termination of the
      * simulator during testing, and implementing timestepping in surrounding
      * tools such as interactive debuggers or visualizers.
-     * <p> </p>
+     * <p>
      * When the exception is thrown, the simulator is left in a state that is
      * safe to be resumed by a <code>start()</code> call.
-     *
+     * </p>
      * @author Ben L. Titzer
      */
     public static class TimeoutException extends RuntimeException

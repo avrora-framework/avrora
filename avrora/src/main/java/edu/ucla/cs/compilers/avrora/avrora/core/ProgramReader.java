@@ -63,34 +63,31 @@ public abstract class ProgramReader extends HelpCategory
 
 
     /**
-     * The <code>read()</code> method will read a program in and produce a
-     * simplified format.
-     *
-     * @param args
-     *            the command line arguments
-     * @return a program instance representing the program
-     * @throws Exception
-     */
-    public abstract Program read(String[] args) throws Exception;
-
-
-    /**
      * The constructor for the <code>ProgramReader</code> class builds a new
      * reader with the specified help text. Since a program reader is also a
      * help category, the constructor will also add an options section
      * containing help for each specific option.
-     * 
+     *
      * @param h
      *            the help text for this reader
      */
-    protected ProgramReader(String h)
-    {
+    protected ProgramReader(String h) {
         super("reader", h);
 
         addSection("OVERVIEW", help);
         addOptionSection("Help for specific options is below.", options);
     }
 
+    /**
+     * The <code>read()</code> method will read a program in and produce a
+     * simplified format.
+     *
+     * @param args
+     *            the command line arguments
+     * @return a program instance representing the program
+     * @throws Exception if exceptional
+     */
+    public abstract Program read(String[] args) throws Exception;
 
     /**
      * The <code>addIndirectEdges()</code> method adds any indirect edges

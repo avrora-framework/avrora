@@ -43,58 +43,6 @@ public class AbstractParseException extends RuntimeException
 {
 
     private static final long serialVersionUID = 1L;
-
-
-    /**
-     * This constructor is used by the method "generateParseException" in the
-     * generated parser. Calling this constructor generates a new object of this
-     * type with the fields "currentToken", "expectedTokenSequences", and
-     * "tokenImage" set. The boolean flag "specialConstructor" is also set to
-     * true to indicate that this constructor was used to create this object.
-     * This constructor calls its super class with the empty string to force the
-     * "toString" method of parent class "Throwable" to print the error message
-     * in the form: ParseException: &lt;result of getMessage&gt;
-     */
-    public AbstractParseException(AbstractToken currentTokenVal,
-            int[][] expectedTokenSequencesVal, String[] tokenImageVal)
-    {
-        super("");
-        specialConstructor = true;
-        currentToken = currentTokenVal;
-        expectedTokenSequences = expectedTokenSequencesVal;
-        tokenImage = tokenImageVal;
-        AbstractToken tok = currentToken.getNextToken();
-        sourcePoint = new SourcePoint(tok.file, tok.beginLine, tok.beginColumn,
-                tok.endColumn);
-    }
-
-
-    /**
-     * The following constructors are for use by you for whatever purpose you
-     * can think of. Constructing the exception in this manner makes the
-     * exception behave in the normal way - i.e., as documented in the class
-     * "Throwable". The fields "errorToken", "expectedTokenSequences", and
-     * "tokenImage" do not contain relevant information. The JavaCC generated
-     * code does not use these constructors.
-     */
-
-    public AbstractParseException()
-    {
-        specialConstructor = false;
-    }
-
-
-    public AbstractParseException(String message)
-    {
-        super(message);
-        specialConstructor = false;
-    }
-
-    /**
-     * This variable determines which constructor was used to create this object
-     * and thereby affects the semantics of the "getMessage" method (see below).
-     */
-    protected boolean specialConstructor;
     /**
      * This is the last token that has been consumed successfully. If this
      * object has been created due to a parse error, the token followng this
@@ -113,17 +61,65 @@ public class AbstractParseException extends RuntimeException
      * generated ...Constants interface.
      */
     public String[] tokenImage;
+    public SourcePoint sourcePoint;
+    /**
+     * This variable determines which constructor was used to create this object
+     * and thereby affects the semantics of the "getMessage" method (see below).
+     */
+    protected boolean specialConstructor;
     /**
      * The end of line string for this machine.
      */
     protected String eol = System.getProperty("line.separator", "\n");
+    /**
+     * This constructor is used by the method {@link AbstractParseException#AbstractParseException
+     * (AbstractToken, int[][], String[])} in the
+     * generated parser. Calling this constructor generates a new object of this
+     * type with the fields {@link #currentToken}, {@link #expectedTokenSequences}, and
+     * {@link #tokenImage} set. The boolean flag {@link #specialConstructor} is also set to
+     * true to indicate that this constructor was used to create this object.
+     * This constructor calls its super class with the empty string to force the
+     * {@link RuntimeException#toString()} method of parent class {@link Throwable} to print the error message
+     * in the form: ParseException: &lt;result of getMessage&gt;
+     *
+     * @param currentTokenVal the {@link #currentToken}
+     * @param expectedTokenSequencesVal the {@link #expectedTokenSequences}
+     * @param tokenImageVal the {@link #tokenImage}
+     */
+    public AbstractParseException(AbstractToken currentTokenVal, int[][] expectedTokenSequencesVal,
+                                  String[] tokenImageVal) {
+        super("");
+        specialConstructor = true;
+        currentToken = currentTokenVal;
+        expectedTokenSequences = expectedTokenSequencesVal;
+        tokenImage = tokenImageVal;
+        AbstractToken tok = currentToken.getNextToken();
+        sourcePoint = new SourcePoint(tok.file, tok.beginLine, tok.beginColumn, tok.endColumn);
+    }
+    /**
+     * The following constructors are for use by you for whatever purpose you
+     * can think of. Constructing the exception in this manner makes the
+     * exception behave in the normal way - i.e., as documented in the class
+     * "Throwable". The fields "errorToken", "expectedTokenSequences", and
+     * "tokenImage" do not contain relevant information. The JavaCC generated
+     * code does not use these constructors.
+     */
 
-    public SourcePoint sourcePoint;
+    public AbstractParseException() {
+        specialConstructor = false;
+    }
 
+    public AbstractParseException(String message) {
+        super(message);
+        specialConstructor = false;
+    }
 
     /**
      * Used to convert raw characters to their escaped version when these raw
      * version cannot be used as part of an ASCII string literal.
+     *
+     * @param str string to escape
+     * @return escaped string
      */
     protected String add_escapes(String str)
     {

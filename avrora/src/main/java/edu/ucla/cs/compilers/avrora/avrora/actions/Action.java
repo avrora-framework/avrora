@@ -70,7 +70,7 @@ public abstract class Action extends HelpCategory
      *
      * @param args
      *            the command line arguments
-     * @throws Exception
+     * @throws Exception if exceptional
      */
     public abstract void run(String[] args) throws Exception;
 

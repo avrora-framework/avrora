@@ -1,47 +1,36 @@
 /**
- * Copyright (c) 2006, Regents of the University of California
- * All rights reserved.
- *
- * Redistribution and use in source and binary forms, with or without
- * modification, are permitted provided that the following conditions
- * are met:
- *
- * Redistributions of source code must retain the above copyright notice,
- * this list of conditions and the following disclaimer.
- *
- * Redistributions in binary form must reproduce the above copyright
- * notice, this list of conditions and the following disclaimer in the
- * documentation and/or other materials provided with the distribution.
- *
- * Neither the name of the University of California, Los Angeles nor the
- * names of its contributors may be used to endorse or promote products
- * derived from this software without specific prior written permission.
- *
- * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
- * "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
- * LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
- * A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
- * OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
- * SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
- * LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
- * DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
- * THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
- * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
- * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ * Copyright (c) 2006, Regents of the University of California All rights reserved.
+ * <p>
+ * Redistribution and use in source and binary forms, with or without modification, are permitted provided
+ * that the following conditions are met:
+ * <p>
+ * Redistributions of source code must retain the above copyright notice, this list of conditions and the
+ * following disclaimer.
+ * <p>
+ * Redistributions in binary form must reproduce the above copyright notice, this list of conditions and the
+ * following disclaimer in the documentation and/or other materials provided with the distribution.
+ * <p>
+ * Neither the name of the University of California, Los Angeles nor the names of its contributors may be used
+ * to endorse or promote products derived from this software without specific prior written permission.
+ * <p>
+ * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND ANY EXPRESS OR IMPLIED
+ * WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A
+ * PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS BE LIABLE FOR ANY
+ * DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO,
+ * PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION)
+ * HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING
+ * NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
+ * POSSIBILITY OF SUCH DAMAGE.
  */
 
 package edu.ucla.cs.compilers.avrora.avrora.sim.mcu;
 
-import java.util.HashMap;
-import java.util.Map;
-
-import edu.ucla.cs.compilers.avrora.avrora.sim.ActiveRegister;
-import edu.ucla.cs.compilers.avrora.avrora.sim.InterruptTable;
-import edu.ucla.cs.compilers.avrora.avrora.sim.RW16Register;
-import edu.ucla.cs.compilers.avrora.avrora.sim.RWRegister;
-import edu.ucla.cs.compilers.avrora.avrora.sim.Simulator;
+import edu.ucla.cs.compilers.avrora.avrora.sim.*;
 import edu.ucla.cs.compilers.avrora.avrora.sim.clock.Clock;
 import edu.ucla.cs.compilers.avrora.cck.util.Util;
+
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * The <code>ATMegaTimer</code> class implements a timer on the ATMega series of
@@ -49,35 +38,20 @@ import edu.ucla.cs.compilers.avrora.cck.util.Util;
  *
  * @author Pekka Nikander
  */
-public abstract class ATMegaTimer extends AtmelInternalDevice
-{
+public abstract class ATMegaTimer extends AtmelInternalDevice {
 
-    /*
-     * The current mode of this timer. The mode determines how to
-     * increment/decrement the counter, when to load new register values, when
-     * to signal TOPs/BOTTOMs/overflows, etc.
-     *
-     * Note that the mode may change as the WGMn bits are set.
-     */ Mode mode;
-
+    protected final Clock externalClock;
+    /**
+     * A temporary register shared by all 16-bit registers in a 16-bit timer/counter. See
+     * <code>LowRegister</code> for more information. While this is not needed in 8-bit timers, it doesn't pay
+     * much to implement it here.
+     */
+    protected final RWRegister tempHighReg = new RWRegister();
     /*
      * A collection of Input, Output, and InputOutputCompareUnits implemented by
      * this timer.
      */
     final Map<String, Comparator> comparators = new HashMap<String, Comparator>();
-
-    boolean timerEnabled;
-    boolean countUp;
-    long period;
-
-    /*
-     * pg. 93 of manual. Block compareMatch for one period after TCNTn is
-     * written to.
-     */ boolean compareMatchBlocked;
-
-    protected final Clock externalClock;
-    Clock timerClock;
-    int timerNumber;
     /*
      * Fields shared by all ATMega timers.
      */
@@ -85,16 +59,28 @@ public abstract class ATMegaTimer extends AtmelInternalDevice
     final FlagField TOVn; // Timer Overflow flag
     final RegisterSet.Field WGMn; // Mode
     final RegisterSet.Field CSn; // Clock source
-
     /*
      * Timer periods, as assigned by the CSn field
      */
     private final int[] periods;
+    /*
+     * The current mode of this timer. The mode determines how to
+     * increment/decrement the counter, when to load new register values, when
+     * to signal TOPs/BOTTOMs/overflows, etc.
+     *
+     * Note that the mode may change as the WGMn bits are set.
+     */ Mode mode;
+    boolean timerEnabled;
+    boolean countUp;
+    long period;
+    /*
+     * pg. 93 of manual. Block compareMatch for one period after TCNTn is
+     * written to.
+     */ boolean compareMatchBlocked;
+    Clock timerClock;
+    int timerNumber;
 
-
-    protected ATMegaTimer(int n, AtmelMicrocontroller m, int[] p,
-            String ovfName)
-    {
+    protected ATMegaTimer(int n, AtmelMicrocontroller m, int[] p, String ovfName) {
         super("Timer" + n, m);
         timerNumber = n;
         periods = p;
@@ -103,8 +89,7 @@ public abstract class ATMegaTimer extends AtmelInternalDevice
 
         TOIEn = rset.getField("TOIE" + n);
         int overflowInterrupt = m.properties.getInterrupt(ovfName);
-        TOVn = new FlagField(interpreter.getInterruptTable(), true,
-                overflowInterrupt);
+        TOVn = new FlagField(interpreter.getInterruptTable(), true, overflowInterrupt);
         rset.installField("TOV" + n, TOVn);
         WGMn = rset.installField("WGM" + n, newWGMField());
         CSn = rset.installField("CS" + n, newPeriodField());
@@ -113,112 +98,93 @@ public abstract class ATMegaTimer extends AtmelInternalDevice
         timerClock = mainClock;
     }
 
-
-    private RegisterSet.Field newPeriodField()
-    {
+    private RegisterSet.Field newPeriodField() {
         return new RegisterSet.Field() {
             @Override
-            public void update()
-            {
+            public void update() {
                 resetPeriod(periods[value]);
             }
         };
     }
 
-
-    private RegisterSet.Field newWGMField()
-    {
+    private RegisterSet.Field newWGMField() {
         return new RegisterSet.Field() {
             @Override
-            public void update()
-            {
+            public void update() {
                 resetMode(value);
             }
         };
     }
 
-
-    protected void addComparator(String name, Comparator comparator)
-    {
+    protected void addComparator(String name, Comparator comparator) {
         comparators.put(name, comparator);
     }
 
-
-    protected Comparator getComparator(String name)
-    {
+    protected Comparator getComparator(String name) {
         return comparators.get(name);
     }
-
 
     /**
      * Resets the clock period. Called whenever CSn is assigned.
      */
-    private void resetPeriod(int nPeriod)
-    {
-        if (nPeriod == 0)
-        {
-            if (timerEnabled)
-            {
-                if (devicePrinter != null)
-                    devicePrinter.println(name + " disabled");
+    private void resetPeriod(int nPeriod) {
+        if (nPeriod == 0) {
+            if (timerEnabled) {
+                if (devicePrinter != null) devicePrinter.println(name + " disabled");
                 timerClock.removeEvent(mode);
                 timerEnabled = false;
             }
             return;
         }
-        if (timerEnabled)
-        {
+        if (timerEnabled) {
             timerClock.removeEvent(mode);
         }
         if (devicePrinter != null)
-            devicePrinter.println(name + " enabled: period = " + nPeriod
-                    + " mode = " + WGMn.value);
+            devicePrinter.println(name + " enabled: period = " + nPeriod + " mode = " + WGMn.value);
         period = nPeriod;
         timerEnabled = true;
         timerClock.insertEvent(mode, period);
-
     }
-
 
     /**
      * Resets the mode according to the WGMn bits.
+     *
+     * @param WGMn the mode index determined by the implementation
      */
     public abstract void resetMode(int WGMn);
-
 
     /**
      * Returns current counter value
      */
     public abstract int getCounter();
 
-
     /**
      * Sets the current counter value
+     *
+     * @param count the value to be set to the counter register
      */
     public abstract void setCounter(int count);
 
-
-    /*
+    /**
      * Returns the counter register name.
+     *
+     * @return the counter name
      */
     public abstract String getCounterName();
 
-
     /**
      * Returns the size-specific MAX value.
+     *
+     * @return the max value according to the MCU bit width
      */
     protected abstract int getMax();
-
 
     /**
      * Sets the overflow flag (TOVn) for this timer.
      */
-    protected void signalOverflow()
-    {
-        if (devicePrinter != null)
-        {
-            devicePrinter.println(name + ".overFlow (interrupts enabled: "
-                    + TOIEn.value + ')');
+    protected void signalOverflow() {
+        if (devicePrinter != null) {
+            devicePrinter.println(name + ".overFlow (interrupts enabled: " + TOIEn.value + ')');
         }
         TOVn.flag();
     }
@@ -228,16 +194,45 @@ public abstract class ATMegaTimer extends AtmelInternalDevice
      * be abstracted. Depending on the mode, TOP may be either defined by a
      * register or by a constant.
      */
-    interface TopValue
-    {
+    interface TopValue {
 
-        public int mask();
+        int mask();
 
+        int read16();
 
-        public int read16();
+        void flush();
+    }
 
+    /**
+     * In some CTC and PWM modes, the TOP values is a fixed one.
+     */
+    static class FixedTop implements TopValue {
 
-        public void flush();
+        public static final FixedTop FF = new FixedTop(0xFF);
+        public static final FixedTop _1FF = new FixedTop(0x1FF);
+        public static final FixedTop _3FF = new FixedTop(0x3FF);
+        public static final FixedTop FFFF = new FixedTop(0xFFFF);
+
+        final int top;
+
+        protected FixedTop(int t) {
+            top = t;
+        }
+
+        @Override
+        public int read16() {
+            return top;
+        }
+
+        @Override
+        public int mask() {
+            return top;
+        }
+
+        @Override
+        public void flush() {
+            throw Util.failure("Fixed top value flushed");
+        }
     }
 
     /**
@@ -249,63 +244,46 @@ public abstract class ATMegaTimer extends AtmelInternalDevice
      * to create a dependency between RegisterSets and InterruptTables, and
      * therefore didn't initially implement this in RegisterSet.
      */
-    public class FlagField extends RegisterSet.Field
-            implements InterruptTable.Notification
-    {
+    public class FlagField extends RegisterSet.Field implements InterruptTable.Notification {
 
         InterruptTable interrupts;
         int inum;
         boolean autoclear;
 
-
-        public FlagField(InterruptTable it, boolean auto, int in)
-        {
+        public FlagField(InterruptTable it, boolean auto, int in) {
             interrupts = it;
             autoclear = auto;
             inum = in;
             interrupts.registerInternalNotification(this, inum);
         }
 
-
         @Override
-        public void update()
-        {
-            if (0 != value)
-            {
+        public void update() {
+            if (0 != value) {
                 interrupts.post(inum);
-            } else
-            {
+            } else {
                 interrupts.unpost(inum);
             }
         }
 
-
-        public void flag()
-        {
+        public void flag() {
             write(1);
         }
 
-
-        public void unflag()
-        {
+        public void unflag() {
             write(0);
         }
 
-
         @Override
-        public void force(int inum)
-        {
+        public void force(int inum) {
             // XXX: Should assert that this.inum == inum?
             flag();
         }
 
-
         @Override
-        public void invoke(int inum)
-        {
+        public void invoke(int inum) {
             // XXX: Should assert that this.inum == inum?
-            if (autoclear)
-            {
+            if (autoclear) {
                 unflag();
             }
         }
@@ -321,8 +299,7 @@ public abstract class ATMegaTimer extends AtmelInternalDevice
      * interface, allowing the commonality between the different ATMega timers
      * to be implemented by a single, fairly simple set of methods.
      */
-    protected /* final */ class Mode implements Simulator.Event
-    {
+    protected /* final */ class Mode implements Simulator.Event {
 
         /**
          * A mode-dependint TOP value, either a constant or a register,
@@ -341,92 +318,72 @@ public abstract class ATMegaTimer extends AtmelInternalDevice
          */
         final Strategy strategy;
 
-
         /**
          * Creates a new, mutable Mode object.
          */
-        protected Mode(Class<? extends Strategy> sc, RegisterSet.Field f,
-                ActiveRegister t)
-        {
+        protected Mode(Class<? extends Strategy> sc, RegisterSet.Field f, ActiveRegister t) {
             this(sc, f, (TopValue) t);
         }
 
-
         /**
          * Creates a new, mutable Mode object.
+         *
+         * @param sc strategy class
+         * @param f register flag field
+         * @param t the top
          */
-        protected Mode(Class<? extends Strategy> sc, RegisterSet.Field f,
-                TopValue t)
-        {
-            if (NORMAL.class == sc)
-            {
+        protected Mode(Class<? extends Strategy> sc, RegisterSet.Field f, TopValue t) {
+            if (NORMAL.class == sc) {
                 strategy = new NORMAL();
-            } else if (CTC.class == sc)
-            {
+            } else if (CTC.class == sc) {
                 strategy = new CTC();
-            } else if (PWM.class == sc)
-            {
+            } else if (PWM.class == sc) {
                 strategy = new PWM();
-            } else if (FC_PWM.class == sc)
-            {
+            } else if (FC_PWM.class == sc) {
                 strategy = new FC_PWM();
-            } else if (FAST_PWM.class == sc)
-            {
+            } else if (FAST_PWM.class == sc) {
                 strategy = new FAST_PWM();
-            } else
-            {
+            } else {
                 throw new Error("Unknown Strategy class " + sc);
             }
             flag = (FlagField) f;
             top = t;
         }
 
-
         /**
-         * Returns the mode-specific TOP value: fixed, OCRnA, OCRnI, ...
+         * @return the mode-specific TOP value: fixed, OCRnA, OCRnI, ...
          */
-        protected int getTop()
-        {
+        protected int getTop() {
             return top.read16();
         }
-
 
         /**
          * Signals hitting the top; depending on the mode, sets the
          * corresponding signal bit.
          */
-        protected void signalTop()
-        {
-            if (null != flag)
-                flag.flag();
+        protected void signalTop() {
+            if (null != flag) flag.flag();
         }
-
 
         /**
          * Updates the TOP register; called either at TOP or BOTTOM, depending
          * on the mode
          */
-        protected void updateTop()
-        {
+        protected void updateTop() {
             top.flush();
         }
-
 
         /**
          * Called by the appropriate clock whenever the strategy should tick.
          */
         @Override
-        public void fire()
-        {
+        public void fire() {
             int value = getCounter();
-            if (devicePrinter != null)
-            {
-                devicePrinter.println(
-                        name + " [" + getCounterName() + " = " + value);
-                for (Comparator c : comparators.values())
-                {
-                    devicePrinter.println(", " + c + "(actual) = " + c.read()
-                            + ", " + c + "(buffer) = " + c.readBuffer() + ']');
+            if (devicePrinter != null) {
+                devicePrinter.println(name + " [" + getCounterName() + " = " + value);
+                for (Comparator c : comparators.values()) {
+                    devicePrinter.println(", " + c + "(actual) = " + c.read() + ", " + c + "(buffer) = " +
+                            c.readBuffer() + ']');
                 }
             }
 
@@ -434,10 +391,8 @@ public abstract class ATMegaTimer extends AtmelInternalDevice
 
             // the compare match should be performed in any case.
             // XXX: Check that this is OK; is using count ok
-            if (!compareMatchBlocked)
-            {
-                for (Comparator i : comparators.values())
-                {
+            if (!compareMatchBlocked) {
+                for (Comparator i : comparators.values()) {
                     i.compare(value);
                 }
             }
@@ -447,168 +402,131 @@ public abstract class ATMegaTimer extends AtmelInternalDevice
             // XXX: verify the timing on this.
             compareMatchBlocked = false;
 
-            if (period != 0)
-                timerClock.insertEvent(this, period);
+            if (period != 0) timerClock.insertEvent(this, period);
         }
 
-
-        protected void registerWritten(BufferedRegister reg)
-        {
+        protected void registerWritten(BufferedRegister reg) {
             strategy.registerWritten(reg);
         }
 
-        protected abstract class Strategy
-        {
+        protected abstract class Strategy {
 
             protected abstract int nextValue(int count);
-
 
             protected abstract void registerWritten(BufferedRegister reg);
         }
 
-        protected class NORMAL extends Strategy
-        {
+        protected class NORMAL extends Strategy {
 
             @Override
-            protected int nextValue(int count)
-            {
+            protected int nextValue(int count) {
                 count++;
-                if (getMax() + 1 == count)
-                {
+                if (getMax() + 1 == count) {
                     signalOverflow();
                     count = 0;
                 }
                 return count;
             }
 
-
             @Override
-            protected void registerWritten(BufferedRegister reg)
-            {
+            protected void registerWritten(BufferedRegister reg) {
                 // Flush the buffer immediately
                 reg.flush();
             }
         }
 
-        protected class CTC extends Strategy
-        {
+        protected class CTC extends Strategy {
 
             @Override
-            protected int nextValue(int count)
-            {
+            protected int nextValue(int count) {
                 count++;
 
-                if (getTop() == count)
-                {
+                if (getTop() == count) {
                     signalTop();
                     count = 0;
                 }
-                if (getMax() + 1 == count)
-                {
+                if (getMax() + 1 == count) {
                     signalOverflow();
                     count = 0;
                 }
                 return count;
             }
 
-
             @Override
-            protected void registerWritten(BufferedRegister reg)
-            {
+            protected void registerWritten(BufferedRegister reg) {
                 // Flush the buffer immediately
                 reg.flush();
             }
         }
 
-        protected class FAST_PWM extends Strategy
-        {
+        protected class FAST_PWM extends Strategy {
 
             boolean zero = false;
 
-
             @Override
-            protected int nextValue(int count)
-            {
+            protected int nextValue(int count) {
                 count++;
 
-                if (zero)
-                {
+                if (zero) {
                     zero = false;
                     count = 0;
                     updateTop();
                     signalOverflow();
                 }
-                if (getTop() == count)
-                {
+                if (getTop() == count) {
                     zero = true; // Zero counter on next clock cycle
                     signalTop();
                 }
                 return count;
             }
 
-
             @Override
-            protected void registerWritten(BufferedRegister reg)
-            {
+            protected void registerWritten(BufferedRegister reg) {
                 // Mask in fixed FASTPWM modes
                 reg.value &= top.mask();
                 // Flushing is delayed
             }
         }
 
-        protected class PWM extends Strategy
-        {
+        protected class PWM extends Strategy {
 
             @Override
-            protected int nextValue(int count)
-            {
-                if (countUp)
-                    count++;
-                else
-                    count--;
+            protected int nextValue(int count) {
+                if (countUp) count++;
+                else count--;
 
-                if (count == getTop())
-                {
+                if (count == getTop()) {
                     countUp = false;
                     signalTop();
                     updateTop();
                 }
-                if (count == 0)
-                {
+                if (count == 0) {
                     countUp = true;
                     signalOverflow();
                 }
                 return count;
             }
 
-
             @Override
-            protected void registerWritten(BufferedRegister reg)
-            {
+            protected void registerWritten(BufferedRegister reg) {
                 // Mask in fixed FASTPWM modes
                 reg.value &= top.mask();
                 // Flushing is delayed until top
             }
         }
 
-        protected class FC_PWM extends Strategy
-        {
+        protected class FC_PWM extends Strategy {
 
             @Override
-            protected int nextValue(int count)
-            {
-                if (countUp)
-                    count++;
-                else
-                    count--;
+            protected int nextValue(int count) {
+                if (countUp) count++;
+                else count--;
 
-                if (count == getTop())
-                {
+                if (count == getTop()) {
                     countUp = false;
                     signalTop();
                 }
-                if (count == 0)
-                {
+                if (count == 0) {
                     countUp = true;
                     signalOverflow();
                     updateTop();
@@ -616,53 +534,10 @@ public abstract class ATMegaTimer extends AtmelInternalDevice
                 return count;
             }
 
-
             @Override
-            protected void registerWritten(BufferedRegister reg)
-            {
+            protected void registerWritten(BufferedRegister reg) {
                 // Flushing is delayed until bottom
             }
-        }
-    }
-
-    /**
-     * In some CTC and PWM modes, the TOP values is a fixed one.
-     */
-    static class FixedTop implements TopValue
-    {
-
-        public static final FixedTop FF = new FixedTop(0xFF);
-        public static final FixedTop _1FF = new FixedTop(0x1FF);
-        public static final FixedTop _3FF = new FixedTop(0x3FF);
-        public static final FixedTop FFFF = new FixedTop(0xFFFF);
-
-        final int top;
-
-
-        protected FixedTop(int t)
-        {
-            top = t;
-        }
-
-
-        @Override
-        public int read16()
-        {
-            return top;
-        }
-
-
-        @Override
-        public int mask()
-        {
-            return top;
-        }
-
-
-        @Override
-        public void flush()
-        {
-            throw Util.failure("Fixed top value flushed");
         }
     }
 
@@ -672,8 +547,7 @@ public abstract class ATMegaTimer extends AtmelInternalDevice
      * Implements the common functionality between 8- and 16-bit, Input and
      * Output units.
      */
-    abstract class Comparator
-    {
+    abstract class Comparator {
 
         public static final String __ = "";
         public static final String A = "A";
@@ -685,10 +559,7 @@ public abstract class ATMegaTimer extends AtmelInternalDevice
         final AtmelMicrocontroller.Pin pin;
         final FlagField flag;
 
-
-        Comparator(String t, String u, RegisterSet rset, int interruptNumber,
-                AtmelMicrocontroller.Pin p)
-        {
+        Comparator(String t, String u, RegisterSet rset, int interruptNumber, AtmelMicrocontroller.Pin p) {
             type = t;
             unit = u;
             pin = p;
@@ -697,97 +568,72 @@ public abstract class ATMegaTimer extends AtmelInternalDevice
             rset.installField(type + "F" + timerNumber + unit, flag);
         }
 
-
         @Override
-        public String toString()
-        {
+        public String toString() {
             return type + "R" + timerNumber + unit;
         }
 
-
-        void compare(int count)
-        {
-            if (read() == count)
-            {
+        void compare(int count) {
+            if (read() == count) {
                 operate();
                 flag.flag(); // Should be next clock cycle
             }
         }
 
-
         protected abstract void operate();
 
-
         abstract int read();
-
 
         abstract int readBuffer();
     }
 
-    abstract class OutputComparator extends Comparator
-    {
+    abstract class OutputComparator extends Comparator {
 
         final RegisterSet.Field pinmode;
         final RegisterSet.Field force;
 
-
-        OutputComparator(String u, RegisterSet rset, int interruptNumber,
-                AtmelMicrocontroller.Pin p)
-        {
+        OutputComparator(String u, RegisterSet rset, int interruptNumber, AtmelMicrocontroller.Pin p) {
             super("OC", u, rset, interruptNumber, p);
             pinmode = rset.getField("COM" + timerNumber + unit);
-            force = rset.installField("FOC" + timerNumber + unit,
-                    new RegisterSet.Field() {
-                        @Override
-                        public void update()
-                        {
-                            if (1 == value)
-                            {
-                                operate();
+            force = rset.installField("FOC" + timerNumber + unit, new RegisterSet.Field() {
+                @Override
+                public void update() {
+                    if (1 == value) {
+                        operate();
                             }
                         }
                     });
         }
 
-
         @Override
-        protected void operate()
-        {
-            if (null == pin)
-                return;
+        protected void operate() {
+            if (null == pin) return;
 
             // read the bits in the control register for compare mode
             // XXX: This should be more mode specific, see pg 133-134 of the
             // ATMega 128 manual
-            switch (pinmode.value)
-            {
-            case 1:
-                pin.write(!pin.read()); // clear
-                break;
-            case 2:
-                pin.write(false);
-                break;
-            case 3:
-                pin.write(true);
-                break;
+            switch (pinmode.value) {
+                case 1:
+                    pin.write(!pin.read()); // clear
+                    break;
+                case 2:
+                    pin.write(false);
+                    break;
+                case 3:
+                    pin.write(true);
+                    break;
             }
         }
-
     }
 
-    abstract class InputComparator extends Comparator
-    {
+    abstract class InputComparator extends Comparator {
 
-        InputComparator(String u, RegisterSet rset, int interruptNumber,
-                AtmelMicrocontroller.Pin p)
-        {
+        InputComparator(String u, RegisterSet rset, int interruptNumber, AtmelMicrocontroller.Pin p) {
             super("IC", u, rset, interruptNumber, p);
         }
 
-
         @Override
-        protected void operate()
-        {
+        protected void operate() {
             // XXX: Should capture here
         }
     }
@@ -798,34 +644,26 @@ public abstract class ATMegaTimer extends AtmelInternalDevice
      * <p> </p>
      * XXX: Make this into a facade
      */
-    protected class TCNTnRegister implements ActiveRegister
-    {
+    protected class TCNTnRegister implements ActiveRegister {
 
         public final String name;
         private final ActiveRegister register;
 
-
-        protected TCNTnRegister(String n, ActiveRegister r)
-        {
+        protected TCNTnRegister(String n, ActiveRegister r) {
             name = n;
             register = r;
         }
 
-
         @Override
-        public void write(byte val)
-        {
+        public void write(byte val) {
             register.write(val);
             compareMatchBlocked = true;
         }
 
-
         @Override
-        public byte read()
-        {
+        public byte read() {
             return register.read();
         }
-
     }
 
     /**
@@ -836,14 +674,15 @@ public abstract class ATMegaTimer extends AtmelInternalDevice
      * buffer register on a write and reading from the buffered register in a
      * read. When the buffered register is to be updated, the
      * <code>flush()</code> method should be called.
-     * <p> </p>
+     * <p>
      * Note that the underlying register may be either an 8-bit or 16-bit
      * register; the BufferedRegister is oblivious to that.
+     * </p>
      */
-    protected class BufferedRegister extends RW16Register
-            implements TopValue, ActiveRegister
-    {
+    protected class BufferedRegister extends RW16Register implements TopValue, ActiveRegister {
 
+        private final ActiveRegister reg8; // The underlying register, 8-bit
+        private final RW16Register reg16; // The underlying register, 16-bit
         /*
          * XXX: The implementation of this class is currently very ugly, as it
          * provides interfaces for both 16 and 8 bit registers.
@@ -857,88 +696,56 @@ public abstract class ATMegaTimer extends AtmelInternalDevice
          * interface inheritance. It's implementation is not used for anyting. -
          * It would be better if read16() didn't exist but it was unified with
          * read().
-         */
-        int value; // The buffered value, 8 or 16 bits
+         */ int value; // The buffered value, 8 or 16 bits
 
-        private final ActiveRegister reg8; // The underlying register, 8-bit
-        private final RW16Register reg16; // The underlying register, 16-bit
-
-
-        protected BufferedRegister(ActiveRegister r)
-        {
+        protected BufferedRegister(ActiveRegister r) {
             this.reg8 = r;
             this.reg16 = null;
         }
 
-
-        protected BufferedRegister(RW16Register r)
-        {
+        protected BufferedRegister(RW16Register r) {
             this.reg16 = r;
             this.reg8 = null;
         }
 
-
         @Override
-        public void write(byte val)
-        {
+        public void write(byte val) {
             value = val;
             mode.registerWritten(this);
         }
 
-
         @Override
-        public void write(int val)
-        {
+        public void write(int val) {
             value = val;
             mode.registerWritten(this);
         }
 
-
-        public int readBuffer()
-        {
+        public int readBuffer() {
             return super.read16();
         }
 
-
         @Override
-        public byte read()
-        {
+        public byte read() {
             return (byte) read16();
         }
 
-
         @Override
-        public int read16()
-        {
+        public int read16() {
             return (null != reg8) ? reg8.read() : reg16.read16();
         }
 
-
         @Override
-        public int mask()
-        {
+        public int mask() {
             return 0xffff; // When used as TOP, never mask any bits, independent
-                           // of the size
+            // of the size
         }
 
-
         @Override
-        public void flush()
-        {
-            if (null != reg8)
-                reg8.write((byte) value);
-            else
-                reg16.write(value);
+        public void flush() {
+            if (null != reg8) reg8.write((byte) value);
+            else reg16.write(value);
         }
     }
-
-    /**
-     * A temporary register shared by all 16-bit registers in a 16-bit
-     * timer/counter. See <code>LowRegister</code> for more information. While
-     * this is not needed in 8-bit timers, it doesn't pay much to implement it
-     * here.
-     */
-    protected final RWRegister tempHighReg = new RWRegister();
 
     /**
      * The <code>LowRegister</code> and <code>HIghRegister</code> classes exists
@@ -953,77 +760,57 @@ public abstract class ATMegaTimer extends AtmelInternalDevice
      * register, as well as initiate a read/write on the associated high
      * register.
      */
-    protected class LowRegister implements ActiveRegister
-    {
+    protected class LowRegister implements ActiveRegister {
 
         final RW16Register reg;
 
-
-        LowRegister(RW16Register r)
-        {
+        LowRegister(RW16Register r) {
             reg = r;
         }
 
-
         @Override
-        public void write(byte val)
-        {
+        public void write(byte val) {
             reg.write((tempHighReg.read() << 8) + (val & 0xFF));
         }
 
-
         @Override
-        public byte read()
-        {
+        public byte read() {
             tempHighReg.write((byte) (reg.read16() >> 8));
             return (byte) reg.read16();
         }
-
     }
 
     /**
      * For other 16-bit registers but OCRnxH, both reads and writes go through
      * the temporary register.
      */
-    protected class HighRegister implements ActiveRegister
-    {
+    protected class HighRegister implements ActiveRegister {
 
         @Override
-        public void write(byte val)
-        {
+        public void write(byte val) {
             tempHighReg.write(val);
         }
 
-
         @Override
-        public byte read()
-        {
+        public byte read() {
             return tempHighReg.read();
         }
-
     }
 
     /**
      * Writes to OCRnxH go through the temporary register but writes are direct.
      */
-    protected class OCRnxHighRegister extends HighRegister
-    {
+    protected class OCRnxHighRegister extends HighRegister {
 
         final RW16Register reg;
 
-
-        OCRnxHighRegister(RW16Register r)
-        {
+        OCRnxHighRegister(RW16Register r) {
             reg = r;
         }
 
-
         @Override
-        public byte read()
-        {
+        public byte read() {
             return (byte) (reg.read16() >> 8);
         }
-
     }
-
 }

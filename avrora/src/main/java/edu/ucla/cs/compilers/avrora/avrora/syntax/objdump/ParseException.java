@@ -7,9 +7,10 @@ import edu.ucla.cs.compilers.avrora.cck.parser.AbstractParseException;
  * This exception is thrown when parse errors are encountered. You can
  * explicitly create objects of this exception type by calling the method
  * generateParseException in the generated parser.
- * <p> </p>
+ * <p>
  * You can modify this class to customize your error reporting mechanisms so
  * long as you retain the public fields.
+ * </p>
  */
 public class ParseException extends AbstractParseException
 {
@@ -18,14 +19,19 @@ public class ParseException extends AbstractParseException
 
 
     /**
-     * This constructor is used by the method "generateParseException" in the
+     * This constructor is used by the method {@link ObjDumpParser#generateParseException()} in the
      * generated parser. Calling this constructor generates a new object of this
-     * type with the fields "currentToken", "expectedTokenSequences", and
-     * "tokenImage" set. The boolean flag "specialConstructor" is also set to
+     * type with the fields {@link #currentToken}, {@link #expectedTokenSequences}, and
+     * {@link #tokenImage} set. The boolean flag {@link #specialConstructor} is also set to
      * true to indicate that this constructor was used to create this object.
      * This constructor calls its super class with the empty string to force the
-     * "toString" method of parent class "Throwable" to print the error message
+     * {@link AbstractParseException#toString} method of parent class {@link Throwable} to print the error
+     * message
      * in the form: ParseException: &lt;result of getMessage&gt;
+     *
+     * @param currentTokenVal see {@link #currentToken}
+     * @param expectedTokenSequencesVal see {@link #expectedTokenSequences}
+     * @param tokenImageVal see {@link #tokenImage}
      */
     public ParseException(Token currentTokenVal,
             int[][] expectedTokenSequencesVal, String[] tokenImageVal)
@@ -46,7 +52,6 @@ public class ParseException extends AbstractParseException
      * "tokenImage" do not contain relevant information. The JavaCC generated
      * code does not use these constructors.
      */
-
     public ParseException()
     {
         specialConstructor = false;

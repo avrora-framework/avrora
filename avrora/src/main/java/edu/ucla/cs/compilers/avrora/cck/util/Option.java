@@ -32,12 +32,12 @@
 
 package edu.ucla.cs.compilers.avrora.cck.util;
 
+import edu.ucla.cs.compilers.avrora.cck.text.StringUtil;
+import edu.ucla.cs.compilers.avrora.cck.text.Terminal;
+
 import java.text.CharacterIterator;
 import java.text.StringCharacterIterator;
 import java.util.Comparator;
-
-import edu.ucla.cs.compilers.avrora.cck.text.StringUtil;
-import edu.ucla.cs.compilers.avrora.cck.text.Terminal;
 
 /**
  * The <code>Option</code> class represents an option that has been given on the
@@ -54,13 +54,6 @@ public abstract class Option
      * option.
      */
     protected final String name;
-
-    /**
-     * The <code>description</code> field stores a reference to the string that
-     * represents the help item for this option.
-     */
-    protected final String description;
-
     /**
      * The <code>OptionComparator</code> is an implementation of the
      * <code>java.util.Comparator</code> interface that is used to sort options
@@ -68,12 +61,15 @@ public abstract class Option
      */
     public static final Comparator<Option> COMPARATOR = new Comparator<Option>() {
         @Override
-        public int compare(Option opt1, Option opt2)
-        {
-            return String.CASE_INSENSITIVE_ORDER.compare(opt1.getName(),
-                    opt2.getName());
+        public int compare(Option opt1, Option opt2) {
+            return String.CASE_INSENSITIVE_ORDER.compare(opt1.getName(), opt2.getName());
         }
     };
+    /**
+     * The <code>description</code> field stores a reference to the string that
+     * represents the help item for this option.
+     */
+    protected final String description;
 
 
     /**
@@ -168,7 +164,7 @@ public abstract class Option
 
 
     /**
-     * The <code>parseError()</code> method is called by an option
+     * The method is called by an option
      * implementation when there is a problem parsing the value for an option
      * supplied by the user on the command line. For example, if an integer is
      * not in the correct format, this method will be called, which will report
@@ -176,6 +172,7 @@ public abstract class Option
      *
      * @param name
      *            the name of the option
+     * @param type the value type
      * @param val
      *            the (invalid) value passed
      */

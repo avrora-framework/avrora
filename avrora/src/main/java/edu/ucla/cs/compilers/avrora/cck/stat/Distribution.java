@@ -1,33 +1,26 @@
 /**
- * Copyright (c) 2004-2005, Regents of the University of California
- * All rights reserved.
- *
- * Redistribution and use in source and binary forms, with or without
- * modification, are permitted provided that the following conditions
- * are met:
- *
- * Redistributions of source code must retain the above copyright notice,
- * this list of conditions and the following disclaimer.
- *
- * Redistributions in binary form must reproduce the above copyright
- * notice, this list of conditions and the following disclaimer in the
- * documentation and/or other materials provided with the distribution.
- *
- * Neither the name of the University of California, Los Angeles nor the
- * names of its contributors may be used to endorse or promote products
- * derived from this software without specific prior written permission.
- *
- * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
- * "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
- * LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
- * A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
- * OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
- * SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
- * LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
- * DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
- * THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
- * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
- * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ * Copyright (c) 2004-2005, Regents of the University of California All rights reserved.
+ * <p>
+ * Redistribution and use in source and binary forms, with or without modification, are permitted provided
+ * that the following conditions are met:
+ * <p>
+ * Redistributions of source code must retain the above copyright notice, this list of conditions and the
+ * following disclaimer.
+ * <p>
+ * Redistributions in binary form must reproduce the above copyright notice, this list of conditions and the
+ * following disclaimer in the documentation and/or other materials provided with the distribution.
+ * <p>
+ * Neither the name of the University of California, Los Angeles nor the names of its contributors may be used
+ * to endorse or promote products derived from this software without specific prior written permission.
+ * <p>
+ * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND ANY EXPRESS OR IMPLIED
+ * WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A
+ * PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS BE LIABLE FOR ANY
+ * DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO,
+ * PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION)
+ * HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING
+ * NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
+ * POSSIBILITY OF SUCH DAMAGE.
  */
 
 package edu.ucla.cs.compilers.avrora.cck.stat;
@@ -42,8 +35,7 @@ import edu.ucla.cs.compilers.avrora.cck.util.Util;
  *
  * @author Ben L. Titzer
  */
-public class Distribution extends MinMaxMean
-{
+public class Distribution extends MinMaxMean {
 
     /**
      * The <code>distrib</code> field stores an array that records the number of
@@ -77,47 +69,49 @@ public class Distribution extends MinMaxMean
      */
     protected String distribname;
 
-
     /**
      * This is the public constructor.
+     * @param name see {@link MinMaxMean#MinMaxMean(String)}
      */
-    public Distribution(String name)
-    {
+    public Distribution(String name) {
         super(name);
         distribMin = observedMinimum;
     }
 
-
     /**
      * Public constructor initializes the statistics for a sequence of integers.
+     *
+     * @param newname see {@link MinMaxMean#MinMaxMean(String)}
+     * @param tn total field name
+     * @param cn cumulative filed name
      */
-    public Distribution(String newname, String tn, String cn)
-    {
+    public Distribution(String newname, String tn, String cn) {
         super(newname, tn, cn);
         distribMin = observedMinimum;
     }
 
-
     /**
      * Public constructor initializes the statistics for a sequence of integers.
+     *
+     * @param newname see {@link MinMaxMean#MinMaxMean(String)}
+     * @param tn total field name
+     * @param cn cummulative field name
+     * @param dn see {@link #distribname}
      */
-    public Distribution(String newname, String tn, String cn, String dn)
-    {
+    public Distribution(String newname, String tn, String cn, String dn) {
         super(newname, tn, cn);
         distribname = dn;
         distribMin = observedMinimum;
     }
 
-
     /**
      * Record the next value and update internal state.
+     * @param value the value to be recorded
      */
     @Override
-    public synchronized void record(int value)
-    {
+    public synchronized void record(int value) {
 
-        if (!someData)
-        {
+        if (!someData) {
             distrib = new int[1];
             distrib[0] = 1;
             distribMin = value;
@@ -128,146 +122,119 @@ public class Distribution extends MinMaxMean
         int oldMax = observedMaximum, oldMin = observedMinimum;
         super.record(value);
 
-        if (observedMaximum > oldMax)
-            recomputeMaxDistrib(observedMaximum);
-        else if (observedMinimum < oldMin)
-            recomputeMinDistrib(observedMinimum);
-        else
-            incrementDistrib(value);
+        if (observedMaximum > oldMax) recomputeMaxDistrib(observedMaximum);
+        else if (observedMinimum < oldMin) recomputeMinDistrib(observedMinimum);
+        else incrementDistrib(value);
     }
-
 
     /**
      * Generate a textual report of the data gathered.
-     * 
-     * @param printer
+     *
+     * @param printer the printer used to report
      */
     @Override
-    public void print(Printer printer)
-    {
+    public void print(Printer printer) {
         printer.print("\n " + name);
-        printer.print(
-                "\n---------------------------------------------------------------------\n");
+        printer.print("\n---------------------------------------------------------------------\n");
 
-        if (totalname != null)
-        {
+        if (totalname != null) {
             printer.print("   " + totalname + ": " + total);
         }
-        if (cumulname != null)
-        {
+        if (cumulname != null) {
             printer.print("   " + cumulname + ": " + accumulation);
         }
 
         printer.print("\n Statistics: ");
-        printer.print("\n   Minimum: " + observedMinimum + ", " + countMinimum
-                + " occurences of min.");
-        printer.print("\n   Maximum: " + observedMaximum + ", " + countMaximum
-                + " occurences of max.");
+        printer.print("\n   Minimum: " + observedMinimum + ", " + countMinimum + " occurences of min.");
+        printer.print("\n   Maximum: " + observedMaximum + ", " + countMaximum + " occurences of max.");
         printer.print("\n   Mean: " + mean + ", Median: " + median + '\n');
 
-        if (distribname != null)
-        {
+        if (distribname != null) {
             printer.print("\n Distribution: ");
             printDistribution(printer, distribMin, distrib);
         }
     }
 
-
     /**
      * PrintVST the distribution using stars
+     *
+     * @param printer printer to print
+     * @param base observed distribution minimum
+     * @param data distribution
      */
-    protected void printDistribution(Printer printer, int base, int[] data)
-    {
+    protected void printDistribution(Printer printer, int base, int[] data) {
         int cntr, max;
         float scale = 1;
         int num = data.length;
 
-        if (num == 0)
-        {
+        if (num == 0) {
             printer.print("\n");
             return;
         }
 
-        for (max = data[0], cntr = 0; cntr < data.length; cntr++)
-        {
-            if (data[cntr] > max)
-                max = data[cntr];
+        for (max = data[0], cntr = 0; cntr < data.length; cntr++) {
+            if (data[cntr] > max) max = data[cntr];
         }
 
-        if (max > 70)
-            scale = ((float) max) / 70;
+        if (max > 70) scale = ((float) max) / 70;
 
         // loop through occurrences and print distribution
-        for (cntr = 0; cntr < num; cntr++)
-        {
+        for (cntr = 0; cntr < num; cntr++) {
             float fstars = ((float) data[cntr]) / scale;
             int stars = (int) fstars;
-            if ((fstars - stars) >= 0.5)
-                stars++;
+            if ((fstars - stars) >= 0.5) stars++;
 
             // collapse a string of redundant 0's.
-            if (data[cntr] == 0)
-            {
-                if (cntr > 0 && cntr < num - 1)
-                {
-                    if ((data[cntr - 1] == 0) && (data[cntr + 1] == 0))
-                    {
+            if (data[cntr] == 0) {
+                if (cntr > 0 && cntr < num - 1) {
+                    if ((data[cntr - 1] == 0) && (data[cntr + 1] == 0)) {
                         printer.print("\n   . . .");
-                        while ((data[cntr + 1] == 0)
-                                && (cntr < data.length - 1))
-                            cntr++;
+                        while ((data[cntr + 1] == 0) && (cntr < data.length - 1)) cntr++;
                     }
                 }
             }
 
             printer.print("\n   " + (base + cntr) + ": " + data[cntr] + " \t");
 
-            for (int scntr = 0; scntr < stars; scntr++)
-            {
+            for (int scntr = 0; scntr < stars; scntr++) {
                 printer.print("*");
             }
         }
         printer.print("\n");
     }
 
-
-    public void expandInterval(int min, int max)
-    {
+    public void expandInterval(int min, int max) {
         // TODO: this will not work unless there is data already present
-        if (distribMin < min)
-            min = distribMin;
-        if (max < distribMin + distrib.length)
-            max = distribMin + distrib.length;
+        if (distribMin < min) min = distribMin;
+        if (max < distribMin + distrib.length) max = distribMin + distrib.length;
 
         int newsize = max - min + 1;
 
-        if (newsize == distrib.length)
-            return;
+        if (newsize == distrib.length) return;
 
         int[] newdistrib = new int[newsize];
 
         // copy the old data to the new array
-        System.arraycopy(distrib, 0, newdistrib, distribMin - min,
-                distrib.length);
+        System.arraycopy(distrib, 0, newdistrib, distribMin - min, distrib.length);
 
         distrib = newdistrib;
     }
 
-
     /**
      * Increment the number of occurrences for a particular integer.
+     *
+     * @param value the value's distribution to increment
      */
-    protected void incrementDistrib(int value)
-    {
+    protected void incrementDistrib(int value) {
         distrib[value - distribMin]++;
     }
 
-
     /**
      * Resize the occurrence table with a new maximum value.
+     *
+     * @param newMax the new maximum value
      */
-    protected void recomputeMaxDistrib(int newMax)
-    {
+    protected void recomputeMaxDistrib(int newMax) {
         int newsize = 1 + newMax - distribMin;
         int[] newdistrib = new int[newsize];
 
@@ -278,12 +245,12 @@ public class Distribution extends MinMaxMean
         distrib = newdistrib;
     }
 
-
     /**
      * Resize the occurences table with the given new minimum.
+     *
+     * @param newMin the new minimum value
      */
-    protected void recomputeMinDistrib(int newMin)
-    {
+    protected void recomputeMinDistrib(int newMin) {
         int mindiff = distribMin - newMin;
         int newsize = mindiff + distrib.length;
         int[] newdistrib = new int[newsize];
@@ -296,39 +263,32 @@ public class Distribution extends MinMaxMean
         distribMin = newMin;
     }
 
-
     @Override
-    public void process()
-    {
+    public void process() {
         super.process();
         int mid = total / 2;
-        if ((distrib == null))
-        {
+        if ((distrib == null)) {
             median = 0;
             return;
         }
-        if (mid == 0)
-            median = observedMinimum;
+        if (mid == 0) median = observedMinimum;
 
         median = observedMinimum - 1;
-        for (int cntr = 0; cntr < distrib.length; cntr++)
-        {
+        for (int cntr = 0; cntr < distrib.length; cntr++) {
             mid = mid - distrib[cntr];
-            if (mid < 0)
-            {
+            if (mid < 0) {
                 median = cntr + distribMin;
                 break;
             }
         }
     }
 
-
     /**
      * Merge this statistical information with another.
+     * @param m the value is unused due to missing implementation
      */
     @Override
-    public MinMaxMean merge(MinMaxMean m)
-    {
+    public MinMaxMean merge(MinMaxMean m) {
         throw Util.unimplemented();
     }
 }

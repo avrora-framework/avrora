@@ -39,7 +39,7 @@ Deployment
   1. increment verion number in *pom.xml*
   1. build and commit snapshot
  
-                 mvn clean deploy -DskipTests
+             mvn clean deploy -DskipTests
 
   1. watch [snapshots](https://oss.sonatype.org/#nexus-search;quick~avrora-framework) at oss.sonatype.org 
 
@@ -48,15 +48,19 @@ Deployment
   1. increment verion number in *pom.xml*
   1. commit *pom.xml*
 
-                git add pom.xml && git commit -m "pre release deployment commit" && git push
+            git add pom.xml && git commit -m "pre release deployment commit" && git push
         
   1. build and commit snapshot and release:
 
-                mvn release:clean release:prepare -Darguments="-DskipTests"
-                mvn release:perform -Darguments="-DskipTests"
+            mvn release:clean release:prepare -Darguments="-DskipTests"
+            mvn release:perform -Darguments="-DskipTests"
 
   1. commit newly changed *pom.xml*
 
-                git add pom.xml && git commit -m "post release deployment commit" && git push
+            git add pom.xml && git commit -m "post release deployment commit" && git push
 
   1. watch [staging profiles](https://oss.sonatype.org/#stagingProfiles) and [snapshots](https://oss.sonatype.org/#nexus-search;quick~avrora-framework) at oss.sonatype.org 
+  
+* deploy to local repository
+
+        mvn clean install -DskipTests

@@ -57,7 +57,7 @@ public class TermUtil
 
 
     /**
-     * The <code>reportProportion()</code> method is a simply utility to print
+     * The method is a simply utility to print
      * out a quantity's name (such as "Number of instructions executed", the
      * value (such as 2002), and the units (such as cycles) in a colorized and
      * standardized way.
@@ -65,9 +65,10 @@ public class TermUtil
      * @param name
      *            the name of the quantity as a string
      * @param val
-     *            the value of the quantity as a long integer
+     *            the value of the quantity in regard to total as a long integer
      * @param units
      *            the name of the units as a string
+     * @param total value in percent of total will be printed
      */
     public static void reportProportion(String name, long val, long total,
             String units)

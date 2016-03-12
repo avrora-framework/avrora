@@ -32,25 +32,14 @@
 
 package edu.ucla.cs.compilers.avrora.avrora.gui;
 
-import java.awt.BorderLayout;
-import java.awt.Color;
-import java.awt.Dimension;
-import java.awt.Graphics;
-import java.awt.GridLayout;
-import java.awt.event.AdjustmentEvent;
-import java.awt.event.AdjustmentListener;
+import edu.ucla.cs.compilers.avrora.cck.text.Terminal;
 
-import javax.swing.BorderFactory;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
-import javax.swing.JScrollBar;
-import javax.swing.JSpinner;
-import javax.swing.OverlayLayout;
-import javax.swing.SpinnerNumberModel;
+import javax.swing.*;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
-
-import edu.ucla.cs.compilers.avrora.cck.text.Terminal;
+import java.awt.*;
+import java.awt.event.AdjustmentEvent;
+import java.awt.event.AdjustmentListener;
 
 /**
  * This is a generic helper class for visual monitors. It's purpose is to help
@@ -70,30 +59,25 @@ public class GraphEvents extends JPanel
 {
 
     private static final long serialVersionUID = 1L;
-    private MyVector[] publicNumbers; // access by monitors to add stuff
-    private MyVector[] privateNumbers; // only accessed by paint
     private static final int VECSIZE = 5;
-    private JPanel parentPanel;
-
-    private Object vSync; // just a private sync variable
-
     /**
      * This is the bar that determines what part of the graph is displayed
      */
     public JScrollBar horzBar;
-
-    // All these fields can be set by options
-
     /**
      * number of pixels per x-axis value
      */
     public double stepsize;
-
     /**
      * The visual component for setting <code> stepsize </code>
      */
     public SpinnerNumberModel stepsizeVisual;
+    private MyVector[] publicNumbers; // access by monitors to add stuff
+    private MyVector[] privateNumbers; // only accessed by paint
 
+    // All these fields can be set by options
+    private JPanel parentPanel;
+    private Object vSync; // just a private sync variable
     private Color backColor; // color of background
     private Color tickColor; // color of tick marks/graph lines
 
@@ -214,6 +198,7 @@ public class GraphEvents extends JPanel
 
     /**
      * used by paint so it knows what value to start painting with
+     * @return the scrollbar's value
      */
     public int getHorzBarValue()
     {
@@ -302,6 +287,8 @@ public class GraphEvents extends JPanel
     /**
      * Used in order to size thing correctly. Should be called right after the
      * constructor is called
+     *
+     * @param pparentPanel the new panel
      */
     public void setParentPanel(JPanel pparentPanel)
     {

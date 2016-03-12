@@ -65,11 +65,14 @@ public class Token extends AbstractToken
      * add the cases to the switch for all those special cases. For example, if
      * you have a subclass of Token called IDToken that you want to create if
      * ofKind is ID, simlpy add something like :
-     * <p> </p>
+     * <p>
      * case MyParserConstants.ID : return new IDToken();
-     * <p> </p>
+     * </p>
      * to the following switch statement. Then you can cast matchedToken
      * variable to the appropriate type and use it in your lexical actions.
+     *
+     * @param ofKind the token kind
+     * @return a default token regardless of the token kind
      */
     public static Token newToken(int ofKind)
     {

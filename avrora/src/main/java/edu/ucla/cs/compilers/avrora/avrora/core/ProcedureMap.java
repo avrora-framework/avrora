@@ -32,11 +32,11 @@
 
 package edu.ucla.cs.compilers.avrora.avrora.core;
 
+import edu.ucla.cs.compilers.avrora.avrora.core.ControlFlowGraph.Block;
+
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.HashSet;
-
-import edu.ucla.cs.compilers.avrora.avrora.core.ControlFlowGraph.Block;
 
 /**
  * The <code>ProcedureMap</code> class represents a mapping from basic blocks to
@@ -48,14 +48,15 @@ import edu.ucla.cs.compilers.avrora.avrora.core.ControlFlowGraph.Block;
  * Those entrypoints are propagated through the control flow graph to all
  * reachable basic blocks (ignoring call edges). If a basic block is reachable
  * through more than one procedure entry, it is considered shared.
- * <p> </p>
+ * <p>
  * The result is a conservative approximation of which basic blocks are in which
  * procedure. Given a basic block, this class can look up the basic block which
  * represents the entrypoint of that procedure. Also, given the entrypoint of a
  * procedure, the class can return a collection of the basic blocks that are
  * reachable from that entrypoint.
- *<p> </p>
+ *</p><p>
  * Interrupt handlers are not considered the entrypoints of procedures.
+ *</p>
  *
  * @author Ben L. Titzer
  * @see Program

@@ -32,10 +32,10 @@
 
 package edu.ucla.cs.compilers.avrora.avrora.core;
 
-import java.io.File;
-
 import edu.ucla.cs.compilers.avrora.avrora.Main;
 import edu.ucla.cs.compilers.avrora.cck.util.Util;
+
+import java.io.File;
 
 /**
  * The <code>LoadableProgram</code> class represents a reference to a program on
@@ -102,6 +102,8 @@ public class LoadableProgram
     /**
      * The <code>load()</code> method loads (or reloads) the program from the
      * disk.
+     *
+     * @throws Exception see {@link Main#loadProgram(String[])}
      */
     public void load() throws Exception
     {

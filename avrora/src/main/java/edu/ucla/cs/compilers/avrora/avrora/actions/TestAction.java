@@ -69,7 +69,7 @@ public class TestAction extends Action
      * @throws Exception
      */
     @Override
-    public void run(String[] args) throws Exception
+    public void run(String[] args)
     {
         enableLongReport();
         TestEngine engine = new TestEngine(Defaults.getTestHarnessMap());

@@ -45,19 +45,19 @@ import java.util.Map;
  * parameters (e.g. parameters to HashMap), can create a new <code>Type</code>
  * instance.
  *
- * <p> </p>
+ * <p>
  * <code>TypeCon</code> instances correspond to flexible types. For example,
  * "array" is a type constructor which accepts an element type, "function"
  * constructs function types from parameter and return types, and each new class
  * in the program creates a new type constructor corresponding to its name.
- *
- * <p> </p>
+ *</p>
+ * <p>
  * <code>TypeCon</code> instances also contain information about what types of
  * operations are supported by values of types constructed by this type
  * constructor. For example, arrays support the <code>[]</code> indexing
  * operation and the <code>.length</code> member access, while function types
  * support the application operation.
- *
+ *</p>
  * @author Ben L. Titzer
  */
 public class TypeCon
@@ -69,55 +69,9 @@ public class TypeCon
     protected final HashMap<HashMap<String, Object>, Type> types;
 
     /**
-     * The <code>Dimension</code> class represents a new type dimension that
-     * applies to a type constructor. A dimension might be the size of an
-     * integer type, the types of parameters to a function, the element type of
-     * an array, or a qualifier that has been introduced by the user.
-     */
-    protected abstract static class Dimension
-    {
-
-        protected final String name;
-
-
-        /**
-         * The default constructor for the <code>Dimension</code> class simply
-         * accepts the name of the dimension as a string that is used to
-         * distinguish it from other type dimensions.
-         * 
-         * @param n
-         *            the name of the type dimension as a string
-         */
-        protected Dimension(String n)
-        {
-            name = n;
-        }
-
-
-        public abstract Object build(TypeEnv env, List<Object> params);
-    }
-
-    public interface BinOp
-    {
-        public Type typeCheck(TypeEnv env, Typeable left, Typeable right);
-
-
-        public String getOperation();
-    }
-
-    public interface UnOp
-    {
-        public abstract Type typeCheck(TypeEnv env, Typeable inner);
-
-
-        public String getOperation();
-    }
-
-
-    /**
      * The protected constructor for the <code>TypeCon</code> class initializes
      * the name field.
-     * 
+     *
      * @param n
      *            the name of this type constructor
      */
@@ -128,43 +82,34 @@ public class TypeCon
         types = new HashMap<HashMap<String, Object>, Type>();
     }
 
-
-    public Type newType(TypeEnv te)
-    {
+    public Type newType(TypeEnv te) {
         return newType(te, EMPTY_DIMS);
     }
-
 
     public Type newType(TypeEnv te, HashMap<String, List<Object>> dims)
     {
         HashMap<String, Object> d = buildDimensions(te, dims);
         Type type = types.get(d);
-        if (type != null)
-            return type;
+        if (type != null) return type;
         type = new Type(this, d);
         types.put(d, type);
         return type;
     }
-
 
     public boolean isAssignableFrom(TypeCon other)
     {
         return other == this;
     }
 
-
     public boolean isComparableTo(TypeCon other)
     {
         return other == this;
     }
 
-
-    protected HashMap<String, Object> buildDimensions(TypeEnv env,
-            HashMap<String, List<Object>> dims)
+    protected HashMap<String, Object> buildDimensions(TypeEnv env, HashMap<String, List<Object>> dims)
     {
         HashMap<String, Object> m = new HashMap<String, Object>();
-        for (Map.Entry<String, List<Object>> e : dims.entrySet())
-        {
+        for (Map.Entry<String, List<Object>> e : dims.entrySet()) {
             String name = e.getKey();
             Dimension d = dimensions.get(name);
             Object o = d.build(env, e.getValue());
@@ -173,60 +118,49 @@ public class TypeCon
         return m;
     }
 
-
     /**
-     * The <code>addDimension()</code> method adds a new dimension to this type
-     * constructor. The new dimension has a string name that can be used to
-     * retrieve the dimension later.
-     * 
-     * @param d
-     *            the new type dimension to add to this type constructor
+     * The <code>addDimension()</code> method adds a new dimension to this type constructor. The new dimension
+     * has a string name that can be used to retrieve the dimension later.
+     *
+     * @param d the new type dimension to add to this type constructor
      */
     public void addDimension(Dimension d)
     {
         dimensions.put(d.name, d);
     }
 
-
     /**
      * The <code>getDimension()</code> method looks up the specified type
      * dimension for this type constructor given the name of the dimension as a
      * string.
-     * 
+     *
      * @param name
      *            the name of the type dimension as a string
      * @return a reference to the <code>Dimension</code> instance if this type
      *         constructor supports the dimension; null otherwise
      */
-    public Dimension getDimension(String name)
-    {
+    public Dimension getDimension(String name) {
         return dimensions.get(name);
     }
-
 
     /**
      * The <code>getName()</code> method returns the name of this type
      * constructor.
-     * 
+     *
      * @return a string representing the name of this type constructor
      */
-    public String getName()
-    {
+    public String getName() {
         return name;
     }
 
-
     @Override
-    public String toString()
-    {
+    public String toString() {
         StringBuffer buf = new StringBuffer();
         buf.append(name);
         buf.append('(');
         boolean first = true;
-        for (Dimension d : dimensions.values())
-        {
-            if (!first)
-                buf.append(", ");
+        for (Dimension d : dimensions.values()) {
+            if (!first) buf.append(", ");
             buf.append(d.name);
             first = false;
         }
@@ -234,37 +168,32 @@ public class TypeCon
         return name;
     }
 
-
     /**
      * The <code>supportsIndex()</code> method checks whether this type
      * constructor supports indexing with the <code>[]</code> brackets. Not all
      * types support indexing; for example, in Java, only array types support
      * this type of indexing.
-     * 
+     *
      * @return true if types constructed by this <code>TypeCon</code> can
      *         legally support indexing with the <code>[]</code> brackets
      */
-    public boolean supportsIndex()
-    {
+    public boolean supportsIndex() {
         return false;
     }
-
 
     /**
      * The <code>supportsRange()</code> method checks whether this type
      * constructor supports sub-range addressing with <code>[h:l]</code>. Not
      * all types support indexing; for example, in Virgil, only integer types
      * support this type of indexing.
-     * 
+     *
      * @return true if types constructed by this <code>TypeCon</code> can
      *         legally support range indexing with the <code>[h:l]</code>
      *         brackets
      */
-    public boolean supportsRange()
-    {
+    public boolean supportsRange() {
         return false;
     }
-
 
     /**
      * The <code>supportsMembers()</code> method checks whether this type
@@ -272,27 +201,60 @@ public class TypeCon
      * Not all types support member access; for example, in Java, object types
      * support field access and array types support the <code>.length</code>
      * idiom.
-     * 
+     *
      * @return true if types constructed by this <code>TypeCon</code> can
      *         legally support member access
      */
-    public boolean supportsMembers()
-    {
+    public boolean supportsMembers() {
         return false;
     }
-
 
     /**
      * The <code>supportsApplication()</code> method checks whether this type
      * constructor supports function application. Few types support application
      * to an expression or list of expressions; in Virgil, only the "function"
      * family of types do.
-     * 
+     *
      * @return true if types constructed by this <code>TypeCon</code> can
      *         legally support application
      */
-    public boolean supportsApplication()
-    {
+    public boolean supportsApplication() {
         return false;
+    }
+
+
+    public interface BinOp {
+        Type typeCheck(TypeEnv env, Typeable left, Typeable right);
+
+        String getOperation();
+    }
+
+    public interface UnOp {
+        Type typeCheck(TypeEnv env, Typeable inner);
+
+        String getOperation();
+    }
+
+    /**
+     * The <code>Dimension</code> class represents a new type dimension that
+     * applies to a type constructor. A dimension might be the size of an
+     * integer type, the types of parameters to a function, the element type of
+     * an array, or a qualifier that has been introduced by the user.
+     */
+    protected abstract static class Dimension {
+
+        protected final String name;
+
+        /**
+         * The default constructor for the <code>Dimension</code> class simply accepts the name of the
+         * dimension as a string that is used to distinguish it from other type dimensions.
+         *
+         * @param n the name of the type dimension as a string
+         */
+        protected Dimension(String n) {
+            name = n;
+        }
+
+        public abstract Object build(TypeEnv env, List<Object> params);
     }
 }

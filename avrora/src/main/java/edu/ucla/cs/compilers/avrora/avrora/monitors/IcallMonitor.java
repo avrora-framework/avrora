@@ -45,66 +45,58 @@ import edu.ucla.cs.compilers.avrora.cck.text.Terminal;
 /**
  * The <code>Icall</code> monitor was motivated by a bug that we found in
  * avr-gcc that causes icalls to go off into neverneverland:
- * <p> </p>
+ * <p>
  * http://gcc.gnu.org/bugzilla/show_bug.cgi?id=27192
- *
+ *</p>
  * @author John Regehr
  * @author Ben L. Titzer
  */
 public class IcallMonitor extends MonitorFactory
 {
 
+    public IcallMonitor()
+    {
+        super("The \"icall\" monitor is used to detect possible bogus icalls, it " + "simply checks that " +
+                "the target for each icall has a source mapping " + "associated with it.");
+    }
+
+    @Override
+    public Monitor newMonitor(Simulator s)
+    {
+        return new Mon(s);
+    }
+
     public class Mon implements Monitor
     {
         public final Simulator simulator;
         private final SourceMapping sourceMap;
 
-
-        Mon(Simulator s)
-        {
+        Mon(Simulator s) {
             simulator = s;
 
             Program p = s.getProgram();
             sourceMap = p.getSourceMapping();
-            for (int pc = 0; pc < p.program_end; pc = p.getNextPC(pc))
-            {
+            for (int pc = 0; pc < p.program_end; pc = p.getNextPC(pc)) {
                 LegacyInstr i = (LegacyInstr) p.readInstr(pc);
-                if (i != null)
-                {
-                    if (i instanceof LegacyInstr.ICALL)
-                        s.insertProbe(new IcallProbe(), pc);
+                if (i != null) {
+                    if (i instanceof LegacyInstr.ICALL) s.insertProbe(new IcallProbe(), pc);
                 }
             }
         }
 
-        public class IcallProbe extends Simulator.Probe.Empty
-        {
-
-            @Override
-            public void fireBefore(State state, int pc)
-            {
-                reportIndirectCall(state, pc);
-            }
-        }
-
-
-        public void reportIndirectCall(State state, int pc)
-        {
+        public void reportIndirectCall(State state, int pc) {
             LegacyState s = (LegacyState) simulator.getState();
-            int icall_addr = 2
-                    * s.getRegisterWord(LegacyRegister.getRegisterByNumber(30));
+            int icall_addr = 2 * s.getRegisterWord(LegacyRegister.getRegisterByNumber(30));
 
             String icall_fn = sourceMap.getName(icall_addr);
 
-            if (icall_addr == 0)
-            {
+            if (icall_addr == 0) {
                 Terminal.printRed("OOPS: icall to 0000");
                 Terminal.nextln();
                 System.exit(-1);
             }
 
-            if (icall_fn == null)
-            {
+            if (icall_fn == null) {
                 Terminal.printRed("OOPS: probably bogus icall to ");
                 Terminal.printRed(StringUtil.toHex(icall_addr, 4));
                 Terminal.printRed(" " + icall_fn);
@@ -112,27 +104,17 @@ public class IcallMonitor extends MonitorFactory
             }
         }
 
-
         @Override
-        public void report()
-        {
+        public void report() {
             // do nothing
         }
 
-    }
+        public class IcallProbe extends Simulator.Probe.Empty {
 
-
-    public IcallMonitor()
-    {
-        super("The \"icall\" monitor is used to detect possible bogus icalls, it "
-                + "simply checks that the target for each icall has a source mapping "
-                + "associated with it.");
-    }
-
-
-    @Override
-    public Monitor newMonitor(Simulator s)
-    {
-        return new Mon(s);
+            @Override
+            public void fireBefore(State state, int pc) {
+                reportIndirectCall(state, pc);
+            }
+        }
     }
 }
