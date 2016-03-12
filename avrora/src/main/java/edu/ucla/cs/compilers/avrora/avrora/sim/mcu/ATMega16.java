@@ -1,25 +1,26 @@
 /**
  * Copyright (c) 2004-2005, Regents of the University of California All rights reserved.
  * <p>
- * Redistribution and use in source and binary forms, with or without modification, are permitted provided that the
- * following conditions are met:
+ * Redistribution and use in source and binary forms, with or without modification, are permitted provided
+ * that the following conditions are met:
  * <p>
- * Redistributions of source code must retain the above copyright notice, this list of conditions and the following
- * disclaimer.
+ * Redistributions of source code must retain the above copyright notice, this list of conditions and the
+ * following disclaimer.
  * <p>
- * Redistributions in binary form must reproduce the above copyright notice, this list of conditions and the following
- * disclaimer in the documentation and/or other materials provided with the distribution.
+ * Redistributions in binary form must reproduce the above copyright notice, this list of conditions and the
+ * following disclaimer in the documentation and/or other materials provided with the distribution.
  * <p>
- * Neither the name of the University of California, Los Angeles nor the names of its contributors may be used to
- * endorse or promote products derived from this software without specific prior written permission.
+ * Neither the name of the University of California, Los Angeles nor the names of its contributors may be used
+ * to endorse or promote products derived from this software without specific prior written permission.
  * <p>
- * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES,
- * INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
- * DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
- * SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR
- * SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY,
- * WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
- * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND ANY EXPRESS OR IMPLIED
+ * WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A
+ * PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS BE LIABLE FOR ANY
+ * DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO,
+ * PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION)
+ * HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING
+ * NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
+ * POSSIBILITY OF SUCH DAMAGE.
  */
 
 package edu.ucla.cs.compilers.avrora.avrora.sim.mcu;
@@ -36,7 +37,8 @@ import edu.ucla.cs.compilers.avrora.cck.util.Arithmetic;
 import java.util.HashMap;
 
 /**
- * The <code>ATMega16</code> class represents the ATMega16 microcontroller from Atmel. This microcontroller has 16Kb
+ * The <code>ATMega16</code> class represents the ATMega16 microcontroller from Atmel. This microcontroller
+ * has 16Kb
  * code, 1KB SRAM, 512 Byte EEPROM, and a host of internal devices such as ADC, SPI, and timers.
  *
  * @author Ben L. Titzer
@@ -68,15 +70,16 @@ public class ATMega16 extends ATMegaFamily {
     public static final int[] ATmega16Periods0 = {0, 1, 8, 64, 256, 1024};
     public static final int[] ATmega16Periods2 = {0, 1, 8, 32, 64, 128, 256, 1024};
     /**
-     * The <code>props</code> field stores a static reference to a properties object shared by all of the instances of
+     * The <code>props</code> field stores a static reference to a properties object shared by all of the
+     * instances of
      * this microcontroller. This object stores the IO register size, SRAM size, pin assignments, etc.
      */
     public static final AVRProperties props;
     protected static final String[] idleModeNames = {"Active", "Idle", "RESERVED 1", "ADC Noise Reduction",
             "RESERVED" + " 2", "Power Down", "Standby", "Power Save", "Extended Standby"};
     protected static final int[] wakeupTimes = {0, 0, 0, 0, 0, 1000, 6, 1000, 6};
-    private static final int[][] transitionTimeMatrix = FiniteStateMachine.buildBimodalTTM(idleModeNames.length, 0,
-            wakeupTimes, new int[wakeupTimes.length]);
+    private static final int[][] transitionTimeMatrix = FiniteStateMachine.buildBimodalTTM(idleModeNames
+            .length, 0, wakeupTimes, new int[wakeupTimes.length]);
     // permutation of sleep mode bits in the register (high order bits first)
     private static final int[] MCUCR_sm_perm = {2, 4, 3};
 
@@ -226,7 +229,8 @@ public class ATMega16 extends ATMegaFamily {
                 ATMEGA16_EEPROM_SIZE, // size of eeprom in bytes
                 ATMEGA16_NUM_PINS, // number of pins
                 ATMEGA16_NUM_INTS, // number of interrupts
-                new ReprogrammableCodeSegment.Factory(ATMEGA16_FLASH_SIZE, 6), pinAssignments, // the assignment of
+                new ReprogrammableCodeSegment.Factory(ATMEGA16_FLASH_SIZE, 6), pinAssignments, // the
+                // assignment of
                 // names to physical pins
                 rl, // the assignment of names to IO registers
                 interruptAssignments);
@@ -235,7 +239,8 @@ public class ATMega16 extends ATMegaFamily {
     protected final ActiveRegister MCUCR_reg;
 
     public ATMega16(int id, Simulation sim, ClockDomain cd, Program p) {
-        super(cd, props, new FiniteStateMachine(cd.getMainClock(), MODE_ACTIVE, idleModeNames, transitionTimeMatrix));
+        super(cd, props, new FiniteStateMachine(cd.getMainClock(), MODE_ACTIVE, idleModeNames,
+                transitionTimeMatrix));
         simulator = sim.createSimulator(id, LegacyInterpreter.FACTORY, this, p);
         interpreter = (AtmelInterpreter) simulator.getInterpreter();
         MCUCR_reg = getIOReg("MCUCR");
@@ -252,10 +257,10 @@ public class ATMega16 extends ATMegaFamily {
         // set up the external interrupt mask and flag registers and interrupt
         // range
         /**
-         * mapping number corresponds to the (INTx_vect_num - 1) according to the iom16.h definition
+         * mapping number corresponds to the (INTx_vect_num + 1) according to the iom16.h definition
          */
-//        EIFR_reg = buildInterruptRange(true, "GICR", "GIFR", 2, 3);
-        int[] mapping = new int[]{-1, -1, -1, -1, -1, 4, 2, 3};
+        // EIFR_reg = buildInterruptRange(true, "GICR", "GIFR", 2, 3);
+        int[] mapping = new int[]{-1, -1, -1, -1, -1, 19, 2, 3};
         FlagRegister fr = new FlagRegister(interpreter, mapping);
         MaskRegister mr = new MaskRegister(interpreter, mapping);
         installIOReg("GICR", mr);
@@ -305,12 +310,15 @@ public class ATMega16 extends ATMegaFamily {
     public static class Factory implements MicrocontrollerFactory {
 
         /**
-         * The <code>newMicrocontroller()</code> method is used to instantiate a microcontroller instance for the
-         * particular program. It will construct an instance of the <code>Simulator</code> class that has all the
+         * The <code>newMicrocontroller()</code> method is used to instantiate a microcontroller instance
+         * for the
+         * particular program. It will construct an instance of the <code>Simulator</code> class that has
+         * all the
          * properties of this hardware device and has been initialized with the specified program.
          *
          * @param sim
-         * @param p   the program to load onto the microcontroller @return a <code>Microcontroller</code> instance that
+         * @param p   the program to load onto the microcontroller @return a <code>Microcontroller</code>
+         *            instance that
          *            represents the specific hardware device with the program loaded onto it
          */
         @Override
