@@ -50,17 +50,6 @@ public class Token
      */
     public Token specialToken;
 
-
-    /**
-     * Returns the image.
-     */
-    @Override
-    public String toString()
-    {
-        return image;
-    }
-
-
     /**
      * Returns a new Token object, by default. However, if you want, you can
      * create and return subclass objects based on the value of ofKind. Simply
@@ -72,6 +61,9 @@ public class Token
      *
      * to the following switch statement. Then you can cast matchedToken
      * variable to the appropriate type and use it in your lexical actions.
+     *
+     * @param ofKind the token kind
+     * @return a default token regardless of the kind
      */
     public static Token newToken(int ofKind)
     {
@@ -80,6 +72,14 @@ public class Token
         default:
             return new Token();
         }
+    }
+
+    /**
+     * Returns the image.
+     */
+    @Override
+    public String toString() {
+        return image;
     }
 
 }

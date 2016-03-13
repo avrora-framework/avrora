@@ -32,14 +32,14 @@
 
 package edu.ucla.cs.compilers.avrora.jintgen.isdl;
 
-import java.util.LinkedList;
-import java.util.List;
-
 import edu.ucla.cs.compilers.avrora.cck.text.Verbose;
 import edu.ucla.cs.compilers.avrora.jintgen.isdl.parser.Token;
 import edu.ucla.cs.compilers.avrora.jintgen.isdl.verifier.JIGIRErrorReporter;
 import edu.ucla.cs.compilers.avrora.jintgen.jigir.JIGIRTypeEnv;
 import edu.ucla.cs.compilers.avrora.jintgen.types.TypeRef;
+
+import java.util.LinkedList;
+import java.util.List;
 
 /**
  * The <code>Architecture</code> class represents a collection of instructions,
@@ -52,11 +52,7 @@ public class ArchDecl
 {
 
     public static boolean INLINE = true;
-
-    Verbose.Printer printer = Verbose.getVerbosePrinter("isdl");
-
     public final Token name;
-
     public final HashList<String, SubroutineDecl> subroutines;
     public final HashList<String, InstrDecl> instructions;
     public final HashList<String, OperandTypeDecl> operandTypes;
@@ -66,18 +62,18 @@ public class ArchDecl
     public final HashList<String, EnumDecl> enums;
     public final HashList<String, GlobalDecl> globals;
     public final List<Item> userTypes;
-
     public final JIGIRTypeEnv typeEnv;
     public final Environment globalEnv;
     public final JIGIRErrorReporter ERROR;
+    Verbose.Printer printer = Verbose.getVerbosePrinter("isdl");
 
 
     /**
      * The constructor for the <code>Architecture</code> class creates an
      * instance with the specified name that is empty and ready to receive new
      * instruction declarations, encodings, etc.
-     * 
-     * @param n
+     *
+     * @param n the name
      */
     public ArchDecl(Token n)
     {

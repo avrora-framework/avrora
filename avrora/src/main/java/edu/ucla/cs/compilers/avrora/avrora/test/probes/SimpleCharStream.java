@@ -14,25 +14,72 @@ import java.io.Reader;
 public class SimpleCharStream
 {
     public static final boolean staticFlag = false;
-    int bufsize;
-    int available;
-    int tokenBegin;
     public int bufpos = -1;
     protected int[] bufline;
     protected int[] bufcolumn;
-
     protected int column = 0;
     protected int line = 1;
-
     protected boolean prevCharIsCR = false;
     protected boolean prevCharIsLF = false;
-
     protected Reader inputStream;
-
     protected char[] buffer;
     protected int maxNextCharInd = 0;
     protected int inBuf = 0;
+    int bufsize;
+    int available;
+    int tokenBegin;
 
+    public SimpleCharStream(Reader dstream, int startline, int startcolumn, int buffersize) {
+        inputStream = dstream;
+        line = startline;
+        column = startcolumn - 1;
+
+        available = bufsize = buffersize;
+        buffer = new char[buffersize];
+        bufline = new int[buffersize];
+        bufcolumn = new int[buffersize];
+    }
+
+    public SimpleCharStream(Reader dstream, int startline, int startcolumn) {
+        this(dstream, startline, startcolumn, 4096);
+    }
+
+    public SimpleCharStream(Reader dstream) {
+        this(dstream, 1, 1, 4096);
+    }
+
+    public SimpleCharStream(InputStream dstream, int startline, int startcolumn, int buffersize) {
+        this(new InputStreamReader(dstream), startline, startcolumn, 4096);
+    }
+
+    public SimpleCharStream(InputStream dstream, int startline, int startcolumn) {
+        this(dstream, startline, startcolumn, 4096);
+    }
+
+//    /**
+//     * @deprecated
+//     * @see #getEndColumn
+//     */
+//
+//    @Deprecated
+//    public int getColumn()
+//    {
+//        return bufcolumn[bufpos];
+//    }
+
+//    /**
+//     * @deprecated
+//     * @see #getEndLine
+//     */
+//    @Deprecated
+//    public int getLine()
+//    {
+//        return bufline[bufpos];
+//    }
+
+    public SimpleCharStream(InputStream dstream) {
+        this(dstream, 1, 1, 4096);
+    }
 
     protected void ExpandBuff(boolean wrapAround)
     {
@@ -90,7 +137,6 @@ public class SimpleCharStream
         tokenBegin = 0;
     }
 
-
     protected void FillBuff() throws IOException
     {
         if (maxNextCharInd == available)
@@ -134,7 +180,6 @@ public class SimpleCharStream
         }
     }
 
-
     public char BeginToken() throws IOException
     {
         tokenBegin = -1;
@@ -143,7 +188,6 @@ public class SimpleCharStream
 
         return c;
     }
-
 
     protected void UpdateLineColumn(char c)
     {
@@ -183,7 +227,6 @@ public class SimpleCharStream
         bufcolumn[bufpos] = column;
     }
 
-
     public char readChar() throws IOException
     {
         if (inBuf > 0)
@@ -205,54 +248,25 @@ public class SimpleCharStream
         return (c);
     }
 
-
-    /**
-     * @deprecated
-     * @see #getEndColumn
-     */
-
-    @Deprecated
-    public int getColumn()
-    {
-        return bufcolumn[bufpos];
-    }
-
-
-    /**
-     * @deprecated
-     * @see #getEndLine
-     */
-
-    @Deprecated
-    public int getLine()
-    {
-        return bufline[bufpos];
-    }
-
-
     public int getEndColumn()
     {
         return bufcolumn[bufpos];
     }
-
 
     public int getEndLine()
     {
         return bufline[bufpos];
     }
 
-
     public int getBeginColumn()
     {
         return bufcolumn[tokenBegin];
     }
 
-
     public int getBeginLine()
     {
         return bufline[tokenBegin];
     }
-
 
     public void backup(int amount)
     {
@@ -261,33 +275,6 @@ public class SimpleCharStream
         if ((bufpos -= amount) < 0)
             bufpos += bufsize;
     }
-
-
-    public SimpleCharStream(Reader dstream, int startline, int startcolumn,
-            int buffersize)
-    {
-        inputStream = dstream;
-        line = startline;
-        column = startcolumn - 1;
-
-        available = bufsize = buffersize;
-        buffer = new char[buffersize];
-        bufline = new int[buffersize];
-        bufcolumn = new int[buffersize];
-    }
-
-
-    public SimpleCharStream(Reader dstream, int startline, int startcolumn)
-    {
-        this(dstream, startline, startcolumn, 4096);
-    }
-
-
-    public SimpleCharStream(Reader dstream)
-    {
-        this(dstream, 1, 1, 4096);
-    }
-
 
     public void ReInit(Reader dstream, int startline, int startcolumn,
             int buffersize)
@@ -308,37 +295,15 @@ public class SimpleCharStream
         bufpos = -1;
     }
 
-
     public void ReInit(Reader dstream, int startline, int startcolumn)
     {
         ReInit(dstream, startline, startcolumn, 4096);
     }
 
-
     public void ReInit(Reader dstream)
     {
         ReInit(dstream, 1, 1, 4096);
     }
-
-
-    public SimpleCharStream(InputStream dstream, int startline, int startcolumn,
-            int buffersize)
-    {
-        this(new InputStreamReader(dstream), startline, startcolumn, 4096);
-    }
-
-
-    public SimpleCharStream(InputStream dstream, int startline, int startcolumn)
-    {
-        this(dstream, startline, startcolumn, 4096);
-    }
-
-
-    public SimpleCharStream(InputStream dstream)
-    {
-        this(dstream, 1, 1, 4096);
-    }
-
 
     public void ReInit(InputStream dstream, int startline, int startcolumn,
             int buffersize)
@@ -396,6 +361,9 @@ public class SimpleCharStream
 
     /**
      * Method to adjust line and column numbers for the start of a token.<BR>
+     *
+     * @param newLine the new line number
+     * @param newCol the new column number
      */
     public void adjustBeginLineColumn(int newLine, int newCol)
     {

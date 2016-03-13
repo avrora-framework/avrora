@@ -36,19 +36,18 @@ import edu.ucla.cs.compilers.avrora.avrora.sim.Simulator;
 import edu.ucla.cs.compilers.avrora.avrora.sim.State;
 
 /**
- * The <code>SequenceProbe</code> is a probe composer that allows a probe to be
+ * A probe composer that allows a probe to be
  * fired for every instruction executed between a specified entrypoint and a
  * specified exit point. For example, if the entrypoint is a call instruction
  * and the exit point is the instruction following the call instruction, then
  * the probe will fire for every instruction executed between the call and
- * return, including both the call and the instruction following the call. <br>
- * <br>
- * <p> </p>
+ * return, including both the call and the instruction following the call.
+ * <p>
  * This probe supports nested entries (e.g. recursive calls). It is best used on
  * pieces of the program that are single-entry/single-exit such as calls,
  * interrupts, basic blocks, and SSE regions of control flow graphs. It does not
  * work well for loops because of the nesting behavior.
- *
+ *</p>
  * @author Ben L. Titzer
  */
 public class SequenceProbe implements Simulator.Probe

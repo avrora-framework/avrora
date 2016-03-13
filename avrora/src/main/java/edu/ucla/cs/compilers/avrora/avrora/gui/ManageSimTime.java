@@ -250,7 +250,7 @@ public class ManageSimTime
 
     /**
      * This function checks to see if an event was caused by this panel. If so, it reacts to it.
-     *
+     * @param e the event to be handled
      * @return true if this panel caused the event, otherwise false
      */
     public boolean checkAndDispatch(ActionEvent e) {

@@ -20,12 +20,12 @@
  */
 package edu.ucla.cs.compilers.avrora.avrora.sim.radio;
 
+import edu.ucla.cs.compilers.avrora.avrora.sim.state.Complex;
+
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Random;
-
-import edu.ucla.cs.compilers.avrora.avrora.sim.state.Complex;
 
 /**
  * The <code>LossyModel</code> definition.
@@ -36,10 +36,11 @@ public class LossyModel implements Medium.Arbitrator
 {
 
     protected static final double Sensitivity = -95;
-    protected int TimeBefore = 0;
+    private static Random rn = new Random();
     protected final Map<Object, Topology.Position> positions;
     protected final double lambda = Math.exp(-5D / 6D);
     protected final double u = Math.sqrt((1 - Math.pow(lambda, 2D)));
+    protected int TimeBefore = 0;
     protected double Csf, Sf;
     protected boolean first = true;
 
@@ -49,6 +50,10 @@ public class LossyModel implements Medium.Arbitrator
         positions = new HashMap<Object, Topology.Position>();
     }
 
+    public static double getGaussian(double mean, double std)
+    {
+        return mean + std * rn.nextGaussian();
+    }
 
     @Override
     public boolean lockTransmission(Medium.Receiver receiver,
@@ -58,14 +63,10 @@ public class LossyModel implements Medium.Arbitrator
         int Pn = getNoise(Milliseconds);
         if (trans.f == receiver.frequency)
         {
-            if (PowerRec > Sensitivity && PowerRec > Pn)
-                return true;
-            else
-                return false;
+            return PowerRec > Sensitivity && PowerRec > Pn;
         } else
             return false;
     }
-
 
     @Override
     public char mergeTransmissions(Medium.Receiver receiver,
@@ -94,15 +95,6 @@ public class LossyModel implements Medium.Arbitrator
         assert one;
         return (char) value;
     }
-
-    private static Random rn = new Random();
-
-
-    public static double getGaussian(double mean, double std)
-    {
-        return mean + std * rn.nextGaussian();
-    }
-
 
     private double Rayleigh()
     {
@@ -198,8 +190,9 @@ public class LossyModel implements Medium.Arbitrator
      * 
      * @param t
      *            transmission
-     * @param receiver
-     * @param Milliseconds
+     * @param receiver bject that can
+     * receive transmissions from the medium
+     * @param Milliseconds ms for shadowing distribution
      * @return received power (dBm)
      */
     @Override

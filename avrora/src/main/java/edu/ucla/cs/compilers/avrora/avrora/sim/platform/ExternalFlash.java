@@ -43,29 +43,52 @@ import edu.ucla.cs.compilers.avrora.avrora.sim.energy.Energy;
 import edu.ucla.cs.compilers.avrora.avrora.sim.mcu.Microcontroller;
 import edu.ucla.cs.compilers.avrora.avrora.sim.output.SimPrinter;
 import edu.ucla.cs.compilers.avrora.avrora.sim.state.BooleanView;
+import edu.ucla.cs.compilers.avrora.avrora.sim.state.BooleanView.ValueSetListener;
 import edu.ucla.cs.compilers.avrora.avrora.sim.state.Register;
 import edu.ucla.cs.compilers.avrora.avrora.sim.state.RegisterUtil;
-import edu.ucla.cs.compilers.avrora.avrora.sim.state.BooleanView.ValueSetListener;
 import edu.ucla.cs.compilers.avrora.cck.text.Terminal;
 
 /**
  * The <code>ExternalFlash</code> class implements the necessary functionality
  * of the Atmega Dataflash interface to use the Mica2 DataFlash This device
  * requires use of the following pins:
- * <p> </p>
+ * <p>
  * PA3 - Flash Cable Seclect
- * <p> </p>
+ * </p><p>
  * PD2 - USART1_RXD PD3 - USART1_TXD PD5 - USART1_CLK
- *
+ *</p>
  * @author Thomas Gaertner
  */
 public class ExternalFlash
 {
 
+    // DataFlash Status Register
+    // bits 5, 4, 3
+    public static final int DF_STATUS_REGISTER_DENSITY = 0x18;
+    public static final int DF_STATUS_READY = 0x80;
+    public static final int DF_STATUS_COMPARE = 0x40;
+    // SC Characteristics
+    // all below in ms
+    public static final int DF_TEP = 20;
+    public static final int DF_TP = 14;
+    public static final int DF_TPE = 8;
+    public static final int DF_TBE = 12;
+    public static final double DF_TXFR = 0.0003;
+    // names of the states of this device
+    private static final String[] modeName = { "standby", "read", "write",
+            "load" };
+    // power consumption of the device states
+    private static final double[] modeAmpere = { 0.000002, 0.004, 0.015,
+            0.000002 };
+    // default mode of the device is standby
+    private static final int startMode = 0;
     protected final Simulator sim;
     protected final Clock clock;
-    protected Microcontroller mcu;
     protected final SimPrinter printer;
+    protected final FiniteStateMachine stateMachine;
+    // the Dataflash Memory
+    public Memory memory;
+    protected Microcontroller mcu;
     private boolean isSelected; // true if PA3 is 0
     private boolean isReading; // mcu is reading from so of dataflash?
     private int dfOpcode;
@@ -82,31 +105,118 @@ public class ExternalFlash
     private short step;
     private byte i;
 
-    // DataFlash Status Register
-    // bits 5, 4, 3
-    public static final int DF_STATUS_REGISTER_DENSITY = 0x18;
-    public static final int DF_STATUS_READY = 0x80;
-    public static final int DF_STATUS_COMPARE = 0x40;
-    // SC Characteristics
-    // all below in ms
-    public static final int DF_TEP = 20;
-    public static final int DF_TP = 14;
-    public static final int DF_TPE = 8;
-    public static final int DF_TBE = 12;
-    public static final double DF_TXFR = 0.0003;
+    public ExternalFlash(Microcontroller mcunit, int numPages, int pageBytes)
+    {
+        memory = new Memory(numPages, pageBytes);
+        mcu = mcunit;
+        sim = mcu.getSimulator();
+        printer = sim.getPrinter("mica2.flash");
+        clock = sim.getClock();
+        dfStatus = DF_STATUS_REGISTER_DENSITY | DF_STATUS_READY;
+        tick = false;
+        i = 0;
+        step = 0;
 
-    // names of the states of this device
-    private static final String[] modeName = { "standby", "read", "write",
-            "load" };
-    // power consumption of the device states
-    private static final double[] modeAmpere = { 0.000002, 0.004, 0.015,
-            0.000002 };
-    // default mode of the device is standby
-    private static final int startMode = 0;
-    // the Dataflash Memory
-    public Memory memory;
+        stateMachine = new FiniteStateMachine(clock, startMode, modeName, 0);
+        // connect Pins
+        // output
+        mcu.getPin("PA3").connectOutput(new PA3Output());
+        mcu.getPin("PD3").connectOutput(new PD3Output());
+        mcu.getPin("PD5").connectOutput(new PD5Output());
+        // input
+        mcu.getPin("PD2").connectInput(new PD2Input());
 
-    protected final FiniteStateMachine stateMachine;
+        // setup energy recording
+        new Energy("flash", modeAmpere, stateMachine, sim.getEnergyControl());
+    }
+
+    private Page getMemoryPage(int num)
+    {
+        return memory.getPage(num);
+    }
+
+    private short getMemoryPageAt(int num, int offset)
+    {
+        return memory.getPage(num).bytes[offset];
+    }
+
+    private void setMemoryPage(int num, Page val)
+    {
+        memory.setPage(num, val);
+        val.debug();
+    }
+
+    private Page getBuffer1()
+    {
+        return memory.buffer1;
+    }
+
+    private void setBuffer1(Page value)
+    {
+        memory.buffer1 = value;
+    }
+
+    private short getBuffer1(int offset)
+    {
+        return memory.buffer1.bytes[offset];
+    }
+
+    private void setBuffer1(int offset, short value)
+    {
+        memory.buffer1.bytes[offset] = value;
+    }
+
+    private Page getBuffer2()
+    {
+        return memory.buffer2;
+    }
+
+    private void setBuffer2(Page value)
+    {
+        memory.buffer2 = value;
+    }
+
+    private short getBuffer2(int offset)
+    {
+        return memory.buffer2.bytes[offset];
+    }
+
+    private void setBuffer2(int offset, short value)
+    {
+        memory.buffer2.bytes[offset] = value;
+    }
+
+    private void copyBuffer1toPage(int num)
+    {
+        setMemoryPage(num, getBuffer1());
+    }
+
+    private void copyBuffer2toPage(int num)
+    {
+        setMemoryPage(num, getBuffer2());
+    }
+
+    private void copyPageToBuffer1(int num)
+    {
+        setBuffer1(getMemoryPage(num));
+    }
+
+    private void copyPageToBuffer2(int num)
+    {
+        setBuffer2(getMemoryPage(num));
+    }
+
+    private void echo(String str)
+    {
+        if (printer != null)
+        {
+            StringBuffer buf = printer.getBuffer(20);
+            Terminal.append(Terminal.COLOR_BLUE, buf, "Dataflash");
+            buf.append(": ");
+            buf.append(str);
+            printer.printBuffer(buf);
+        }
+    }
 
     /**
      * The <code>Memory</code> class simulates the Dataflash Memory
@@ -170,123 +280,6 @@ public class ExternalFlash
                 }
             }
         }
-    }
-
-
-    public ExternalFlash(Microcontroller mcunit, int numPages, int pageBytes)
-    {
-        memory = new Memory(numPages, pageBytes);
-        mcu = mcunit;
-        sim = mcu.getSimulator();
-        printer = sim.getPrinter("mica2.flash");
-        clock = sim.getClock();
-        dfStatus = DF_STATUS_REGISTER_DENSITY | DF_STATUS_READY;
-        tick = false;
-        i = 0;
-        step = 0;
-
-        stateMachine = new FiniteStateMachine(clock, startMode, modeName, 0);
-        // connect Pins
-        // output
-        mcu.getPin("PA3").connectOutput(new PA3Output());
-        mcu.getPin("PD3").connectOutput(new PD3Output());
-        mcu.getPin("PD5").connectOutput(new PD5Output());
-        // input
-        mcu.getPin("PD2").connectInput(new PD2Input());
-
-        // setup energy recording
-        new Energy("flash", modeAmpere, stateMachine, sim.getEnergyControl());
-    }
-
-
-    private Page getMemoryPage(int num)
-    {
-        return memory.getPage(num);
-    }
-
-
-    private short getMemoryPageAt(int num, int offset)
-    {
-        return memory.getPage(num).bytes[offset];
-    }
-
-
-    private void setMemoryPage(int num, Page val)
-    {
-        memory.setPage(num, val);
-        val.debug();
-    }
-
-
-    private Page getBuffer1()
-    {
-        return memory.buffer1;
-    }
-
-
-    private short getBuffer1(int offset)
-    {
-        return memory.buffer1.bytes[offset];
-    }
-
-
-    private void setBuffer1(Page value)
-    {
-        memory.buffer1 = value;
-    }
-
-
-    private void setBuffer1(int offset, short value)
-    {
-        memory.buffer1.bytes[offset] = value;
-    }
-
-
-    private Page getBuffer2()
-    {
-        return memory.buffer2;
-    }
-
-
-    private short getBuffer2(int offset)
-    {
-        return memory.buffer2.bytes[offset];
-    }
-
-
-    private void setBuffer2(Page value)
-    {
-        memory.buffer2 = value;
-    }
-
-
-    private void setBuffer2(int offset, short value)
-    {
-        memory.buffer2.bytes[offset] = value;
-    }
-
-
-    private void copyBuffer1toPage(int num)
-    {
-        setMemoryPage(num, getBuffer1());
-    }
-
-
-    private void copyBuffer2toPage(int num)
-    {
-        setMemoryPage(num, getBuffer2());
-    }
-
-
-    private void copyPageToBuffer1(int num)
-    {
-        setBuffer1(getMemoryPage(num));
-    }
-
-
-    private void copyPageToBuffer2(int num)
-    {
-        setBuffer2(getMemoryPage(num));
     }
 
     // Flash_CS as output pin
@@ -786,19 +779,6 @@ public class ExternalFlash
         {
             // operation finished
             dfStatus |= DF_STATUS_READY;
-        }
-    }
-
-
-    private void echo(String str)
-    {
-        if (printer != null)
-        {
-            StringBuffer buf = printer.getBuffer(20);
-            Terminal.append(Terminal.COLOR_BLUE, buf, "Dataflash");
-            buf.append(": ");
-            buf.append(str);
-            printer.printBuffer(buf);
         }
     }
 

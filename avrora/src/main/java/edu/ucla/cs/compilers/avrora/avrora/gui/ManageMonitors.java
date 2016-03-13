@@ -35,22 +35,15 @@
 
 package edu.ucla.cs.compilers.avrora.avrora.gui;
 
-import java.awt.BorderLayout;
-import java.awt.GridLayout;
+import edu.ucla.cs.compilers.avrora.avrora.sim.Simulation;
+import edu.ucla.cs.compilers.avrora.avrora.sim.Simulation.Node;
+
+import javax.swing.*;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Vector;
-
-import javax.swing.BorderFactory;
-import javax.swing.JButton;
-import javax.swing.JCheckBox;
-import javax.swing.JDialog;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
-
-import edu.ucla.cs.compilers.avrora.avrora.sim.Simulation;
-import edu.ucla.cs.compilers.avrora.avrora.sim.Simulation.Node;
 
 /**
  * This class manages the dialog boxes for adding a monitor to the simulator. It
@@ -174,6 +167,7 @@ public class ManageMonitors
      * reacts to it. This will be called by AvroraGui, the global listener for
      * all events
      *
+     * @param e the event to be handled
      * @return true if this panel was the cause of the event, false otherwise
      */
     public boolean checkAndDispatch(ActionEvent e)

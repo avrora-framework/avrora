@@ -38,9 +38,9 @@ package edu.ucla.cs.compilers.avrora.avrora.arch.legacy;
  * Whether the register is a source or destination register depends on the
  * particular instruction. Likewise, whether the integer represents an
  * immediate, an offset, or an address depends on the instruction.
- * <p></p>
+ * <p>
  * Operands are used as the arguments to the constructors of instructions.
- *
+ * </p>
  * @author Ben L. Titzer
  * @see LegacyInstrProto
  */
@@ -56,7 +56,7 @@ public interface LegacyOperand
      * @return this if this is an instance of
      *         <code>LegacyOperand.LegacyRegister</code>; null otherwise
      */
-    public Register asRegister();
+    Register asRegister();
 
 
     /**
@@ -68,13 +68,13 @@ public interface LegacyOperand
      * @return this if this is an instance of
      *         <code>LegacyOperand.Constant</code>; null otherwise
      */
-    public Constant asConstant();
+    Constant asConstant();
 
     /**
      * The <code>LegacyOperand.LegacyRegister</code> class encapsulates the
      * notion of a register operand to an instruction.
      */
-    public interface Register extends LegacyOperand
+    interface Register extends LegacyOperand
     {
 
         /**
@@ -83,14 +83,14 @@ public interface LegacyOperand
          * 
          * @return a reference to the register that this operand refers to
          */
-        public LegacyRegister getRegister();
+        LegacyRegister getRegister();
     }
 
     /**
      * The <code>LegacyOperand.Constant</code> class encapsulates the notion of
      * a constant operand to an instruction.
      */
-    public interface Constant extends LegacyOperand
+    interface Constant extends LegacyOperand
     {
 
         /**
@@ -99,7 +99,7 @@ public interface LegacyOperand
          * 
          * @return an integer representation of the value
          */
-        public int getValue();
+        int getValue();
 
 
         /**
@@ -110,6 +110,6 @@ public interface LegacyOperand
          * @return an integer representation of the value, word-aligned if it is
          *         an address
          */
-        public int getValueAsWord();
+        int getValueAsWord();
     }
 }

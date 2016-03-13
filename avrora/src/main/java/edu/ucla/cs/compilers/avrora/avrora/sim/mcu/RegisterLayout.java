@@ -32,15 +32,15 @@
 
 package edu.ucla.cs.compilers.avrora.avrora.sim.mcu;
 
+import edu.ucla.cs.compilers.avrora.cck.text.StringUtil;
+import edu.ucla.cs.compilers.avrora.cck.util.Arithmetic;
+import edu.ucla.cs.compilers.avrora.cck.util.Util;
+
 import java.text.CharacterIterator;
 import java.text.StringCharacterIterator;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.NoSuchElementException;
-
-import edu.ucla.cs.compilers.avrora.cck.text.StringUtil;
-import edu.ucla.cs.compilers.avrora.cck.util.Arithmetic;
-import edu.ucla.cs.compilers.avrora.cck.util.Util;
 
 /**
  * The <code>RegisterLayout</code> class stores information about the IO
@@ -56,105 +56,37 @@ import edu.ucla.cs.compilers.avrora.cck.util.Util;
 public class RegisterLayout
 {
 
-    protected static class RegisterInfo
-    {
-        final String name;
-        final int ior_num;
-        SubField[] subfields;
-
-
-        RegisterInfo(String n, int ior)
-        {
-            name = n;
-            ior_num = ior;
-        }
-    }
-
-    protected static class Field
-    {
-        final String name;
-        int length;
-        SubField[] subfields;
-
-
-        Field(String n)
-        {
-            name = n;
-        }
-
-
-        void add(SubField sf)
-        {
-            if (subfields == null)
-            {
-                subfields = new SubField[1];
-            } else
-            {
-                SubField[] nsf = new SubField[subfields.length + 1];
-                System.arraycopy(subfields, 0, nsf, 0, subfields.length);
-                subfields = nsf;
-            }
-            subfields[subfields.length - 1] = sf;
-            int highbit = sf.field_low_bit + sf.length;
-            if (highbit > length)
-                length = highbit;
-        }
-    }
-
     public static final Field UNUSED = new Field("UNUSED");
     public static final Field RESERVED = new Field("RESERVED");
-
-    protected static class SubField
-    {
-        final Field field; // the name of the field
-        final int ior; // the IO register containing this subfield
-        int length;
-        int ior_low_bit; // low bit in the IO register
-        int field_low_bit; // offset (low bit) in the field
-        int mask; // low bit in the IO register
-        boolean commit; // true if a write to this subfield should commit
-
-
-        SubField(Field f, int ior)
-        {
-            this.field = f;
-            this.ior = ior;
-        }
-    }
-
     /**
      * The <code>ioreg_size</code> field stores the number of IO registers on
      * this microcontroller.
      */
     public final int ioreg_size;
-
     /**
      * The <code>ioreg_length</code> field stores the length of each register in
      * bits.
      */
     public final int ioreg_length;
-
     /**
      * The <code>ioregAssignments</code> field stores a reference to a hashmap
      * from IO register names to their addresses.
      */
     protected final HashMap<String, RegisterInfo> ioregAssignments;
-
     protected final RegisterInfo[] info;
-
     /**
      * The <code>fields</code> field stores a reference to a hashmap that maps
      * from a field name to a representation of the field.
      */
     protected final HashMap<String, Field> fields;
 
-
     /**
      * The constructor for the <code>RegisterLayout</code> class creates a new
      * register layout with the specified size.
-     * 
+     *
      * @param is
      *            the number of registers in this register layout
+     * @param rlength see {@link #ioreg_length}
      */
     public RegisterLayout(int is, int rlength)
     {
@@ -165,11 +97,10 @@ public class RegisterLayout
         ioreg_length = rlength;
     }
 
-
     /**
      * The <code>addIOReg()</code> method adds a new IO register with the
      * specified name and address to this register layout.
-     * 
+     *
      * @param n
      *            the name of the IO register
      * @param ior_num
@@ -185,7 +116,6 @@ public class RegisterLayout
         ioregAssignments.put(n, i);
     }
 
-
     /**
      * The <code>addIOReg()</code> method adds a new IO register with the
      * specified name and address to this register layout. This variant of the
@@ -193,7 +123,7 @@ public class RegisterLayout
      * IO register. The format description is used to automatically generate an
      * instance of the IO register that puts the right bits of the right fields
      * in the right places when the register is written to.
-     * 
+     *
      * @param n
      *            the name of the IO register
      * @param ior_num
@@ -214,11 +144,10 @@ public class RegisterLayout
         ioregAssignments.put(n, i);
     }
 
-
     /**
      * The <code>getIOReg()</code> method retrieves the IO register number for
      * the given IO Register name for this microcontroller.
-     * 
+     *
      * @param n
      *            the name of the IO register such as "TCNT0"
      * @return an integer representing the IO register number if it exists
@@ -234,11 +163,10 @@ public class RegisterLayout
         return i.ior_num;
     }
 
-
     /**
      * The <code>hasIOReg()</code> method simply checks whether this register
      * layout has a register with the specified name.
-     * 
+     *
      * @param n
      *            the name of the IO register
      * @return true if this layout has a register with the specified name; false
@@ -249,12 +177,11 @@ public class RegisterLayout
         return ioregAssignments.containsKey(n);
     }
 
-
     /**
      * The <code>instantiate()</code> method creates a new register set that
      * contains the actual register implementations that can be used in
      * simulation.
-     * 
+     *
      * @return a new register set to be used in simulation
      */
     public RegisterSet instantiate()
@@ -262,13 +189,11 @@ public class RegisterLayout
         return new RegisterSet(this);
     }
 
-
     public String getRegisterName(int ior)
     {
         RegisterInfo registerInfo = info[ior];
         return registerInfo != null ? registerInfo.name : "";
     }
-
 
     private SubField[] parseSubFields(String name, int ior, String desc)
     {
@@ -320,7 +245,6 @@ public class RegisterLayout
         return subFields;
     }
 
-
     private int readNamedField(StringCharacterIterator i, int ior,
             SubField[] sfs, int count, int ior_hbit)
     {
@@ -340,7 +264,6 @@ public class RegisterLayout
         return ior_hbit;
     }
 
-
     private int readReservedField(StringCharacterIterator i, SubField[] sfs,
             int count, int ior_hbit)
     {
@@ -350,7 +273,6 @@ public class RegisterLayout
         ior_hbit = eat(ior_hbit, i, sf, 'x');
         return ior_hbit;
     }
-
 
     private int readUnusedField(StringCharacterIterator i, SubField[] sfs,
             int count, int ior_hbit)
@@ -362,7 +284,6 @@ public class RegisterLayout
         return ior_hbit;
     }
 
-
     private int readBit(int ior_hbit, SubField sf)
     {
         // no bit range is specified; assume only one bit
@@ -373,7 +294,6 @@ public class RegisterLayout
         ior_hbit--;
         return ior_hbit;
     }
-
 
     private int readBitRange(StringCharacterIterator i, int ior_hbit,
             SubField sf)
@@ -395,7 +315,6 @@ public class RegisterLayout
         return ior_hbit;
     }
 
-
     private int eat(int ior_hbit, StringCharacterIterator i, SubField sf,
             char c)
     {
@@ -411,7 +330,6 @@ public class RegisterLayout
         return ior_hbit;
     }
 
-
     private Field getField(String name)
     {
         Field f = fields.get(name);
@@ -421,5 +339,68 @@ public class RegisterLayout
             fields.put(name, f);
         }
         return f;
+    }
+
+    protected static class RegisterInfo
+    {
+        final String name;
+        final int ior_num;
+        SubField[] subfields;
+
+
+        RegisterInfo(String n, int ior)
+        {
+            name = n;
+            ior_num = ior;
+        }
+    }
+
+    protected static class Field
+    {
+        final String name;
+        int length;
+        SubField[] subfields;
+
+
+        Field(String n)
+        {
+            name = n;
+        }
+
+
+        void add(SubField sf)
+        {
+            if (subfields == null)
+            {
+                subfields = new SubField[1];
+            } else
+            {
+                SubField[] nsf = new SubField[subfields.length + 1];
+                System.arraycopy(subfields, 0, nsf, 0, subfields.length);
+                subfields = nsf;
+            }
+            subfields[subfields.length - 1] = sf;
+            int highbit = sf.field_low_bit + sf.length;
+            if (highbit > length)
+                length = highbit;
+        }
+    }
+
+    protected static class SubField
+    {
+        final Field field; // the name of the field
+        final int ior; // the IO register containing this subfield
+        int length;
+        int ior_low_bit; // low bit in the IO register
+        int field_low_bit; // offset (low bit) in the field
+        int mask; // low bit in the IO register
+        boolean commit; // true if a write to this subfield should commit
+
+
+        SubField(Field f, int ior)
+        {
+            this.field = f;
+            this.ior = ior;
+        }
     }
 }

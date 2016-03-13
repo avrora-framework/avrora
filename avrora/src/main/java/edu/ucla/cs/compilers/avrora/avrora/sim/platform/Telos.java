@@ -51,32 +51,7 @@ public class Telos extends Platform
     protected static final int MAIN_HZ = 8000000;
     protected static final int EXT_HZ = 32768;
     protected static final int RADIO_HZ = 7372800 * 2;
-
-    public static class Factory implements PlatformFactory
-    {
-        /**
-         * The <code>newPlatform()</code> method is a factory method used to
-         * create new instances of the <code>Telos</code> class.
-         * 
-         * @param id
-         *            the integer ID of the node
-         * @param sim
-         * @param p
-         *            the program to load onto the node @return a new instance
-         *            of the <code>Mica2</code> platform
-         */
-        @Override
-        public Platform newPlatform(int id, Simulation sim, Program p)
-        {
-            ClockDomain cd = new ClockDomain(MAIN_HZ);
-            cd.newClock("external", EXT_HZ);
-
-            return new Telos(new F1611(id, sim, cd, p));
-        }
-    }
-
     protected final Simulator sim;
-
 
     protected Telos(Microcontroller m)
     {
@@ -84,7 +59,6 @@ public class Telos extends Platform
         sim = m.getSimulator();
         addDevices();
     }
-
 
     /**
      * The <code>addDevices()</code> method is used to add the external
@@ -117,6 +91,25 @@ public class Telos extends Platform
         // AtmelMicrocontroller amcu = (AtmelMicrocontroller)mcu;
         // lightSensor = new LightSensor(mcu, 1, "PC2", "PE5");
         // addDevice("light-sensor", lightSensor);
+    }
+
+    public static class Factory implements PlatformFactory {
+        /**
+         * The <code>newPlatform()</code> method is a factory method used to create new instances of the
+         * <code>Telos</code> class.
+         *
+         * @param id  the integer ID of the node
+         * @param sim the simulation
+         * @param p   the program to load onto the node @return a new instance of the <code>Mica2</code>
+         *            platform
+         */
+        @Override
+        public Platform newPlatform(int id, Simulation sim, Program p) {
+            ClockDomain cd = new ClockDomain(MAIN_HZ);
+            cd.newClock("external", EXT_HZ);
+
+            return new Telos(new F1611(id, sim, cd, p));
+        }
     }
 
 }

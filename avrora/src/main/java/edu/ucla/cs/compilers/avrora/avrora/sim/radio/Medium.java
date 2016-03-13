@@ -33,15 +33,15 @@
  */
 package edu.ucla.cs.compilers.avrora.avrora.sim.radio;
 
-import java.util.Iterator;
-import java.util.LinkedList;
-import java.util.List;
-
 import edu.ucla.cs.compilers.avrora.avrora.sim.Simulator;
 import edu.ucla.cs.compilers.avrora.avrora.sim.clock.Clock;
 import edu.ucla.cs.compilers.avrora.avrora.sim.clock.Synchronizer;
 import edu.ucla.cs.compilers.avrora.avrora.sim.util.TransactionalList;
 import edu.ucla.cs.compilers.avrora.cck.util.Arithmetic;
+
+import java.util.Iterator;
+import java.util.LinkedList;
+import java.util.List;
 
 /**
  * The <code>Medium</code> definition drives the timming in the transmission and
@@ -57,22 +57,107 @@ public class Medium
 
     private static int Pn = -95;// Noise Power in dBm
     private static double Pr = Pn;// Received Power in dBm
+    public final Synchronizer synch;
+    public final Arbitrator arbitrator;
+    public final int bitsPerSecond;
+    public final int leadBits;
+    public final int minLength;
+    public final int maxLength;
+    protected List<Transmission> transmissions = new LinkedList<Transmission>();
 
+    /**
+     * The constructor for the <code>Medium</code> class creates a new shared
+     * transmission medium with the specified properties, including the bits per
+     * second, the lead time before beginning transmission, and the minimum
+     * transmission size in bits. These parameters are used to configure the
+     * medium and to ensure maximum possible simulation performance.
+     *
+     * @param synch
+     *            the synchronizer used to synchronize concurrent senders and
+     *            receivers
+     * @param arb
+     *            the arbitrator that determines how to merge received
+     *            transmissions
+     * @param bps
+     *            the bits per second throughput of this medium
+     * @param ltb
+     *            the lead time in bits before beginning a transmission and the
+     *            first bit
+     * @param mintl
+     *            the minimum transmission length
+     * @param maxtl
+     *            the maximum transmission length
+     */
+    public Medium(Synchronizer synch, Arbitrator arb, int bps, int ltb,
+            int mintl, int maxtl)
+    {
+        this.synch = synch;
+        bitsPerSecond = bps;
+        leadBits = ltb;
+        minLength = mintl;
+        maxLength = maxtl;
+        if (arb == null)
+            arbitrator = new BasicArbitrator();
+        else
+            arbitrator = arb;
+    }
+
+    /**
+     * The method <code>isCorruptedByte</code> computes if the byte is corrupted
+     * or not
+     *
+     * @param c
+     *            byte to be computed
+     * @return true if it is corrupted, false otherwise
+     */
+    public static boolean isCorruptedByte(char c)
+    {
+        return (c & 0xff00) != 0;
+    }
+
+    public static byte getCorruptedBits(char c)
+    {
+        return (byte) (c >> 8);
+    }
+
+    public static byte getTransmittedBits(char c)
+    {
+        return (byte) c;
+    }
+
+    /**
+     * The synchronized class <code>newTransmission</code> creates a new
+     * Transmission object and adds it to the list of transmissions
+     *
+     * @param o
+     *            Transmitter that creates the new transmission
+     * @param p
+     *            power for the new transmission
+     * @return tx new transmission created
+     *
+     * @param f the frequency for the transmission
+     * @return the added transmission
+     */
+    protected synchronized Transmission newTransmission(Transmitter o, double p,
+            double f)
+    {
+        Transmission tx = new Transmission(o, p, f);
+        transmissions.add(tx);
+        return tx;
+    }
     public interface Arbitrator
     {
-        public boolean lockTransmission(Receiver receiver, Transmission tran,
-                int Milliseconds);
+        boolean lockTransmission(Receiver receiver, Transmission tran, int Milliseconds);
 
 
-        public char mergeTransmissions(Receiver receiver,
-                List<Medium.Transmission> trans, long bit, int Milliseconds);
+        char mergeTransmissions(Receiver receiver, List<Medium.Transmission> trans, long bit, int
+                Milliseconds);
 
 
-        public double computeReceivedPower(Medium.Transmission t,
-                Medium.Receiver receiver, int Milliseconds);
+        double computeReceivedPower(Medium.Transmission t, Medium.Receiver receiver, int Milliseconds);
 
 
-        public int getNoise(int index);
+        int getNoise(int index);
     }
 
     /**
@@ -81,18 +166,18 @@ public class Medium
      */
     public interface Probe
     {
-        public void fireBeforeTransmit(Transmitter t, byte val);
+        void fireBeforeTransmit(Transmitter t, byte val);
 
 
-        public void fireBeforeTransmitEnd(Transmitter t);
+        void fireBeforeTransmitEnd(Transmitter t);
 
 
-        public void fireAfterReceive(Receiver r, char val);
+        void fireAfterReceive(Receiver r, char val);
 
 
-        public void fireAfterReceiveEnd(Receiver r);
+        void fireAfterReceiveEnd(Receiver r);
 
-        public class Empty implements Probe
+        class Empty implements Probe
         {
             @Override
             public void fireBeforeTransmit(Transmitter t, byte val)
@@ -122,7 +207,7 @@ public class Medium
          * The <code>List</code> class inherits from TransactionalList several
          * methods to implement all methods of the interface Probe
          */
-        public class List extends TransactionalList implements Probe
+        class List extends TransactionalList implements Probe
         {
             @Override
             public void fireBeforeTransmit(Transmitter t, byte val)
@@ -176,9 +261,8 @@ public class Medium
         public final long cyclesPerByte;
         public final long leadCycles;
         public final long cyclesPerBit;
-        protected Probe.List probeList;
-
         public boolean activated;
+        protected Probe.List probeList;
 
 
         /**
@@ -239,14 +323,17 @@ public class Medium
     public static abstract class Transmitter extends TXRX
     {
 
-        protected Transmission transmission;
         protected final Transmitter.Ticker ticker;
+        protected Transmission transmission;
         protected boolean shutdown;
 
 
         /**
          * The constructor <code>Transmitter</code> creates an extension of TXRX
          * constructor adding an instance of <code>Ticker</code>
+         *
+         * @param m the medium
+         * @param c the frequency clock
          */
         protected Transmitter(Medium m, Clock c)
         {
@@ -294,6 +381,8 @@ public class Medium
         /**
          * The <code>nextByte</code> abstract method which has to be implemented
          * by the Radio implementation
+         *
+         * @return the next byte
          */
         public abstract byte nextByte();
 
@@ -349,9 +438,9 @@ public class Medium
     public static abstract class Receiver extends TXRX
     {
         private static final int BIT_DELAY = 1;
+        public Receiver.Ticker ticker;
         protected boolean locked;
         protected double frequency;
-        public Receiver.Ticker ticker;
 
 
         // Receiver class constructor
@@ -398,6 +487,166 @@ public class Medium
 
 
         public abstract void setBER(double BER);
+
+        /**
+         * The <code>isChannelClear</code> method determines whether the channel
+         * is clear or not.
+         *
+         * @param RSSI_reg RSSI register value of the radio
+         * @param MDMCTRL0_reg MDMCTRL0 register value of the radio
+         * @return true if channel is clear and false otherwise
+         */
+        public final boolean isChannelClear(int RSSI_reg, int MDMCTRL0_reg)
+        {
+            if (activated && locked)
+            {
+                // this is the only shortcut: receiver is on and locked to a
+                // transmission
+                return false;
+            } else
+            {
+                // the receiver could be off or it is not locked to a
+                // transmission
+                // the latter could happen also if the receiver was just turned
+                // on and the TX has been started before!
+                long time = clock.getCount();
+                long bit = getBitNum(time) - BIT_DELAY; // there is a one bit
+                                                        // delay
+                waitForNeighbors(time - cyclesPerByte);
+                List<Transmission> it = getIntersection(bit - BYTE_SIZE);
+                if (it != null)
+                { // if there is a transmission
+                  // There are 3 modes (ED, 802.15.4 compliant detection,
+                  // both)
+                    int cca_mode = (MDMCTRL0_reg & 0x00c0) >>> 6;
+                    // cca modes 1 and 3 compare threshold with rssi to
+                    // determine CCA
+                    if (cca_mode == 1 || cca_mode == 3)
+                    {
+                        boolean one = false;
+                        double rssi = 0.0;
+                        assert it.size() > 0;
+                        for (Transmission t : it)
+                        {
+                            if (one)
+                            {// more than one transmission
+                                double I = medium.arbitrator
+                                        .computeReceivedPower(t, Receiver.this,
+                                                (int) clock.cyclesToMillis(
+                                                        clock.getCount()));
+                                // add interference to received power in linear
+                                // scale
+                                rssi = 10 * Math.log10(Math.pow(10, rssi / 10)
+                                        + Math.pow(10, I / 10));
+                            } else
+                            {// only one transmission - no interference -
+                                one = true;
+                                Pr = medium.arbitrator.computeReceivedPower(t,
+                                        Receiver.this,
+                                        (int) clock.cyclesToMillis(
+                                                clock.getCount()));
+                                Pn = medium.arbitrator.getNoise((int) clock
+                                        .cyclesToMillis(clock.getCount()));
+                                rssi = Pr;
+                            }
+                        }
+                        int cca_hyst = (MDMCTRL0_reg & 0x0700) >>> 8;
+                        int cca_thr = (RSSI_reg & 0xff00) >>> 8;
+                        if (cca_thr > 127)
+                            cca_thr -= 256;
+                        int rssi_val = (int) rssi + 45;
+                        return rssi_val < cca_thr - cca_hyst;
+                    } else
+                        return false; // other modes false since we have
+                                      // transmissions
+                } else
+                    return true; // no transmissions: CCA true in all cases
+            }
+        }
+
+        /**
+         * The <code>earliestNewTransmission</code> method determines if there
+         * is a new transmission from the other threads
+         *
+         * @param bit
+         *            equal to oneBitBeforeNow - BYTE_SIZE
+         * @return tx new transmission
+         */
+        private Transmission earliestNewTransmission(long bit)
+        {
+            Transmission tx = null;
+            synchronized (medium)
+            {
+                Iterator<Transmission> i = medium.transmissions.iterator();
+                while (i.hasNext())
+                {
+                    Transmission t = i.next();
+                    if (bit <= t.firstBit && medium.arbitrator.lockTransmission(
+                            Receiver.this, t,
+                            (int) clock.cyclesToMillis(clock.getCount())))
+                    {
+                        if (tx == null)
+                            tx = t;
+                        else if (t.firstBit < tx.firstBit)
+                            tx = t;
+                    } else if (bit - 8 - 2 * medium.leadBits > t.lastBit)
+                    {
+                        // remove older transmissions
+                        i.remove();
+                    }
+                }
+            }
+            return tx;
+        }
+
+        /**
+         * The <code>getIntersection</code> method calculate if transmissions
+         * intersect
+         *
+         * @param bit
+         *            time in which calculate if tx intersect (oneBitBeforeNow -
+         *            BYTE_SIZE)
+         * @return it representing the list of transmissions that intersect
+         */
+        private List<Transmission> getIntersection(long bit)
+        {
+            List<Transmission> it = null;
+            synchronized (medium)
+            {
+                for (Transmission t : medium.transmissions)
+                {
+                    if (intersect(bit, t))
+                    {
+                        if (it == null)
+                            it = new LinkedList<Transmission>();
+                        it.add(t);
+                    }
+                }
+            }
+            return it;
+        }
+
+        /**
+         * The method <code>intersect</code> calculates if byte to transmit
+         * intersect with another transmission
+         *
+         * @param bit
+         *            time in which calculate if tx intersect (oneBitBeforeNow -
+         *            BYTE_SIZE)
+         * @param t
+         *            Transmission to find out if intersects
+         * @return true if they intersect, false otherwise
+         */
+        private boolean intersect(long bit, Transmission t)
+        {
+            return bit >= t.firstBit && bit < t.lastBit;
+        }
+
+        private void waitForNeighbors(long gtime)
+        {
+            if (medium.synch != null)
+                medium.synch.waitForNeighbors(gtime);
+        }
 
         /**
          * The <code>Ticker</code> class implements a Simulator Event call
@@ -548,8 +797,8 @@ public class Medium
                             Receiver.this, it, oneBitBeforeNow - BYTE_SIZE,
                             (int) clock.cyclesToMillis(clock.getCount()));
                     // store high byte for corrupted bytes
-                    int newval = (int) (val & 0xff00);
-                    newval |= (int) (0xff & nextByte(true, (byte) val));
+                    int newval = val & 0xff00;
+                    newval |= 0xff & nextByte(true, (byte) val);
                     val = (char) newval;
                     if (probeList != null)
                         probeList.fireAfterReceive(Receiver.this, val);
@@ -566,169 +815,6 @@ public class Medium
                 }
             }
 
-        }
-
-
-        /**
-         * The <code>isChannelClear</code> method determines wether the channel
-         * is clear or not
-         *
-         * @return true if channel is clear and false otherwise
-         */
-        public final boolean isChannelClear(int RSSI_reg, int MDMCTRL0_reg)
-        {
-            if (activated && locked)
-            {
-                // this is the only shortcut: receiver is on and locked to a
-                // transmission
-                return false;
-            } else
-            {
-                // the receiver could be off or it is not locked to a
-                // transmission
-                // the latter could happen also if the receiver was just turned
-                // on and the TX has been started before!
-                long time = clock.getCount();
-                long bit = getBitNum(time) - BIT_DELAY; // there is a one bit
-                                                        // delay
-                waitForNeighbors(time - cyclesPerByte);
-                List<Transmission> it = getIntersection(bit - BYTE_SIZE);
-                if (it != null)
-                { // if there is a transmission
-                  // There are 3 modes (ED, 802.15.4 compliant detection,
-                  // both)
-                    int cca_mode = (MDMCTRL0_reg & 0x00c0) >>> 6;
-                    // cca modes 1 and 3 compare threshold with rssi to
-                    // determine CCA
-                    if (cca_mode == 1 || cca_mode == 3)
-                    {
-                        boolean one = false;
-                        double rssi = 0.0;
-                        assert it.size() > 0;
-                        for (Transmission t : it)
-                        {
-                            if (one)
-                            {// more than one transmission
-                                double I = medium.arbitrator
-                                        .computeReceivedPower(t, Receiver.this,
-                                                (int) clock.cyclesToMillis(
-                                                        clock.getCount()));
-                                // add interference to received power in linear
-                                // scale
-                                rssi = 10 * Math.log10(Math.pow(10, rssi / 10)
-                                        + Math.pow(10, I / 10));
-                            } else
-                            {// only one transmission - no interference -
-                                one = true;
-                                Pr = medium.arbitrator.computeReceivedPower(t,
-                                        Receiver.this,
-                                        (int) clock.cyclesToMillis(
-                                                clock.getCount()));
-                                Pn = medium.arbitrator.getNoise((int) clock
-                                        .cyclesToMillis(clock.getCount()));
-                                rssi = Pr;
-                            }
-                        }
-                        int cca_hyst = (MDMCTRL0_reg & 0x0700) >>> 8;
-                        int cca_thr = (RSSI_reg & 0xff00) >>> 8;
-                        if (cca_thr > 127)
-                            cca_thr -= 256;
-                        int rssi_val = (int) rssi + 45;
-                        return rssi_val < cca_thr - cca_hyst;
-                    } else
-                        return false; // other modes false since we have
-                                      // transmissions
-                } else
-                    return true; // no transmissions: CCA true in all cases
-            }
-        }
-
-
-        /**
-         * The <code>earliestNewTransmission</code> method determines if there
-         * is a new transmission from the other threads
-         *
-         * @param bit
-         *            equal to oneBitBeforeNow - BYTE_SIZE
-         * @return tx new transmission
-         */
-        private Transmission earliestNewTransmission(long bit)
-        {
-            Transmission tx = null;
-            synchronized (medium)
-            {
-                Iterator<Transmission> i = medium.transmissions.iterator();
-                while (i.hasNext())
-                {
-                    Transmission t = i.next();
-                    if (bit <= t.firstBit && medium.arbitrator.lockTransmission(
-                            Receiver.this, t,
-                            (int) clock.cyclesToMillis(clock.getCount())))
-                    {
-                        if (tx == null)
-                            tx = t;
-                        else if (t.firstBit < tx.firstBit)
-                            tx = t;
-                    } else if (bit - 8 - 2 * medium.leadBits > t.lastBit)
-                    {
-                        // remove older transmissions
-                        i.remove();
-                    }
-                }
-            }
-            return tx;
-        }
-
-
-        /**
-         * The <code>getIntersection</code> method calculate if transmissions
-         * intersect
-         *
-         * @param bit
-         *            time in which calculate if tx intersect (oneBitBeforeNow -
-         *            BYTE_SIZE)
-         * @return it representing the list of transmissions that intersect
-         */
-        private List<Transmission> getIntersection(long bit)
-        {
-            List<Transmission> it = null;
-            synchronized (medium)
-            {
-                for (Transmission t : medium.transmissions)
-                {
-                    if (intersect(bit, t))
-                    {
-                        if (it == null)
-                            it = new LinkedList<Transmission>();
-                        it.add(t);
-                    }
-                }
-            }
-            return it;
-        }
-
-
-        /**
-         * The method <code>intersect</code> calculates if byte to transmit
-         * intersect with another transmission
-         *
-         * @param bit
-         *            time in which calculate if tx intersect (oneBitBeforeNow -
-         *            BYTE_SIZE)
-         * @param t
-         *            Transmission to find out if intersects
-         * @return true if they intersect, false otherwise
-         */
-        private boolean intersect(long bit, Transmission t)
-        {
-            return bit >= t.firstBit && bit < t.lastBit;
-        }
-
-
-        private void waitForNeighbors(long gtime)
-        {
-            if (medium.synch != null)
-                medium.synch.waitForNeighbors(gtime);
         }
     }
 
@@ -857,98 +943,5 @@ public class Medium
             }
             return (byte) hi;
         }
-    }
-
-    public final Synchronizer synch;
-    public final Arbitrator arbitrator;
-
-    public final int bitsPerSecond;
-    public final int leadBits;
-    public final int minLength;
-    public final int maxLength;
-
-    protected List<Transmission> transmissions = new LinkedList<Transmission>();
-
-
-    /**
-     * The constructor for the <code>Medium</code> class creates a new shared
-     * transmission medium with the specified properties, including the bits per
-     * second, the lead time before beginning transmission, and the minimum
-     * transmission size in bits. These parameters are used to configure the
-     * medium and to ensure maximum possible simulation performance.
-     *
-     * @param synch
-     *            the synchronizer used to synchronize concurrent senders and
-     *            receivers
-     * @param arb
-     *            the arbitrator that determines how to merge received
-     *            transmissions
-     * @param bps
-     *            the bits per second throughput of this medium
-     * @param ltb
-     *            the lead time in bits before beginning a transmission and the
-     *            first bit
-     * @param mintl
-     *            the minimum transmission length
-     * @param maxtl
-     *            the maximum transmission length
-     */
-    public Medium(Synchronizer synch, Arbitrator arb, int bps, int ltb,
-            int mintl, int maxtl)
-    {
-        this.synch = synch;
-        bitsPerSecond = bps;
-        leadBits = ltb;
-        minLength = mintl;
-        maxLength = maxtl;
-        if (arb == null)
-            arbitrator = new BasicArbitrator();
-        else
-            arbitrator = arb;
-    }
-
-
-    /**
-     * The synchronized class <code>newTransmission</code> creates a new
-     * Transmission object and adds it to the list of transmissions
-     *
-     * @param o
-     *            Transmitter that creates the new transmission
-     * @param p
-     *            power for the new transmission
-     * @return tx new transmission created
-     */
-    protected synchronized Transmission newTransmission(Transmitter o, double p,
-            double f)
-    {
-        Transmission tx = new Transmission(o, p, f);
-        transmissions.add(tx);
-        return tx;
-    }
-
-
-    /**
-     * The method <code>isCorruptedByte</code> computes if the byte is corrupted
-     * or not
-     *
-     * @param c
-     *            byte to be computed
-     * @return true if it is corrupted, false otherwise
-     */
-    public static boolean isCorruptedByte(char c)
-    {
-        return (c & 0xff00) != 0;
-    }
-
-
-    public static byte getCorruptedBits(char c)
-    {
-        return (byte) (c >> 8);
-    }
-
-
-    public static byte getTransmittedBits(char c)
-    {
-        return (byte) c;
     }
 }

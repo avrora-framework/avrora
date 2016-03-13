@@ -51,6 +51,8 @@ import edu.ucla.cs.compilers.avrora.avrora.sim.clock.Clock;
 public class Energy implements FiniteStateMachine.Probe
 {
 
+    // voltage, needed for computation of energy consumption
+    private static final double voltage = 3.0d;
     // name of the device, which energy consumption is traced by
     // this class instance
     private String deviceName;
@@ -64,8 +66,6 @@ public class Energy implements FiniteStateMachine.Probe
     private int oldMode;
     // cycle the state was changed last
     private long lastChange;
-    // voltage, needed for computation of energy consumption
-    private static final double voltage = 3.0d;
     // time one mcu cycle takes
     private double cycleTime;
     // the state machine handles the sate of the device
@@ -85,7 +85,8 @@ public class Energy implements FiniteStateMachine.Probe
      *            array of current draw for each device state (in Ampere)
      * @param fsm
      *            finite state machine of this device
-     * @param energyControl
+     * @param energyControl the implementation of energy control that handles subscription of monitors and
+     * consumers
      */
     public Energy(String deviceName, double[] modeAmpere,
             FiniteStateMachine fsm, EnergyControl energyControl)

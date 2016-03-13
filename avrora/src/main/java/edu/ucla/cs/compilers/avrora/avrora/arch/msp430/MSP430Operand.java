@@ -29,21 +29,23 @@ public abstract class MSP430Operand
 
 
     /**
-     * The <code>accept()</code> method implements the visitor pattern for
-     * operand types, allowing a user to double-dispatch on the type of an
-     * operand.
-     */
-    public abstract void accept(MSP430OperandVisitor v);
-
-
-    /**
      * The default constructor for the <code>$operand</code> class simply stores
      * the type of the operand in a final field.
+     *
+     * @param t see  {@link #op_type}
      */
     protected MSP430Operand(byte t)
     {
         op_type = t;
     }
+
+    /**
+     * The <code>accept()</code> method implements the visitor pattern for operand types, allowing a user to
+     * double-dispatch on the type of an operand.
+     *
+     * @param v the visitor
+     */
+    public abstract void accept(MSP430OperandVisitor v);
 
     /**
      * The <code>MSP430Operand.Int</code> class is the super class of operands

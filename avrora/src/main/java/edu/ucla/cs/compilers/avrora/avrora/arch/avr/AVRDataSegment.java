@@ -66,7 +66,7 @@ public class AVRDataSegment extends Segment
      * @param ior
      *            the IO registers that are positioned after the register file
      *            in memory
-     * @param st
+     * @param st the state object to pass to watches when fired
      */
     public AVRDataSegment(int sz, ActiveRegister[] ior, State st)
     {

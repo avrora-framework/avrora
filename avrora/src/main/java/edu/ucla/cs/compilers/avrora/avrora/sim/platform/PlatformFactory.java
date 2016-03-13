@@ -52,11 +52,12 @@ public interface PlatformFactory
      * 
      * @param id
      *            the ID number of the platform to create
-     * @param sim
+     * @param sim the simulation
      * @param p
      *            the program to load into the platform @return a new instance
      *            of the <code>Platform</code> interface for this platform
+     * @return a new platform instance
      */
-    public Platform newPlatform(int id, Simulation sim, Program p);
+    Platform newPlatform(int id, Simulation sim, Program p);
 
 }

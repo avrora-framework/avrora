@@ -316,7 +316,7 @@ public class ATMega16 extends ATMegaFamily {
          * all the
          * properties of this hardware device and has been initialized with the specified program.
          *
-         * @param sim
+         * @param sim the simulation
          * @param p   the program to load onto the microcontroller @return a <code>Microcontroller</code>
          *            instance that
          *            represents the specific hardware device with the program loaded onto it

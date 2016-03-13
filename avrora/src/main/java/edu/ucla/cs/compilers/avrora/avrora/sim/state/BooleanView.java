@@ -41,22 +41,23 @@ package edu.ucla.cs.compilers.avrora.avrora.sim.state;
 public interface BooleanView
 {
 
+    boolean getValue();
+
+    void setValue(boolean v);
+
+    void setValueSetListener(ValueSetListener listener);
+
+
     /** Listener for <code>onValueSet</code> events. */
-    public interface ValueSetListener
+    interface ValueSetListener
     {
         /**
          * Called when the value of this view is set (although it is not
          * guaranteed that it was changed).
+         *
+         * @param view the current view
+         * @param newValue the value
          */
-        public void onValueSet(BooleanView view, boolean newValue);
+        void onValueSet(BooleanView view, boolean newValue);
     }
-
-
-    boolean getValue();
-
-
-    void setValue(boolean v);
-
-
-    void setValueSetListener(ValueSetListener listener);
 }

@@ -129,7 +129,6 @@ public class TestEngine
      *
      * @param fnames
      *            an array of the filenames of tests to run
-     * @throws IOException
      *             if there is a problem loading the test cases
      * @return true if all the tests pass
      */

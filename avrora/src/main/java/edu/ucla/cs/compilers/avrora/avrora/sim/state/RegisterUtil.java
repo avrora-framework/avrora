@@ -51,6 +51,35 @@ import edu.ucla.cs.compilers.avrora.cck.util.Arithmetic;
 public class RegisterUtil
 {
 
+    public static edu.ucla.cs.compilers.avrora.avrora.sim.state.BooleanView booleanView(RegisterView sup,
+                                                                                        int low) {
+        return new BoolView(sup, (byte) low);
+    }
+
+    public static RegisterView bitView(RegisterView sup, int low) {
+        return new BitRangeView(sup, (byte) low, (byte) low);
+    }
+
+    public static BitRangeView bitRangeView(RegisterView sup, int low, int high) {
+        return new BitRangeView(sup, (byte) low, (byte) high);
+    }
+
+    public static RegisterView permutedView(RegisterView sup, byte[] perm) {
+        return new PermutedView(sup, perm);
+    }
+
+    public static RegisterView stackedView(RegisterView a, RegisterView b) {
+        return new StackedView(new RegisterView[]{a, b});
+    }
+
+    public static RegisterView stackedView(RegisterView[] a) {
+        return new StackedView(a);
+    }
+
+    public static void instrumentRegister(SimPrinter sp, Register reg, String name) {
+        if (sp != null) reg.addWatch(new RegisterPrinter(sp, name));
+    }
+
     public static class Buffer
     {
         protected final Register r1;
@@ -132,6 +161,7 @@ public class RegisterUtil
          *            Array which is viewed. If used in conjunction with
          *            listeners, caller has to guarantee not to modify the
          *            affected array value, but use .setValue instead.
+         * @param i index of array to be viewed
          */
         public ByteArrayView(byte[] v, int i)
         {
@@ -175,6 +205,8 @@ public class RegisterUtil
          *            Array which is viewed. If used in conjunction with
          *            listeners, caller has to guarantee not to modify the
          *            affected array value, but use .setValue instead.
+         *
+         * @param i index of array to be viewed
          */
         public CharArrayView(char[] v, int i)
         {
@@ -424,43 +456,6 @@ public class RegisterUtil
         }
     }
 
-
-    public static edu.ucla.cs.compilers.avrora.avrora.sim.state.BooleanView booleanView(
-            RegisterView sup, int low)
-    {
-        return new BoolView(sup, (byte) low);
-    }
-
-
-    public static RegisterView bitView(RegisterView sup, int low)
-    {
-        return new BitRangeView(sup, (byte) low, (byte) low);
-    }
-
-
-    public static BitRangeView bitRangeView(RegisterView sup, int low, int high)
-    {
-        return new BitRangeView(sup, (byte) low, (byte) high);
-    }
-
-
-    public static RegisterView permutedView(RegisterView sup, byte[] perm)
-    {
-        return new PermutedView(sup, perm);
-    }
-
-
-    public static RegisterView stackedView(RegisterView a, RegisterView b)
-    {
-        return new StackedView(new RegisterView[] { a, b });
-    }
-
-
-    public static RegisterView stackedView(RegisterView[] a)
-    {
-        return new StackedView(a);
-    }
-
     public static class RegisterPrinter implements Register.Watch
     {
         protected final SimPrinter printer;
@@ -488,14 +483,6 @@ public class RegisterUtil
             printer.println(name + "    ->   "
                     + StringUtil.toMultirepString(oldv, r.width));
         }
-    }
-
-
-    public static void instrumentRegister(SimPrinter sp, Register reg,
-            String name)
-    {
-        if (sp != null)
-            reg.addWatch(new RegisterPrinter(sp, name));
     }
 
     public static class ConstantBehavior extends VolatileBehavior

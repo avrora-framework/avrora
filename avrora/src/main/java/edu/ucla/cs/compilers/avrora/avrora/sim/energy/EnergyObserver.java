@@ -47,7 +47,7 @@ public interface EnergyObserver
      * called when the state of the device changes this component logs these
      * state changes
      *
-     * @param energy
+     * @param energy energy modelling class
      */
-    public void stateChange(Energy energy);
+    void stateChange(Energy energy);
 }

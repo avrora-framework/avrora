@@ -60,7 +60,7 @@ public interface RegisterView
      * 
      * @return the width of this register view in bits
      */
-    public int getWidth();
+    int getWidth();
 
 
     /**
@@ -72,7 +72,7 @@ public interface RegisterView
      *
      * @return the value of the bits of this register view
      */
-    public int getValue();
+    int getValue();
 
 
     /**
@@ -85,18 +85,22 @@ public interface RegisterView
      * @param val
      *            the new value of the bits
      */
-    public void setValue(int val);
+    void setValue(int val);
+
+    void registerValueSetListener(RegisterValueSetListener listener);
+
 
     /** Listener for <code>onValueSet</code> events. */
-    public interface RegisterValueSetListener
+    interface RegisterValueSetListener
     {
         /**
          * Called whenever the value of this view is set (although may have, but
          * not necessarily has to have changed).
+         *
+         * @param view the view to be updated
+         * @param oldValue the value before update
+         * @param newValue the value after update
          */
-        public void onValueSet(RegisterView view, int oldValue, int newValue);
+        void onValueSet(RegisterView view, int oldValue, int newValue);
     }
-
-
-    void registerValueSetListener(RegisterValueSetListener listener);
 }

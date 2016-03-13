@@ -35,11 +35,7 @@
 package edu.ucla.cs.compilers.avrora.avrora.arch.msp430;
 
 import edu.ucla.cs.compilers.avrora.avrora.arch.AbstractInstr;
-import edu.ucla.cs.compilers.avrora.avrora.sim.ActiveRegister;
-import edu.ucla.cs.compilers.avrora.avrora.sim.Interpreter;
-import edu.ucla.cs.compilers.avrora.avrora.sim.Segment;
-import edu.ucla.cs.compilers.avrora.avrora.sim.Simulator;
-import edu.ucla.cs.compilers.avrora.avrora.sim.State;
+import edu.ucla.cs.compilers.avrora.avrora.sim.*;
 import edu.ucla.cs.compilers.avrora.cck.util.Util;
 
 /**
@@ -47,14 +43,14 @@ import edu.ucla.cs.compilers.avrora.cck.util.Util;
  * state of a <code>MSP430Interpreter</code> instance. This class allows access
  * to the state of the interpreter without exposing the details of the
  * implementation or jeopardizing the soundness of the simulation.
- * <p> </p>
+ * <p>
  * A <code>MSP430State</code> instance contains the state of registers, memory,
  * the code segment, and the IO registers, as well as the interrupt table and
  * <code>MainClock</code> instance. It provides a public interface through the
  * <code>get_XXX()</code> methods and a protected interface used in
  * <code>MSP430Interpreter</code> that allows direct access to the fields
  * representing the actual state.
- *
+ * </p>
  * @author Ben L. Titzer
  */
 public abstract class MSP430State extends Interpreter implements State

@@ -32,19 +32,15 @@
 
 package edu.ucla.cs.compilers.avrora.avrora.sim.mcu;
 
-import java.util.HashMap;
-
 import edu.ucla.cs.compilers.avrora.avrora.arch.avr.AVRProperties;
 import edu.ucla.cs.compilers.avrora.avrora.arch.legacy.LegacyInterpreter;
 import edu.ucla.cs.compilers.avrora.avrora.core.Program;
-import edu.ucla.cs.compilers.avrora.avrora.sim.ActiveRegister;
-import edu.ucla.cs.compilers.avrora.avrora.sim.AtmelInterpreter;
-import edu.ucla.cs.compilers.avrora.avrora.sim.FiniteStateMachine;
-import edu.ucla.cs.compilers.avrora.avrora.sim.RWRegister;
-import edu.ucla.cs.compilers.avrora.avrora.sim.Simulation;
+import edu.ucla.cs.compilers.avrora.avrora.sim.*;
 import edu.ucla.cs.compilers.avrora.avrora.sim.clock.ClockDomain;
 import edu.ucla.cs.compilers.avrora.avrora.sim.energy.Energy;
 import edu.ucla.cs.compilers.avrora.cck.util.Arithmetic;
+
+import java.util.HashMap;
 
 /**
  * The <code>ATMega128</code> class represents the ATMega128 microcontroller
@@ -74,31 +70,25 @@ public class ATMega128New extends ATMegaClassic
     public static final int MODE_RESERVED2 = 6;
     public static final int MODE_STANDBY = 7;
     public static final int MODE_EXTSTANDBY = 8;
-
-    protected static final String[] idleModeNames = { "Active", "Idle",
-            "ADC Noise Reduction", "Power Down", "Power Save", "RESERVED 1",
-            "RESERVED 2", "Standby", "Extended Standby" };
-
-    // power consumption of each mode (ATMEGA128L)
-    private static final double[] modeAmpere = { 0.0075667, 0.0033433,
-            0.0009884, 0.0001158, 0.0001237, 0.0, 0.0, 0.0002356, 0.0002433 };
-
-    protected static final int[] wakeupTimes = { 0, 0, 0, 1000, 1000, 0, 0, 6,
-            6 };
-
-    protected final ActiveRegister MCUCR_reg;
-
-    private static final int[][] transitionTimeMatrix = FiniteStateMachine
-            .buildBimodalTTM(idleModeNames.length, 0, wakeupTimes,
-                    new int[wakeupTimes.length]);
-
     /**
      * The <code>props</code> field stores a static reference to a properties
      * object shared by all of the instances of this microcontroller. This
      * object stores the IO register size, SRAM size, pin assignments, etc.
      */
     public static final AVRProperties props;
-
+    protected static final String[] idleModeNames = { "Active", "Idle",
+            "ADC Noise Reduction", "Power Down", "Power Save", "RESERVED 1",
+            "RESERVED 2", "Standby", "Extended Standby" };
+    protected static final int[] wakeupTimes = { 0, 0, 0, 1000, 1000, 0, 0, 6,
+            6 };
+    // power consumption of each mode (ATMEGA128L)
+    private static final double[] modeAmpere = { 0.0075667, 0.0033433,
+            0.0009884, 0.0001158, 0.0001237, 0.0, 0.0, 0.0002356, 0.0002433 };
+    private static final int[][] transitionTimeMatrix = FiniteStateMachine
+            .buildBimodalTTM(idleModeNames.length, 0, wakeupTimes,
+                    new int[wakeupTimes.length]);
+    // permutation of sleep mode bits in the register (high order bits first)
+    private static final int[] MCUCR_sm_perm = { 2, 4, 3 };
 
     static
     {
@@ -348,30 +338,7 @@ public class ATMega128New extends ATMegaClassic
 
     }
 
-    public static class Factory implements MicrocontrollerFactory
-    {
-
-        /**
-         * The <code>newMicrocontroller()</code> method is used to instantiate a
-         * microcontroller instance for the particular program. It will
-         * construct an instance of the <code>Simulator</code> class that has
-         * all the properties of this hardware device and has been initialized
-         * with the specified program.
-         *
-         * @param sim
-         * @param p
-         *            the program to load onto the microcontroller @return a
-         *            <code>Microcontroller</code> instance that represents the
-         *            specific hardware device with the program loaded onto it
-         */
-        @Override
-        public Microcontroller newMicrocontroller(int id, Simulation sim,
-                ClockDomain cd, Program p)
-        {
-            return new ATMega128New(id, sim, cd, p);
-        }
-
-    }
+    protected final ActiveRegister MCUCR_reg;
 
 
     public ATMega128New(int id, Simulation sim, ClockDomain cd, Program p)
@@ -434,10 +401,6 @@ public class ATMega128New extends ATMegaClassic
         addDevice(new ADC(this, 8));
     }
 
-    // permutation of sleep mode bits in the register (high order bits first)
-    private static final int[] MCUCR_sm_perm = { 2, 4, 3 };
-
-
     @Override
     protected int getSleepMode()
     {
@@ -448,6 +411,31 @@ public class ATMega128New extends ATMegaClassic
             return Arithmetic.getBitField(value, MCUCR_sm_perm) + 1;
         else
             return MODE_IDLE;
+    }
+
+    public static class Factory implements MicrocontrollerFactory
+    {
+
+        /**
+         * The <code>newMicrocontroller()</code> method is used to instantiate a
+         * microcontroller instance for the particular program. It will
+         * construct an instance of the <code>Simulator</code> class that has
+         * all the properties of this hardware device and has been initialized
+         * with the specified program.
+         *
+         * @param sim the simulation
+         * @param p
+         *            the program to load onto the microcontroller @return a
+         *            <code>Microcontroller</code> instance that represents the
+         *            specific hardware device with the program loaded onto it
+         */
+        @Override
+        public Microcontroller newMicrocontroller(int id, Simulation sim,
+                ClockDomain cd, Program p)
+        {
+            return new ATMega128New(id, sim, cd, p);
+        }
+
     }
 
 }

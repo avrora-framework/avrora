@@ -32,19 +32,14 @@
 
 package edu.ucla.cs.compilers.avrora.avrora.sim.platform;
 
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
-import java.io.RandomAccessFile;
-import java.net.ServerSocket;
-import java.net.Socket;
-
 import edu.ucla.cs.compilers.avrora.avrora.sim.Simulator;
 import edu.ucla.cs.compilers.avrora.avrora.sim.clock.Clock;
 import edu.ucla.cs.compilers.avrora.avrora.sim.mcu.USART;
 import edu.ucla.cs.compilers.avrora.cck.util.Util;
+
+import java.io.*;
+import java.net.ServerSocket;
+import java.net.Socket;
 
 /**
  * The <code>SerialForwarder</code> class implements a serial forwarder that
@@ -58,7 +53,8 @@ public class SerialForwarder implements USART.USARTDevice
 {
 
     public static final int BPS = 57600;
-
+    private final Simulator simulator;
+    protected int portNumber;
     private ServerSocket serverSocket = null;
     private Socket socket = null;
     private Socket newSocket = null;
@@ -67,9 +63,6 @@ public class SerialForwarder implements USART.USARTDevice
     private USART usart;
     private SFTicker ticker;
     private byte[] data;
-    protected int portNumber;
-    private final Simulator simulator;
-
     private RandomAccessFile handle;
 
 
@@ -81,8 +74,9 @@ public class SerialForwarder implements USART.USARTDevice
      *            USART device to redirect
      * @param pn
      *            socket port number
+     * @param sim the simulator
+     * @param waitForConnection if true waits for connection on port, else no waiting
      */
-
     public SerialForwarder(USART usart, int pn, Simulator sim,
             boolean waitForConnection)
     {
@@ -149,55 +143,6 @@ public class SerialForwarder implements USART.USARTDevice
                 }
             }
         }).start();
-    }
-
-
-    synchronized private void checkReconnection()
-    {
-        if (newSocket != null)
-        {
-            if (socket != null)
-            {
-                try
-                {
-                    socket.close();
-                }
-                catch (IOException e)
-                {
-                    // ignore
-                }
-            }
-            socket = newSocket;
-            newSocket = null;
-            try
-            {
-                out = socket.getOutputStream();
-                in = socket.getInputStream();
-            }
-            catch (IOException e)
-            {
-                throw Util.unexpected(e);
-            }
-        }
-    }
-
-
-    synchronized private void closeSocketInOut()
-    {
-        out = null;
-        in = null;
-        if (socket != null)
-        {
-            try
-            {
-                socket.close();
-            }
-            catch (IOException e)
-            {
-                // ignore
-            }
-            socket = null;
-        }
     }
 
 
@@ -275,6 +220,52 @@ public class SerialForwarder implements USART.USARTDevice
         usdv.connect(this);
     }
 
+    synchronized private void checkReconnection()
+    {
+        if (newSocket != null)
+        {
+            if (socket != null)
+            {
+                try
+                {
+                    socket.close();
+                }
+                catch (IOException e)
+                {
+                    // ignore
+                }
+            }
+            socket = newSocket;
+            newSocket = null;
+            try
+            {
+                out = socket.getOutputStream();
+                in = socket.getInputStream();
+            }
+            catch (IOException e)
+            {
+                throw Util.unexpected(e);
+            }
+        }
+    }
+
+    synchronized private void closeSocketInOut()
+    {
+        out = null;
+        in = null;
+        if (socket != null)
+        {
+            try
+            {
+                socket.close();
+            }
+            catch (IOException e)
+            {
+                // ignore
+            }
+            socket = null;
+        }
+    }
 
     @Override
     public USART.Frame transmitFrame()

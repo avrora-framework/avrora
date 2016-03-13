@@ -37,11 +37,7 @@ import edu.ucla.cs.compilers.avrora.avrora.sim.Simulator;
 import edu.ucla.cs.compilers.avrora.avrora.sim.clock.Clock;
 import edu.ucla.cs.compilers.avrora.avrora.sim.clock.Synchronizer;
 import edu.ucla.cs.compilers.avrora.avrora.sim.energy.Energy;
-import edu.ucla.cs.compilers.avrora.avrora.sim.mcu.ADC;
-import edu.ucla.cs.compilers.avrora.avrora.sim.mcu.ATMegaFamily;
-import edu.ucla.cs.compilers.avrora.avrora.sim.mcu.Microcontroller;
-import edu.ucla.cs.compilers.avrora.avrora.sim.mcu.SPI;
-import edu.ucla.cs.compilers.avrora.avrora.sim.mcu.SPIDevice;
+import edu.ucla.cs.compilers.avrora.avrora.sim.mcu.*;
 import edu.ucla.cs.compilers.avrora.avrora.sim.mcu.Microcontroller.Pin.ListenableBooleanViewInput;
 import edu.ucla.cs.compilers.avrora.avrora.sim.output.SimPrinter;
 import edu.ucla.cs.compilers.avrora.cck.text.StringUtil;
@@ -58,8 +54,6 @@ import edu.ucla.cs.compilers.avrora.cck.util.Arithmetic;
  */
 public class CC1000Radio implements Radio
 {
-
-    private static final double FXOSC_FREQUENCY = 14745600.0;
 
     /**
      * Register addresses.
@@ -92,13 +86,28 @@ public class CC1000Radio implements Radio
     public static final int TEST2 = 0x44;
     public static final int TEST1 = 0x45;
     public static final int TEST0 = 0x46;
-
     protected static final String[] allModeNames = RadioEnergy.allModeNames();
     protected static final int[][] ttm = FiniteStateMachine
             .buildSparseTTM(allModeNames.length, 0);
-
-    protected RadioRegister[] registers = new RadioRegister[0x47];
-
+    static final int[] VCO_CURRENT = { 150, 250, 350, 450, 950, 1050, 1150,
+            1250, 1450, 1550, 1650, 1750, 2250, 2350, 2450, 2550 }; // in
+    static final double[] LO_DRIVE = { 0.5, 1.0, 1.5, 2.0 }; // in milliamperes
+    static final int[] PA_DRIVE = { 1, 2, 3, 4 }; // in milliamperes
+    static final int[] BUF_CURRENT = { 520, 690 }; // in microamperes
+    static final double[] LNA_CURRENT = { 0.8, 1.4, 1.8, 2.2 }; // in
+    // PLL_LOCK_ACCURACY
+    static final int[] SETS_LOCK_THRESHOLD = { 127, 31 };
+    static final int[] RESET_LOCK_THRESHOLD = { 111, 15 };
+    static final int[] SETTLING = { 11, 22, 43, 86 };
+    static final int[] BAUDRATE = { 600, 1200, 2400, 4800, 9600, 19200, 0, 0 };
+    static final int[] XOSC_FREQ = { 3686400, // 3-4 Mhz
+            7372800, // 6-8 Mhz
+            1105920, // 9-12 Mhz
+            1474560 };// 12-16 Mhz
+    static final double[] PRE_SWING = { 1.0, 2.0 / 3, 7.0 / 3, 5.0 / 3 };
+    static final double[] PRE_CURRENT = { 1.0, 2.0 / 3, 1.0 / 2, 2.0 / 5 };
+    private static final double FXOSC_FREQUENCY = 14745600.0;
+    public final CC1000Radio.SerialConfigurationInterface config;
     /**
      * Registers
      */
@@ -118,23 +127,28 @@ public class CC1000Radio implements Radio
     protected final MatchRegister MATCH_reg;
     protected final FSCTRLRegister FSCTRL_reg;
     protected final PrescalerRegister PRESCALER_reg;
-
     protected final SimPrinter radioPrinter;
-
     protected final long xoscFrequency;
-
-    protected FrequencyRegister currentFrequencyRegister;
-
     /**
      * Connected Microcontroller, Simulator and SimulatorThread should all
      * correspond.
      */
     protected final Microcontroller mcu;
     protected final Simulator sim;
+                                                                    // microamperes
     protected final Clock clock;
     protected final FiniteStateMachine stateMachine;
-    public final CC1000Radio.SerialConfigurationInterface config;
-
+    protected RadioRegister[] registers = new RadioRegister[0x47];
+    protected FrequencyRegister currentFrequencyRegister;
+    protected Medium medium;
+                                                                // milliamperes
+    protected Transmitter transmitter;
+    protected Receiver receiver;
+    protected SPITicker ticker;
+    protected RSSIOutput rssiOutput;
+    long spiTick;
+    byte txBuffer;
+    int rxBuffer;
 
     public CC1000Radio(Microcontroller mcu, long xfreq)
     {
@@ -199,6 +213,11 @@ public class CC1000Radio implements Radio
         config = new SerialConfigurationInterface();
     }
 
+    public static Medium createMedium(Synchronizer synch, Medium.Arbitrator arb)
+    {
+        // TODO: we only support 19200 kbit/s
+        return new Medium(synch, arb, 19200, 4, 8, 128 * 8);
+    }
 
     /**
      * The <code>getFiniteStateMachine()</code> method gets a reference to the
@@ -208,12 +227,76 @@ public class CC1000Radio implements Radio
      * implementation. The <code>FiniteStateMachine</code> instance allows the
      * user to instrument the state transitions in order to gather information
      * during simulation.
-     * 
+     *
      * @return a reference to the finite state machine for this radio
      */
     public FiniteStateMachine getFiniteStateMachine()
     {
         return stateMachine;
+    }
+
+    /**
+     * get the transmission power
+     *
+     * @return the transmission power in [dB/m]
+     */
+    public double getPower()
+    {
+        double powerSet = (double) PA_POW_reg.getPower();
+        double power;
+        // convert to dB (by linearization) we distinguish values less than 16
+        // and higher ones. Probably a lookup table and Spline
+        // interpolation would be nice here
+        if (powerSet < 16)
+            power = 0.12 * powerSet - 1.8;
+        else
+            power = 0.00431 * powerSet - 0.06459;
+
+        return power;
+    }
+
+    /**
+     * get transmission frequency (Mhz)
+     *
+     * @return te transmission frequency in [MHz]
+     */
+    public double getFrequency()
+    {
+        double fref = FXOSC_FREQUENCY / PLL_reg.refDiv;
+        int freq = !MAIN_reg.fReg ? FREQ_A_reg.frequency : FREQ_B_reg.frequency;
+        return fref * (freq + 8192) / (16384 * 1E6);
+    }
+
+    @Override
+    public Simulator getSimulator()
+    {
+        return sim;
+    }
+
+    @Override
+    public Medium.Transmitter getTransmitter()
+    {
+        return transmitter;
+    }
+
+    @Override
+    public Medium.Receiver getReceiver()
+    {
+        return receiver;
+    }
+
+    @Override
+    public Medium getMedium()
+    {
+        return medium;
+    }
+
+    @Override
+    public void setMedium(Medium m)
+    {
+        medium = m;
+        transmitter = new Transmitter(m);
+        receiver = new Receiver(m);
     }
 
     /**
@@ -494,16 +577,13 @@ public class CC1000Radio implements Radio
         // TODO: use stacked register view.
         protected final SubRegister reg1 = new SubRegister("FSEP1");
         protected final SubRegister reg0 = new SubRegister("FSEP0");
-
+        int frequencySeparation;
 
         FrequencySeparationRegister()
         {
             setFrequencySeparation(0x59); // default frequency separation is 0b
                                           // 0000 0000 0101 1001
         }
-
-        int frequencySeparation;
-
 
         protected void updateFrequencySeparation()
         {
@@ -539,13 +619,6 @@ public class CC1000Radio implements Radio
 
         }
     }
-
-    static final int[] VCO_CURRENT = { 150, 250, 350, 450, 950, 1050, 1150,
-            1250, 1450, 1550, 1650, 1750, 2250, 2350, 2450, 2550 }; // in
-                                                                    // microamperes
-
-    static final double[] LO_DRIVE = { 0.5, 1.0, 1.5, 2.0 }; // in milliamperes
-    static final int[] PA_DRIVE = { 1, 2, 3, 4 }; // in milliamperes
 
     /**
      * The <code>CurrentRegister</code> controls various currents running
@@ -583,20 +656,14 @@ public class CC1000Radio implements Radio
         }
     }
 
-    static final int[] BUF_CURRENT = { 520, 690 }; // in microamperes
-    static final double[] LNA_CURRENT = { 0.8, 1.4, 1.8, 2.2 }; // in
-                                                                // milliamperes
-
     protected class FrontEndRegister extends RadioRegister
     {
-
-        int bufCurrent = 520;
-
-        double lnaCurrent = 0.8;
 
         static final int IF_RSSI_INACTIVE = 0;
         static final int IF_RSSI_ACTIVE = 1;
         static final int IF_RSSI_MIXER = 2;
+        int bufCurrent = 520;
+        double lnaCurrent = 0.8;
         int ifRSSI;
 
         boolean xoscBypassExternal;
@@ -691,10 +758,6 @@ public class CC1000Radio implements Radio
         }
     }
 
-    // PLL_LOCK_ACCURACY
-    static final int[] SETS_LOCK_THRESHOLD = { 127, 31 };
-    static final int[] RESET_LOCK_THRESHOLD = { 111, 15 };
-
     protected class LockRegister extends RadioRegister
     {
 
@@ -784,28 +847,22 @@ public class CC1000Radio implements Radio
         static final int CAL_WAIT = 5;
         static final int CAL_CURRENT = 4;
         static final int CAL_COMPLETE = 3;
-
+        static final int CAL_ITERATE_NORMAL = 0x6;
         boolean calStart;
         boolean calDual;
         boolean calWait;
         boolean calCurrent;
         boolean calComplete;
-
-        static final int CAL_ITERATE_NORMAL = 0x6;
-
         int calIterate;
 
         Calibrate calibrate = new Calibrate();
-
+        boolean calibrating;
 
         CALRegister()
         {
             super("CAL", (byte) 0x05);
             // default value 0b 00000101
         }
-
-        boolean calibrating;
-
 
         @Override
         protected void decode(byte val)
@@ -904,8 +961,6 @@ public class CC1000Radio implements Radio
         }
     }
 
-    static final int[] SETTLING = { 11, 22, 43, 86 };
-
     protected class Modem1Register extends RadioRegister
     {
 
@@ -938,12 +993,6 @@ public class CC1000Radio implements Radio
         }
     }
 
-    static final int[] BAUDRATE = { 600, 1200, 2400, 4800, 9600, 19200, 0, 0 };
-    static final int[] XOSC_FREQ = { 3686400, // 3-4 Mhz
-            7372800, // 6-8 Mhz
-            1105920, // 9-12 Mhz
-            1474560 };// 12-16 Mhz
-
     /**
      * The baud rate of the system is determined by values on the MODEM0
      * register. TinyOS uses a baud rate of 19.2 kBaud with manchester encoding,
@@ -951,12 +1000,11 @@ public class CC1000Radio implements Radio
      */
     protected class Modem0Register extends RadioRegister
     {
-        int baudrate = 2400;
-        int bitrate = 1200;
-
         static final int DATA_FORMAT_NRZ = 0;
         static final int DATA_FORMAT_MANCHESTER = 1;
         static final int DATA_FORMAT_UART = 2;
+        int baudrate = 2400;
+        int bitrate = 1200;
         int dataFormat = DATA_FORMAT_MANCHESTER;
 
         int xoscFreqRange = XOSC_FREQ[0];
@@ -1051,9 +1099,6 @@ public class CC1000Radio implements Radio
         }
     }
 
-    static final double[] PRE_SWING = { 1.0, 2.0 / 3, 7.0 / 3, 5.0 / 3 };
-    static final double[] PRE_CURRENT = { 1.0, 2.0 / 3, 1.0 / 2, 2.0 / 5 };
-
     protected class PrescalerRegister extends RadioRegister
     {
 
@@ -1112,6 +1157,70 @@ public class CC1000Radio implements Radio
         {
 
             readerPrinter = sim.getPrinter("radio.cc1000.pinconfig");
+        }
+
+        private void clockInBit()
+        {
+            if (bitsRead < 7)
+            {
+                // the first 7 bits are the address
+                address <<= 1;
+                address |= inputPin ? 0x1 : 0x0;
+            } else if (bitsRead == 7)
+            {
+                // the 8th bit is the read/write bit
+                writeCommand = inputPin;
+                if (!writeCommand)
+                {
+                    readData = registers[address].value;
+                    // the first bit is set on PDATA when PALE goes high
+                }
+            } else if (bitsRead < 16)
+            {
+                // the 9-16th bits are either the value to write or the value of
+                // the register
+                if (writeCommand)
+                {
+                    // shift in the new bit into the value to write
+                    inputWriteBit();
+                } else
+                {
+                    // shift out another bit from the register value
+                    outputReadBit();
+                }
+            }
+            bitsRead++;
+            if (bitsRead == 16)
+            {
+                // complete the command.
+                if (writeCommand)
+                {
+                    registers[address].write((byte) writeValue);
+                    if (readerPrinter != null)
+                        readerPrinter.println("CC1000.Reg["
+                                + StringUtil.toHex(address, 2) + "] <= "
+                                + StringUtil.toMultirepString(writeValue, 8));
+                } else
+                {
+                    if (readerPrinter != null)
+                        readerPrinter.println("CC1000.Reg["
+                                + StringUtil.toHex(address, 2) + "] -> "
+                                + StringUtil.toMultirepString(readData, 8));
+                }
+                // reset the state
+                bitsRead = 0;
+                address = 0;
+            }
+        }
+
+        private void inputWriteBit()
+        {
+            writeValue = writeValue << 1 | (inputPin ? 0x1 : 0x0);
+        }
+
+        private void outputReadBit()
+        {
+            PDATA_out.setLevel(Arithmetic.getBit(readData, 14 - bitsRead));
         }
 
         /**
@@ -1194,103 +1303,6 @@ public class CC1000Radio implements Radio
             }
         }
 
-
-        private void clockInBit()
-        {
-            if (bitsRead < 7)
-            {
-                // the first 7 bits are the address
-                address <<= 1;
-                address |= inputPin ? 0x1 : 0x0;
-            } else if (bitsRead == 7)
-            {
-                // the 8th bit is the read/write bit
-                writeCommand = inputPin;
-                if (!writeCommand)
-                {
-                    readData = registers[address].value;
-                    // the first bit is set on PDATA when PALE goes high
-                }
-            } else if (bitsRead < 16)
-            {
-                // the 9-16th bits are either the value to write or the value of
-                // the register
-                if (writeCommand)
-                {
-                    // shift in the new bit into the value to write
-                    inputWriteBit();
-                } else
-                {
-                    // shift out another bit from the register value
-                    outputReadBit();
-                }
-            }
-            bitsRead++;
-            if (bitsRead == 16)
-            {
-                // complete the command.
-                if (writeCommand)
-                {
-                    registers[address].write((byte) writeValue);
-                    if (readerPrinter != null)
-                        readerPrinter.println("CC1000.Reg["
-                                + StringUtil.toHex(address, 2) + "] <= "
-                                + StringUtil.toMultirepString(writeValue, 8));
-                } else
-                {
-                    if (readerPrinter != null)
-                        readerPrinter.println("CC1000.Reg["
-                                + StringUtil.toHex(address, 2) + "] -> "
-                                + StringUtil.toMultirepString(readData, 8));
-                }
-                // reset the state
-                bitsRead = 0;
-                address = 0;
-            }
-        }
-
-
-        private void inputWriteBit()
-        {
-            writeValue = writeValue << 1 | (inputPin ? 0x1 : 0x0);
-        }
-
-
-        private void outputReadBit()
-        {
-            PDATA_out.setLevel(Arithmetic.getBit(readData, 14 - bitsRead));
-        }
-
-    }
-
-
-    /**
-     * get the transmission power (dB)
-     */
-    public double getPower()
-    {
-        double powerSet = (double) PA_POW_reg.getPower();
-        double power;
-        // convert to dB (by linearization) we distinguish values less than 16
-        // and higher ones. Probably a lookup table and Spline
-        // interpolation would be nice here
-        if (powerSet < 16)
-            power = 0.12 * powerSet - 1.8;
-        else
-            power = 0.00431 * powerSet - 0.06459;
-
-        return power;
-    }
-
-
-    /**
-     * get transmission frequency (Mhz)
-     */
-    public double getFrequency()
-    {
-        double fref = FXOSC_FREQUENCY / PLL_reg.refDiv;
-        int freq = !MAIN_reg.fReg ? FREQ_A_reg.frequency : FREQ_B_reg.frequency;
-        return fref * (freq + 8192) / (16384 * 1E6);
     }
 
     private class SPITicker implements Simulator.Event
@@ -1413,59 +1425,5 @@ public class CC1000Radio implements Radio
             } else
                 return 0.000f;
         }
-    }
-
-    protected Medium medium;
-    protected Transmitter transmitter;
-    protected Receiver receiver;
-    protected SPITicker ticker;
-    protected RSSIOutput rssiOutput;
-
-    long spiTick;
-    byte txBuffer;
-    int rxBuffer;
-
-
-    public static Medium createMedium(Synchronizer synch, Medium.Arbitrator arb)
-    {
-        // TODO: we only support 19200 kbit/s
-        return new Medium(synch, arb, 19200, 4, 8, 128 * 8);
-    }
-
-
-    @Override
-    public Simulator getSimulator()
-    {
-        return sim;
-    }
-
-
-    @Override
-    public Medium.Transmitter getTransmitter()
-    {
-        return transmitter;
-    }
-
-
-    @Override
-    public Medium.Receiver getReceiver()
-    {
-        return receiver;
-    }
-
-
-    @Override
-    public void setMedium(Medium m)
-    {
-        medium = m;
-        transmitter = new Transmitter(m);
-        receiver = new Receiver(m);
-    }
-
-
-    @Override
-    public Medium getMedium()
-    {
-        return medium;
     }
 }

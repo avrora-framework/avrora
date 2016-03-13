@@ -35,11 +35,7 @@
 package edu.ucla.cs.compilers.avrora.avrora.arch.msp430;
 
 import edu.ucla.cs.compilers.avrora.avrora.core.Program;
-import edu.ucla.cs.compilers.avrora.avrora.sim.Interpreter;
-import edu.ucla.cs.compilers.avrora.avrora.sim.InterpreterFactory;
-import edu.ucla.cs.compilers.avrora.avrora.sim.InterruptTable;
-import edu.ucla.cs.compilers.avrora.avrora.sim.Simulator;
-import edu.ucla.cs.compilers.avrora.avrora.sim.State;
+import edu.ucla.cs.compilers.avrora.avrora.sim.*;
 import edu.ucla.cs.compilers.avrora.avrora.sim.mcu.MCUProperties;
 import edu.ucla.cs.compilers.avrora.avrora.sim.mcu.RegisterSet;
 import edu.ucla.cs.compilers.avrora.avrora.sim.util.MulticastProbe;
@@ -54,45 +50,22 @@ public class MSP430Interpreter extends MSP430InstrInterpreter
 {
 
     public static Factory FACTORY = new Factory();
-
-    public static class Factory extends InterpreterFactory
-    {
-        /**
-         * The <code>newInterpreter()</code> method creates a new interpreter
-         * given the simulator, the program, and the properties of the
-         * microcontroller.
-         * 
-         * @param s
-         *            the simulator for which the interpreter is being created
-         * @param p
-         *            the program to load into the interpreter
-         * @param pr
-         *            the properties of the microcontroller
-         * @return a new instance of the <code>BaseInterpreter</code> class for
-         *         the program
-         */
-        @Override
-        public Interpreter newInterpreter(Simulator s, Program p,
-                MCUProperties pr)
-        {
-            return new MSP430Interpreter(s, p, (MSP430Properties) pr);
-        }
-    }
-
     protected final RegisterSet registers;
     protected final MSP430Instr[] shared_instr;
     protected final STOP_instr STOP;
     protected boolean shouldRun;
     protected boolean sleeping;
-
     protected MulticastProbe globalProbe;
-
 
     /**
      * The constructor for the <code>AVRInterpreter</code> class creates a new
      * interpreter and initializes all of the state. This includes allocating
      * memory and segments to represent the SRAM, flash, interrupt table, IO
      * registers, etc.
+     *
+     * @param simulator the simulator
+     * @param p a program
+     * @param pr psp430 properties
      */
     public MSP430Interpreter(Simulator simulator, Program p,
             MSP430Properties pr)
@@ -134,7 +107,6 @@ public class MSP430Interpreter extends MSP430InstrInterpreter
         STOP = new STOP_instr();
     }
 
-
     protected void runLoop()
     {
         while (shouldRun)
@@ -146,7 +118,6 @@ public class MSP430Interpreter extends MSP430InstrInterpreter
         }
     }
 
-
     private void fastLoop()
     {
         innerLoop = true;
@@ -156,7 +127,6 @@ public class MSP430Interpreter extends MSP430InstrInterpreter
             execute(fetch(curpc));
         }
     }
-
 
     private void instrumentedLoop()
     {
@@ -169,7 +139,6 @@ public class MSP430Interpreter extends MSP430InstrInterpreter
             globalProbe.fireAfter(this, curpc);
         }
     }
-
 
     private MSP430Instr fetch(int curpc)
     {
@@ -185,7 +154,6 @@ public class MSP430Interpreter extends MSP430InstrInterpreter
         return i;
     }
 
-
     private void execute(MSP430Instr i)
     {
         i.accept(this);
@@ -193,20 +161,17 @@ public class MSP430Interpreter extends MSP430InstrInterpreter
         clock.advance(1);
     }
 
-
     @Override
     protected void bumpPC()
     {
         regs[PC_REG] += 2;
     }
 
-
     @Override
     protected int bit(boolean b)
     {
         return b ? 1 : 0;
     }
-
 
     @Override
     protected int popByte()
@@ -217,7 +182,6 @@ public class MSP430Interpreter extends MSP430InstrInterpreter
         return b;
     }
 
-
     @Override
     protected void pushByte(int b)
     {
@@ -227,20 +191,17 @@ public class MSP430Interpreter extends MSP430InstrInterpreter
         regs[SP_REG] = (char) nsp;
     }
 
-
     @Override
     protected void disableInterrupts()
     {
 
     }
 
-
     @Override
     protected void enableInterrupts()
     {
 
     }
-
 
     @Override
     protected int popWord()
@@ -249,7 +210,6 @@ public class MSP430Interpreter extends MSP430InstrInterpreter
         byte b2 = (byte) popByte();
         return uword(b1, b2);
     }
-
 
     @Override
     protected void pushWord(int b)
@@ -261,13 +221,11 @@ public class MSP430Interpreter extends MSP430InstrInterpreter
         regs[SP_REG] = (char) nsp;
     }
 
-
     @Override
     public State getState()
     {
         return this;
     }
-
 
     @Override
     public void start()
@@ -276,13 +234,11 @@ public class MSP430Interpreter extends MSP430InstrInterpreter
         runLoop();
     }
 
-
     @Override
     public int step()
     {
         throw Util.unimplemented();
     }
-
 
     @Override
     public void stop()
@@ -291,11 +247,10 @@ public class MSP430Interpreter extends MSP430InstrInterpreter
         innerLoop = false;
     }
 
-
     /**
      * The <code>insertProbe()</code> method is used internally to insert a
      * probe on a particular instruction.
-     * 
+     *
      * @param p
      *            the probe to insert on an instruction
      * @param addr
@@ -306,7 +261,6 @@ public class MSP430Interpreter extends MSP430InstrInterpreter
     {
         throw Util.unimplemented();
     }
-
 
     /**
      * The <code>insertExceptionWatch()</code> method registers an <code>
@@ -321,7 +275,6 @@ public class MSP430Interpreter extends MSP430InstrInterpreter
     {
         throw Util.unimplemented();
     }
-
 
     /**
      * The <code>insertProbe()</code> method allows a probe to be inserted that
@@ -338,11 +291,10 @@ public class MSP430Interpreter extends MSP430InstrInterpreter
         innerLoop = false;
     }
 
-
     /**
      * The <code>removeProbe()</code> method is used internally to remove a
      * probe from a particular instruction.
-     * 
+     *
      * @param p
      *            the probe to remove from an instruction
      * @param addr
@@ -353,7 +305,6 @@ public class MSP430Interpreter extends MSP430InstrInterpreter
     {
         throw Util.unimplemented();
     }
-
 
     /**
      * The <code>removeProbe()</code> method removes a probe from the global
@@ -369,11 +320,10 @@ public class MSP430Interpreter extends MSP430InstrInterpreter
         globalProbe.remove(b);
     }
 
-
     /**
      * The <code>insertWatch()</code> method is used internally to insert a
      * watch on a particular memory location.
-     * 
+     *
      * @param p
      *            the watch to insert on a memory location
      * @param data_addr
@@ -386,11 +336,10 @@ public class MSP430Interpreter extends MSP430InstrInterpreter
         throw Util.unimplemented();
     }
 
-
     /**
      * The <code>removeWatch()</code> method is used internally to remove a
      * watch from a particular memory location.
-     * 
+     *
      * @param p
      *            the watch to remove from the memory location
      * @param data_addr
@@ -403,13 +352,12 @@ public class MSP430Interpreter extends MSP430InstrInterpreter
         throw Util.unimplemented();
     }
 
-
     /**
      * The <code>delay()</code> method is used to add some delay cycles before
      * the next instruction is executed. This is necessary because some devices
      * such as the EEPROM actually delay execution of instructions while they
      * are working
-     * 
+     *
      * @param cycles
      *            the number of cycles to delay the execution
      */
@@ -418,7 +366,6 @@ public class MSP430Interpreter extends MSP430InstrInterpreter
     {
         throw Util.unimplemented();
     }
-
 
     /**
      * The <code>setRegister()</code> method reads a general purpose register's
@@ -434,7 +381,6 @@ public class MSP430Interpreter extends MSP430InstrInterpreter
         regs[reg.value] = val;
     }
 
-
     /**
      * The <code>setData()</code> method sets the value of the data segment at
      * the specified address.
@@ -448,6 +394,30 @@ public class MSP430Interpreter extends MSP430InstrInterpreter
     {
         data.set(address, (byte) val);
         data.set(address + 1, (byte) (val >> 8));
+    }
+
+    public static class Factory extends InterpreterFactory
+    {
+        /**
+         * The <code>newInterpreter()</code> method creates a new interpreter
+         * given the simulator, the program, and the properties of the
+         * microcontroller.
+         *
+         * @param s
+         *            the simulator for which the interpreter is being created
+         * @param p
+         *            the program to load into the interpreter
+         * @param pr
+         *            the properties of the microcontroller
+         * @return a new instance of the <code>BaseInterpreter</code> class for
+         *         the program
+         */
+        @Override
+        public Interpreter newInterpreter(Simulator s, Program p,
+                MCUProperties pr)
+        {
+            return new MSP430Interpreter(s, p, (MSP430Properties) pr);
+        }
     }
 
     class STOP_instr extends MSP430Instr

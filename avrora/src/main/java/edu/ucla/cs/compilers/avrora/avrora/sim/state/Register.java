@@ -43,10 +43,9 @@ import edu.ucla.cs.compilers.avrora.avrora.sim.util.TransactionalList;
  * This allows registers to be instrumented by the user for profiling and
  * debugging purposes, and also by device implementations that may sub ranges of
  * registers.
- *
- * <p> </p>
+ * <p>
  * This implementation models registers that can be as wide as 32 bits.
- *
+ *</p>
  * @author Ben L. Titzer
  */
 public class Register extends AbstractRegisterView implements RegisterView
@@ -75,6 +74,130 @@ public class Register extends AbstractRegisterView implements RegisterView
     }
 
     /**
+     * The <code>write()</code> method writes a value to the register. This
+     * method will notify any objects that have been added to the watch list.
+     *
+     * @param newv
+     *            the value to write to this register
+     */
+    public void write(int newv)
+    {
+        int oldv = value;
+        newv = newv & mask;
+        value = (behavior != null ? mask & behavior.write(value, newv) : newv);
+        if (watches != null)
+        {
+            // call instrumentation code.
+            watches.beginTransaction();
+            for (TransactionalList.Link n = watches
+                    .getHead(); n != null; n = n.next)
+            {
+                ((Watch) n.object).fireAfterWrite(this, oldv, newv);
+            }
+            watches.endTransaction();
+        }
+        notify(oldv, newv);
+    }
+
+    /**
+     * The <code>read()</code> method reads a value from this register. This
+     * method will trigger calls to an objects in the watch list.
+     *
+     * @return the value in this register
+     */
+    public int read()
+    {
+        int oldv = value;
+        int newv = value;
+        if (behavior != null)
+            value = newv = mask & behavior.read(value);
+        if (watches != null)
+        {
+            // call instrumentation code.
+            watches.beginTransaction();
+            for (TransactionalList.Link n = watches
+                    .getHead(); n != null; n = n.next)
+            {
+                ((Watch) n.object).fireAfterRead(this, oldv, newv);
+            }
+            watches.endTransaction();
+        }
+        return value;
+    }
+
+    /**
+     * The <code>setBehavior()</code> method sets the behavior of this register.
+     *
+     * @param b
+     *            the behavior for this register
+     */
+    public void setBehavior(VolatileBehavior b)
+    {
+        behavior = b;
+    }
+
+    /**
+     * The <code>getValue()</code> method retrieves the value from this
+     * register, without triggering the notification of any objects in the
+     * notification list. This interface should be used by client code (if
+     * necessary at all) to avoid recursive triggering of notifications.
+     *
+     * @return the value of this register
+     */
+    @Override
+    public int getValue()
+    {
+        return value;
+    }
+
+    /**
+     * The <code>setValue()</code> method sets the value of this register,
+     * without triggering the notification of any objects in the notification
+     * list. This interface should not be used by client (user) code, but is
+     * intended for subfields and devices using subfields. It will, however,
+     * trigger registered ValueSetListeners
+     *
+     * @param val
+     *            the value to which to set the register
+     */
+    @Override
+    public void setValue(int val)
+    {
+        int oldVal = value;
+        value = val & mask;
+        notify(oldVal, value);
+    }
+
+    /**
+     * The <code>getWidth()</code> method returns the width of this register (or
+     * register view) in bits.
+     *
+     * @return the width of this view in bits.
+     */
+    @Override
+    public int getWidth()
+    {
+        return width;
+    }
+
+    public void addWatch(Watch w)
+    {
+        if (watches == null)
+        {
+            watches = new TransactionalList();
+        }
+        watches.add(w);
+    }
+
+    public void removeWatch(Watch w)
+    {
+        watches.remove(w);
+        if (watches.isEmpty())
+            watches = null;
+    }
+
+
+    /**
      * The <code>Watch</code> interface allows clients to add instrumentation to
      * a register. The object implementing the watch is then consulted when
      * reads and writes to the register occur.
@@ -82,12 +205,12 @@ public class Register extends AbstractRegisterView implements RegisterView
      */
     public interface Watch
     {
-        public void fireAfterWrite(Register r, int oldv, int newv);
+        void fireAfterWrite(Register r, int oldv, int newv);
 
 
-        public void fireAfterRead(Register r, int oldv, int newv);
+        void fireAfterRead(Register r, int oldv, int newv);
 
-        public static class Empty implements Watch
+        class Empty implements Watch
         {
             @Override
             public void fireAfterWrite(Register r, int oldv, int newv)
@@ -115,136 +238,5 @@ public class Register extends AbstractRegisterView implements RegisterView
             notify = n;
             next = nx;
         }
-    }
-
-
-    /**
-     * The <code>write()</code> method writes a value to the register. This
-     * method will notify any objects that have been added to the watch list.
-     *
-     * @param newv
-     *            the value to write to this register
-     */
-    public void write(int newv)
-    {
-        int oldv = value;
-        newv = newv & mask;
-        value = (behavior != null ? mask & behavior.write(value, newv) : newv);
-        if (watches != null)
-        {
-            // call instrumentation code.
-            watches.beginTransaction();
-            for (TransactionalList.Link n = watches
-                    .getHead(); n != null; n = n.next)
-            {
-                ((Watch) n.object).fireAfterWrite(this, oldv, newv);
-            }
-            watches.endTransaction();
-        }
-        notify(oldv, newv);
-    }
-
-
-    /**
-     * The <code>read()</code> method reads a value from this register. This
-     * method will trigger calls to an objects in the watch list.
-     * 
-     * @return the value in this register
-     */
-    public int read()
-    {
-        int oldv = value;
-        int newv = value;
-        if (behavior != null)
-            value = newv = mask & behavior.read(value);
-        if (watches != null)
-        {
-            // call instrumentation code.
-            watches.beginTransaction();
-            for (TransactionalList.Link n = watches
-                    .getHead(); n != null; n = n.next)
-            {
-                ((Watch) n.object).fireAfterRead(this, oldv, newv);
-            }
-            watches.endTransaction();
-        }
-        return value;
-    }
-
-
-    /**
-     * The <code>setBehavior()</code> method sets the behavior of this register.
-     * 
-     * @param b
-     *            the behavior for this register
-     */
-    public void setBehavior(VolatileBehavior b)
-    {
-        behavior = b;
-    }
-
-
-    /**
-     * The <code>setValue()</code> method sets the value of this register,
-     * without triggering the notification of any objects in the notification
-     * list. This interface should not be used by client (user) code, but is
-     * intended for subfields and devices using subfields. It will, however,
-     * trigger registered ValueSetListeners
-     * 
-     * @param val
-     *            the value to which to set the register
-     */
-    @Override
-    public void setValue(int val)
-    {
-        int oldVal = value;
-        value = val & mask;
-        notify(oldVal, value);
-    }
-
-
-    /**
-     * The <code>getValue()</code> method retrieves the value from this
-     * register, without triggering the notification of any objects in the
-     * notification list. This interface should be used by client code (if
-     * necessary at all) to avoid recursive triggering of notifications.
-     * 
-     * @return the value of this register
-     */
-    @Override
-    public int getValue()
-    {
-        return value;
-    }
-
-
-    /**
-     * The <code>getWidth()</code> method returns the width of this register (or
-     * register view) in bits.
-     * 
-     * @return the width of this view in bits.
-     */
-    @Override
-    public int getWidth()
-    {
-        return width;
-    }
-
-
-    public void addWatch(Watch w)
-    {
-        if (watches == null)
-        {
-            watches = new TransactionalList();
-        }
-        watches.add(w);
-    }
-
-
-    public void removeWatch(Watch w)
-    {
-        watches.remove(w);
-        if (watches.isEmpty())
-            watches = null;
     }
 }

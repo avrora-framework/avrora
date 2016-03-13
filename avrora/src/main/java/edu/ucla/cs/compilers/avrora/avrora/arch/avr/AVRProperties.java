@@ -32,11 +32,11 @@
 
 package edu.ucla.cs.compilers.avrora.avrora.arch.avr;
 
-import java.util.HashMap;
-
 import edu.ucla.cs.compilers.avrora.avrora.sim.CodeSegment;
 import edu.ucla.cs.compilers.avrora.avrora.sim.mcu.MCUProperties;
 import edu.ucla.cs.compilers.avrora.avrora.sim.mcu.RegisterLayout;
+
+import java.util.HashMap;
 
 /**
  * The <code>MicrocontrollerProperties</code> class is simply a wrapper class
@@ -109,6 +109,8 @@ public class AVRProperties extends MCUProperties
      * @param inta
      *            a <code>HashMap</code> instance mapping string names to
      *            <code>Integer</code> indexes for each type of interrupt
+     *
+     * @param csf the code segment factory
      */
     public AVRProperties(int is, int ss, int fs, int es, int np, int ni,
             CodeSegment.Factory csf, HashMap<String, Integer> pa,

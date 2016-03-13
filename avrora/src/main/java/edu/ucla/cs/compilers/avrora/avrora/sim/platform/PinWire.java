@@ -125,7 +125,7 @@ public class PinWire {
     /**
      * Register a probe to this {@link PinWire}'s {@link FiniteStateMachine}.
      *
-     * @param pinWireProbe
+     * @param pinWireProbe the pin wire probe to register
      */
     public void insertProbe(FiniteStateMachine.Probe pinWireProbe) {
         if (externalProbes.containsKey(pinWireProbe)) return;
@@ -141,7 +141,7 @@ public class PinWire {
     /**
      * remove a probe from this {@link PinWire}'s {@link FiniteStateMachine}.
      *
-     * @param pinWireProbe
+     * @param pinWireProbe the pin wire probe
      */
     public void removeProbe(FiniteStateMachine.Probe pinWireProbe) {
         if (!externalProbes.containsKey(pinWireProbe)) return;

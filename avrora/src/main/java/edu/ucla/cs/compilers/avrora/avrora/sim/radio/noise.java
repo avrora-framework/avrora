@@ -20,6 +20,8 @@
  */
 package edu.ucla.cs.compilers.avrora.avrora.sim.radio;
 
+import edu.ucla.cs.compilers.avrora.cck.util.Util;
+
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
@@ -27,8 +29,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.StringTokenizer;
-
-import edu.ucla.cs.compilers.avrora.cck.util.Util;
 
 /**
  *
@@ -40,7 +40,12 @@ public class noise
     private static List<Integer> noise = new ArrayList<Integer>();
 
 
-    /** Creates a new instance of Noise from file */
+    /**
+     * Creates a new instance of Noise from file
+     *
+     * @param fileName the source file
+     * @throws IOException if file cannot be opened
+     */
     public noise(String fileName) throws IOException
     {
         parse(new BufferedReader(new FileReader(fileName)));
@@ -53,6 +58,15 @@ public class noise
         noise.add(new Integer(-95));
     }
 
+    public static int getNoise(int index)
+    {
+        return noise.get(index);
+    }
+
+    public static int sizeNoise()
+    {
+        return noise.size();
+    }
 
     private void parse(BufferedReader f) throws IOException
     {
@@ -63,7 +77,6 @@ public class noise
         }
         f.close();
     }
-
 
     /**
      * parse one line of the file
@@ -99,17 +112,5 @@ public class noise
                 noise.add(new Integer(noise_value));
             }
         }
-    }
-
-
-    public static int getNoise(int index)
-    {
-        return noise.get(index);
-    }
-
-
-    public static int sizeNoise()
-    {
-        return noise.size();
     }
 }

@@ -32,8 +32,6 @@
 
 package edu.ucla.cs.compilers.avrora.avrora.sim.mcu;
 
-import java.util.LinkedList;
-
 import edu.ucla.cs.compilers.avrora.avrora.sim.RWRegister;
 import edu.ucla.cs.compilers.avrora.avrora.sim.Simulator;
 import edu.ucla.cs.compilers.avrora.avrora.sim.output.SimPrinter;
@@ -42,6 +40,8 @@ import edu.ucla.cs.compilers.avrora.avrora.sim.state.RegisterUtil;
 import edu.ucla.cs.compilers.avrora.avrora.sim.state.RegisterView;
 import edu.ucla.cs.compilers.avrora.cck.text.StringUtil;
 import edu.ucla.cs.compilers.avrora.cck.util.Arithmetic;
+
+import java.util.LinkedList;
 
 /**
  * The USART class implements a Universal Synchronous Asynchronous
@@ -93,136 +93,18 @@ public class USART extends AtmelInternalDevice
     static final int PARITY_ODD = 3;
 
     static final int[] FRAME_SIZE = { 5, 6, 7, 8, 8, 8, 8, 9 };
-
-    static class USARTProperties
-    {
-        String subID;
-
-        int USART_RX_inum;
-        int USART_UDRE_inum;
-        int USART_TX_inum;
-
-        int[] interruptMapping;
-
-        String USART_name;
-        String UDR_name;
-        String UCSR_name;
-        String UBRR_name;
-    }
-
-
-    static USARTProperties getUSARTProperties(String subID, Microcontroller m)
-    {
-        MCUProperties mp = m.getProperties();
-        USARTProperties props = new USARTProperties();
-
-        props.subID = subID;
-        props.USART_name = "USART" + subID;
-        props.UDR_name = "UDR" + subID;
-        props.UCSR_name = "UCSR" + subID;
-        props.UBRR_name = "UBRR" + subID;
-        props.USART_RX_inum = mp.getInterrupt(props.USART_name + ", RX");
-        props.USART_UDRE_inum = mp.getInterrupt(props.USART_name + ", UDRE");
-        props.USART_TX_inum = mp.getInterrupt(props.USART_name + ", TX");
-
-        props.interruptMapping = new int[] { -1, -1, -1, -1, -1,
-                props.USART_UDRE_inum, props.USART_TX_inum,
-                props.USART_RX_inum };
-
-        // TODO: cache the properties for each (subID, microcontroller) pair
-        return props;
-    }
-
     final DataRegister UDRn_reg;
     final ControlRegisterA UCSRnA_reg;
     final ControlRegisterB UCSRnB_reg;
     final ControlRegisterC UCSRnC_reg;
     final UBRRnLReg UBRRnL_reg;
     final UBRRnHReg UBRRnH_reg;
-
     final Transmitter transmitter;
     final Receiver receiver;
-
     final USARTProperties properties;
-
     public USARTDevice connectedDevice;
-
     int period;
     int UBRRMultiplier = 16;
-
-    /**
-     * The <code>USARTDevice</code> interface describes USARTs and other serial
-     * devices which can be connected to the USART. For simplicity, a
-     * higher-level interface communicating by frames of data is used, rather
-     * than bits or a representation of changing voltages.
-     */
-    public interface USARTDevice
-    {
-        /**
-         * Transmit a frame from this device.
-         *
-         * @return the frame for transmission
-         */
-        public Frame transmitFrame();
-
-
-        /**
-         * Receive a frame.
-         *
-         * @param frame
-         *            the frame to be received
-         */
-        public void receiveFrame(Frame frame);
-
-    }
-
-    /**
-     * A <code>USARTFrame</code> is a representation of the serial frames being
-     * passed between the USART and a connected device.
-     */
-    public static class Frame
-    {
-        public final int value;
-        public final int size;
-
-
-        /**
-         * Constructor for a USARTFrame. The <code>high</code> bit is used for 9
-         * bit frame sizes.
-         */
-        public Frame(byte low, boolean high, int sz)
-        {
-            int val = low;
-            if (sz > 8)
-                val = Arithmetic.setBit(val, 8, high);
-            value = val;
-            size = sz;
-        }
-
-
-        @Override
-        public String toString()
-        {
-            return StringUtil.toMultirepString(value, size);
-        }
-    }
-
-
-    /* *********************************************** */
-    /* Methods to implement the USARTDevice interface */
-
-    public Frame transmitFrame()
-    {
-        return new Frame(UDRn_reg.transmitRegister.read(),
-                UCSRnB_reg.readBit(TXB8n), UCSRnC_reg.getFrameSize());
-    }
-
-
-    public void receiveFrame(Frame frame)
-    {
-        UDRn_reg.receiveRegister.writeFrame(frame);
-    }
-
 
     public USART(String subID, AtmelMicrocontroller m)
     {
@@ -250,12 +132,47 @@ public class USART extends AtmelInternalDevice
         connect(new SerialPrinter());
     }
 
+    static USARTProperties getUSARTProperties(String subID, Microcontroller m)
+    {
+        MCUProperties mp = m.getProperties();
+        USARTProperties props = new USARTProperties();
+
+        props.subID = subID;
+        props.USART_name = "USART" + subID;
+        props.UDR_name = "UDR" + subID;
+        props.UCSR_name = "UCSR" + subID;
+        props.UBRR_name = "UBRR" + subID;
+        props.USART_RX_inum = mp.getInterrupt(props.USART_name + ", RX");
+        props.USART_UDRE_inum = mp.getInterrupt(props.USART_name + ", UDRE");
+        props.USART_TX_inum = mp.getInterrupt(props.USART_name + ", TX");
+
+        props.interruptMapping = new int[] { -1, -1, -1, -1, -1,
+                props.USART_UDRE_inum, props.USART_TX_inum,
+                props.USART_RX_inum };
+
+        // TODO: cache the properties for each (subID, microcontroller) pair
+        return props;
+    }
+
+    public Frame transmitFrame()
+    {
+        return new Frame(UDRn_reg.transmitRegister.read(),
+                UCSRnB_reg.readBit(TXB8n), UCSRnC_reg.getFrameSize());
+    }
+
+    public void receiveFrame(Frame frame)
+    {
+        UDRn_reg.receiveRegister.writeFrame(frame);
+    }
+
+
+    /* *********************************************** */
+    /* Methods to implement the USARTDevice interface */
 
     public void connect(USARTDevice d)
     {
         connectedDevice = d;
     }
-
 
     void updatePeriod()
     {
@@ -264,6 +181,92 @@ public class USART extends AtmelInternalDevice
             devicePrinter.println(
                     properties.USART_name + ": period set to " + period);
         period *= UBRRMultiplier;
+    }
+
+    /**
+     * Initiate a receive between the UART and the connected device.
+     */
+    public void startReceive()
+    {
+        receiver.enableReceive();
+    }
+
+
+    /**
+     * The <code>USARTDevice</code> interface describes USARTs and other serial
+     * devices which can be connected to the USART. For simplicity, a
+     * higher-level interface communicating by frames of data is used, rather
+     * than bits or a representation of changing voltages.
+     */
+    public interface USARTDevice
+    {
+        /**
+         * Transmit a frame from this device.
+         *
+         * @return the frame for transmission
+         */
+        Frame transmitFrame();
+
+
+        /**
+         * Receive a frame.
+         *
+         * @param frame
+         *            the frame to be received
+         */
+        void receiveFrame(Frame frame);
+
+    }
+
+    static class USARTProperties
+    {
+        String subID;
+
+        int USART_RX_inum;
+        int USART_UDRE_inum;
+        int USART_TX_inum;
+
+        int[] interruptMapping;
+
+        String USART_name;
+        String UDR_name;
+        String UCSR_name;
+        String UBRR_name;
+    }
+
+    /**
+     * A <code>USARTFrame</code> is a representation of the serial frames being
+     * passed between the USART and a connected device.
+     */
+    public static class Frame
+    {
+        public final int value;
+        public final int size;
+
+
+        /**
+         * Constructor for a USARTFrame. The <code>high</code> bit is used for 9
+         * bit frame sizes.
+         *
+         * @param low low byte of the frame
+         * @param high 9th bit of the frame
+         * @param sz frame size
+         */
+        public Frame(byte low, boolean high, int sz)
+        {
+            int val = low;
+            if (sz > 8)
+                val = Arithmetic.setBit(val, 8, high);
+            value = val;
+            size = sz;
+        }
+
+
+        @Override
+        public String toString()
+        {
+            return StringUtil.toMultirepString(value, size);
+        }
     }
 
     protected class Transmitter
@@ -308,15 +311,6 @@ public class USART extends AtmelInternalDevice
                 }
             }
         }
-    }
-
-
-    /**
-     * Initiate a receive between the UART and the connected device.
-     */
-    public void startReceive()
-    {
-        receiver.enableReceive();
     }
 
     protected class Receiver

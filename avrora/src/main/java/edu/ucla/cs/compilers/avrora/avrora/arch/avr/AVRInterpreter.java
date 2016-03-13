@@ -70,83 +70,24 @@ public class AVRInterpreter extends AVRInstrInterpreter
     private static final int SREG_N_MASK = 1 << SREG_N;
     private static final int SREG_Z_MASK = 1 << SREG_Z;
     private static final int SREG_C_MASK = 1;
-
-    private class SREG_reg implements ActiveRegister
-    {
-
-        /**
-         * The <code>read()</code> method reads the 8-bit value of the IO
-         * register as a byte. For simple <code>RWIOReg</code> instances, this
-         * simply returns the internally stored value.
-         *
-         * @return the value of the register as a byte
-         */
-        @Override
-        public byte read()
-        {
-            int value = 0;
-            if (I)
-                value |= SREG_I_MASK;
-            if (T)
-                value |= SREG_T_MASK;
-            if (H)
-                value |= SREG_H_MASK;
-            if (S)
-                value |= SREG_S_MASK;
-            if (V)
-                value |= SREG_V_MASK;
-            if (N)
-                value |= SREG_N_MASK;
-            if (Z)
-                value |= SREG_Z_MASK;
-            if (C)
-                value |= SREG_C_MASK;
-            return (byte) value;
-        }
-
-
-        /**
-         * The <code>write()</code> method writes an 8-bit value to the IO
-         * register as a byte. For simple <code>RWIOReg</code> instances, this
-         * simply writes the internally stored value.
-         *
-         * @param val
-         *            the value to write
-         */
-        @Override
-        public void write(byte val)
-        {
-            if ((val & SREG_I_MASK) != 0)
-                enableInterrupts();
-            else
-                disableInterrupts();
-            T = (val & SREG_T_MASK) != 0;
-            H = (val & SREG_H_MASK) != 0;
-            S = (val & SREG_S_MASK) != 0;
-            V = (val & SREG_V_MASK) != 0;
-            N = (val & SREG_N_MASK) != 0;
-            Z = (val & SREG_Z_MASK) != 0;
-            C = (val & SREG_C_MASK) != 0;
-        }
-
-    }
-
-    protected int RAMPZ; // location of the RAMPZ IO register
     protected final MainClock clock;
     protected final RegisterSet registers;
     protected final AVRInstr[] shared_instr;
     protected final RWRegister SPL_reg;
     protected final RWRegister SPH_reg;
+    protected int RAMPZ; // location of the RAMPZ IO register
     protected boolean innerLoop;
     protected boolean shouldRun;
     protected boolean sleeping;
-
-
     /**
      * The constructor for the <code>AVRInterpreter</code> class creates a new
      * interpreter and initializes all of the state. This includes allocating
      * memory and segments to represent the SRAM, flash, interrupt table, IO
      * registers, etc.
+     *
+     * @param simulator the simulator
+     * @param p a program
+     * @param pr avr properties
      */
     public AVRInterpreter(Simulator simulator, Program p, AVRProperties pr)
     {
@@ -213,7 +154,6 @@ public class AVRInterpreter extends AVRInstrInterpreter
         shared_instr = null;
     }
 
-
     @Override
     public int getSP()
     {
@@ -222,20 +162,16 @@ public class AVRInterpreter extends AVRInstrInterpreter
         return Arithmetic.uword(low, high);
     }
 
+    protected void setSP(int val) {
+        SPL_reg.value = (Arithmetic.low(val));
+        SPH_reg.value = (Arithmetic.high(val));
+    }
 
     @Override
     public AbstractInstr getInstr(int address)
     {
         throw Util.unimplemented();
     }
-
-
-    protected void setSP(int val)
-    {
-        SPL_reg.value = (Arithmetic.low(val));
-        SPH_reg.value = (Arithmetic.high(val));
-    }
-
 
     @Override
     protected int popByte()
@@ -245,7 +181,6 @@ public class AVRInterpreter extends AVRInstrInterpreter
         return sram.read(address);
     }
 
-
     @Override
     protected void pushByte(int val)
     {
@@ -253,7 +188,6 @@ public class AVRInterpreter extends AVRInstrInterpreter
         setSP(address - 1);
         sram.write(address, (byte) val);
     }
-
 
     @Override
     protected int extended(int addr)
@@ -264,7 +198,6 @@ public class AVRInterpreter extends AVRInstrInterpreter
             return addr;
     }
 
-
     @Override
     protected void enableInterrupts()
     {
@@ -272,14 +205,12 @@ public class AVRInterpreter extends AVRInstrInterpreter
         interrupts.enableAll();
     }
 
-
     @Override
     protected void disableInterrupts()
     {
         I = true;
         interrupts.disableAll();
     }
-
 
     @Override
     protected void enterSleepMode()
@@ -289,13 +220,11 @@ public class AVRInterpreter extends AVRInstrInterpreter
         simulator.getMicrocontroller().sleep();
     }
 
-
     @Override
     protected void storeProgramMemory()
     {
         flash.update();
     }
-
 
     @Override
     protected void stop()
@@ -303,7 +232,6 @@ public class AVRInterpreter extends AVRInstrInterpreter
         shouldRun = false;
         innerLoop = false;
     }
-
 
     @Override
     protected void skip()
@@ -317,19 +245,59 @@ public class AVRInterpreter extends AVRInstrInterpreter
          */
     }
 
-
     @Override
     protected boolean getIORbit(int ior, int bit)
     {
         return Arithmetic.getBit(ioregs[ior].read(), bit);
     }
 
-
     @Override
     protected void setIORbit(int ior, int bit, boolean v)
     {
         byte val = ioregs[ior].read();
         ioregs[ior].write(Arithmetic.setBit(val, bit, v));
+    }
+
+    private class SREG_reg implements ActiveRegister {
+
+        /**
+         * The <code>read()</code> method reads the 8-bit value of the IO register as a byte. For simple
+         * <code>RWIOReg</code> instances, this simply returns the internally stored value.
+         *
+         * @return the value of the register as a byte
+         */
+        @Override
+        public byte read() {
+            int value = 0;
+            if (I) value |= SREG_I_MASK;
+            if (T) value |= SREG_T_MASK;
+            if (H) value |= SREG_H_MASK;
+            if (S) value |= SREG_S_MASK;
+            if (V) value |= SREG_V_MASK;
+            if (N) value |= SREG_N_MASK;
+            if (Z) value |= SREG_Z_MASK;
+            if (C) value |= SREG_C_MASK;
+            return (byte) value;
+        }
+
+        /**
+         * The <code>write()</code> method writes an 8-bit value to the IO register as a byte. For simple
+         * <code>RWIOReg</code> instances, this simply writes the internally stored value.
+         *
+         * @param val the value to write
+         */
+        @Override
+        public void write(byte val) {
+            if ((val & SREG_I_MASK) != 0) enableInterrupts();
+            else disableInterrupts();
+            T = (val & SREG_T_MASK) != 0;
+            H = (val & SREG_H_MASK) != 0;
+            S = (val & SREG_S_MASK) != 0;
+            V = (val & SREG_V_MASK) != 0;
+            N = (val & SREG_N_MASK) != 0;
+            Z = (val & SREG_Z_MASK) != 0;
+            C = (val & SREG_C_MASK) != 0;
+        }
     }
 
 }

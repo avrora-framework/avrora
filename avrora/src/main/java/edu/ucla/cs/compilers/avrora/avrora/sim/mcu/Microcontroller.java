@@ -32,13 +32,13 @@
 
 package edu.ucla.cs.compilers.avrora.avrora.sim.mcu;
 
-import java.util.LinkedList;
-
 import edu.ucla.cs.compilers.avrora.avrora.sim.Simulator;
 import edu.ucla.cs.compilers.avrora.avrora.sim.clock.ClockDomain;
 import edu.ucla.cs.compilers.avrora.avrora.sim.platform.Platform;
 import edu.ucla.cs.compilers.avrora.avrora.sim.state.BooleanRegister;
 import edu.ucla.cs.compilers.avrora.avrora.sim.state.BooleanView;
+
+import java.util.LinkedList;
 
 /**
  * The <code>Microcontroller</code> interface corresponds to a hardware device
@@ -52,22 +52,144 @@ public interface Microcontroller
 {
 
     /**
+     * The <code>getSimulator()</code> method gets a simulator instance that is
+     * capable of emulating this hardware device.
+     *
+     * @return a <code>Simulator</code> instance corresponding to this device
+     */
+    Simulator getSimulator();
+
+    /**
+     * The <code>getPlatform()</code> method gets a platform instance that
+     * contains this microcontroller.
+     *
+     * @return the platform instance containing this microcontroller, if it
+     *         exists; null otherwise
+     */
+    Platform getPlatform();
+
+    /**
+     * The <code>setPlatform()</code> method sets the platform instance that
+     * contains this microcontroller.
+     *
+     * @param p
+     *            the new platform for this microcontroller
+     */
+    void setPlatform(Platform p);
+
+    /**
+     * The <code>getPin()</code> method looks up the named pin and returns a
+     * reference to that pin. Names of pins should be UPPERCASE. The intended
+     * users of this method are external device implementors which connect their
+     * devices to the microcontroller through the pins.
+     *
+     * @param name
+     *            the name of the pin; for example "PA0" or "OC1A"
+     * @return a reference to the <code>Pin</code> object corresponding to the
+     *         named pin if it exists; null otherwise
+     */
+    Pin getPin(String name);
+
+    /**
+     * The <code>getPin()</code> method looks up the specified pin by its number
+     * and returns a reference to that pin. The intended users of this method
+     * are external device implementors which connect their devices to the
+     * microcontroller through the pins.
+     *
+     * @param num
+     *            the pin number to look up
+     * @return a reference to the <code>Pin</code> object corresponding to the
+     *         named pin if it exists; null otherwise
+     */
+    Pin getPin(int num);
+
+    /**
+     * The <code>sleep()</code> method puts the microcontroller into the sleep
+     * mode defined by its internal sleep configuration register. It may
+     * shutdown devices and disable some clocks. This method should only be
+     * called from within the interpreter.
+     */
+    void sleep();
+
+    /**
+     * The <code>wakeup()</code> method wakes the microcontroller from a sleep
+     * mode. It may resume devices, turn clocks back on, etc. This method is
+     * expected to return the number of cycles that is required for the
+     * microcontroller to wake completely from the sleep state it was in.
+     *
+     * @return cycles required to wake from the current sleep mode
+     */
+    int wakeup();
+
+    /**
+     * The <code>getClockDomain()</code> method returns the clock domain for
+     * this microcontroller. The clock domain contains all of the clocks
+     * attached to the microcontroller and platform, including the main clock.
+     *
+     * @return an instance of the <code>ClockDomain</code> class representing
+     *         the clock domain for this microcontroller
+     */
+    ClockDomain getClockDomain();
+
+    /**
+     * The <code>getRegisterSet()</code> method returns the register set
+     * containing all of the IO registers for this microcontroller.
+     *
+     * @return a reference to the <code>RegisterSet</code> instance which stores
+     *         all of the IO registers for this microcontroller.
+     */
+    RegisterSet getRegisterSet();
+
+    /**
+     * The <code>getProperties()</code> method gets an object that describes the
+     * microcontroller including the size of the RAM, EEPROM, flash, etc.
+     *
+     * @return an instance of the <code>MicrocontrollerProperties</code> class
+     *         that contains all the relevant information about this
+     *         microcontroller
+     */
+    MCUProperties getProperties();
+
+
+    /**
      * The <code>Pin</code> interface encapsulates the notion of a physical pin
      * on the microcontroller chip. It is generally used in wiring up external
      * devices to the microcontroller.
      *
      * @author Ben L. Titzer
      */
-    public interface Pin
+    interface Pin
     {
+        /**
+         * The <code>connect()</code> method will connect this pin to the
+         * specified input. Attempts by the microcontroller to read from this
+         * pin when it is configured as an input will then call this instance's
+         * <code>read()</code> method.
+         *
+         * @param i
+         *            the <code>Input</code> instance to connect to
+         */
+        void connectInput(Input i);
+
+        /**
+         * The <code>connect()</code> method will connect this pin to the
+         * specified output. Attempts by the microcontroller to write to this
+         * pin when it is configured as an output will then call this instance's
+         * <code>write()</code> method.
+         *
+         * @param o
+         *            the <code>Output</code> instance to connect to
+         */
+        void connectOutput(Output o);
+
         /**
          * Listener which will be called if the value of a pin changes.
          */
-        public interface InputListener
+        interface InputListener
         {
             /**
              * Called when the value of <code>input</code> was changed.
-             * 
+             *
              * @param input
              *            input which was affected
              * @param newValue
@@ -82,7 +204,7 @@ public interface Microcontroller
          * read from this pin, the installed instance of this interface will be
          * called.
          */
-        public interface Input
+        interface Input
         {
             /**
              * The <code>read()</code> method is called by the simulator when
@@ -91,30 +213,49 @@ public interface Microcontroller
              *
              * @return true if the level of the pin is high; false otherwise
              */
-            public boolean read();
+            boolean read();
 
 
             /**
              * Registers a {@link edu.ucla.cs.compilers.avrora.avrora.sim.mcu.Microcontroller.Pin.InputListener}.
-             * 
+             *
              * @param listener
              *            listener to register
              */
-            public void registerListener(InputListener listener);
+            void registerListener(InputListener listener);
 
 
             /**
              * Unregisters a {@link edu.ucla.cs.compilers.avrora.avrora.sim.mcu.Microcontroller.Pin.InputListener} if found, or does nothing
              * otherwise.
-             * 
+             *
              * @param listener
              *            listener to unregister.
              */
-            public void unregisterListener(InputListener listener);
+            void unregisterListener(InputListener listener);
+        }
+
+        /**
+         * The <code>Output</code> interface represents an output pin. When the
+         * pin is configured to be an output and the microcontroller attempts to
+         * wrote to this pin, the installed instance of this interface will be
+         * called.
+         */
+        interface Output
+        {
+            /**
+             * The <code>write()</code> method is called by the simulator when
+             * the program writes a logical level to the pin. The device can
+             * then take the appropriate action.
+             *
+             * @param level
+             *            a boolean representing the logical level of the write
+             */
+            void write(boolean level);
         }
 
         /** ListenableInput which is implemented using a BooleanView */
-        public class ListenableBooleanViewInput extends ListenableInput
+        class ListenableBooleanViewInput extends ListenableInput
                 implements BooleanView.ValueSetListener
         {
 
@@ -136,7 +277,7 @@ public interface Microcontroller
 
             /**
              * Creates this input pin and uses an existing BooleanView
-             * 
+             *
              * @param view
              *            existing BooleanView to use
              */
@@ -148,6 +289,8 @@ public interface Microcontroller
 
             /**
              * Returns the view used as pin level
+             *
+             * @return see {@link #level}
              */
             public BooleanView getLevelView()
             {
@@ -157,6 +300,8 @@ public interface Microcontroller
 
             /**
              * Changes the view used for pin level
+             *
+             * @param view the new view
              */
             public void setLevelView(BooleanView view)
             {
@@ -175,26 +320,25 @@ public interface Microcontroller
                 }
             }
 
-
-            /**
-             * Changes the level of this pin by modifying the underlying view.
-             */
-            public void setLevel(boolean newLevel)
-            {
-                level.setValue(newLevel);
-            }
-
-
             /**
              * Returns the level of this pin by reading the underlying view.
-             * 
-             * @return
+             *
+             * @return the valie of tis input
              */
             public boolean getLevel()
             {
                 return level.getValue();
             }
 
+            /**
+             * Changes the level of this pin by modifying the underlying view.
+             *
+             * @param newLevel the level for the {@link #level} input
+             */
+            public void setLevel(boolean newLevel)
+            {
+                level.setValue(newLevel);
+            }
 
             @Override
             public boolean read()
@@ -214,7 +358,7 @@ public interface Microcontroller
          * Abstract implementation of <code>Input</code> which supports
          * InputListeners.
          */
-        public abstract class ListenableInput implements Input
+        abstract class ListenableInput implements Input
         {
 
             private LinkedList<InputListener> listeners;
@@ -235,8 +379,10 @@ public interface Microcontroller
                 }
             }
 
-
-            /** Notifies every listener about a changed value. */
+            /**
+             * Notifies every listener about a changed value.
+             * @param newValue the newly changed value
+             */
             protected void notifyListeners(boolean newValue)
             {
                 if (listeners != null)
@@ -272,158 +418,6 @@ public interface Microcontroller
                 }
             }
         }
-
-        /**
-         * The <code>Output</code> interface represents an output pin. When the
-         * pin is configured to be an output and the microcontroller attempts to
-         * wrote to this pin, the installed instance of this interface will be
-         * called.
-         */
-        public interface Output
-        {
-            /**
-             * The <code>write()</code> method is called by the simulator when
-             * the program writes a logical level to the pin. The device can
-             * then take the appropriate action.
-             *
-             * @param level
-             *            a boolean representing the logical level of the write
-             */
-            public void write(boolean level);
-        }
-
-
-        /**
-         * The <code>connect()</code> method will connect this pin to the
-         * specified input. Attempts by the microcontroller to read from this
-         * pin when it is configured as an input will then call this instance's
-         * <code>read()</code> method.
-         *
-         * @param i
-         *            the <code>Input</code> instance to connect to
-         */
-        public void connectInput(Input i);
-
-
-        /**
-         * The <code>connect()</code> method will connect this pin to the
-         * specified output. Attempts by the microcontroller to write to this
-         * pin when it is configured as an output will then call this instance's
-         * <code>write()</code> method.
-         *
-         * @param o
-         *            the <code>Output</code> instance to connect to
-         */
-        public void connectOutput(Output o);
     }
-
-
-    /**
-     * The <code>getSimulator()</code> method gets a simulator instance that is
-     * capable of emulating this hardware device.
-     *
-     * @return a <code>Simulator</code> instance corresponding to this device
-     */
-    public Simulator getSimulator();
-
-
-    /**
-     * The <code>getPlatform()</code> method gets a platform instance that
-     * contains this microcontroller.
-     *
-     * @return the platform instance containing this microcontroller, if it
-     *         exists; null otherwise
-     */
-    public Platform getPlatform();
-
-
-    /**
-     * The <code>setPlatform()</code> method sets the platform instance that
-     * contains this microcontroller.
-     * 
-     * @param p
-     *            the new platform for this microcontroller
-     */
-    public void setPlatform(Platform p);
-
-
-    /**
-     * The <code>getPin()</code> method looks up the named pin and returns a
-     * reference to that pin. Names of pins should be UPPERCASE. The intended
-     * users of this method are external device implementors which connect their
-     * devices to the microcontroller through the pins.
-     *
-     * @param name
-     *            the name of the pin; for example "PA0" or "OC1A"
-     * @return a reference to the <code>Pin</code> object corresponding to the
-     *         named pin if it exists; null otherwise
-     */
-    public Pin getPin(String name);
-
-
-    /**
-     * The <code>getPin()</code> method looks up the specified pin by its number
-     * and returns a reference to that pin. The intended users of this method
-     * are external device implementors which connect their devices to the
-     * microcontroller through the pins.
-     *
-     * @param num
-     *            the pin number to look up
-     * @return a reference to the <code>Pin</code> object corresponding to the
-     *         named pin if it exists; null otherwise
-     */
-    public Pin getPin(int num);
-
-
-    /**
-     * The <code>sleep()</code> method puts the microcontroller into the sleep
-     * mode defined by its internal sleep configuration register. It may
-     * shutdown devices and disable some clocks. This method should only be
-     * called from within the interpreter.
-     */
-    public void sleep();
-
-
-    /**
-     * The <code>wakeup()</code> method wakes the microcontroller from a sleep
-     * mode. It may resume devices, turn clocks back on, etc. This method is
-     * expected to return the number of cycles that is required for the
-     * microcontroller to wake completely from the sleep state it was in.
-     *
-     * @return cycles required to wake from the current sleep mode
-     */
-    public int wakeup();
-
-
-    /**
-     * The <code>getClockDomain()</code> method returns the clock domain for
-     * this microcontroller. The clock domain contains all of the clocks
-     * attached to the microcontroller and platform, including the main clock.
-     * 
-     * @return an instance of the <code>ClockDomain</code> class representing
-     *         the clock domain for this microcontroller
-     */
-    public ClockDomain getClockDomain();
-
-
-    /**
-     * The <code>getRegisterSet()</code> method returns the register set
-     * containing all of the IO registers for this microcontroller.
-     * 
-     * @return a reference to the <code>RegisterSet</code> instance which stores
-     *         all of the IO registers for this microcontroller.
-     */
-    public RegisterSet getRegisterSet();
-
-
-    /**
-     * The <code>getProperties()</code> method gets an object that describes the
-     * microcontroller including the size of the RAM, EEPROM, flash, etc.
-     * 
-     * @return an instance of the <code>MicrocontrollerProperties</code> class
-     *         that contains all the relevant information about this
-     *         microcontroller
-     */
-    public MCUProperties getProperties();
 
 }

@@ -60,6 +60,7 @@ public class AssignStmt extends Stmt
      * The constructor of the <code>AssignStmt</code> class simply stores a
      * reference to the right hand side expression internally.
      *
+     * @param d destination expression
      * @param r
      *            the expression representing the right hand side of the
      *            assignment

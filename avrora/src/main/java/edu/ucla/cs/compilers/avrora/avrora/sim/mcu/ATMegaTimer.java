@@ -155,6 +155,8 @@ public abstract class ATMegaTimer extends AtmelInternalDevice {
 
     /**
      * Returns current counter value
+     *
+     * @return the counter value
      */
     public abstract int getCounter();
 
@@ -238,11 +240,12 @@ public abstract class ATMegaTimer extends AtmelInternalDevice {
     /**
      * The <code>FlagField</code> implements a <code>Field</code> that works as
      * an interrupt posted flag.
-     * <p> </p>
+     * <p>
      * XXX: This is a wrong place for this class, since it is generic and not
      * Timer specific. Please refactor it to elsewhere. However, I didn't want
      * to create a dependency between RegisterSets and InterruptTables, and
      * therefore didn't initially implement this in RegisterSet.
+     *  </p>
      */
     public class FlagField extends RegisterSet.Field implements InterruptTable.Notification {
 
@@ -294,10 +297,11 @@ public abstract class ATMegaTimer extends AtmelInternalDevice {
      * the timer. It emulates the operation of the timer at each clock cycle and
      * uses the global timed event queue to achieve the correct periodic
      * behavior.
-     * <p> </p>
+     * <p>
      * The Mode abstract the specifics of the timer mode into a simpler
      * interface, allowing the commonality between the different ATMega timers
      * to be implemented by a single, fairly simple set of methods.
+     * </p>
      */
     protected /* final */ class Mode implements Simulator.Event {
 
@@ -320,6 +324,10 @@ public abstract class ATMegaTimer extends AtmelInternalDevice {
 
         /**
          * Creates a new, mutable Mode object.
+         *
+         * @param sc strategy class
+         * @param f register flag field
+         * @param t the top
          */
         protected Mode(Class<? extends Strategy> sc, RegisterSet.Field f, ActiveRegister t) {
             this(sc, f, (TopValue) t);
@@ -641,8 +649,9 @@ public abstract class ATMegaTimer extends AtmelInternalDevice {
     /**
      * Overloads the write behavior of this class of register in order to
      * implement compare match blocking for one timer period.
-     * <p> </p>
+     * <p>
      * XXX: Make this into a facade
+     * </p>
      */
     protected class TCNTnRegister implements ActiveRegister {
 
