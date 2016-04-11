@@ -1,33 +1,26 @@
 /**
- * Copyright (c) 2004-2005, Regents of the University of California
- * All rights reserved.
- *
- * Redistribution and use in source and binary forms, with or without
- * modification, are permitted provided that the following conditions
- * are met:
- *
- * Redistributions of source code must retain the above copyright notice,
- * this list of conditions and the following disclaimer.
- *
- * Redistributions in binary form must reproduce the above copyright
- * notice, this list of conditions and the following disclaimer in the
- * documentation and/or other materials provided with the distribution.
- *
- * Neither the name of the University of California, Los Angeles nor the
- * names of its contributors may be used to endorse or promote products
- * derived from this software without specific prior written permission.
- *
- * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
- * "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
- * LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
- * A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
- * OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
- * SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
- * LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
- * DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
- * THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
- * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
- * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ * Copyright (c) 2004-2005, Regents of the University of California All rights reserved.
+ * <p>
+ * Redistribution and use in source and binary forms, with or without modification, are permitted provided
+ * that the following conditions are met:
+ * <p>
+ * Redistributions of source code must retain the above copyright notice, this list of conditions and the
+ * following disclaimer.
+ * <p>
+ * Redistributions in binary form must reproduce the above copyright notice, this list of conditions and the
+ * following disclaimer in the documentation and/or other materials provided with the distribution.
+ * <p>
+ * Neither the name of the University of California, Los Angeles nor the names of its contributors may be used
+ * to endorse or promote products derived from this software without specific prior written permission.
+ * <p>
+ * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND ANY EXPRESS OR IMPLIED
+ * WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A
+ * PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS BE LIABLE FOR ANY
+ * DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO,
+ * PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION)
+ * HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING
+ * NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
+ * POSSIBILITY OF SUCH DAMAGE.
  */
 
 package edu.ucla.cs.compilers.avrora.avrora.actions;
@@ -59,33 +52,28 @@ import java.util.List;
  *
  * @author Ben L. Titzer
  */
-public class SimAction extends Action
-{
+public class SimAction extends Action {
 
-    public static final String HELP = "The \"simulate\" action creates a simulation with the specified program(s) "
-            + "for the specified node(s). The simulation type might be as simple as a single node with a single "
-            + "program, or a multiple-node sensor network simulation or robotics simulation.";
+    public static final String HELP = "The \"simulate\" action creates a simulation with the specified " +
+            "program(s) " + "for the specified node(s). The simulation type might be as simple as a single " +
+            "node with a single " + "program, or a multiple-node sensor network simulation or robotics " +
+            "simulation.";
 
-    public final Option.Bool REPORT_SECONDS = newOption("report-seconds", false,
-            "This option causes all times printed out by the simulator to be reported "
-                    + "in seconds rather than clock cycles.");
-    public final Option.Long SECONDS_PRECISION = newOption("seconds-precision",
-            6,
-            "This option sets the precision (number of decimal places) reported for "
-                    + "event times in the simulation.");
-    public final Option.Str SIMULATION = newOption("simulation", "single",
-            "The \"simulation\" option selects from the available simulation types, including a single node "
-                    + "simulation, a sensor network simulation, or a robotics simulation.");
-    public final Option.Bool THROUGHPUT = newOption("throughput", false,
-            "This option enables reporting of simulator throughput (i.e. mhz).");
+    public final Option.Bool REPORT_SECONDS = newOption("report-seconds", false, "This option causes all " +
+            "times printed out by the simulator to be reported " + "in seconds rather than clock cycles.");
+    public final Option.Long SECONDS_PRECISION = newOption("seconds-precision", 6, "This option sets the " +
+            "precision (number of decimal places) reported for " + "event times in the simulation.");
+    public final Option.Str SIMULATION = newOption("simulation", "single", "The \"simulation\" option " +
+            "selects from the available simulation types, including a single node " + "simulation, a sensor" +
+            " network simulation, or a robotics simulation.");
+    public final Option.Bool THROUGHPUT = newOption("throughput", false, "This option enables reporting of " +
+            "" + "simulator throughput (i.e. mhz).");
 
     protected Simulation simulation;
     protected long startms;
     protected boolean reported;
 
-
-    public SimAction()
-    {
+    public SimAction() {
         super(HELP);
     }
 
@@ -170,8 +158,7 @@ public class SimAction extends Action
      *             occurs during simulation
      */
     @Override
-    public void run(String[] args) throws Exception
-    {
+    public void run(String[] args) throws Exception {
         setupSecondsAntPrecision();
 
         simulation = Defaults.getSimulation(SIMULATION.get());
@@ -216,7 +203,8 @@ public class SimAction extends Action
             Terminal.println(": breakpoint at " + StringUtil.addrToString(e.address) + " reached.");
         } catch (TimeoutException e) {
             Terminal.printYellow("Simulation terminated");
-            Terminal.println(": timeout reached at pc = " + StringUtil.addrToString(e.address) + ", time = " + e.state.getCycles());
+            Terminal.println(": timeout reached at pc = " + StringUtil.addrToString(e.address) + ", time = " +
+                    "" + e.state.getCycles());
         } catch (AsynchronousExit e) {
             Terminal.printYellow("Simulation terminated asynchronously");
             Terminal.nextln();
@@ -246,8 +234,7 @@ public class SimAction extends Action
      *
      * @author Ben L. Titzer
      */
-    public static class BreakPointException extends RuntimeException
-    {
+    public static class BreakPointException extends RuntimeException {
 
         private static final long serialVersionUID = 1L;
 
@@ -264,9 +251,7 @@ public class SimAction extends Action
          */
         public final State state;
 
-
-        public BreakPointException(int a, State s)
-        {
+        public BreakPointException(int a, State s) {
             super("breakpoint @ " + StringUtil.addrToString(a) + " reached");
             address = a;
             state = s;
@@ -284,8 +269,7 @@ public class SimAction extends Action
      * </p>
      * @author Ben L. Titzer
      */
-    public static class TimeoutException extends RuntimeException
-    {
+    public static class TimeoutException extends RuntimeException {
 
         private static final long serialVersionUID = 1L;
 
@@ -307,28 +291,22 @@ public class SimAction extends Action
          */
         public final long timeout;
 
-
-        public TimeoutException(int a, State s, long t, String l)
-        {
-            super("timeout @ " + StringUtil.addrToString(a) + " reached after "
-                    + t + ' ' + l);
-            address = a;
-            state = s;
-            timeout = t;
+        public TimeoutException(int address, State state, long timeout, String unit) {
+            super("timeout @ " + StringUtil.addrToString(address) + " reached after " + timeout + ' ' + unit);
+            this.address = address;
+            this.state = state;
+            this.timeout = timeout;
         }
     }
 
-    public static class AsynchronousExit extends RuntimeException
-    {
+    public static class AsynchronousExit extends RuntimeException {
 
         private static final long serialVersionUID = 1L;
     }
 
-    public class ShutdownThread extends Thread
-    {
+    public class ShutdownThread extends Thread {
         @Override
-        public void run()
-        {
+        public void run() {
             exitSimulation(new AsynchronousExit());
         }
     }
