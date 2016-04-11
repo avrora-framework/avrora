@@ -166,7 +166,8 @@ public class StepSynchronizer extends Synchronizer {
     }
 
     void removeSimulator(Simulator s) {
-        throw Util.unimplemented();
+//        throw Util.unimplemented();
+        s.stop();
     }
 
     /**
@@ -214,8 +215,8 @@ public class StepSynchronizer extends Synchronizer {
                         cycles[cntr] = sim.step();
                     } catch (Throwable t) {
                         reportException(t);
+                        removeSimulator(threads[cntr]);
                         if (!(t instanceof SimAction.TimeoutException)) {
-                            removeSimulator(threads[cntr]);
                             reportExit(sim, t);
                         }
                         stop();
