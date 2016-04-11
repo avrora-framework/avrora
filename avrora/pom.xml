@@ -4,7 +4,7 @@
 
     <groupId>com.github.avrora-framework</groupId>
     <artifactId>avrora</artifactId>
-    <version>0.1.49-SNAPSHOT</version>
+    <version>0.1.50-SNAPSHOT</version>
 
     <name>avrora</name>
     <description>Avrora, a research project of the UCLA Compilers Group, is a set of simulation and analysis tools for
