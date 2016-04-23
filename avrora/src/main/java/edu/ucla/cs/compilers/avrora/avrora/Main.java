@@ -32,11 +32,6 @@
 
 package edu.ucla.cs.compilers.avrora.avrora;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.util.Properties;
-
 import edu.ucla.cs.compilers.avrora.avrora.actions.Action;
 import edu.ucla.cs.compilers.avrora.avrora.core.Program;
 import edu.ucla.cs.compilers.avrora.avrora.core.ProgramReader;
@@ -48,6 +43,11 @@ import edu.ucla.cs.compilers.avrora.cck.text.Verbose;
 import edu.ucla.cs.compilers.avrora.cck.util.Option;
 import edu.ucla.cs.compilers.avrora.cck.util.Options;
 import edu.ucla.cs.compilers.avrora.cck.util.Util;
+
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.util.Properties;
 
 /**
  * This is the main entrypoint to Avrora. It is responsible for parsing the
@@ -441,7 +441,7 @@ public class Main
         File f = new File(fstr);
         if (!f.exists())
         {
-            Util.userError("File not found", fstr);
+            Util.userError("File [" + fstr + "] not found", fstr);
         }
     }
 }
