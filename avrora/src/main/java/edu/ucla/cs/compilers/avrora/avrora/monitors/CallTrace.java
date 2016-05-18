@@ -79,9 +79,11 @@ public class CallTrace {
         Program p = sim.getProgram();
         for (int pc = 0; pc < p.program_end; pc = p.getNextPC(pc)) {
             LegacyInstr i = (LegacyInstr) p.readInstr(pc);
+
             if (i != null) {
                 if (i instanceof LegacyInstr.CALL) sim.insertProbe(new Probe_call(targetOfCall(i)), pc);
-                else if (i instanceof LegacyInstr.RCALL)
+                    // skip "RCALL .+0" since this is used for compiler optimization
+                else if (i instanceof LegacyInstr.RCALL && i.getOperands().compareTo("0") != 0)
                     sim.insertProbe(new Probe_call(targetOfRCall(i, pc)), pc);
                 else if (i instanceof LegacyInstr.ICALL) sim.insertProbe(new Probe_icall(), pc);
                 else if (i instanceof LegacyInstr.RET) sim.insertProbe(new Probe_ret(), pc);
