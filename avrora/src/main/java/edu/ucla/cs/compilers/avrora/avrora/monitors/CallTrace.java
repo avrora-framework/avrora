@@ -35,10 +35,9 @@ import edu.ucla.cs.compilers.avrora.avrora.sim.Simulator;
 import edu.ucla.cs.compilers.avrora.avrora.sim.State;
 
 /**
- * The <code>CallTrace</code> class represents a trace of the call/return and
- * interrupt behavior of the program. A call trace represents a sequence of
- * events that represent the calls, returns, interrupts, and interrupt returns
- * of the program.
+ * The <code>CallTrace</code> class represents a trace of the call/return and interrupt behavior of the
+ * program. A call trace represents a sequence of events that represent the calls, returns, interrupts, and
+ * interrupt returns of the program.
  *
  * @author Ben L. Titzer
  */
@@ -81,13 +80,20 @@ public class CallTrace {
             LegacyInstr i = (LegacyInstr) p.readInstr(pc);
 
             if (i != null) {
-                if (i instanceof LegacyInstr.CALL) sim.insertProbe(new Probe_call(targetOfCall(i)), pc);
+                if (i instanceof LegacyInstr.CALL) {
+                    sim.insertProbe(new Probe_call(targetOfCall(i)), pc);
+                } else if (i instanceof LegacyInstr.RCALL) {
                     // skip "RCALL .+0" since this is used for compiler optimization
-                else if (i instanceof LegacyInstr.RCALL && i.getOperands().compareTo("0") != 0)
-                    sim.insertProbe(new Probe_call(targetOfRCall(i, pc)), pc);
-                else if (i instanceof LegacyInstr.ICALL) sim.insertProbe(new Probe_icall(), pc);
-                else if (i instanceof LegacyInstr.RET) sim.insertProbe(new Probe_ret(), pc);
-                else if (i instanceof LegacyInstr.RETI) sim.insertProbe(new Probe_iret(), pc);
+                    if (i.getOperands().compareTo("0") != 0) {
+                        sim.insertProbe(new Probe_call(targetOfRCall(i, pc)), pc);
+                    }
+                } else if (i instanceof LegacyInstr.ICALL) {
+                    sim.insertProbe(new Probe_icall(), pc);
+                } else if (i instanceof LegacyInstr.RET) {
+                    sim.insertProbe(new Probe_ret(), pc);
+                } else if (i instanceof LegacyInstr.RETI) {
+                    sim.insertProbe(new Probe_iret(), pc);
+                }
             }
         }
     }

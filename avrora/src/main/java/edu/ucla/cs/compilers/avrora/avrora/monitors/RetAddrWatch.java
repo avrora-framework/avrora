@@ -35,13 +35,12 @@ import edu.ucla.cs.compilers.avrora.avrora.sim.Simulator;
 import edu.ucla.cs.compilers.avrora.avrora.sim.State;
 
 /**
- * The <code>retaddr</code> monitor inserts a watch on the stack dynamically
- * after each CALL/ICALL/RCALL or interrupt invocation to check if the return
- * address is not modified. Before a RET or RETI the watch is removed.
- *
- * Note: This monitor is tested with TinyOS programs for AVR platforms. It is
- * not guaranteed it will work with other OS or platforms! Note 2: this still
- * experimental :-)
+ * The <code>retaddr</code> monitor inserts a watch on the stack dynamically after each CALL/ICALL/RCALL or
+ * interrupt invocation to check if the return address is not modified. Before a RET or RETI the watch is
+ * removed.
+ * <p>
+ * Note: This monitor is tested with TinyOS programs for AVR platforms. It is not guaranteed it will work with
+ * other OS or platforms! Note 2: this still experimental :-)
  *
  * @author Daniel Minder
  */
@@ -119,9 +118,8 @@ public class RetAddrWatch extends MonitorFactory {
     }
 
     /**
-     * The actual monitoring class. It attaches probes to each
-     * CALL/RCALL/ICALL/RET/RETI instruction and attaches also an interrupt
-     * invocation probe
+     * The actual monitoring class. It attaches probes to each CALL/RCALL/ICALL/RET/RETI instruction and
+     * attaches also an interrupt invocation probe
      */
 
     class Mon implements Monitor {
@@ -149,12 +147,12 @@ public class RetAddrWatch extends MonitorFactory {
                         // do not insert a probe when main is called since main
                         // will set SP again
                         if (!targetName.equals("main")) simulator.insertProbe(probeCall, pc);
-                    }
-                    // skip "RCALL .+0" since this is used for compiler optimization
-                    else if (i instanceof LegacyInstr.RCALL && i.getOperands().compareTo("0") != 0) {
-                        simulator.insertProbe(probeCall, pc);
-                    }
-                    else if (i instanceof LegacyInstr.ICALL) {
+                    } else if (i instanceof LegacyInstr.RCALL) {
+                        // skip "RCALL .+0" since this is used for compiler optimization
+                        if (i.getOperands().compareTo("0") != 0) {
+                            simulator.insertProbe(probeCall, pc);
+                        }
+                    } else if (i instanceof LegacyInstr.ICALL) {
                         simulator.insertProbe(probeCall, pc);
                     } else if (i instanceof LegacyInstr.RET || i instanceof LegacyInstr.RETI)
                         simulator.insertProbe(probeReturn, pc);
